@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .bg-primary {
+    @apply bg-neutral-800;
+  }
+
+  .bg-secondary {
+    @apply bg-neutral-700;
+  }
+
+  .bg-invert {
+    @apply bg-neutral-200;
+  }
+
+  .text-primary {
+    @apply text-neutral-200;
+  }
+
+  .text-secondary {
+    @apply text-neutral-400;
+  }
+
+  .text-invert {
+    @apply text-neutral-800;
+  }
+}
+
+html {
+  @apply bg-primary text-primary;
+}
