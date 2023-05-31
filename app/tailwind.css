@@ -4,30 +4,40 @@
 
 @layer utilities {
   .bg-primary {
-    @apply bg-neutral-800;
+    @apply bg-neutral-200 dark:bg-neutral-800;
   }
 
   .bg-secondary {
-    @apply bg-neutral-700;
+    @apply bg-neutral-400 dark:bg-neutral-500;
   }
 
-  .bg-invert {
-    @apply bg-neutral-200;
+  .bg-inverse {
+    @apply bg-neutral-800 dark:bg-neutral-200;
   }
 
   .text-primary {
-    @apply text-neutral-200;
+    @apply text-neutral-800 dark:text-neutral-200;
   }
 
   .text-secondary {
-    @apply text-neutral-400;
+    @apply text-neutral-500 dark:text-neutral-400;
   }
 
-  .text-invert {
-    @apply text-neutral-800;
+  .text-inverse {
+    @apply text-neutral-200 dark:text-neutral-800;
+  }
+
+  .text-highlight {
+    @apply text-black dark:text-white;
   }
 }
 
-html {
-  @apply bg-primary text-primary;
+html.light {
+  @apply bg-neutral-200 text-neutral-800;
+  color-scheme: light;
+}
+
+html.dark {
+  @apply bg-neutral-800 text-neutral-200;
+  color-scheme: dark;
 }

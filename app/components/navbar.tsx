@@ -4,6 +4,7 @@ import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { NavLink } from "./link";
+import { ThemeSwitcher } from "./theme-switcher";
 
 const LINKS = [
   {
@@ -37,6 +38,10 @@ export const NavBar = () => {
             <BasicLinksHamburger />
           </NavigationMenu.Item>
 
+          <NavigationMenu.Item className="hidden md:list-item">
+            <ThemeSwitcher />
+          </NavigationMenu.Item>
+
           <NavigationMenu.Item>
             <UserAccount />
           </NavigationMenu.Item>
@@ -64,7 +69,7 @@ const BasicLinksHamburger = () => (
       <HamburgerMenuIcon />
     </Dialog.Trigger>
     <Dialog.Portal>
-      <Dialog.Content className="absolute inset-0 z-50 bg-neutral-800">
+      <Dialog.Content className="bg-primary absolute inset-0 z-50">
         <VisuallyHidden.Root>
           <Dialog.Title>Navigation Menu</Dialog.Title>
           <Dialog.Description>Here is the navigation menu.</Dialog.Description>
@@ -77,6 +82,10 @@ const BasicLinksHamburger = () => (
         <div className="p-9">
           <NavigationMenu.Root>
             <NavigationMenu.List className="text-3xl font-bold">
+              <NavigationMenu.Item className="mb-4">
+                <ThemeSwitcher />
+              </NavigationMenu.Item>
+
               {LINKS.map((link) => (
                 <NavigationMenu.Item key={link.to}>
                   <NavLink prefetch="intent" to={link.to}>
@@ -94,7 +103,7 @@ const BasicLinksHamburger = () => (
 
 const UserAccount = () => (
   <Avatar.Root className="inline-flex h-10 w-10 select-none items-center justify-center overflow-hidden rounded-full align-middle">
-    <Avatar.Fallback className="bg-invert flex h-full w-full items-center justify-center text-sm font-bold leading-none text-violet-600">
+    <Avatar.Fallback className="bg-inverse text-inverse flex h-full w-full items-center justify-center text-sm font-bold leading-none">
       SJ
     </Avatar.Fallback>
   </Avatar.Root>

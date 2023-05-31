@@ -1,5 +1,9 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderArgs,
+  LoaderFunction,
+} from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -7,25 +11,47 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css";
 import { NavBar } from "./components/navbar";
 import { Footer } from "./components/footer";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import {
+  FixFlashOfWrongTheme,
+  ThemeProvider,
+  useTheme,
+} from "./utils/theme-provider";
+import clsx from "clsx";
+import { getThemeSession } from "./utils/theme.server";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: stylesheet },
 ];
 
+export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
+  const themeSession = await getThemeSession(request);
+
+  const data = {
+    theme: themeSession.getTheme(),
+  };
+
+  return data;
+};
+
 export function App() {
+  const data = useLoaderData<typeof loader>();
+  const [theme] = useTheme();
+
   return (
-    <html lang="en" className="relative h-full">
+    <html lang="en" className={clsx(theme, "relative h-full")}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <Meta />
         <Links />
+        <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} />
       </head>
       <body className="flex h-full flex-col">
         <header>
@@ -49,9 +75,13 @@ export function App() {
 }
 
 export default function AppWithProviders() {
+  const data = useLoaderData<typeof loader>();
+
   return (
-    <Tooltip.Provider>
-      <App />
-    </Tooltip.Provider>
+    <ThemeProvider specifiedTheme={data.theme}>
+      <Tooltip.Provider>
+        <App />
+      </Tooltip.Provider>
+    </ThemeProvider>
   );
 }
