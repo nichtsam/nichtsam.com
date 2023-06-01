@@ -34,7 +34,7 @@ export const Footer = () => {
                     sideOffset={5}
                   >
                     {link.name}
-                    <Tooltip.Arrow className="fill-neutral-200" />
+                    <Tooltip.Arrow className="fill-bg-invert" />
                   </Tooltip.Content>
                 </Tooltip.Content>
               </Tooltip.Root>

@@ -30,6 +30,34 @@
   .text-highlight {
     @apply text-black dark:text-white;
   }
+
+  .fill-bg-primary {
+    @apply fill-neutral-200 dark:fill-neutral-800;
+  }
+
+  .fill-bg-secondary {
+    @apply fill-neutral-400 dark:fill-neutral-500;
+  }
+
+  .fill-bg-invert {
+    @apply fill-neutral-800 dark:fill-neutral-200;
+  }
+
+  .fill-text-primary {
+    @apply fill-neutral-800 dark:fill-neutral-200;
+  }
+
+  .fill-text-secondary {
+    @apply fill-neutral-500 dark:fill-neutral-400;
+  }
+
+  .fill-text-invert {
+    @apply fill-neutral-200 dark:fill-neutral-800;
+  }
+
+  .fill-text-highlight {
+    @apply fill-black dark:fill-white;
+  }
 }
 
 html.light {
