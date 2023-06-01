@@ -24,6 +24,7 @@ import {
 } from "./utils/theme-provider";
 import clsx from "clsx";
 import { getThemeSession } from "./utils/theme.server";
+import { publicEnv, forceEnvValidation } from "./utils/env.server";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -31,10 +32,13 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
+  forceEnvValidation();
+
   const themeSession = await getThemeSession(request);
 
   const data = {
     theme: themeSession.getTheme(),
+    env: publicEnv,
   };
 
   return data;
@@ -67,6 +71,11 @@ export function App() {
         </footer>
 
         <ScrollRestoration />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.ENV = ${JSON.stringify(data.env)}`,
+          }}
+        />
         <Scripts />
         <LiveReload />
       </body>
