@@ -12,8 +12,17 @@ export const meta: V2_MetaFunction = () => {
 
 export default function Index() {
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <h1 className="text-3xl font-bold">Hello! This is Soydev.</h1>
+    <div className="h-full w-full">
+      <section className="container mx-auto p-9">
+        <h1 className="text-3xl font-bold sm:text-5xl">Samuel Jensen</h1>
+        <p className="text-sm sm:text-lg">
+          Hi there, I'm Sam.
+          <br />
+          You can call me Sam.
+          <br />
+          Oh and this is my website by the way.
+        </p>
+      </section>
     </div>
   );
 }
