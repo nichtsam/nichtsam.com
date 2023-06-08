@@ -1,4 +1,8 @@
+import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import type { V2_MetaFunction } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { NavLink } from "~/components/link";
+import { getBlogPostsMeta } from "~/utils/blog.server";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -10,18 +14,32 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
+export const loader = async () => {
+  const blogPosts = await getBlogPostsMeta();
+
+  return { blogPosts };
+};
+
 export default function Blog() {
+  const { blogPosts } = useLoaderData<typeof loader>();
   return (
-    <div className="flex h-full w-full items-center justify-center">
-      <article>
-        <h1 className="text-3xl font-bold">
-          Hello! here should be the blogs of mine.
-        </h1>
-        <p>
-          The blogs would be loaded with the help of `mdx-bundler` and
-          `@octokit/rest`.
-        </p>
-      </article>
+    <div className="container prose mx-auto h-full w-full px-9 dark:prose-invert">
+      <h1>Blog</h1>
+      <NavigationMenu.Root>
+        <NavigationMenu.List>
+          {blogPosts.map((post) => (
+            <NavigationMenu.Item key={post.slug}>
+              <p>
+                <NavLink prefetch="intent" to={`./${post.slug}`}>
+                  {post.title}
+                </NavLink>
+                <br />
+                <span>- {post.readingTime.text}</span>
+              </p>
+            </NavigationMenu.Item>
+          ))}
+        </NavigationMenu.List>
+      </NavigationMenu.Root>
     </div>
   );
 }
