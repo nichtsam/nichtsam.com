@@ -25,10 +25,13 @@ import {
 import clsx from "clsx";
 import { getThemeSession } from "./utils/theme.server";
 import { publicEnv, forceEnvValidation } from "./utils/env.server";
+import { FaviconMeta, faviconLinks } from "./utils/favicon";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: stylesheet },
+  { rel: "manifest", href: "/site.webmanifest" },
+  ...faviconLinks,
 ];
 
 export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
@@ -53,6 +56,8 @@ export function App() {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <FaviconMeta />
+
         <Meta />
         <Links />
         <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} />
