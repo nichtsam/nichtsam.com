@@ -1,53 +1,60 @@
-# Welcome to Remix!
+# Welcome to nichtsam.com!
 
-- [Remix Docs](https://remix.run/docs)
+- Framework: [Remix](https://remix.run/)
+- Deployment: [Fly.io](https://fly.io/)
+- Styling: [Tailwind CSS](https://tailwindcss.com/)
+
+## System Requirement
+
+- [Node.js](https://nodejs.org/) >= 18
+- [Pnpm](https://pnpm.io/) >= 8
 
 ## Development
 
-From your terminal:
+### Setup
 
-```sh
-npm run dev
-```
-
-This starts your app in development mode, rebuilding assets on file changes.
+1. Copy `.env.example` into `.env`
+2. run `pnpm i`
+3. run `pnpm dev`
+4. open up `http://localhost:3000`
 
 ## Deployment
 
-First, build your app for production:
+This repository has a [Github Workflow](.github/workflows/deploy.yml) set up to deploy automatically. \
+If you want to deploy manually, refer to [Deploy a Fly App](https://fly.io/docs/apps/deploy/).
 
-```sh
-npm run build
-```
+## Make it yours
 
-Then run the app in production mode:
+### Infra
 
-```sh
-npm start
-```
+- [sign up on fiy.io](https://fly.io/docs/hands-on/)
+- [setup deployment for fly.io](https://fly.io/docs/apps/launch/)
+- set up [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) needed by [project's Github Workflows](./.github/workflows/).
+  - [`FLY_API_TOKEN`](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#api-tokens)
 
-Now you'll need to pick a host to deploy it to.
+### Content
 
-### DIY
+Here are some stuff you will need to adjust to make it your website.
 
-If you're familiar with deploying node applications, the built-in Remix app server is production-ready.
+#### Blog
 
-Make sure to deploy the output of `remix build`
+- `/content/blog` \
+  Written in mdx, every top-level file or directory with index file is a blog post.
 
-- `build/`
-- `public/build/`
+#### Favicons
 
-### Using a Template
+- `public/favicon.ico`
+- `public/favicons`
+- related fields in `public/site.webmanifest`
 
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
+#### Logo
 
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```
+- logo in `app/components/navbar.tsx`
+
+#### Pages' Meta
+
+- `meta()` in every route
+
+#### Social Links
+
+- `LINKS` in `app/components/footer.tsx`
