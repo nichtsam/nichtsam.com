@@ -19,7 +19,7 @@ export const Footer = () => {
           {LINKS.map((link) => (
             <NavigationMenu.Item key={link.to}>
               <Tooltip.Root>
-                <Tooltip.Trigger>
+                <Tooltip.Trigger asChild>
                   <NavLink
                     aria-label={link.name}
                     prefetch="intent"

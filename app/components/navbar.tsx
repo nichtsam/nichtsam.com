@@ -88,9 +88,7 @@ const BasicLinksHamburger = () => (
 
               {LINKS.map((link) => (
                 <NavigationMenu.Item key={link.to}>
-                  <NavLink prefetch="intent" to={link.to}>
-                    {link.name}
-                  </NavLink>
+                  <NavLink to={link.to}>{link.name}</NavLink>
                 </NavigationMenu.Item>
               ))}
             </NavigationMenu.List>
