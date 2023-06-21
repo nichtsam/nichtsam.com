@@ -52,7 +52,7 @@ export function App() {
   const [theme] = useTheme();
 
   return (
-    <html lang="en" className={clsx(theme, "relative h-full")}>
+    <html lang="en" className={clsx(theme, "relative")}>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -62,7 +62,7 @@ export function App() {
         <Links />
         <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} />
       </head>
-      <body className="flex h-full flex-col">
+      <body className="flex h-full min-h-screen flex-col">
         <header>
           <NavBar />
         </header>
