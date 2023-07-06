@@ -5,6 +5,9 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { NavLink } from "./link";
 import { ThemeSwitcher } from "./theme-switcher";
+import { RemoveScroll } from "react-remove-scroll";
+import { useEffect, useState } from "react";
+import { useNavigation } from "@remix-run/react";
 
 const LINKS = [
   {
@@ -63,41 +66,57 @@ const BasicLinks = () => (
   </>
 );
 
-const BasicLinksHamburger = () => (
-  <Dialog.Root>
-    <Dialog.Trigger aria-label="Navigation menu">
-      <HamburgerMenuIcon />
-    </Dialog.Trigger>
-    <Dialog.Portal>
-      <Dialog.Content className="bg-primary absolute inset-0 z-50">
-        <VisuallyHidden.Root>
-          <Dialog.Title>Navigation Menu</Dialog.Title>
-          <Dialog.Description>Here is the navigation menu.</Dialog.Description>
-        </VisuallyHidden.Root>
+const BasicLinksHamburger = () => {
+  const { state } = useNavigation();
+  const [open, setOpen] = useState(false);
+  const closeDialog = () => setOpen(false);
 
-        <Dialog.Close className="absolute right-5 top-5 z-50">
-          <Cross2Icon className="h-5 w-5" />
-        </Dialog.Close>
+  useEffect(() => {
+    if (state === "idle") {
+      closeDialog();
+    }
+  }, [state]);
 
-        <div className="p-9">
-          <NavigationMenu.Root>
-            <NavigationMenu.List className="text-3xl font-bold">
-              <NavigationMenu.Item className="mb-4">
-                <ThemeSwitcher />
-              </NavigationMenu.Item>
+  return (
+    <Dialog.Root open={open} onOpenChange={setOpen}>
+      <Dialog.Trigger aria-label="Navigation menu">
+        <HamburgerMenuIcon />
+      </Dialog.Trigger>
+      <Dialog.Portal>
+        <RemoveScroll>
+          <Dialog.Content className="bg-primary fixed inset-0 z-50 h-screen w-screen overflow-auto">
+            <VisuallyHidden.Root>
+              <Dialog.Title>Navigation Menu</Dialog.Title>
+              <Dialog.Description>
+                Here is the navigation menu.
+              </Dialog.Description>
+            </VisuallyHidden.Root>
 
-              {LINKS.map((link) => (
-                <NavigationMenu.Item key={link.to}>
-                  <NavLink to={link.to}>{link.name}</NavLink>
-                </NavigationMenu.Item>
-              ))}
-            </NavigationMenu.List>
-          </NavigationMenu.Root>
-        </div>
-      </Dialog.Content>
-    </Dialog.Portal>
-  </Dialog.Root>
-);
+            <Dialog.Close className="absolute right-5 top-5 z-50">
+              <Cross2Icon className="h-5 w-5" />
+            </Dialog.Close>
+
+            <div className="p-9">
+              <NavigationMenu.Root>
+                <NavigationMenu.List className="text-3xl font-bold">
+                  <NavigationMenu.Item className="mb-4">
+                    <ThemeSwitcher />
+                  </NavigationMenu.Item>
+
+                  {LINKS.map((link) => (
+                    <NavigationMenu.Item key={link.to} onClick={() => {}}>
+                      <NavLink to={link.to}>{link.name}</NavLink>
+                    </NavigationMenu.Item>
+                  ))}
+                </NavigationMenu.List>
+              </NavigationMenu.Root>
+            </div>
+          </Dialog.Content>
+        </RemoveScroll>
+      </Dialog.Portal>
+    </Dialog.Root>
+  );
+};
 
 const UserAccount = () => (
   <Avatar.Root className="inline-flex h-10 w-10 select-none items-center justify-center overflow-hidden rounded-full align-middle">
