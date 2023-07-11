@@ -31,7 +31,7 @@ const getPreferredTheme = () =>
 const clientThemeCode = `
 ;(() => {
   const theme = window.matchMedia(${JSON.stringify(
-    prefersDarkMediaQuery
+    prefersDarkMediaQuery,
   )}).matches
     ? 'dark'
     : 'light';
@@ -122,14 +122,14 @@ export const ThemeProvider = ({
         if (newTheme) {
           persistThemeRef.current.submit(
             { theme: newTheme },
-            { action: "action/set-theme", method: "POST" }
+            { action: "action/set-theme", method: "POST" },
           );
         }
 
         return newTheme;
       });
     },
-    []
+    [],
   );
 
   useEffect(() => {

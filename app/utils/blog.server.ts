@@ -114,10 +114,10 @@ export const getBlogPostsMeta = async () => {
             }
           } catch (err) {
             console.error(
-              `Error: corrupted blog post, skipping file or directory: '${dirent.name}'`
+              `Error: corrupted blog post, skipping file or directory: '${dirent.name}'`,
             );
           }
-        })
+        }),
     )
   ).filter((postMeta): postMeta is PostMeta => !!postMeta);
 };

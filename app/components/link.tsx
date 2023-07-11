@@ -18,7 +18,7 @@ export const NavLink = forwardRef<HTMLAnchorElement | null, NavLinkProps>(
         })
       }
     />
-  )
+  ),
 );
 
 // TODO

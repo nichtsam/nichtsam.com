@@ -11,14 +11,14 @@ export const ThemeSwitcher = () => {
       className="bg-inverse flex h-[25px] w-[50px] items-center rounded"
       onCheckedChange={() => {
         setTheme((prevTheme) =>
-          prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT
+          prevTheme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT,
         );
       }}
     >
       <Switch.Thumb
         className={clsx(
           "bg-primary mr-auto block h-[15px] w-[15px] rounded-full",
-          "translate-x-[5px] transition-transform data-[state=checked]:translate-x-[30px]"
+          "translate-x-[5px] transition-transform data-[state=checked]:translate-x-[30px]",
         )}
       />
     </Switch.Root>

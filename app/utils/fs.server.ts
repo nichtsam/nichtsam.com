@@ -13,7 +13,7 @@ type File = {
 
 export const walk = async (
   path: string,
-  rootPath: string = path
+  rootPath: string = path,
 ): Promise<File[]> => {
   if (!existsSync(path)) {
     return [];
@@ -32,7 +32,7 @@ export const walk = async (
         dir.map(async (dirent) => {
           const direntPath = resolve(path, dirent.name);
           return walk(direntPath, rootPath);
-        })
+        }),
       )
     ).flat();
 
