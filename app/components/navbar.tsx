@@ -5,9 +5,7 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { NavLink } from "./link";
 import { ThemeSwitcher } from "./theme-switcher";
-import { RemoveScroll } from "react-remove-scroll";
-import { useEffect, useState } from "react";
-import { useNavigation } from "@remix-run/react";
+import { useState } from "react";
 
 const LINKS = [
   {
@@ -67,24 +65,20 @@ const BasicLinks = () => (
 );
 
 const BasicLinksHamburger = () => {
-  const { state } = useNavigation();
   const [open, setOpen] = useState(false);
-  const closeDialog = () => setOpen(false);
-
-  useEffect(() => {
-    if (state === "idle") {
-      closeDialog();
-    }
-  }, [state]);
+  const closeDialog = () => {
+    setOpen(false)
+  };
 
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger aria-label="Navigation menu">
         <HamburgerMenuIcon />
       </Dialog.Trigger>
+
       <Dialog.Portal>
-        <RemoveScroll>
-          <Dialog.Content className="bg-primary fixed inset-0 z-50 h-screen w-screen overflow-auto">
+        <Dialog.Overlay className="fixed inset-0 overflow-auto bg-black/50">
+          <Dialog.Content className="bg-primary flex h-full flex-col gap-4 overflow-hidden p-9">
             <VisuallyHidden.Root>
               <Dialog.Title>Navigation Menu</Dialog.Title>
               <Dialog.Description>
@@ -92,27 +86,25 @@ const BasicLinksHamburger = () => {
               </Dialog.Description>
             </VisuallyHidden.Root>
 
-            <Dialog.Close className="absolute right-5 top-5 z-50">
-              <Cross2Icon className="h-5 w-5" />
-            </Dialog.Close>
+            <div className="flex justify-between">
+              <ThemeSwitcher />
 
-            <div className="p-9">
-              <NavigationMenu.Root>
-                <NavigationMenu.List className="text-3xl font-bold">
-                  <NavigationMenu.Item className="mb-4">
-                    <ThemeSwitcher />
-                  </NavigationMenu.Item>
-
-                  {LINKS.map((link) => (
-                    <NavigationMenu.Item key={link.to} onClick={() => {}}>
-                      <NavLink to={link.to}>{link.name}</NavLink>
-                    </NavigationMenu.Item>
-                  ))}
-                </NavigationMenu.List>
-              </NavigationMenu.Root>
+              <Dialog.Close>
+                <Cross2Icon className="h-5 w-5" />
+              </Dialog.Close>
             </div>
+
+            <NavigationMenu.Root className="overflow-y-scroll border-t-2 border-t-neutral-500 text-3xl font-bold dark:border-t-neutral-400">
+              <NavigationMenu.List>
+                {LINKS.map((link) => (
+                  <NavigationMenu.Item key={link.to} onClick={closeDialog}>
+                    <NavLink to={link.to}>{link.name}</NavLink>
+                  </NavigationMenu.Item>
+                ))}
+              </NavigationMenu.List>
+            </NavigationMenu.Root>
           </Dialog.Content>
-        </RemoveScroll>
+        </Dialog.Overlay>
       </Dialog.Portal>
     </Dialog.Root>
   );
