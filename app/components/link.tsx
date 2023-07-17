@@ -11,8 +11,9 @@ export const NavLink = forwardRef<HTMLAnchorElement | null, NavLinkProps>(
     <RemixNavLink
       ref={ref}
       {...props}
-      className={({ isActive }) =>
+      className={({ isActive, isPending }) =>
         clsx(className, "transition-colors", {
+          "animate-pulse": isPending,
           "text-primary underline": isActive,
           "text-secondary hover:text-current hover:underline": !isActive,
         })

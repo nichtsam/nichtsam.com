@@ -12,11 +12,13 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useNavigation,
 } from "@remix-run/react";
 import stylesheet from "~/tailwind.css";
 import { NavBar } from "./components/navbar";
 import { Footer } from "./components/footer";
 import * as Tooltip from "@radix-ui/react-tooltip";
+import * as Toast from "@radix-ui/react-toast";
 import {
   FixFlashOfWrongTheme,
   ThemeProvider,
@@ -26,6 +28,9 @@ import clsx from "clsx";
 import { getThemeSession } from "./utils/theme.server";
 import { publicEnv, forceEnvValidation } from "./utils/env.server";
 import { FaviconMeta, faviconLinks } from "./utils/favicon";
+import { RocketIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from "react";
+import { useSpinDelay } from "spin-delay";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -47,7 +52,7 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   return data;
 };
 
-export function App() {
+function App() {
   const data = useLoaderData<typeof loader>();
   const [theme] = useTheme();
 
@@ -63,6 +68,8 @@ export function App() {
         <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} />
       </head>
       <body className="flex h-full min-h-screen flex-col">
+        <PageLoadingMessage />
+
         <header>
           <NavBar />
         </header>
@@ -75,13 +82,15 @@ export function App() {
           <Footer />
         </footer>
 
-        <ScrollRestoration />
+        <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] flex w-96 max-w-[100vw] flex-col p-6" />
+
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(data.env)}`,
           }}
         />
         <Scripts />
+        <ScrollRestoration />
         <LiveReload />
       </body>
     </html>
@@ -94,8 +103,46 @@ export default function AppWithProviders() {
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Tooltip.Provider>
-        <App />
+        <Toast.Provider>
+          <App />
+        </Toast.Provider>
       </Tooltip.Provider>
     </ThemeProvider>
+  );
+}
+
+// we don't want to show the loading indicator on page load
+let firstRender = true;
+
+function PageLoadingMessage() {
+  const navigation = useNavigation();
+  const [pendingPath, setPendingPath] = useState("");
+  const showLoader = useSpinDelay(Boolean(navigation.state !== "idle"), {
+    delay: 400,
+    minDuration: 1000,
+  });
+
+  useEffect(() => {
+    if (firstRender) return;
+    if (navigation.state === "idle") return;
+    setPendingPath(navigation.location.pathname);
+  }, [navigation]);
+
+  useEffect(() => {
+    firstRender = false;
+  }, []);
+
+  return (
+    <Toast.Root open={showLoader} className="rounded-md bg-white p-5">
+      <div className="grid [grid-template-areas:'icon_title'_'icon_description'] [grid-template-columns:52px_auto]">
+        <RocketIcon className="h-8 w-8 animate-wiggle self-center text-black [grid-area:icon]" />
+        <Toast.Title className="text-lg font-bold text-black [grid-area:title]">
+          Loading
+        </Toast.Title>
+        <Toast.Description className="[grid-area:description truncate text-sm font-bold text-gray-600">
+          Path: {pendingPath}
+        </Toast.Description>
+      </div>
+    </Toast.Root>
   );
 }
