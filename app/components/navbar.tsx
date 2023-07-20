@@ -25,7 +25,7 @@ const LINKS = [
 export const NavBar = () => {
   return (
     <div className="container mx-auto flex items-center p-9 md:gap-16">
-      <span className="text-highlight text-3xl font-bold">nichtsam</span>
+      <span className="text-primary text-3xl font-bold">nichtsam</span>
 
       <NavigationMenu.Root className="flex-1">
         <NavigationMenu.List className="flex items-center gap-8 text-lg font-bold">
@@ -67,7 +67,7 @@ const BasicLinks = () => (
 const BasicLinksHamburger = () => {
   const [open, setOpen] = useState(false);
   const closeDialog = () => {
-    setOpen(false)
+    setOpen(false);
   };
 
   return (
@@ -77,7 +77,7 @@ const BasicLinksHamburger = () => {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 overflow-auto bg-black/50">
+        <Dialog.Overlay className="fixed inset-0 overflow-auto bg-gray-9">
           <Dialog.Content className="bg-primary flex h-full flex-col gap-4 overflow-hidden p-9">
             <VisuallyHidden.Root>
               <Dialog.Title>Navigation Menu</Dialog.Title>
@@ -94,7 +94,7 @@ const BasicLinksHamburger = () => {
               </Dialog.Close>
             </div>
 
-            <NavigationMenu.Root className="overflow-y-scroll border-t-2 border-t-neutral-500 text-3xl font-bold dark:border-t-neutral-400">
+            <NavigationMenu.Root className="border-t-gray-6 overflow-y-scroll border-t-2 text-3xl font-bold">
               <NavigationMenu.List>
                 {LINKS.map((link) => (
                   <NavigationMenu.Item key={link.to} onClick={closeDialog}>

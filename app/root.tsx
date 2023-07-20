@@ -1,4 +1,6 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
+import tailwindStylesheet from "~/styles/tailwind.css";
+import appStylesheet from "~/styles/app.css";
 import type {
   LinksFunction,
   LoaderArgs,
@@ -14,7 +16,6 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import stylesheet from "~/tailwind.css";
 import { NavBar } from "./components/navbar";
 import { Footer } from "./components/footer";
 import * as Tooltip from "@radix-ui/react-tooltip";
@@ -34,7 +35,8 @@ import { useSpinDelay } from "spin-delay";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-  { rel: "stylesheet", href: stylesheet },
+  { rel: "stylesheet", href: appStylesheet },
+  { rel: "stylesheet", href: tailwindStylesheet },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,
 ];
@@ -133,13 +135,13 @@ function PageLoadingMessage() {
   }, []);
 
   return (
-    <Toast.Root open={showLoader} className="rounded-md bg-white p-5">
+    <Toast.Root open={showLoader} className="rounded-md bg-gray-3 p-5 border-gray-7 border-2">
       <div className="grid [grid-template-areas:'icon_title'_'icon_description'] [grid-template-columns:52px_auto]">
-        <RocketIcon className="h-8 w-8 animate-wiggle self-center text-black [grid-area:icon]" />
-        <Toast.Title className="text-lg font-bold text-black [grid-area:title]">
+        <RocketIcon className="h-8 w-8 animate-wiggle self-center text-primary [grid-area:icon]" />
+        <Toast.Title className="text-lg font-bold text-primary [grid-area:title]">
           Loading
         </Toast.Title>
-        <Toast.Description className="[grid-area:description truncate text-sm font-bold text-gray-600">
+        <Toast.Description className="[grid-area:description] text-secondary truncate text-sm font-bold">
           Path: {pendingPath}
         </Toast.Description>
       </div>
