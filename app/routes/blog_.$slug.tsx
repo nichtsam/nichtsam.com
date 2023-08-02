@@ -1,8 +1,8 @@
-import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
+import { json, type LoaderArgs, type V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getBlogPost } from "~/utils/blog.server.ts";
 import { useMdxComponent } from "~/utils/mdx.tsx";
-import { bundleMdx } from "~/utils/mdx.server.ts";
+import { compileMdxCached } from "~/utils/compile-mdx.server.ts";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -21,10 +21,15 @@ export const loader = async ({ params }: LoaderArgs) => {
 
   const slug = params.slug;
   const { source, files } = await getBlogPost(slug);
-  const bundledBlog = await bundleMdx({
+  const bundledBlog = await compileMdxCached({
+    slug,
     source,
     files,
   });
+
+  if (!bundledBlog) {
+    throw json({ status: 404 });
+  }
 
   return { bundledBlog };
 };
