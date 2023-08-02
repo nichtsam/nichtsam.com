@@ -94,7 +94,7 @@ const BasicLinksHamburger = () => {
               </Dialog.Close>
             </div>
 
-            <NavigationMenu.Root className="border-t-gray-6 overflow-y-scroll border-t-2 text-3xl font-bold">
+            <NavigationMenu.Root className="overflow-y-scroll border-t-2 border-t-gray-6 text-3xl font-bold">
               <NavigationMenu.List>
                 {LINKS.map((link) => (
                   <NavigationMenu.Item key={link.to} onClick={closeDialog}>

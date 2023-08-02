@@ -135,13 +135,16 @@ function PageLoadingMessage() {
   }, []);
 
   return (
-    <Toast.Root open={showLoader} className="rounded-md bg-gray-3 p-5 border-gray-7 border-2">
+    <Toast.Root
+      open={showLoader}
+      className="rounded-md border-2 border-gray-7 bg-gray-3 p-5"
+    >
       <div className="grid [grid-template-areas:'icon_title'_'icon_description'] [grid-template-columns:52px_auto]">
-        <RocketIcon className="h-8 w-8 animate-wiggle self-center text-primary [grid-area:icon]" />
-        <Toast.Title className="text-lg font-bold text-primary [grid-area:title]">
+        <RocketIcon className="text-primary h-8 w-8 animate-wiggle self-center [grid-area:icon]" />
+        <Toast.Title className="text-primary text-lg font-bold [grid-area:title]">
           Loading
         </Toast.Title>
-        <Toast.Description className="[grid-area:description] text-secondary truncate text-sm font-bold">
+        <Toast.Description className="text-secondary truncate text-sm font-bold [grid-area:description]">
           Path: {pendingPath}
         </Toast.Description>
       </div>
