@@ -35,7 +35,6 @@ app.use(express.static("public", { maxAge: "1h" }));
 
 app.use(morgan("tiny"));
 
-
 app.all(
   "*",
   process.env.NODE_ENV === "development"
@@ -56,7 +55,7 @@ app.listen(port, async () => {
 });
 
 async function createDevRequestHandler() {
-  const chokidar = await import("chokidar")
+  const chokidar = await import("chokidar");
   const watcher = chokidar.watch(BUILD_PATH, { ignoreInitial: true });
 
   watcher.on("all", async () => {
