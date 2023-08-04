@@ -46,8 +46,8 @@ export const bundleMdx = async ({ source, files }: BundleMdx) => {
         ".jpeg": "file",
         ".gif": "file",
       };
-      options.outdir = resolve(publicDir, "./build/generated/assets");
-      options.publicPath = "/build/generated/assets";
+      options.outdir = resolve(publicDir, "./generated/assets");
+      options.publicPath = "/generated/assets";
       options.write = true;
 
       return options;
