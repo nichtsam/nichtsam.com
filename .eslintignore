@@ -2,6 +2,7 @@ node_modules
 
 build
 public/build
+public/generated
 
 # Intentional ignore
 *.ignored/

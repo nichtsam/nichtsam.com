@@ -5,6 +5,8 @@ node_modules
 /public/build
 .env
 
+/public/generated
+
 .git
 .gitignore
 
