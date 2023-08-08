@@ -1,8 +1,8 @@
 import type { LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getBlogPost } from "~/utils/blog.server";
-import { useMdxComponent } from "~/utils/mdx";
-import { bundleMdx } from "~/utils/mdx.server";
+import { getBlogPost } from "~/utils/blog.server.ts";
+import { useMdxComponent } from "~/utils/mdx.tsx";
+import { bundleMdx } from "~/utils/mdx.server.ts";
 
 export const meta: V2_MetaFunction = () => {
   return [

@@ -1,8 +1,8 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import type { V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { NavLink } from "~/components/link";
-import { getBlogPostsMeta } from "~/utils/blog.server";
+import { NavLink } from "~/components/link.tsx";
+import { getBlogPostsMeta } from "~/utils/blog.server.ts";
 
 export const meta: V2_MetaFunction = () => {
   return [

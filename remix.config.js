@@ -1,32 +1,20 @@
 /** @type {import('@remix-run/dev').AppConfig} */
-module.exports = {
+export default {
   ignoredRouteFiles: ["**/.*"],
   // appDirectory: "app",
   // assetsBuildDirectory: "public/build",
   // serverBuildPath: "build/index.js",
   // publicPath: "/build/",
-  serverModuleFormat: "cjs",
+  serverModuleFormat: "esm",
   future: {
+    v2_dev: true,
     v2_errorBoundary: true,
+    v2_headers: true,
     v2_meta: true,
     v2_normalizeFormMethod: true,
     v2_routeConvention: true,
-    v2_headers: true,
-    v2_dev: true,
   },
   tailwind: true,
   watchPaths: ["./tailwind.config.ts", "./content"],
-  serverDependenciesToBundle: [
-    /^rehype.*/,
-    /^remark.*/,
-    /^unified.*/,
-    "unist-util-visit",
-    "unist-util-visit-parents",
-    "unist-util-is",
-    "github-slugger",
-    "hast-util-has-property",
-    "hast-util-heading-rank",
-    "hast-util-to-string",
-    "hast-util-is-element",
-  ],
+  serverDependenciesToBundle: [],
 };

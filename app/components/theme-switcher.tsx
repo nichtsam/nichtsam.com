@@ -1,6 +1,6 @@
 import * as Switch from "@radix-ui/react-switch";
 import clsx from "clsx";
-import { Theme, useTheme } from "~/utils/theme-provider";
+import { Theme, useTheme } from "~/utils/theme-provider.tsx";
 
 export const ThemeSwitcher = () => {
   const [, setTheme] = useTheme();

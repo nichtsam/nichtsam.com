@@ -2,8 +2,12 @@ import { bundleMDX as innerBundleMDX } from "mdx-bundler";
 import remarkMdxImages from "remark-mdx-images";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { resolve } from "./fs.server";
+import { dirname, resolve } from "./fs.server.ts";
 import calculateReadingTime from "reading-time";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const root = resolve(__dirname, "../");
 const publicDir = resolve(root, "./public");

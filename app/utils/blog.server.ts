@@ -1,7 +1,18 @@
 import type { ReadTimeResults } from "reading-time";
 import calculateReadingTime from "reading-time";
-import { existsSync, readFile, readdir, resolve, walk } from "./fs.server";
-import parseFrontMatter from "front-matter";
+import {
+  existsSync,
+  readFile,
+  readdir,
+  resolve,
+  walk,
+  dirname,
+} from "./fs.server.ts";
+import matter from "gray-matter";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const rootPath = resolve(__dirname, "../");
 const contentDirPath = resolve(rootPath, "./content");
@@ -75,8 +86,8 @@ export const getBlogPostsMeta = async () => {
   const getMeta = async (path: string) => {
     const file = await readFile(path, "utf-8");
 
-    const frontMatter = parseFrontMatter(file);
-    const { title } = frontMatter.attributes as { title: string };
+    const frontMatter = matter(file);
+    const { title } = frontMatter.data;
     const readingTime = calculateReadingTime(file);
 
     return {

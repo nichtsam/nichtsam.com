@@ -4,7 +4,7 @@ import { resolve, relative } from "path";
 
 export { readFile, readdir } from "fs/promises";
 export { existsSync } from "fs";
-export { resolve } from "path";
+export { resolve, dirname } from "path";
 
 type File = {
   path: string;
