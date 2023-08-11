@@ -1,4 +1,4 @@
-import type { V2_MetaFunction } from "@remix-run/node";
+import type { HeadersFunction, V2_MetaFunction } from "@remix-run/node";
 
 export const meta: V2_MetaFunction = () => {
   return [
@@ -9,6 +9,11 @@ export const meta: V2_MetaFunction = () => {
     },
   ];
 };
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "private, max-age=3600",
+  Vary: "Cookie",
+});
 
 export default function About() {
   return (
