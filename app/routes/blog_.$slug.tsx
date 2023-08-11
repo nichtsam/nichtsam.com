@@ -1,4 +1,9 @@
-import { json, type LoaderArgs, type V2_MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LoaderArgs,
+  V2_MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getBlogPost } from "~/utils/blog.server.ts";
 import { useMdxComponent } from "~/utils/mdx.tsx";
@@ -28,11 +33,24 @@ export const loader = async ({ params }: LoaderArgs) => {
   });
 
   if (!bundledBlog) {
-    throw json({ status: 404 });
+    throw new Response(null, { status: 404 });
   }
 
-  return { bundledBlog };
+  return json(
+    { bundledBlog },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        Vary: "Cookie",
+      },
+    },
+  );
 };
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "private, max-age=3600",
+  Vary: "Cookie",
+});
 
 export default function BlogPost() {
   const { bundledBlog } = useLoaderData<typeof loader>();

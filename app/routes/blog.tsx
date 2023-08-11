@@ -1,5 +1,6 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import type { V2_MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import type { HeadersFunction, V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { NavLink } from "~/components/link.tsx";
 import { getBlogPostsMeta } from "~/utils/blog.server.ts";
@@ -17,8 +18,21 @@ export const meta: V2_MetaFunction = () => {
 export const loader = async () => {
   const blogPosts = await getBlogPostsMeta();
 
-  return { blogPosts };
+  return json(
+    { blogPosts },
+    {
+      headers: {
+        "Cache-Control": "public, max-age=3600",
+        Vary: "Cookie",
+      },
+    },
+  );
 };
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "private, max-age=3600",
+  Vary: "Cookie",
+});
 
 export default function Blog() {
   const { blogPosts } = useLoaderData<typeof loader>();
