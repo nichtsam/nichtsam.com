@@ -1,7 +1,7 @@
 import type { ActionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { isTheme } from "~/utils/theme-provider.tsx";
-import { getThemeSession } from "~/utils/theme.server.ts";
+import { isTheme } from "@/utils/theme-provider.tsx";
+import { getThemeSession } from "@/utils/theme.server.ts";
 
 export const action = async ({ request }: ActionArgs) => {
   const themeSession = await getThemeSession(request);

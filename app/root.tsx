@@ -1,6 +1,6 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import tailwindStylesheet from "~/styles/tailwind.css";
-import appStylesheet from "~/styles/app.css";
+import tailwindStylesheet from "@/styles/tailwind.css";
+import appStylesheet from "@/styles/app.css";
 import type {
   LinksFunction,
   LoaderArgs,
@@ -16,19 +16,19 @@ import {
   useLoaderData,
   useNavigation,
 } from "@remix-run/react";
-import { NavBar } from "~/components/navbar.tsx";
-import { Footer } from "~/components/footer.tsx";
+import { NavBar } from "@/components/navbar.tsx";
+import { Footer } from "@/components/footer.tsx";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import * as Toast from "@radix-ui/react-toast";
 import {
   FixFlashOfWrongTheme,
   ThemeProvider,
   useTheme,
-} from "~/utils/theme-provider.tsx";
+} from "@/utils/theme-provider.tsx";
 import clsx from "clsx";
-import { getThemeSession } from "~/utils/theme.server.ts";
-import { publicEnv, forceEnvValidation } from "~/utils/env.server.ts";
-import { FaviconMeta, faviconLinks } from "~/utils/favicon.tsx";
+import { getThemeSession } from "@/utils/theme.server.ts";
+import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
+import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
 import { RocketIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
 import { useSpinDelay } from "spin-delay";

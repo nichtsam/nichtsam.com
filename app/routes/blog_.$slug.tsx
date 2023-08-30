@@ -5,9 +5,9 @@ import type {
   V2_MetaFunction,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getBlogPost } from "~/utils/blog.server.ts";
-import { useMdxComponent } from "~/utils/mdx.tsx";
-import { compileMdxCached } from "~/utils/compile-mdx.server.ts";
+import { getBlogPost } from "@/utils/blog.server.ts";
+import { useMdxComponent } from "@/utils/mdx.tsx";
+import { compileMdxCached } from "@/utils/compile-mdx.server.ts";
 
 export const meta: V2_MetaFunction = () => {
   return [

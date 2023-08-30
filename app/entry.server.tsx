@@ -11,7 +11,7 @@ import { Response } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import { forceEnvValidation } from "~/utils/env.server.ts";
+import { forceEnvValidation } from "@/utils/env.server.ts";
 
 forceEnvValidation();
 

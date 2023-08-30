@@ -3,7 +3,7 @@ import * as Avatar from "@radix-ui/react-avatar";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
-import { NavLink } from "~/components/link.tsx";
+import { NavLink } from "@/components/link.tsx";
 import { ThemeSwitcher } from "./theme-switcher.tsx";
 import { useState } from "react";
 

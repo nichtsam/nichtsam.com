@@ -1,6 +1,6 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
-import { NavLink } from "~/components/link.tsx";
+import { NavLink } from "@/components/link.tsx";
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 const LINKS = [
