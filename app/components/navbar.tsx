@@ -1,11 +1,11 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
-import * as Avatar from "@radix-ui/react-avatar";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { Cross2Icon, HamburgerMenuIcon } from "@radix-ui/react-icons";
 import { NavLink } from "@/components/link.tsx";
 import { ThemeSwitcher } from "./theme-switcher.tsx";
 import { useState } from "react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar.tsx";
 
 const LINKS = [
   {
@@ -24,8 +24,8 @@ const LINKS = [
 
 export const NavBar = () => {
   return (
-    <div className="container mx-auto flex items-center p-9 md:gap-16">
-      <span className="text-primary text-3xl font-bold">nichtsam</span>
+    <div className="container flex items-center p-9  md:gap-16">
+      <span className="text-3xl font-bold">nichtsam</span>
 
       <NavigationMenu.Root className="flex-1">
         <NavigationMenu.List className="flex items-center gap-8 text-lg font-bold">
@@ -77,8 +77,8 @@ const BasicLinksHamburger = () => {
       </Dialog.Trigger>
 
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 overflow-auto bg-gray-9">
-          <Dialog.Content className="bg-primary flex h-full flex-col gap-4 overflow-hidden p-9">
+        <Dialog.Overlay className="bg-gray-9 fixed inset-0 overflow-auto">
+          <Dialog.Content className="flex h-full flex-col gap-4 overflow-hidden p-9">
             <VisuallyHidden.Root>
               <Dialog.Title>Navigation Menu</Dialog.Title>
               <Dialog.Description>
@@ -94,7 +94,7 @@ const BasicLinksHamburger = () => {
               </Dialog.Close>
             </div>
 
-            <NavigationMenu.Root className="overflow-y-scroll border-t-2 border-t-gray-6 text-3xl font-bold">
+            <NavigationMenu.Root className="border-t-gray-6 overflow-y-scroll border-t-2 text-3xl font-bold">
               <NavigationMenu.List>
                 {LINKS.map((link) => (
                   <NavigationMenu.Item key={link.to} onClick={closeDialog}>
@@ -111,9 +111,8 @@ const BasicLinksHamburger = () => {
 };
 
 const UserAccount = () => (
-  <Avatar.Root className="inline-flex h-10 w-10 select-none items-center justify-center overflow-hidden rounded-full align-middle">
-    <Avatar.Fallback className="bg-inverse text-inverse flex h-full w-full items-center justify-center text-sm font-bold leading-none">
-      SJ
-    </Avatar.Fallback>
-  </Avatar.Root>
+  <Avatar>
+      <AvatarImage src="https://avatars.githubusercontent.com/u/44519206?v=4" alt="@nichtsam" />
+      <AvatarFallback>SJ</AvatarFallback>
+    </Avatar>
 );

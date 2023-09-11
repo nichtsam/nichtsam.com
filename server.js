@@ -1,5 +1,5 @@
 import * as fs from "node:fs";
-
+import os from "os";
 import { createRequestHandler } from "@remix-run/express";
 import { broadcastDevReady, installGlobals } from "@remix-run/node";
 import compression from "compression";
@@ -47,7 +47,19 @@ app.all(
 
 const port = process.env.PORT || 3000;
 app.listen(port, async () => {
-  console.log(`Express server listening on port ${port}`);
+  let address =
+    process.env.HOST ||
+    Object.values(os.networkInterfaces())
+      .flat()
+      .find((ip) => String(ip?.family).includes("4") && !ip?.internal)?.address;
+
+  if (!address) {
+    console.log(`Remix App Server started at http://localhost:${port}`);
+  } else {
+    console.log(
+      `Remix App Server started at http://localhost:${port} (http://${address}:${port})`,
+    );
+  }
 
   if (process.env.NODE_ENV === "development") {
     broadcastDevReady(build);

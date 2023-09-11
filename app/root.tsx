@@ -1,6 +1,6 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import tailwindStylesheet from "@/styles/tailwind.css";
 import appStylesheet from "@/styles/app.css";
+import radixColorsStylesheet from "@/styles/radix-colors.css";
 import type {
   LinksFunction,
   LoaderArgs,
@@ -35,8 +35,8 @@ import { useSpinDelay } from "spin-delay";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: radixColorsStylesheet },
   { rel: "stylesheet", href: appStylesheet },
-  { rel: "stylesheet", href: tailwindStylesheet },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,
 ];
@@ -137,14 +137,14 @@ function PageLoadingMessage() {
   return (
     <Toast.Root
       open={showLoader}
-      className="rounded-md border-2 border-gray-7 bg-gray-3 p-5"
+      className="border-gray-7 bg-gray-3 rounded-md border-2 p-5"
     >
       <div className="grid [grid-template-areas:'icon_title'_'icon_description'] [grid-template-columns:52px_auto]">
-        <RocketIcon className="text-primary h-8 w-8 animate-wiggle self-center [grid-area:icon]" />
-        <Toast.Title className="text-primary text-lg font-bold [grid-area:title]">
+        <RocketIcon className="h-8 w-8 animate-wiggle self-center [grid-area:icon]" />
+        <Toast.Title className="text-lg font-bold [grid-area:title]">
           Loading
         </Toast.Title>
-        <Toast.Description className="text-secondary truncate text-sm font-bold [grid-area:description]">
+        <Toast.Description className="truncate text-sm font-bold [grid-area:description]">
           Path: {pendingPath}
         </Toast.Description>
       </div>
