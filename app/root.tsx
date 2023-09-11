@@ -1,6 +1,6 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import tailwindStylesheet from "@/styles/tailwind.css";
 import appStylesheet from "@/styles/app.css";
+import radixColorsStylesheet from "@/styles/radix-colors.css";
 import type {
   LinksFunction,
   LoaderArgs,
@@ -14,12 +14,10 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
-  useNavigation,
 } from "@remix-run/react";
-import { NavBar } from "@/components/navbar.tsx";
+import { NavBar } from "@/components/navbar/index.tsx";
 import { Footer } from "@/components/footer.tsx";
 import * as Tooltip from "@radix-ui/react-tooltip";
-import * as Toast from "@radix-ui/react-toast";
 import {
   FixFlashOfWrongTheme,
   ThemeProvider,
@@ -29,14 +27,12 @@ import clsx from "clsx";
 import { getThemeSession } from "@/utils/theme.server.ts";
 import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
 import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
-import { RocketIcon } from "@radix-ui/react-icons";
-import { useEffect, useState } from "react";
-import { useSpinDelay } from "spin-delay";
+import { ToasterWithPageLoading } from "./components/ui/toaster.tsx";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: radixColorsStylesheet },
   { rel: "stylesheet", href: appStylesheet },
-  { rel: "stylesheet", href: tailwindStylesheet },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,
 ];
@@ -70,8 +66,6 @@ function App() {
         <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} />
       </head>
       <body className="flex h-full min-h-screen flex-col">
-        <PageLoadingMessage />
-
         <header>
           <NavBar />
         </header>
@@ -84,7 +78,7 @@ function App() {
           <Footer />
         </footer>
 
-        <Toast.Viewport className="fixed bottom-0 right-0 z-[2147483647] flex w-96 max-w-[100vw] flex-col p-6" />
+        <ToasterWithPageLoading />
 
         <script
           dangerouslySetInnerHTML={{
@@ -105,49 +99,8 @@ export default function AppWithProviders() {
   return (
     <ThemeProvider specifiedTheme={data.theme}>
       <Tooltip.Provider>
-        <Toast.Provider>
-          <App />
-        </Toast.Provider>
+        <App />
       </Tooltip.Provider>
     </ThemeProvider>
-  );
-}
-
-// we don't want to show the loading indicator on page load
-let firstRender = true;
-
-function PageLoadingMessage() {
-  const navigation = useNavigation();
-  const [pendingPath, setPendingPath] = useState("");
-  const showLoader = useSpinDelay(Boolean(navigation.state !== "idle"), {
-    delay: 400,
-    minDuration: 1000,
-  });
-
-  useEffect(() => {
-    if (firstRender) return;
-    if (navigation.state === "idle") return;
-    setPendingPath(navigation.location.pathname);
-  }, [navigation]);
-
-  useEffect(() => {
-    firstRender = false;
-  }, []);
-
-  return (
-    <Toast.Root
-      open={showLoader}
-      className="rounded-md border-2 border-gray-7 bg-gray-3 p-5"
-    >
-      <div className="grid [grid-template-areas:'icon_title'_'icon_description'] [grid-template-columns:52px_auto]">
-        <RocketIcon className="text-primary h-8 w-8 animate-wiggle self-center [grid-area:icon]" />
-        <Toast.Title className="text-primary text-lg font-bold [grid-area:title]">
-          Loading
-        </Toast.Title>
-        <Toast.Description className="text-secondary truncate text-sm font-bold [grid-area:description]">
-          Path: {pendingPath}
-        </Toast.Description>
-      </div>
-    </Toast.Root>
   );
 }

@@ -19,7 +19,7 @@ export default function About() {
   return (
     <div className="h-full w-full">
       <section className="container mx-auto p-9">
-        <article className="prose dark:prose-invert lg:prose-xl">
+        <article className="prose prose-neutral dark:prose-invert lg:prose-xl">
           <h1>About me</h1>
           <p>
             Hello there!

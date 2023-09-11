@@ -1,2 +1,46 @@
-@import "@radix-ui/colors/gray.css";
-@import "@radix-ui/colors/gray-dark.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html.light {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  :root {
+    --app-background: var(--mauve-1);
+    --app-foreground: var(--mauve-12);
+
+    --ui-background: var(--mauve-3);
+    --ui-foreground: var(--mauve-12);
+
+    --ui-accent-background: var(--mauve-4);
+    --ui-accent-foreground: var(--mauve-11);
+
+    --btn-primary-background: var(--violet-9);
+    --btn-primary-foreground: var(--white);
+    --btn-secondary-background: var(--mauve-9);
+    --btn-secondary-foreground: var(--white);
+
+    --warning-background: var(--red-9);
+    --warning-foreground: var(--white);
+
+    --surrounding-color: var(--mauve-7);
+
+    --radius: 0.5rem;
+  }
+}

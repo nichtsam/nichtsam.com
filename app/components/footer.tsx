@@ -30,11 +30,11 @@ export const Footer = () => {
                 </Tooltip.Trigger>
                 <Tooltip.Content>
                   <Tooltip.Content
-                    className="bg-inverse text-inverse rounded px-2 py-1 text-sm"
+                    className="rounded px-2 py-1 text-sm"
                     sideOffset={5}
                   >
                     {link.name}
-                    <Tooltip.Arrow className="fill-bg-inverse" />
+                    <Tooltip.Arrow />
                   </Tooltip.Content>
                 </Tooltip.Content>
               </Tooltip.Root>
