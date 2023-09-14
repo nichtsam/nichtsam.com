@@ -1,4 +1,5 @@
 import { useFetcher } from "@remix-run/react";
+import DOMPurify from "isomorphic-dompurify";
 import {
   createContext,
   useCallback,
@@ -58,7 +59,13 @@ const clientThemeCode = `
 })();
 `;
 
-export const FixFlashOfWrongTheme = ({ ssrTheme }: { ssrTheme: boolean }) => {
+export const FixFlashOfWrongTheme = ({
+  ssrTheme,
+  nonce,
+}: {
+  ssrTheme: boolean;
+  nonce?: string;
+}) => {
   const [theme] = useTheme();
 
   return (
@@ -68,7 +75,14 @@ export const FixFlashOfWrongTheme = ({ ssrTheme }: { ssrTheme: boolean }) => {
         content={theme === Theme.LIGHT ? "light dark" : "dark light"}
       />
       {ssrTheme ? null : (
-        <script dangerouslySetInnerHTML={{ __html: clientThemeCode }} />
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(clientThemeCode, {
+              RETURN_TRUSTED_TYPE: true,
+            }),
+          }}
+        />
       )}
     </>
   );

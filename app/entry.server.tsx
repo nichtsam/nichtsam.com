@@ -6,23 +6,34 @@
 
 import { PassThrough } from "node:stream";
 
-import type { EntryContext } from "@remix-run/node";
+import type {
+  EntryContext,
+  HandleDocumentRequestFunction,
+} from "@remix-run/node";
 import { Response } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
 import { forceEnvValidation } from "@/utils/env.server.ts";
+import { NonceProvider } from "./utils/nonce-provider.tsx";
 
 forceEnvValidation();
 
 const ABORT_DELAY = 5_000;
 
-export default function handleRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-) {
+type DocRequestArgs = Parameters<HandleDocumentRequestFunction>;
+
+export default function handleRequest(...arg: DocRequestArgs) {
+  const [
+    request,
+    responseStatusCode,
+    responseHeaders,
+    remixContext,
+    loadContext,
+  ] = arg;
+
+  const nonce = loadContext.cspNonce ? String(loadContext.cspNonce) : undefined;
+
   return isbot(request.headers.get("user-agent"))
     ? handleBotRequest(
         request,
@@ -35,6 +46,7 @@ export default function handleRequest(
         responseStatusCode,
         responseHeaders,
         remixContext,
+        nonce,
       );
 }
 
@@ -85,14 +97,17 @@ function handleBrowserRequest(
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
+  nonce?: string,
 ) {
   return new Promise((resolve, reject) => {
     const { pipe, abort } = renderToPipeableStream(
-      <RemixServer
-        context={remixContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
+      <NonceProvider value={nonce}>
+        <RemixServer
+          context={remixContext}
+          url={request.url}
+          abortDelay={ABORT_DELAY}
+        />
+      </NonceProvider>,
       {
         onShellReady() {
           const body = new PassThrough();

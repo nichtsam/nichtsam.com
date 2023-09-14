@@ -28,6 +28,8 @@ import { getThemeSession } from "@/utils/theme.server.ts";
 import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
 import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
 import { ToasterWithPageLoading } from "./components/ui/toaster.tsx";
+import { useNonce } from "./utils/nonce-provider.tsx";
+import DOMPurify from "isomorphic-dompurify";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -50,9 +52,10 @@ export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
   return data;
 };
 
-function App() {
+function Document({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
   const [theme] = useTheme();
+  const nonce = useNonce();
 
   return (
     <html lang="en" className={clsx(theme, "relative")}>
@@ -63,9 +66,36 @@ function App() {
 
         <Meta />
         <Links />
-        <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} />
+        <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} nonce={nonce} />
       </head>
-      <body className="flex h-full min-h-screen flex-col">
+      <body suppressHydrationWarning>
+        {children}
+
+        <ToasterWithPageLoading />
+
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify.sanitize(
+              `window.ENV = ${JSON.stringify(data.env)}`,
+              {
+                RETURN_TRUSTED_TYPE: true,
+              },
+            ),
+          }}
+        />
+        <Scripts nonce={nonce} />
+        <ScrollRestoration nonce={nonce} />
+        <LiveReload nonce={nonce} />
+      </body>
+    </html>
+  );
+}
+
+function App() {
+  return (
+    <Document>
+      <div className="flex h-full min-h-screen flex-col">
         <header>
           <NavBar />
         </header>
@@ -77,19 +107,8 @@ function App() {
         <footer>
           <Footer />
         </footer>
-
-        <ToasterWithPageLoading />
-
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(data.env)}`,
-          }}
-        />
-        <Scripts />
-        <ScrollRestoration />
-        <LiveReload />
-      </body>
-    </html>
+      </div>
+    </Document>
   );
 }
 
