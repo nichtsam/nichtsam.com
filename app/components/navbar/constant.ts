@@ -1,4 +1,4 @@
-export const LINKS = [
+export const CORE_CONTENT_LINKS = [
   {
     name: "Home",
     to: "/",

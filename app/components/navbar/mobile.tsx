@@ -5,7 +5,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useState } from "react";
 import { Button } from "../ui/button.tsx";
 import { SheetTrigger, SheetContent, Sheet } from "../ui/sheet.tsx";
-import { LINKS } from "./constant.ts";
+import { CORE_CONTENT_LINKS } from "./constant.ts";
 import { NavLink } from "../link.tsx";
 import { ScrollArea } from "../ui/scroll-area.tsx";
 
@@ -36,9 +36,12 @@ export const MobileNavigation = () => {
         </VisuallyHidden>
 
         <ScrollArea className="h-full">
-          <NavigationMenu.Root className="text-3xl font-bold">
+          <NavigationMenu.Root
+            className="text-sm font-bold"
+            orientation="vertical"
+          >
             <NavigationMenu.List>
-              {LINKS.map((link) => (
+              {CORE_CONTENT_LINKS.map((link) => (
                 <NavigationMenu.Item key={link.to}>
                   <NavLink onClick={closeDialog} to={link.to}>
                     {link.name}

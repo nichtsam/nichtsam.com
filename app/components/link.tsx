@@ -1,30 +1,34 @@
 import { NavLink as RemixNavLink } from "@remix-run/react";
 import type { NavLinkProps as RemixNavLinkProps } from "@remix-run/react";
 import clsx from "clsx";
+import type { AnchorHTMLAttributes } from "react";
 import { forwardRef } from "react";
 
 export interface NavLinkProps extends RemixNavLinkProps {}
 
-// eslint-disable-next-line react/display-name
 export const NavLink = forwardRef<HTMLAnchorElement | null, NavLinkProps>(
   ({ className, ...props }, ref) => (
     <RemixNavLink
       ref={ref}
       {...props}
       className={({ isActive, isPending }) =>
-        clsx(className, "transition-colors", {
+        clsx(className, {
           "animate-pulse": isPending,
-          "text-foreground underline": isActive,
-          "text-foreground-secondary hover:text-current hover:underline":
-            !isActive,
+          underline: isActive,
         })
       }
     />
   ),
 );
+NavLink.displayName = "NavLink";
 
-// TODO
-export const ExternalLink = () => {};
+export const ExternalLink = forwardRef<
+  HTMLAnchorElement | null,
+  AnchorHTMLAttributes<HTMLAnchorElement>
+>(({ target = "_blank", children, ...props }, ref) => (
+  <a target={target} ref={ref} children={children} {...props} />
+));
+ExternalLink.displayName = "ExternalLink";
 
 // TODO
 export const DownloadLink = () => {};
