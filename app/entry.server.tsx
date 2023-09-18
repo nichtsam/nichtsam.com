@@ -6,11 +6,8 @@
 
 import { PassThrough } from "node:stream";
 
-import type {
-  EntryContext,
-  HandleDocumentRequestFunction,
-} from "@remix-run/node";
-import { Response } from "@remix-run/node";
+import type { AppLoadContext, EntryContext } from "@remix-run/node";
+import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import isbot from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
@@ -21,17 +18,13 @@ forceEnvValidation();
 
 const ABORT_DELAY = 5_000;
 
-type DocRequestArgs = Parameters<HandleDocumentRequestFunction>;
-
-export default function handleRequest(...arg: DocRequestArgs) {
-  const [
-    request,
-    responseStatusCode,
-    responseHeaders,
-    remixContext,
-    loadContext,
-  ] = arg;
-
+export default function handleRequest(
+  request: Request,
+  responseStatusCode: number,
+  responseHeaders: Headers,
+  remixContext: EntryContext,
+  loadContext: AppLoadContext,
+) {
   const nonce = loadContext.cspNonce ? String(loadContext.cspNonce) : undefined;
 
   return isbot(request.headers.get("user-agent"))
@@ -56,6 +49,7 @@ function handleBotRequest(
   responseHeaders: Headers,
   remixContext: EntryContext,
 ) {
+  let shellRendered = false;
   return new Promise((resolve, reject) => {
     const { pipe, abort } = renderToPipeableStream(
       <RemixServer
@@ -65,12 +59,13 @@ function handleBotRequest(
       />,
       {
         onAllReady() {
+          shellRendered = true;
           const body = new PassThrough();
-
+          const stream = createReadableStreamFromReadable(body);
           responseHeaders.set("Content-Type", "text/html");
 
           resolve(
-            new Response(body, {
+            new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode,
             }),
@@ -83,7 +78,12 @@ function handleBotRequest(
         },
         onError(error: unknown) {
           responseStatusCode = 500;
-          console.error(error);
+          // Log streaming rendering errors from inside the shell.  Don't log
+          // errors encountered during initial shell rendering since they'll
+          // reject and get logged in handleDocumentRequest.
+          if (shellRendered) {
+            console.error(error);
+          }
         },
       },
     );
@@ -99,6 +99,7 @@ function handleBrowserRequest(
   remixContext: EntryContext,
   nonce?: string,
 ) {
+  let shellRendered = false;
   return new Promise((resolve, reject) => {
     const { pipe, abort } = renderToPipeableStream(
       <NonceProvider value={nonce}>
@@ -110,12 +111,14 @@ function handleBrowserRequest(
       </NonceProvider>,
       {
         onShellReady() {
+          shellRendered = true;
           const body = new PassThrough();
+          const stream = createReadableStreamFromReadable(body);
 
           responseHeaders.set("Content-Type", "text/html");
 
           resolve(
-            new Response(body, {
+            new Response(stream, {
               headers: responseHeaders,
               status: responseStatusCode,
             }),
@@ -127,8 +130,13 @@ function handleBrowserRequest(
           reject(error);
         },
         onError(error: unknown) {
-          console.error(error);
           responseStatusCode = 500;
+          // Log streaming rendering errors from inside the shell.  Don't log
+          // errors encountered during initial shell rendering since they'll
+          // reject and get logged in handleDocumentRequest.
+          if (shellRendered) {
+            console.error(error);
+          }
         },
       },
     );

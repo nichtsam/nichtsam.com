@@ -1,11 +1,7 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import appStylesheet from "@/styles/app.css";
 import radixColorsStylesheet from "@/styles/radix-colors.css";
-import type {
-  LinksFunction,
-  LoaderArgs,
-  LoaderFunction,
-} from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -39,7 +35,7 @@ export const links: LinksFunction = () => [
   ...faviconLinks,
 ];
 
-export const loader: LoaderFunction = async ({ request }: LoaderArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   forceEnvValidation();
 
   const themeSession = await getThemeSession(request);

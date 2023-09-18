@@ -1,8 +1,8 @@
-import type { HeadersFunction, V2_MetaFunction } from "@remix-run/node";
+import type { HeadersFunction, MetaFunction } from "@remix-run/node";
 import { ButtonDemo } from "@/components/ui/demo/index.ts";
 import { Heading, Section } from "@/components/section/index.tsx";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     { title: "Style Guideline | nichtsam" },
     {

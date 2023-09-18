@@ -1,11 +1,11 @@
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { json } from "@remix-run/node";
-import type { HeadersFunction, V2_MetaFunction } from "@remix-run/node";
+import type { HeadersFunction, MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { NavLink } from "@/components/link.tsx";
 import { getBlogPostsMeta } from "@/utils/blog.server.ts";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     { title: "Blog | nichtsam" },
     {

@@ -1,15 +1,15 @@
 import { json } from "@remix-run/node";
 import type {
   HeadersFunction,
-  LoaderArgs,
-  V2_MetaFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { getBlogPost } from "@/utils/blog.server.ts";
 import { useMdxComponent } from "@/utils/mdx.tsx";
 import { compileMdxCached } from "@/utils/compile-mdx.server.ts";
 
-export const meta: V2_MetaFunction = () => {
+export const meta: MetaFunction = () => {
   return [
     { title: "Blog | nichtsam" },
     {
@@ -19,7 +19,7 @@ export const meta: V2_MetaFunction = () => {
   ];
 };
 
-export const loader = async ({ params }: LoaderArgs) => {
+export const loader = async ({ params }: LoaderFunctionArgs) => {
   if (!params.slug) {
     throw new Error("params.slug is not defined");
   }
