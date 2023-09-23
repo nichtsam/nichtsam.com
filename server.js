@@ -1,5 +1,4 @@
 import * as fs from "node:fs";
-import os from "os";
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";
 import { broadcastDevReady, installGlobals } from "@remix-run/node";
@@ -8,6 +7,9 @@ import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
 import sourceMapSupport from "source-map-support";
+import getPort, { portNumbers } from "get-port";
+import chalk from "chalk";
+import { printUrls } from "./server-utils.js";
 
 sourceMapSupport.install();
 installGlobals();
@@ -87,21 +89,28 @@ app.all(
     : getRequestHandler(build),
 );
 
-const port = process.env.PORT || 3000;
-app.listen(port, async () => {
-  let address =
-    process.env.HOST ||
-    Object.values(os.networkInterfaces())
-      .flat()
-      .find((ip) => String(ip?.family).includes("4") && !ip?.internal)?.address;
+const desiredPort = Number(process.env.PORT || 3000);
+const portToUse = await getPort({
+  port: portNumbers(desiredPort, desiredPort + 100),
+});
 
-  if (!address) {
-    console.log(`Remix App Server started at http://localhost:${port}`);
-  } else {
-    console.log(
-      `Remix App Server started at http://localhost:${port} (http://${address}:${port})`,
+const server = app.listen(portToUse, async () => {
+  const addr = server.address();
+  const portUsed = typeof addr === "object" ? addr.port : addr;
+
+  if (portUsed !== desiredPort) {
+    console.warn(
+      chalk.yellow(
+        `⚠️  Port ${desiredPort} is not available, using ${portUsed} instead.`,
+      ),
     );
   }
+
+  console.log(`🚀 App started`);
+
+  printUrls(portUsed);
+
+  console.log(chalk.bold("Press Ctrl+C to stop"));
 
   if (MODE === "development") {
     broadcastDevReady(build);
