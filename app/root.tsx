@@ -26,6 +26,7 @@ import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
 import { ToasterWithPageLoading } from "./components/ui/toaster.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
 import DOMPurify from "isomorphic-dompurify";
+import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -43,6 +44,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const data = {
     theme: themeSession.getTheme(),
     env: publicEnv,
+    requestInfo: {
+      hints: getHints(request),
+    },
   };
 
   return data;
@@ -56,6 +60,7 @@ function Document({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={clsx(theme, "relative")}>
       <head>
+        <ClientHintsCheck nonce={nonce} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <FaviconMeta />
