@@ -39,7 +39,7 @@ export const ThemeSwitcher = () => {
         variant="ghost"
         aria-label="Dark Mode Toggler"
       >
-        {modeLabel[mode]}
+        {modeLabel[nextMode]}
       </Button>
 
       {/* <ErrorList errors={form.errors} id={form.errorId} /> */}
