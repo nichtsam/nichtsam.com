@@ -5,6 +5,12 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@conform-to/react':
+    specifier: 0.9.0
+    version: 0.9.0(react@18.2.0)
+  '@conform-to/zod':
+    specifier: 0.9.0
+    version: 0.9.0(@conform-to/dom@0.9.0)(zod@3.22.2)
   '@radix-ui/colors':
     specifier: 2.1.0
     version: 2.1.0
@@ -662,6 +668,29 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
     dev: true
+
+  /@conform-to/dom@0.9.0:
+    resolution: {integrity: sha512-kaYP7jKeWWnBY+M0+Rttj5atWm9Tt9Uyts49lU4hoz9p/X8v5GuGas6YOilovyE5/vJUsnuYzN97upxIvlYg4g==}
+    dev: false
+
+  /@conform-to/react@0.9.0(react@18.2.0):
+    resolution: {integrity: sha512-ZxfzK+L4b3Z9SPGCyo8GqLjfSFDp4upiwpjJHxDLPwMDVsF8EvkifSHyzUkjaiIny407qN9zbdtoItQCTaaZeg==}
+    peerDependencies:
+      react: '>=16.8'
+    dependencies:
+      '@conform-to/dom': 0.9.0
+      react: 18.2.0
+    dev: false
+
+  /@conform-to/zod@0.9.0(@conform-to/dom@0.9.0)(zod@3.22.2):
+    resolution: {integrity: sha512-Eq19/U6inDlCB1GNrvfTJBxyRVFesHVgkB5piWqLmhRYFHL8ooQGvmhVaOqeqqm+e+zNCjsIe3jip5ZW7uiBIw==}
+    peerDependencies:
+      '@conform-to/dom': 0.9.0
+      zod: ^3.21.0
+    dependencies:
+      '@conform-to/dom': 0.9.0
+      zod: 3.22.2
+    dev: false
 
   /@emotion/hash@0.9.1:
     resolution: {integrity: sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ==}

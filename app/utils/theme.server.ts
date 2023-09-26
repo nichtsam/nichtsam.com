@@ -1,29 +1,21 @@
-import { createCookieSessionStorage } from "@remix-run/node";
-import type { Theme } from "./theme-provider.tsx";
-import { isTheme } from "./theme-provider.tsx";
-import { env } from "./env.server.ts";
+import { parse as parseCookie, serialize as serializeCookie } from "cookie";
 
-const sessionSecret = env.SESSION_SECRET;
+const cookieName = "theme";
+export type Theme = "light" | "dark";
 
-const themeStorage = createCookieSessionStorage({
-  cookie: {
-    name: "theme",
-    secure: true,
-    secrets: [sessionSecret],
-    sameSite: "lax",
-    path: "/",
-    httpOnly: true,
-  },
-});
+export const getTheme = (request: Request): Theme | null => {
+  const cookieHeader = request.headers.get("Cookie");
+  const parsed = cookieHeader ? parseCookie(cookieHeader)[cookieName] : "light";
 
-export async function getThemeSession(request: Request) {
-  const session = await themeStorage.getSession(request.headers.get("Cookie"));
-  return {
-    getTheme: () => {
-      const themeValue = session.get("theme");
-      return isTheme(themeValue) ? themeValue : null;
-    },
-    setTheme: (theme: Theme) => session.set("theme", theme),
-    commit: () => themeStorage.commitSession(session),
-  };
-}
+  if (parsed === "light" || parsed === "dark") return parsed;
+
+  return null;
+};
+
+export const setTheme = (theme: Theme | "system"): string => {
+  if (theme === "system") {
+    return serializeCookie(cookieName, "", { path: "/", maxAge: -1 });
+  } else {
+    return serializeCookie(cookieName, theme, { path: "/" });
+  }
+};

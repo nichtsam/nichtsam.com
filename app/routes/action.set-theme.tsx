@@ -1,34 +1,27 @@
 import type { ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { isTheme } from "@/utils/theme-provider.tsx";
-import { getThemeSession } from "@/utils/theme.server.ts";
+import { parse } from "@conform-to/zod";
+import { z } from "zod";
+import { setTheme } from "@/utils/theme.server.ts";
+
+export const ThemeFormSchema = z.object({
+  theme: z.enum(["system", "light", "dark"]),
+});
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-  const themeSession = await getThemeSession(request);
-  const requestText = await request.text();
-  const form = new URLSearchParams(requestText);
-  const theme = form.get("theme");
+  const formData = await request.formData();
 
-  if (!isTheme(theme)) {
-    return json({
-      success: false,
-      message: `theme value of ${theme} is not a valid theme`,
-    });
-  }
-
-  themeSession.setTheme(theme);
-  return json(
-    { success: true },
-    { headers: { "Set-Cookie": await themeSession.commit() } },
-  );
-};
-
-export const loader = () => {
-  throw new Response(null, {
-    status: 404,
-    statusText: "Not Found",
+  const submission = parse(formData, {
+    schema: ThemeFormSchema,
   });
-};
 
-// This is to get the default 404 page of remix.
-export default function Nothing() {}
+  if (!submission.value || submission.intent !== "update-theme") {
+    return json({ status: "error", submission } as const, { status: 400 });
+  }
+  const { theme } = submission.value;
+
+  const responseInit = {
+    headers: { "set-cookie": setTheme(theme) },
+  };
+  return json({ success: true, submission }, responseInit);
+};

@@ -1,6 +1,8 @@
 import { useRevalidator } from "@remix-run/react";
 import { useEffect } from "react";
 import { parse as parseCookie } from "cookie";
+import type { Theme } from "./theme.server.ts";
+import { useRequestInfo } from "./request-info.ts";
 
 type ClientHintConfigSchema = {
   cookieName: string;
@@ -14,7 +16,7 @@ const clientHintConfigs = {
     cookieName: "CH-prefers-color-scheme",
     getValueCode: `window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'`,
     fallback: "light",
-    transform(value: string) {
+    transform(value: string): Theme {
       return value === "dark" ? "dark" : "light";
     },
   },
@@ -62,6 +64,11 @@ export const getHints = (request?: Request): ClientHints => {
 
     return acc;
   }, {} as ClientHints);
+};
+
+export const useHints = () => {
+  const requestInfo = useRequestInfo();
+  return requestInfo.hints;
 };
 
 export const ClientHintsCheck = ({ nonce }: { nonce: string }) => {

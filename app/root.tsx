@@ -1,7 +1,11 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import appStylesheet from "@/styles/app.css";
 import radixColorsStylesheet from "@/styles/radix-colors.css";
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
+import {
+  json,
+  type LinksFunction,
+  type LoaderFunctionArgs,
+} from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -13,20 +17,16 @@ import {
 } from "@remix-run/react";
 import { NavBar } from "@/components/navbar/index.tsx";
 import { Footer } from "@/components/footer.tsx";
-import * as Tooltip from "@radix-ui/react-tooltip";
-import {
-  FixFlashOfWrongTheme,
-  ThemeProvider,
-  useTheme,
-} from "@/utils/theme-provider.tsx";
 import clsx from "clsx";
-import { getThemeSession } from "@/utils/theme.server.ts";
 import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
 import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
 import { ToasterWithPageLoading } from "./components/ui/toaster.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
 import DOMPurify from "isomorphic-dompurify";
 import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
+import { getTheme, type Theme } from "./utils/theme.server.ts";
+import { useTheme } from "./utils/theme.ts";
+import { TooltipProvider } from "./components/ui/tooltip.tsx";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -39,24 +39,28 @@ export const links: LinksFunction = () => [
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   forceEnvValidation();
 
-  const themeSession = await getThemeSession(request);
-
-  const data = {
-    theme: themeSession.getTheme(),
+  return json({
     env: publicEnv,
     requestInfo: {
       hints: getHints(request),
+      userPreferences: {
+        theme: getTheme(request),
+      },
     },
-  };
-
-  return data;
+  });
 };
 
-function Document({ children }: { children: React.ReactNode }) {
-  const data = useLoaderData<typeof loader>();
-  const [theme] = useTheme();
-  const nonce = useNonce();
-
+function Document({
+  children,
+  nonce,
+  theme = "light",
+  env = {},
+}: {
+  children: React.ReactNode;
+  nonce: string;
+  theme?: Theme;
+  env?: Record<string, string>;
+}) {
   return (
     <html lang="en" className={clsx(theme, "relative")}>
       <head>
@@ -67,7 +71,6 @@ function Document({ children }: { children: React.ReactNode }) {
 
         <Meta />
         <Links />
-        <FixFlashOfWrongTheme ssrTheme={Boolean(data.theme)} nonce={nonce} />
       </head>
       <body suppressHydrationWarning>
         {children}
@@ -77,12 +80,9 @@ function Document({ children }: { children: React.ReactNode }) {
         <script
           nonce={nonce}
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(
-              `window.ENV = ${JSON.stringify(data.env)}`,
-              {
-                RETURN_TRUSTED_TYPE: true,
-              },
-            ),
+            __html: DOMPurify.sanitize(`window.ENV = ${JSON.stringify(env)}`, {
+              RETURN_TRUSTED_TYPE: true,
+            }),
           }}
         />
         <Scripts nonce={nonce} />
@@ -93,9 +93,14 @@ function Document({ children }: { children: React.ReactNode }) {
   );
 }
 
-function App() {
+export function App() {
+  const data = useLoaderData<typeof loader>();
+  const nonce = useNonce();
+  const env = data.env;
+  const theme = useTheme();
+
   return (
-    <Document>
+    <Document nonce={nonce} env={env} theme={theme}>
       <div className="flex h-full min-h-screen flex-col">
         <header>
           <NavBar />
@@ -114,13 +119,9 @@ function App() {
 }
 
 export default function AppWithProviders() {
-  const data = useLoaderData<typeof loader>();
-
   return (
-    <ThemeProvider specifiedTheme={data.theme}>
-      <Tooltip.Provider>
-        <App />
-      </Tooltip.Provider>
-    </ThemeProvider>
+    <TooltipProvider>
+      <App />
+    </TooltipProvider>
   );
 }

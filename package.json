@@ -11,6 +11,8 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@conform-to/react": "0.9.0",
+    "@conform-to/zod": "0.9.0",
     "@radix-ui/colors": "2.1.0",
     "@radix-ui/react-avatar": "1.0.3",
     "@radix-ui/react-dialog": "1.0.4",

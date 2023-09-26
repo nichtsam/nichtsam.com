@@ -25,7 +25,7 @@ export default function handleRequest(
   remixContext: EntryContext,
   loadContext: AppLoadContext,
 ) {
-  const nonce = loadContext.cspNonce ? String(loadContext.cspNonce) : undefined;
+  const nonce = String(loadContext.cspNonce);
 
   return isbot(request.headers.get("user-agent"))
     ? handleBotRequest(
@@ -97,7 +97,7 @@ function handleBrowserRequest(
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  nonce?: string,
+  nonce: string,
 ) {
   let shellRendered = false;
   return new Promise((resolve, reject) => {
