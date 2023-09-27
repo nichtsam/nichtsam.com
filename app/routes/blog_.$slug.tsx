@@ -8,6 +8,10 @@ import { useLoaderData } from "@remix-run/react";
 import { getBlogPost } from "@/utils/blog.server.ts";
 import { useMdxComponent } from "@/utils/mdx.tsx";
 import { compileMdxCached } from "@/utils/compile-mdx.server.ts";
+import {
+  GeneralErrorBoundary,
+  generalNotFoundHandler,
+} from "@/components/error-boundary.tsx";
 
 export const meta: MetaFunction = () => {
   return [
@@ -25,6 +29,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   const slug = params.slug;
+
   const { source, files } = await getBlogPost(slug);
   const bundledBlog = await compileMdxCached({
     slug,
@@ -63,5 +68,11 @@ export default function BlogPost() {
         <Component />
       </article>
     </div>
+  );
+}
+
+export function ErrorBoundary() {
+  return (
+    <GeneralErrorBoundary unexpectedErrorHandler={generalNotFoundHandler} />
   );
 }

@@ -27,6 +27,7 @@ import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
 import { getTheme, type Theme } from "./utils/theme.server.ts";
 import { useTheme } from "./utils/theme.ts";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
+import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -123,5 +124,24 @@ export default function AppWithProviders() {
     <TooltipProvider>
       <App />
     </TooltipProvider>
+  );
+}
+
+export function ErrorBoundary() {
+  // the nonce doesn't rely on the loader so we can access that
+  const nonce = useNonce();
+
+  // NOTE: you cannot use useLoaderData in an ErrorBoundary because the loader
+  // likely failed to run so we have to do the best we can.
+  // We could probably do better than this (it's possible the loader did run).
+  // This would require a change in Remix.
+
+  // Just make sure your root route never errors out and you'll always be able
+  // to give the user a better UX.
+
+  return (
+    <Document nonce={nonce}>
+      <GeneralErrorBoundary />
+    </Document>
   );
 }

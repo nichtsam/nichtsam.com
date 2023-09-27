@@ -3,6 +3,10 @@ import { json } from "@remix-run/node";
 import { parse } from "@conform-to/zod";
 import { z } from "zod";
 import { setTheme } from "@/utils/theme.server.ts";
+import {
+  GeneralErrorBoundary,
+  generalNotFoundHandler,
+} from "@/components/error-boundary.tsx";
 
 export const ThemeFormSchema = z.object({
   theme: z.enum(["system", "light", "dark"]),
@@ -25,3 +29,17 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   };
   return json({ success: true, submission }, responseInit);
 };
+
+export async function loader() {
+  throw new Response("Not found", { status: 404 });
+}
+
+export function ErrorBoundary() {
+  return (
+    <GeneralErrorBoundary
+      statusHandlers={{
+        404: generalNotFoundHandler,
+      }}
+    />
+  );
+}
