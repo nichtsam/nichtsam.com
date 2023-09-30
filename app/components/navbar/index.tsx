@@ -13,7 +13,7 @@ import { NavLink } from "../link.tsx";
 
 export const NavBar = () => {
   return (
-    <div className="container flex items-center p-9  md:gap-16">
+    <div className="flex items-center p-9 md:gap-16">
       <span className="text-xl font-bold sm:text-3xl">nichtsam</span>
 
       <NavigationMenu className="max-w-none">

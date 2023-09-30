@@ -37,23 +37,25 @@ export const headers: HeadersFunction = () => ({
 export default function Blog() {
   const { blogPosts } = useLoaderData<typeof loader>();
   return (
-    <div className="container prose mx-auto h-full w-full px-9 dark:prose-invert">
-      <h1>Blog</h1>
-      <NavigationMenu.Root>
-        <NavigationMenu.List>
-          {blogPosts.map((post) => (
-            <NavigationMenu.Item key={post.slug}>
-              <p>
-                <NavLink prefetch="intent" to={`./${post.slug}`}>
-                  {post.title}
-                </NavLink>
-                <br />
-                <span>- {post.readingTime.text}</span>
-              </p>
-            </NavigationMenu.Item>
-          ))}
-        </NavigationMenu.List>
-      </NavigationMenu.Root>
+    <div className="container py-9">
+      <section className="prose dark:prose-invert lg:prose-xl">
+        <h1>Blog</h1>
+        <NavigationMenu.Root>
+          <NavigationMenu.List>
+            {blogPosts.map((post) => (
+              <NavigationMenu.Item key={post.slug}>
+                <p>
+                  <NavLink prefetch="intent" to={`./${post.slug}`}>
+                    {post.title}
+                  </NavLink>
+                  <br />
+                  <span>- {post.readingTime.text}</span>
+                </p>
+              </NavigationMenu.Item>
+            ))}
+          </NavigationMenu.List>
+        </NavigationMenu.Root>
+      </section>
     </div>
   );
 }

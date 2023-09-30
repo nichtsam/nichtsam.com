@@ -56,15 +56,6 @@ export default {
     },
 
     extend: {
-      typography: {
-        DEFAULT: {
-          css: {
-            color: "hsl(var(--app-foreground))",
-            // TODO add other stuff
-          },
-        },
-      },
-
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

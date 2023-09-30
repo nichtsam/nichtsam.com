@@ -17,17 +17,17 @@ export const headers: HeadersFunction = () => ({
 
 export default function Index() {
   return (
-    <div className="h-full w-full">
-      <section className="container mx-auto p-9">
-        <h1 className="text-3xl font-bold sm:text-5xl">Samuel Jensen</h1>
-        <p className="text-sm sm:text-lg">
+    <section className="container py-9">
+      <article className="prose dark:prose-invert lg:prose-xl">
+        <h1>Samuel Jensen</h1>
+        <p>
           Hi there, I'm Sam.
           <br />
           You can call me Sam.
           <br />
           Oh and this is my website by the way.
         </p>
-      </section>
-    </div>
+      </article>
+    </section>
   );
 }

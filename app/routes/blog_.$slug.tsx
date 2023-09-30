@@ -62,12 +62,12 @@ export default function BlogPost() {
   const Component = useMdxComponent(bundledBlog.code);
 
   return (
-    <div className="flex h-full w-full justify-center">
-      <article className="prose px-4 dark:prose-invert">
+    <section className="container flex justify-center py-9">
+      <article className="prose prose-sm dark:prose-invert sm:prose-base lg:prose-lg">
         <p>{bundledBlog.readingTime.text}</p>
         <Component />
       </article>
-    </div>
+    </section>
   );
 }
 
