@@ -40,7 +40,7 @@ export const MobileNavigation = () => {
             className="text-sm font-bold"
             orientation="vertical"
           >
-            <NavigationMenu.List>
+            <NavigationMenu.List className="text-3xl">
               {CORE_CONTENT_LINKS.map((link) => (
                 <NavigationMenu.Item key={link.to}>
                   <NavLink onClick={closeDialog} to={link.to}>
