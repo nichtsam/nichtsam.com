@@ -1,6 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import appStylesheet from "@/styles/app.css";
-import radixColorsStylesheet from "@/styles/radix-colors.css";
 import {
   json,
   type LinksFunction,
@@ -31,7 +30,6 @@ import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
-  { rel: "stylesheet", href: radixColorsStylesheet },
   { rel: "stylesheet", href: appStylesheet },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,

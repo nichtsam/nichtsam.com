@@ -1,16 +1,16 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "default",
   "rsc": false,
+  "style": "new-york",
   "tsx": true,
   "tailwind": {
     "config": "tailwind.shadcn.config.ts",
     "css": "app/styles/shadcn.css",
-    "baseColor": "neutral",
+    "baseColor": "gray",
     "cssVariables": true
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@/utils/ui.ts"
+    "utils": "@/utils/ui"
   }
 }
