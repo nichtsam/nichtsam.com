@@ -44,14 +44,21 @@ export function ToasterWithPageLoading() {
 
   const navigation = useNavigation();
   const [pendingPath, setPendingPath] = useState("");
-  const showLoader = useSpinDelay(Boolean(navigation.state !== "idle"), {
-    delay: 400,
-    minDuration: 1000,
-  });
+
+  const showLoader = useSpinDelay(
+    navigation.state !== "idle" &&
+      !navigation.location.pathname.startsWith("/auth"),
+    {
+      delay: 400,
+      minDuration: 1000,
+    },
+  );
 
   useEffect(() => {
     if (firstRender) return;
     if (navigation.state === "idle") return;
+    if (navigation.location.pathname.startsWith("/auth")) return;
+
     setPendingPath(navigation.location.pathname);
   }, [navigation]);
 

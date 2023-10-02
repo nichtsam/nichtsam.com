@@ -2,15 +2,26 @@ import { DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
 import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button.tsx";
-import { SheetTrigger, SheetContent, Sheet } from "../ui/sheet.tsx";
+import {
+  SheetTrigger,
+  SheetContent,
+  Sheet,
+  SheetFooter,
+} from "../ui/sheet.tsx";
 import { CORE_CONTENT_LINKS } from "./constant.ts";
 import { NavLink } from "../link.tsx";
 import { ScrollArea } from "../ui/scroll-area.tsx";
+import { UserButton } from "../user.tsx";
+import { useLocation } from "@remix-run/react";
+
+let firstRender = true;
 
 export const MobileNavigation = () => {
   const [open, setOpen] = useState(false);
+
+  const location = useLocation();
 
   const onOpenChange = (open: boolean) => {
     setOpen(open);
@@ -20,6 +31,18 @@ export const MobileNavigation = () => {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (firstRender) {
+      return;
+    }
+
+    closeDialog();
+  }, [location.key, location.pathname]);
+
+  useEffect(() => {
+    firstRender = false;
+  }, []);
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
@@ -27,7 +50,7 @@ export const MobileNavigation = () => {
           <HamburgerMenuIcon />
         </Button>
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent side="left" className="flex flex-col gap-y-4" forceMount>
         <VisuallyHidden>
           <DialogTitle>Navigation Menu</DialogTitle>
           <DialogDescription>
@@ -35,7 +58,7 @@ export const MobileNavigation = () => {
           </DialogDescription>
         </VisuallyHidden>
 
-        <ScrollArea className="h-full">
+        <ScrollArea className="flex-1">
           <NavigationMenu.Root
             className="text-sm font-bold"
             orientation="vertical"
@@ -43,14 +66,16 @@ export const MobileNavigation = () => {
             <NavigationMenu.List className="text-3xl">
               {CORE_CONTENT_LINKS.map((link) => (
                 <NavigationMenu.Item key={link.to}>
-                  <NavLink onClick={closeDialog} to={link.to}>
-                    {link.name}
-                  </NavLink>
+                  <NavLink to={link.to}>{link.name}</NavLink>
                 </NavigationMenu.Item>
               ))}
             </NavigationMenu.List>
           </NavigationMenu.Root>
         </ScrollArea>
+
+        <SheetFooter>
+          <UserButton />
+        </SheetFooter>
       </SheetContent>
     </Sheet>
   );

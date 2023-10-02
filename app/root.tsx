@@ -27,6 +27,7 @@ import { getTheme, type Theme } from "./utils/theme.server.ts";
 import { useTheme } from "./utils/theme.ts";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
+import { authenticator } from "./utils/auth.server.ts";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -38,7 +39,10 @@ export const links: LinksFunction = () => [
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   forceEnvValidation();
 
+  const user = await authenticator.isAuthenticated(request);
+
   return json({
+    user,
     env: publicEnv,
     requestInfo: {
       hints: getHints(request),

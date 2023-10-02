@@ -1,5 +1,4 @@
 import { ThemeSwitcher } from "../theme-switcher.tsx";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar.tsx";
 import { MobileNavigation } from "./mobile.tsx";
 import { CORE_CONTENT_LINKS } from "./constant.ts";
 import {
@@ -10,6 +9,7 @@ import {
   navigationMenuTriggerStyle,
 } from "../ui/navigation-menu.tsx";
 import { NavLink } from "../link.tsx";
+import { UserButton } from "../user.tsx";
 
 export const NavBar = () => {
   return (
@@ -50,30 +50,18 @@ const LinkItem = ({ to, name }: { to: string; name: string }) => (
   </NavigationMenuItem>
 );
 
-const NonTextNav = () => {
-  return (
-    <NavigationMenuList>
-      <NavigationMenuItem className="md:hidden">
-        <MobileNavigation />
-      </NavigationMenuItem>
+const NonTextNav = () => (
+  <NavigationMenuList>
+    <NavigationMenuItem className="md:hidden">
+      <MobileNavigation />
+    </NavigationMenuItem>
 
-      <NavigationMenuItem>
-        <ThemeSwitcher />
-      </NavigationMenuItem>
+    <NavigationMenuItem>
+      <ThemeSwitcher />
+    </NavigationMenuItem>
 
-      <NavigationMenuItem className="ml-2">
-        <UserAccount />
-      </NavigationMenuItem>
-    </NavigationMenuList>
-  );
-};
-
-const UserAccount = () => (
-  <Avatar>
-    <AvatarImage
-      src="https://avatars.githubusercontent.com/u/44519206?v=4"
-      alt="@nichtsam"
-    />
-    <AvatarFallback>SJ</AvatarFallback>
-  </Avatar>
+    <NavigationMenuItem className="hidden md:ml-2 md:list-item">
+      <UserButton />
+    </NavigationMenuItem>
+  </NavigationMenuList>
 );
