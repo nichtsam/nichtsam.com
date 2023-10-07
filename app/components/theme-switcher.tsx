@@ -30,6 +30,9 @@ export const ThemeSwitcher = () => {
   return (
     <fetcher.Form method="POST" action="/action/set-theme" {...form.props}>
       <input type="hidden" name="theme" value={nextMode} />
+      <noscript>
+        <input type="hidden" name="noscript" value="true" />
+      </noscript>
 
       <Button
         name={conform.INTENT}
