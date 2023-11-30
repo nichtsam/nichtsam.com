@@ -44,8 +44,8 @@ export const getHints = (request?: Request): ClientHints => {
     typeof document !== "undefined"
       ? document.cookie
       : typeof request !== "undefined"
-      ? request?.headers.get("Cookie") ?? ""
-      : "";
+        ? request?.headers.get("Cookie") ?? ""
+        : "";
 
   const cookies = parseCookie(cookieString);
 
