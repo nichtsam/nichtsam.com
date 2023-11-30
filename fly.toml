@@ -1,14 +1,22 @@
-# fly.toml app configuration file generated for shy-paper-5701 on 2023-05-23T21:28:26+08:00
+# fly.toml app configuration file generated for nichtsam-com on 2023-11-30T19:39:28+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "shy-paper-5701"
-primary_region = "nrt"
+app = "nichtsam-com"
+primary_region = "cdg"
+
+[build]
 
 [http_service]
-  internal_port = 3000
-  force_https = true
-  auto_stop_machines = true
-  auto_start_machines = true
-  min_machines_running = 0
+internal_port = 3000
+force_https = true
+auto_stop_machines = true
+auto_start_machines = true
+min_machines_running = 1
+processes = ["app"]
+
+[[vm]]
+cpu_kind = "shared"
+cpus = 1
+memory_mb = 256
