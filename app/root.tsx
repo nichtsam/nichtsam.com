@@ -21,7 +21,6 @@ import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
 import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
 import { ToasterWithPageLoading } from "./components/ui/toaster.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
-import DOMPurify from "isomorphic-dompurify";
 import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
 import { getTheme, type Theme } from "./utils/theme.server.ts";
 import { useTheme } from "./utils/theme.ts";
@@ -83,9 +82,7 @@ function Document({
         <script
           nonce={nonce}
           dangerouslySetInnerHTML={{
-            __html: DOMPurify.sanitize(`window.ENV = ${JSON.stringify(env)}`, {
-              RETURN_TRUSTED_TYPE: true,
-            }),
+            __html: `window.ENV = ${JSON.stringify(env)}`,
           }}
         />
         <Scripts nonce={nonce} />
