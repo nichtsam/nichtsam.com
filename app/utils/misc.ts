@@ -96,6 +96,8 @@ const useDelayedIsPending = ({
   return delayedIsPending;
 };
 
+const unvariant = <T>(bool: boolean, value: T) => (bool ? value : undefined);
+
 export {
   sleep,
   reuseUsefulLoaderHeaders,
@@ -103,4 +105,5 @@ export {
   combineHeaders,
   useIsPending,
   useDelayedIsPending,
+  unvariant,
 };

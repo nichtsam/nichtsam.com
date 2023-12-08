@@ -5,8 +5,12 @@ import type { action as setThemeAction } from "@/routes/action.set-theme.tsx";
 import { useOptimisticThemeMode } from "@/utils/theme.ts";
 import { useRequestInfo } from "@/utils/request-info.ts";
 import { Button } from "./ui/button.tsx";
+import { useEffect, useState } from "react";
+import { unvariant } from "@/utils/misc.ts";
 
 export const ThemeSwitcher = () => {
+  const [clientJavascriptEnable, setClientJavascriptEnable] = useState(false);
+
   const {
     userPreferences: { theme: themPreference },
   } = useRequestInfo();
@@ -27,12 +31,13 @@ export const ThemeSwitcher = () => {
     system: <LaptopIcon className="animate-in fade-in" />,
   };
 
+  useEffect(() => {
+    setClientJavascriptEnable(true);
+  }, []);
+
   return (
     <fetcher.Form method="POST" action="/action/set-theme" {...form.props}>
       <input type="hidden" name="theme" value={nextMode} />
-      <noscript>
-        <input type="hidden" name="noscript" value="true" />
-      </noscript>
 
       <Button
         name={conform.INTENT}
@@ -41,11 +46,18 @@ export const ThemeSwitcher = () => {
         size="icon"
         variant="ghost"
         aria-label="Dark Mode Toggler"
+        disabled={!clientJavascriptEnable}
+        className={unvariant(
+          !clientJavascriptEnable,
+          "disabled:pointer-events-auto",
+        )}
+        title={unvariant(
+          !clientJavascriptEnable,
+          "Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.",
+        )}
       >
         {modeLabel[nextMode]}
       </Button>
-
-      {/* <ErrorList errors={form.errors} id={form.errorId} /> */}
     </fetcher.Form>
   );
 };
