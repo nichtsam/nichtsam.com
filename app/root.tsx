@@ -19,7 +19,6 @@ import { Footer } from "@/components/footer.tsx";
 import clsx from "clsx";
 import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
 import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
-import { ToasterWithPageLoading } from "./components/ui/toaster.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
 import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
 import { getTheme, type Theme } from "./utils/theme.server.ts";
@@ -27,6 +26,7 @@ import { useTheme } from "./utils/theme.ts";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 import { authenticator } from "./utils/auth.server.ts";
+import { NavProgress } from "./components/nav-progress.tsx";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -77,7 +77,7 @@ function Document({
       <body suppressHydrationWarning>
         {children}
 
-        <ToasterWithPageLoading />
+        <NavProgress />
 
         <script
           nonce={nonce}
