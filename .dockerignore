@@ -7,6 +7,8 @@ node_modules
 
 /public/generated
 
+*.db
+
 .git
 .gitignore
 
