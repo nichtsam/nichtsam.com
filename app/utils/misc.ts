@@ -1,4 +1,4 @@
-import type { HeadersFunction } from "@remix-run/node";
+import type { Cookie, HeadersFunction, SessionStorage } from "@remix-run/node";
 import { useFormAction, useNavigation } from "@remix-run/react";
 import { useSpinDelay } from "spin-delay";
 
@@ -98,6 +98,50 @@ const useDelayedIsPending = ({
 
 const unvariant = <T>(bool: boolean, value: T) => (bool ? value : undefined);
 
+export async function downloadFile(
+  url: string,
+  retries: number = 0,
+  max_retries: number = 3,
+) {
+  try {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch image with status ${response.status}`);
+    }
+
+    // contentType fallback : https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3-5
+    const contentType =
+      response.headers.get("content-type") ?? "application/octet-stream";
+    const blob = Buffer.from(await response.arrayBuffer());
+
+    return { contentType, blob };
+  } catch (e) {
+    if (retries > max_retries) throw e;
+    return downloadFile(url, retries + 1, max_retries);
+  }
+}
+
+const getCookieHeader = (request: Request) => {
+  return request.headers.get("cookie");
+};
+
+const destroyCookie = (cookie: Cookie) => {
+  return cookie.serialize(null, { expires: new Date(Date.now() - 1) });
+};
+
+const getSession = (storage: SessionStorage, request: Request) => {
+  const cookieHeader = getCookieHeader(request);
+  const session = storage.getSession(cookieHeader);
+
+  return session;
+};
+
+const destroySession = async (storage: SessionStorage, request: Request) => {
+  const session = await getSession(storage, request);
+  return storage.destroySession(session);
+};
+
 export {
   sleep,
   reuseUsefulLoaderHeaders,
@@ -106,4 +150,14 @@ export {
   useIsPending,
   useDelayedIsPending,
   unvariant,
+  getCookieHeader,
+  destroyCookie,
+  getSession,
+  destroySession,
 };
+
+type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};
+
+export type { Prettify };

@@ -25,8 +25,9 @@ import { getTheme, type Theme } from "./utils/theme.server.ts";
 import { useTheme } from "./utils/theme.ts";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
-import { authenticator } from "./utils/auth.server.ts";
 import { NavProgress } from "./components/nav-progress.tsx";
+import { getUserId, logout } from "./utils/auth.server.ts";
+import { db } from "./utils/db.server.ts";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -38,7 +39,23 @@ export const links: LinksFunction = () => [
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   forceEnvValidation();
 
-  const user = await authenticator.isAuthenticated(request);
+  const userId = await getUserId(request);
+
+  const user = userId
+    ? (await db.query.userTable.findFirst({
+        where: (userTable, { eq }) => eq(userTable.id, userId),
+        with: {
+          image: {
+            columns: { id: true },
+          },
+        },
+      })) ?? null
+    : null;
+
+  if (userId && !user) {
+    console.info("something weird happened");
+    await logout({ request });
+  }
 
   return json({
     user,

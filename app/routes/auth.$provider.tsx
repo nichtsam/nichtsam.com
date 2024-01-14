@@ -2,7 +2,7 @@ import {
   GeneralErrorBoundary,
   generalNotFoundHandler,
 } from "@/components/error-boundary.tsx";
-import { authenticator } from "@/utils/auth.server.ts";
+import { authenticator } from "@/utils/connections.server.ts";
 import { ProviderNameSchema } from "@/utils/connections.tsx";
 import { sleep } from "@/utils/misc.ts";
 import type { DataFunctionArgs } from "@remix-run/node";

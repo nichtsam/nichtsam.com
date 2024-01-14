@@ -1,9 +1,11 @@
 import type { loader as rootLoader } from "@/root.tsx";
 import { Link, useRouteLoaderData } from "@remix-run/react";
-import type { ProviderUser } from "./providers/model.ts";
 import { Button } from "@/components/ui/button.tsx";
+import type { SerializeFrom } from "@remix-run/node";
 
-export const isUser = (user: unknown): user is ProviderUser => {
+export const isUser = (
+  user: unknown,
+): user is SerializeFrom<typeof rootLoader>["user"] => {
   return (
     !!user &&
     typeof user === "object" &&

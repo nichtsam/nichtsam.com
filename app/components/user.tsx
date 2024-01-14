@@ -9,6 +9,7 @@ import {
 } from "./ui/dropdown-menu.tsx";
 import { useOptionalUser, useUser } from "@/utils/user.tsx";
 import { useRef } from "react";
+import { getUserImgSrc } from "@/routes/resources.user-images.$imageId.ts";
 
 export const UserButton = () => {
   const maybeUser = useOptionalUser();
@@ -36,14 +37,12 @@ export const UserActions = () => {
         <Button variant="outline" className="flex gap-x-2">
           <Avatar className="h-6 w-6">
             <AvatarImage
-              src={user.imageUrl}
-              alt={`The image of ${
-                user.name ?? user.username ?? `Owner of ${user.email}`
-              }`}
+              src={getUserImgSrc(user.image?.id)}
+              alt={`The image of ${user.display_name}`}
             />
             <AvatarFallback>me</AvatarFallback>
           </Avatar>
-          {user.name ?? user.username}
+          {user.display_name}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
