@@ -1,3 +1,4 @@
+import "dotenv/config";
 import * as fs from "node:fs";
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";
