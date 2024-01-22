@@ -30,9 +30,7 @@ export default function About() {
           Taiwan. This unique blend of cultures has shaped my perspective and
           instilled a deep appreciation for diversity. Language has always been
           something special to me. I am most fluent in Chinese, followed by
-          English and German. Recently, I've grown a bit of interest in French.
-          Unfortunately, Polish wasn't part of my upbringing, but I look forward
-          to exploring it one day.
+          English and German.
         </p>
         <p>
           I've always been a self-taught developer with a curiosity for
