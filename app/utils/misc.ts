@@ -1,5 +1,6 @@
 import type { Cookie, HeadersFunction, SessionStorage } from "@remix-run/node";
 import { useFormAction, useNavigation } from "@remix-run/react";
+import { useState } from "react";
 import { useSpinDelay } from "spin-delay";
 
 const sleep = (ms: number) =>
@@ -95,6 +96,48 @@ const useDelayedIsPending = ({
   });
   return delayedIsPending;
 };
+
+const generateCallAll = <Args extends Array<unknown>>(
+  ...fns: Array<((...arg: Args) => unknown) | null | undefined>
+) => {
+  return (...arg: Args) => fns.forEach((fn) => fn?.(...arg));
+};
+
+export function useDoubleCheck() {
+  const [doubleCheck, setDoubleCheck] = useState(false);
+
+  function getButtonProps(
+    props?: React.ButtonHTMLAttributes<HTMLButtonElement>,
+  ) {
+    const onBlur: React.ButtonHTMLAttributes<HTMLButtonElement>["onBlur"] =
+      () => setDoubleCheck(false);
+
+    const onClick: React.ButtonHTMLAttributes<HTMLButtonElement>["onClick"] =
+      doubleCheck
+        ? undefined
+        : (e) => {
+            e.preventDefault();
+            setDoubleCheck(true);
+          };
+
+    const onKeyUp: React.ButtonHTMLAttributes<HTMLButtonElement>["onKeyUp"] = (
+      e,
+    ) => {
+      if (e.key === "Escape") {
+        setDoubleCheck(false);
+      }
+    };
+
+    return {
+      ...props,
+      onBlur: generateCallAll(onBlur, props?.onBlur),
+      onClick: generateCallAll(onClick, props?.onClick),
+      onKeyUp: generateCallAll(onKeyUp, props?.onKeyUp),
+    };
+  }
+
+  return { doubleCheck, getButtonProps };
+}
 
 const unvariant = <T>(bool: boolean, value: T) => (bool ? value : undefined);
 
