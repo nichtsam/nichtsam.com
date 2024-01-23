@@ -40,7 +40,7 @@ function NavProgress() {
     <div
       role="progressbar"
       className={cn(
-        "fixed inset-x-0 top-0 z-[60] flex flex-col items-end transition-all duration-500",
+        "pointer-events-none fixed inset-x-0 top-0 z-[60] flex flex-col items-end transition-all duration-500",
         !busy && "opacity-0",
       )}
     >
@@ -53,7 +53,10 @@ function NavProgress() {
           style={{ transform: `translateX(-${100 - progressRate}%)` }}
         />
       </ProgressPrimitive.Root>
-      <Loader2 className="m-1 animate-spin" />
+      <Loader2
+        className={cn("m-1", { "animate-spin": !animationComplete })}
+        aria-hidden
+      />
     </div>
   );
 }
