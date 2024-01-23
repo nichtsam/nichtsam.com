@@ -10,19 +10,22 @@ import {
 import { useOptionalUser, useUser } from "@/utils/user.tsx";
 import { useRef } from "react";
 import { getUserImgSrc } from "@/routes/resources.user-images.$imageId.ts";
+import { LogOut } from "lucide-react";
+import { useIsPending } from "@/utils/misc.ts";
+import { cn } from "@/utils/ui.ts";
 
 export const UserButton = () => {
   const maybeUser = useOptionalUser();
 
-  if (maybeUser) {
-    return <UserActions />;
+  if (!maybeUser) {
+    return (
+      <Button asChild>
+        <Link to="login">Login</Link>
+      </Button>
+    );
   }
 
-  return (
-    <Button asChild>
-      <Link to="login">Login</Link>
-    </Button>
-  );
+  return <UserActions />;
 };
 
 export const UserActions = () => {
@@ -30,6 +33,8 @@ export const UserActions = () => {
 
   const submit = useSubmit();
   const formRef = useRef<HTMLFormElement>(null);
+
+  const isLoggingOut = useIsPending({ formAction: "/logout" });
 
   return (
     <DropdownMenu>
@@ -54,7 +59,14 @@ export const UserActions = () => {
           }}
         >
           <Form action="/logout" method="POST" ref={formRef}>
-            <button type="submit">Log out</button>
+            <button
+              type="submit"
+              className={cn("flex items-center gap-x-2", {
+                "animate-pulse": isLoggingOut,
+              })}
+            >
+              <LogOut size={16} /> Log out
+            </button>
           </Form>
         </DropdownMenuItem>
       </DropdownMenuContent>
