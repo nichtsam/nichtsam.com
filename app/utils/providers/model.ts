@@ -10,4 +10,14 @@ export type ProviderUser = {
 
 export interface AuthProvider {
   getAuthStrategy(): Strategy<ProviderUser, never>;
+  resolveConnectionInfo(profileId: string): Promise<
+    | {
+        connectionUserDisplayName: string;
+        profileLink: string;
+      }
+    | {
+        connectionUserDisplayName: "Unknown";
+        profileLink: null;
+      }
+  >;
 }

@@ -27,3 +27,13 @@ export const authenticator = new Authenticator<ProviderUser>(
 for (const [providerName, provider] of Object.entries(providers)) {
   authenticator.use(provider.getAuthStrategy(), providerName);
 }
+
+export function resolveConnectionInfo({
+  providerId,
+  providerName,
+}: {
+  providerName: ProviderName;
+  providerId: string;
+}) {
+  return providers[providerName].resolveConnectionInfo(providerId);
+}
