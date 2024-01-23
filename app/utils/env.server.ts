@@ -9,6 +9,7 @@ const envSchema = z.object({
     z.literal("test"),
   ]),
   SESSION_SECRET: z.string(),
+  CSRF_SECRET: z.string().optional(),
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
 });

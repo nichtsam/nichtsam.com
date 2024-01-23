@@ -28,6 +28,8 @@ import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 import { NavProgress } from "./components/nav-progress.tsx";
 import { getUserId, logout } from "./utils/auth.server.ts";
 import { db } from "./utils/db.server.ts";
+import { csrf } from "./utils/csrf.server.ts";
+import { AuthenticityTokenProvider } from "remix-utils/csrf/react";
 
 export const links: LinksFunction = () => [
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
@@ -57,16 +59,30 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     await logout({ request });
   }
 
-  return json({
-    user,
-    env: publicEnv,
-    requestInfo: {
-      hints: getHints(request),
-      userPreferences: {
-        theme: getTheme(request),
+  const [csrfToken, csrfCookieHeader] = await csrf.commitToken();
+
+  const headers = new Headers();
+
+  if (csrfCookieHeader) {
+    headers.append("set-cookie", csrfCookieHeader);
+  }
+
+  return json(
+    {
+      user,
+      env: publicEnv,
+      requestInfo: {
+        hints: getHints(request),
+        userPreferences: {
+          theme: getTheme(request),
+        },
       },
+      csrfToken,
     },
-  });
+    {
+      headers,
+    },
+  );
 };
 
 function Document({
@@ -136,10 +152,14 @@ export function App() {
 }
 
 export default function AppWithProviders() {
+  const { csrfToken } = useLoaderData<typeof loader>();
+
   return (
-    <TooltipProvider>
-      <App />
-    </TooltipProvider>
+    <AuthenticityTokenProvider token={csrfToken}>
+      <TooltipProvider>
+        <App />
+      </TooltipProvider>
+    </AuthenticityTokenProvider>
   );
 }
 
