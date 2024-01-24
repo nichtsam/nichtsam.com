@@ -37,7 +37,7 @@ const CoreContentNav = () => (
 );
 
 const LinkItem = ({ to, name }: { to: string; name: string }) => (
-  <NavigationMenuItem key={to}>
+  <NavigationMenuItem>
     <NavigationMenuLink asChild>
       <NavLink
         prefetch="intent"
