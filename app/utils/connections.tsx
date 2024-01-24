@@ -18,7 +18,7 @@ export type ProviderConfig = {
 export const providerConfigs: Record<ProviderName, ProviderConfig> = {
   [GITHUB_PROVIDER_NAME]: {
     label: "Github",
-    icon: <GitHubLogoIcon />,
+    icon: <GitHubLogoIcon className="inline-block" />,
   },
 };
 

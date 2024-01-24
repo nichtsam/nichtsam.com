@@ -1,0 +1,246 @@
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card.tsx";
+import {
+  providerConfigs,
+  ProviderNameSchema,
+  type ProviderName,
+} from "@/utils/connections.tsx";
+import { useDoubleCheck } from "@/utils/misc.ts";
+import { json } from "@remix-run/node";
+import type {
+  MetaFunction,
+  DataFunctionArgs,
+  ActionFunctionArgs,
+} from "@remix-run/node";
+import { AuthenticityTokenInput } from "remix-utils/csrf/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
+import { StatusButton } from "@/components/status-button.tsx";
+import { Link as LinkIcon, Trash } from "lucide-react";
+import { requireUserId } from "@/utils/auth.server.ts";
+import { db } from "@/utils/db.server.ts";
+import { resolveConnectionInfo } from "@/utils/connections.server.ts";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table.tsx";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip.tsx";
+import dayjs from "dayjs";
+import { validateCSRF } from "@/utils/csrf.server.ts";
+import { connectionTable } from "database/schema.ts";
+import { eq } from "drizzle-orm";
+
+export const handle = {
+  breadcrumb: (
+    <span className="flex items-center gap-x-2">
+      <LinkIcon size={16} />
+      Connections
+    </span>
+  ),
+};
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Connections | nichtsam" },
+    {
+      name: "description",
+      content: "Manage your connections of your account on nichtsam.com",
+    },
+  ];
+};
+
+export async function loader({ request }: DataFunctionArgs) {
+  const userId = await requireUserId(request);
+  const connections = await getConnections(userId);
+
+  return json({ connections });
+}
+
+type ActionArgs = {
+  request: Request;
+  formData: FormData;
+};
+
+export async function action({ request }: ActionFunctionArgs) {
+  const formData = await request.formData();
+  await validateCSRF(formData, request.headers);
+  const intent = formData.get("intent");
+
+  switch (intent) {
+    case INTENT_DELETE_CONNECTION: {
+      return deleteConnection({ formData, request });
+    }
+    default: {
+      throw new Response(`Invalid intent "${intent}"`, { status: 400 });
+    }
+  }
+}
+
+export default function ProfileConnections() {
+  const data = useLoaderData<typeof loader>();
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Connections</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Table>
+          <TableCaption>A list of your connections.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Provider</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Connected At</TableHead>
+              <TableHead className="w-12">Delete</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {data.connections.map((connection) => (
+              <ConnectionRow key={connection.connectionId} {...connection} />
+            ))}
+          </TableBody>
+        </Table>
+      </CardContent>
+    </Card>
+  );
+}
+
+interface ConnectionRowProps {
+  providerName: ProviderName;
+  connectionId: string;
+  connectionUserDisplayName: string;
+  profileLink?: string | null;
+  createdAtFormatted: string;
+}
+const ConnectionRow = ({
+  connectionId,
+  providerName,
+  profileLink,
+  connectionUserDisplayName,
+  createdAtFormatted,
+}: ConnectionRowProps) => {
+  const providerIcon = providerConfigs[providerName].icon;
+  const providerLabel = providerConfigs[providerName].label;
+  const name = profileLink ? (
+    <a href={profileLink} className="underline">
+      {connectionUserDisplayName}
+    </a>
+  ) : (
+    <span>{connectionUserDisplayName}</span>
+  );
+
+  return (
+    <TableRow>
+      <TableCell>
+        <span className="inline-flex items-center gap-x-2">
+          {providerIcon}
+          {providerLabel}
+        </span>
+      </TableCell>
+      <TableCell>{name}</TableCell>
+      <TableCell>{createdAtFormatted}</TableCell>
+      <TableCell className="text-right">
+        <DeleteConnectionButton connectionId={connectionId} />
+      </TableCell>
+    </TableRow>
+  );
+};
+
+const DeleteConnectionButton = ({ connectionId }: { connectionId: string }) => {
+  const dc = useDoubleCheck();
+  const fetcher = useFetcher<typeof action>();
+
+  return (
+    <fetcher.Form method="POST">
+      <AuthenticityTokenInput />
+      <input name="connectionId" value={connectionId} hidden readOnly />
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <StatusButton
+            {...dc.getButtonProps({
+              type: "submit",
+              name: "intent",
+              value: INTENT_DELETE_CONNECTION,
+            })}
+            variant={dc.doubleCheck ? "destructive" : "ghost"}
+            status={fetcher.state !== "idle" ? "pending" : "idle"}
+          >
+            {fetcher.state === "idle" && <Trash size={16} />}
+          </StatusButton>
+        </TooltipTrigger>
+        <TooltipContent>Disconnect this account</TooltipContent>
+      </Tooltip>
+    </fetcher.Form>
+  );
+};
+
+const getConnections = async (userId: string) => {
+  const rawConnections = await db.query.connectionTable.findMany({
+    where: (connections, { eq }) => eq(connections.user_id, userId),
+    columns: {
+      id: true,
+      provider_id: true,
+      provider_name: true,
+      created_at: true,
+    },
+  });
+
+  const connections: Array<{
+    providerName: ProviderName;
+    connectionId: string;
+    connectionUserDisplayName: string;
+    profileLink?: string | null;
+    createdAtFormatted: string;
+  }> = [];
+
+  for (const connection of rawConnections) {
+    const parsed = ProviderNameSchema.safeParse(connection.provider_name);
+    if (!parsed.success) {
+      continue;
+    }
+
+    const { data: providerName } = parsed;
+
+    const connectionInfo = await resolveConnectionInfo({
+      providerName: parsed.data,
+      providerId: connection.provider_id,
+    });
+
+    connections.push({
+      ...connectionInfo,
+      providerName: providerName,
+      connectionId: connection.id,
+      createdAtFormatted: dayjs(connection.created_at).format(
+        "MM/DD/YYYY HH:mm:ss Z",
+      ),
+    });
+  }
+
+  return connections;
+};
+
+const INTENT_DELETE_CONNECTION = "INTENT_DELETE_CONNECTION";
+
+const deleteConnection = async ({ formData }: ActionArgs) => {
+  const connectionId = formData.get("connectionId");
+  if (typeof connectionId !== "string") {
+    throw new Response("Invalid connectionId", { status: 400 });
+  }
+
+  await db.delete(connectionTable).where(eq(connectionTable.id, connectionId));
+
+  return json({ status: "success" } as const);
+};

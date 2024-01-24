@@ -61,6 +61,7 @@ app.use(
         "font-src": ["'self'"],
         "frame-src": ["'self'"],
         "img-src": ["'self'", "data:", "avatars.githubusercontent.com"],
+        "form-action": ["'self'", "github.com/login/oauth/authorize"],
         "script-src": [
           "'strict-dynamic'",
           "'self'",

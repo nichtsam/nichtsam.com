@@ -10,7 +10,7 @@ import {
 import { useOptionalUser, useUser } from "@/utils/user.tsx";
 import { useRef } from "react";
 import { getUserImgSrc } from "@/routes/resources.user-images.$imageId.ts";
-import { LogOut } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { useIsPending } from "@/utils/misc.ts";
 import { cn } from "@/utils/ui.ts";
 
@@ -39,18 +39,34 @@ export const UserActions = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" className="flex gap-x-2">
-          <Avatar className="h-6 w-6">
-            <AvatarImage
-              src={getUserImgSrc(user.image?.id)}
-              alt={`The image of ${user.display_name}`}
-            />
-            <AvatarFallback>me</AvatarFallback>
-          </Avatar>
-          {user.display_name}
+        <Button asChild variant="outline">
+          <Link
+            className="flex gap-x-2"
+            to={`/settings/profile`}
+            onClick={(e) => e.preventDefault()}
+          >
+            <Avatar className="h-6 w-6">
+              <AvatarImage
+                src={getUserImgSrc(user.image?.id)}
+                alt={`The image of ${user.display_name}`}
+              />
+              <AvatarFallback>me</AvatarFallback>
+            </Avatar>
+            {user.display_name}
+          </Link>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
+        <DropdownMenuItem asChild>
+          <Link
+            prefetch="intent"
+            to={`/settings/profile`}
+            className="flex items-center gap-x-2"
+          >
+            <User size={16} /> Profile
+          </Link>
+        </DropdownMenuItem>
+
         <DropdownMenuItem
           asChild
           onSelect={(event) => {
