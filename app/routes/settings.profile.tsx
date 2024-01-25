@@ -4,14 +4,15 @@ import {
   AvatarImage,
 } from "@/components/ui/avatar.tsx";
 import { useUser } from "@/utils/user.tsx";
-import { Outlet } from "@remix-run/react";
+import { Form, Outlet } from "@remix-run/react";
 import { getUserImgSrc } from "./resources.user-images.$imageId.ts";
 import { useBreadcrumbs } from "@/utils/breadcrumb.tsx";
-import { ChevronRight, User } from "lucide-react";
+import { ChevronRight, LogOut, User } from "lucide-react";
 import { cn } from "@/utils/ui.ts";
-import { unvariant } from "@/utils/misc.ts";
+import { unvariant, useIsPending } from "@/utils/misc.ts";
 import { requireUserId } from "@/utils/auth.server.ts";
 import type { DataFunctionArgs } from "@remix-run/node";
+import { Button } from "@/components/ui/button.tsx";
 
 export const handle = {
   breadcrumb: (
@@ -42,6 +43,7 @@ export default function SettingProfile() {
 
 const UserHeader = () => {
   const user = useUser();
+  const isLoggingOut = useIsPending({ formAction: "/logout" });
 
   return (
     <div className="flex flex-col items-center gap-4">
@@ -56,6 +58,17 @@ const UserHeader = () => {
         <p className="text-muted-foreground">
           Joined {new Date(user.created_at).toLocaleDateString("en")}
         </p>
+        <Form action="/logout" method="POST">
+          <Button
+            variant="link"
+            type="submit"
+            className={cn("inline-flex w-full items-center gap-x-2", {
+              "animate-pulse": isLoggingOut,
+            })}
+          >
+            <LogOut size={16} /> Log out
+          </Button>
+        </Form>
       </div>
     </div>
   );
