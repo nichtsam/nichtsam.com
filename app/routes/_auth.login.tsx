@@ -43,7 +43,7 @@ export default function Login() {
           <CardDescription>Choose your path</CardDescription>
         </CardHeader>
         <CardContent>
-          <ul>
+          <ul className="flex flex-col gap-y-2">
             {providerNames.map((providerName) => (
               <li key={providerName}>
                 <ProviderConnectionForm providerName={providerName} />

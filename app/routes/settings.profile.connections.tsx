@@ -8,6 +8,8 @@ import {
   providerConfigs,
   ProviderNameSchema,
   type ProviderName,
+  ProviderConnectionForm,
+  providerNames as supportedProviderNames,
 } from "@/utils/connections.tsx";
 import { useDoubleCheck } from "@/utils/misc.ts";
 import { json } from "@remix-run/node";
@@ -41,6 +43,7 @@ import dayjs from "dayjs";
 import { validateCSRF } from "@/utils/csrf.server.ts";
 import { connectionTable } from "database/schema.ts";
 import { eq } from "drizzle-orm";
+import { without } from "ramda";
 
 export const handle = {
   breadcrumb: (
@@ -90,29 +93,50 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function ProfileConnections() {
   const data = useLoaderData<typeof loader>();
+  const connectedProviderNames = data.connections.map((c) => c.providerName);
+  const missingProviderNames = without(
+    connectedProviderNames,
+    supportedProviderNames,
+  );
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>Connections</CardTitle>
       </CardHeader>
-      <CardContent>
-        <Table>
-          <TableCaption>A list of your connections.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Provider</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Connected At</TableHead>
-              <TableHead className="w-12">Delete</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {data.connections.map((connection) => (
-              <ConnectionRow key={connection.connectionId} {...connection} />
+      <CardContent className="flex flex-col gap-y-8">
+        {data.connections.length > 0 && (
+          <Table>
+            <TableCaption>A list of your connections.</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Provider</TableHead>
+                <TableHead>Name</TableHead>
+                <TableHead>Connected At</TableHead>
+                <TableHead className="w-12">Delete</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.connections.map((connection) => (
+                <ConnectionRow key={connection.connectionId} {...connection} />
+              ))}
+            </TableBody>
+          </Table>
+        )}
+
+        {missingProviderNames.length > 0 && (
+          <div className="flex flex-col gap-y-4">
+            <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">
+              Connect with new platform
+            </h4>
+            {missingProviderNames.map((providerName) => (
+              <ProviderConnectionForm
+                key={providerName}
+                providerName={providerName}
+              />
             ))}
-          </TableBody>
-        </Table>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

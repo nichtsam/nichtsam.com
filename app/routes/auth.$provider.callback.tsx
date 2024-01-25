@@ -56,8 +56,10 @@ export const loader = async ({ request, params }: DataFunctionArgs) => {
       provider_name: providerName,
     });
 
-    // TODO: connection added
-    throw redirect("/connection-added", { headers: combineHeaders(headers) });
+    // TODO: toast help message
+    throw redirect("/settings/profile/connections", {
+      headers: combineHeaders(headers),
+    });
   }
 
   // * not logged in but connection bind to a user, login that user
