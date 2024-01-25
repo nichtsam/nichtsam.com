@@ -12,14 +12,12 @@ import {
 } from "@/utils/connections.server.ts";
 import { ProviderNameSchema } from "@/utils/connections.tsx";
 import { db } from "@/utils/db.server.ts";
-import { destroySession, sleep } from "@/utils/misc.ts";
+import { destroySession } from "@/utils/misc.ts";
 import { redirect, type DataFunctionArgs } from "@remix-run/node";
 import { connectionTable, sessionTable } from "database/schema.ts";
 import { onboardingCookie } from "@/utils/auth.onboarding.server.ts";
 
 export const loader = async ({ request, params }: DataFunctionArgs) => {
-  await sleep(2000);
-
   const providerName = ProviderNameSchema.parse(params.provider);
 
   const profile = await authenticator.authenticate(providerName, request, {
