@@ -143,9 +143,11 @@ export const logout = async ({
 export const login = async ({
   request,
   userId,
+  headers,
 }: {
   request: Request;
   userId: string;
+  headers?: Headers;
 }) => {
   const session = (
     await db
@@ -161,9 +163,9 @@ export const login = async ({
   authSession.set(SESSION_ID_KEY, session.id);
 
   throw redirect("/", {
-    headers: {
+    headers: combineHeaders(headers, {
       "set-cookie": await authSessionStorage.commitSession(authSession),
-    },
+    }),
   });
 };
 

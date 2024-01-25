@@ -12,7 +12,7 @@ import {
 } from "@/utils/connections.server.ts";
 import { ProviderNameSchema } from "@/utils/connections.tsx";
 import { db } from "@/utils/db.server.ts";
-import { destroySession } from "@/utils/misc.ts";
+import { combineHeaders, destroySession } from "@/utils/misc.ts";
 import { redirect, type DataFunctionArgs } from "@remix-run/node";
 import { connectionTable, sessionTable } from "database/schema.ts";
 import { onboardingCookie } from "@/utils/auth.onboarding.server.ts";
@@ -22,6 +22,10 @@ export const loader = async ({ request, params }: DataFunctionArgs) => {
 
   const profile = await authenticator.authenticate(providerName, request, {
     failureRedirect: "/login",
+  });
+
+  const headers = new Headers({
+    "set-cookie": await destroySession(connectionSessionStorage, request),
   });
 
   const existingConnection = await db.query.connectionTable.findFirst({
@@ -37,10 +41,10 @@ export const loader = async ({ request, params }: DataFunctionArgs) => {
   if (existingConnection && userId) {
     if (existingConnection.user_id === userId) {
       // TODO: connection already bound to user
-      throw redirect("/already-bound");
+      throw redirect("/already-bound", { headers: combineHeaders(headers) });
     } else {
       // TODO: connection already bound to another user
-      throw redirect("/already-taken");
+      throw redirect("/already-taken", { headers: combineHeaders(headers) });
     }
   }
 
@@ -53,7 +57,7 @@ export const loader = async ({ request, params }: DataFunctionArgs) => {
     });
 
     // TODO: connection added
-    throw redirect("/connection-added");
+    throw redirect("/connection-added", { headers: combineHeaders(headers) });
   }
 
   // * not logged in but connection bind to a user, login that user
@@ -72,9 +76,9 @@ export const loader = async ({ request, params }: DataFunctionArgs) => {
     authSession.set(SESSION_ID_KEY, session.id);
 
     throw redirect("/", {
-      headers: {
+      headers: combineHeaders(headers, {
         "set-cookie": await authSessionStorage.commitSession(authSession),
-      },
+      }),
     });
   }
 
@@ -90,33 +94,23 @@ export const loader = async ({ request, params }: DataFunctionArgs) => {
       user_id: emailOwner.id,
     });
 
-    await login({ request, userId: emailOwner.id });
+    await login({ request, userId: emailOwner.id, headers });
   }
 
   // TODO: new user, get them onboard
 
-  const headers = new Headers();
-
-  headers.append(
-    "set-cookie",
-    await onboardingCookie.serialize({
-      providerId: profile.id,
-      providerName,
-      profile: {
-        email: profile.email,
-        imageUrl: profile.imageUrl,
-        displayName: profile.name,
-        username: profile.username,
-      },
-    }),
-  );
-
-  headers.append(
-    "set-cookie",
-    await destroySession(connectionSessionStorage, request),
-  );
-
   throw redirect("/onboarding", {
-    headers,
+    headers: combineHeaders(headers, {
+      "set-cookie": await onboardingCookie.serialize({
+        providerId: profile.id,
+        providerName,
+        profile: {
+          email: profile.email,
+          imageUrl: profile.imageUrl,
+          displayName: profile.name,
+          username: profile.username,
+        },
+      }),
+    }),
   });
 };
