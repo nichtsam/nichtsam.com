@@ -40,7 +40,6 @@ export const ProviderConnectionForm = ({
       <StatusButton
         status={isPending ? "pending" : "idle"}
         type="submit"
-        size="icon"
         className="w-full"
       >
         <span className="inline-flex items-center gap-2">
