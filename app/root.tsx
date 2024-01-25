@@ -1,9 +1,10 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
 import appStylesheet from "@/styles/app.css";
-import {
-  json,
-  type LinksFunction,
-  type LoaderFunctionArgs,
+import { json } from "@remix-run/node";
+import type {
+  MetaFunction,
+  LinksFunction,
+  LoaderFunctionArgs,
 } from "@remix-run/node";
 import {
   Links,
@@ -36,6 +37,11 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesheet },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,
+];
+
+export const meta: MetaFunction = ({ data }) => [
+  { title: data ? "nichtsam.com" : "Error | nichtsam" },
+  { name: "description", content: `Samuel Jensen, aka nichtsam's website.` },
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
