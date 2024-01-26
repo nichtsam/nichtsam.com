@@ -4,40 +4,38 @@ FROM node:18-alpine as base
 RUN apk add --no-cache libc6-compat
 RUN corepack enable
 
-FROM base as dependencies
+FROM base as deps
 
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install
 
-FROM dependencies as prod-dependencies
+FROM deps as prod-deps
 
 RUN pnpm prune --prod
 
-FROM base as build
+FROM deps as build
 
-WORKDIR /app
-
-COPY --from=dependencies /app/node_modules /app/node_modules
 COPY . .
-
 RUN pnpm build
 
 FROM base
 
+ENV DATABASE_PATH /data/sqlite.db
 ENV NODE_ENV production
 ENV PORT 3000
 EXPOSE 3000
 
 WORKDIR /app
 
-COPY --from=prod-dependencies /app/node_modules /app/node_modules
+COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app/build
 COPY --from=build /app/public /app/public
 COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/server.js /app/server.js
 COPY --from=build /app/server-utils.js /app/server-utils.js
+COPY --from=build /app/drizzle /app/drizzle
 COPY ./content ./content
 
 CMD [ "pnpm","start" ]

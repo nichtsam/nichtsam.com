@@ -18,6 +18,9 @@ mkdirSync(path.dirname(env.DATABASE_PATH), { recursive: true });
 const betterSqlite = new Database(env.DATABASE_PATH);
 const db = drizzle(betterSqlite);
 
+console.log("Running database migrations...");
+console.time("🤖 Migrated");
 migrate(db, { migrationsFolder: "./drizzle" });
+console.timeEnd("🤖 Migrated");
 
 betterSqlite.close();
