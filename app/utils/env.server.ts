@@ -8,8 +8,12 @@ const envSchema = z.object({
     z.literal("production"),
     z.literal("test"),
   ]),
+
   SESSION_SECRET: z.string(),
   CSRF_SECRET: z.string().optional(),
+
+  DATABASE_PATH: z.string(),
+
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
 });

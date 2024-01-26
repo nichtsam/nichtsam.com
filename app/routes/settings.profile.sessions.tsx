@@ -17,7 +17,7 @@ import type {
 import { StatusButton } from "@/components/status-button.tsx";
 import { db } from "@/utils/db.server.ts";
 import { and, count, eq, not } from "drizzle-orm";
-import { sessionTable } from "database/schema.ts";
+import { sessionTable } from "drizzle/schema.ts";
 import { validateCSRF } from "@/utils/csrf.server.ts";
 import { getAuthSession, requireUserId } from "@/utils/auth.server.ts";
 

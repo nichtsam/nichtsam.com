@@ -41,7 +41,7 @@ import {
 } from "@/components/ui/tooltip.tsx";
 import dayjs from "dayjs";
 import { validateCSRF } from "@/utils/csrf.server.ts";
-import { connectionTable } from "database/schema.ts";
+import { connectionTable } from "drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import { without } from "ramda";
 

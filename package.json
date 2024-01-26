@@ -9,7 +9,7 @@
     "typecheck": "tsc",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "format": "prettier --write .",
-    "db:migrate": "tsx ./database/migrate.ts"
+    "db:migrate": "tsx ./drizzle/migrate.ts"
   },
   "dependencies": {
     "@conform-to/react": "0.9.1",

@@ -23,7 +23,7 @@ import {
   requireUserId,
 } from "@/utils/auth.server.ts";
 import { db } from "@/utils/db.server.ts";
-import { userTable } from "database/schema.ts";
+import { userTable } from "drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 
 export const meta: MetaFunction = () => {
