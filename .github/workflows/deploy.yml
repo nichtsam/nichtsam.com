@@ -55,10 +55,35 @@ jobs:
       - name: 🔎 Type check
         run: pnpm run typecheck
 
+  migration:
+    name: 🧬 Migration
+    runs-on: ubuntu-latest
+    needs: [lint, typecheck]
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v3
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📥 Download deps
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 8
+          run_install: true
+
+      - name: 🧬 Migration
+        run: pnpm run db:migrate
+        env:
+          TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
+          TURSO_DB_AUTH_TOKEN: ${{ secrets.TURSO_DB_AUTH_TOKEN }}
+
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
-    needs: [lint, typecheck]
+    needs: [lint, typecheck, migration]
 
     steps:
       - name: ⬇️ Checkout repo

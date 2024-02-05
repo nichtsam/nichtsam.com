@@ -9,11 +9,12 @@
     "typecheck": "tsc",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "format": "prettier --write .",
-    "db:migrate": "node ./drizzle/migrate.js"
+    "db:migrate": "tsx ./drizzle/migrate.ts"
   },
   "dependencies": {
     "@conform-to/react": "0.9.1",
     "@conform-to/zod": "0.9.1",
+    "@libsql/client": "0.4.3",
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-checkbox": "1.0.4",
     "@radix-ui/react-dialog": "1.0.5",
@@ -33,7 +34,6 @@
     "@remix-run/react": "2.3.1",
     "@remix-run/serve": "2.3.1",
     "address": "2.0.1",
-    "better-sqlite3": "9.2.2",
     "cachified": "3.5.4",
     "chalk": "5.3.0",
     "class-variance-authority": "0.7.0",

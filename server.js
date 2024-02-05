@@ -1,5 +1,4 @@
 import "dotenv/config";
-import "./drizzle/migrate.js";
 import * as fs from "node:fs";
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";

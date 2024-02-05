@@ -12,10 +12,11 @@ const envSchema = z.object({
   SESSION_SECRET: z.string(),
   CSRF_SECRET: z.string().optional(),
 
-  DATABASE_PATH: z.string(),
-
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
+
+  TURSO_DB_URL: z.string().url(),
+  TURSO_DB_AUTH_TOKEN: z.string(),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);

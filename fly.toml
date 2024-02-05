@@ -20,7 +20,3 @@ processes = ["app"]
 cpu_kind = "shared"
 cpus = 1
 memory_mb = 256
-
-[mounts]
-source = "data"
-destination = "/data"
