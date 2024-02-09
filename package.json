@@ -9,7 +9,9 @@
     "typecheck": "tsc",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
     "format": "prettier --write .",
-    "db:migrate": "tsx ./drizzle/migrate.ts"
+    "db:migrate": "tsx ./drizzle/migrate.ts",
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@conform-to/react": "0.9.1",
@@ -86,6 +88,7 @@
     "@types/react": "18.2.39",
     "@types/react-dom": "18.2.17",
     "@types/source-map-support": "0.5.10",
+    "@vitest/coverage-v8": "1.2.2",
     "autoprefixer": "10.4.17",
     "chokidar": "3.5.3",
     "drizzle-kit": "0.20.13",
@@ -96,7 +99,8 @@
     "tailwindcss": "3.3.5",
     "tailwindcss-animate": "1.0.7",
     "tsx": "4.7.0",
-    "typescript": "5.3.2"
+    "typescript": "5.3.2",
+    "vitest": "1.2.2"
   },
   "engines": {
     "node": "18",

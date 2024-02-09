@@ -11,3 +11,5 @@ node_modules
 *.local.*
 
 *.db
+
+coverage

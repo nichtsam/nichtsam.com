@@ -1,16 +1,17 @@
-node_modules
-
-/.cache
-/build
-/public/build
-.env
-
-/public/generated
-
-*.db
-
 .git
 .gitignore
 
 Dockerfile
 .dockerignore
+
+# gitignore
+node_modules
+/.cache
+/build
+/public/build
+.env
+/public/generated
+/local
+*.local.*
+*.db
+coverage

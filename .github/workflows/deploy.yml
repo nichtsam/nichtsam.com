@@ -55,10 +55,31 @@ jobs:
       - name: 🔎 Type check
         run: pnpm run typecheck
 
+  vitest:
+    name: ⚡ Vitest
+    runs-on: ubuntu-22.04
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+
+      - name: ⎔ Setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: 📥 Download deps
+        uses: pnpm/action-setup@v3
+        with:
+          version: 8
+          run_install: true
+
+      - name: ⚡ Run vitest
+        run: pnpm coverage
+
   migration:
     name: 🧬 Migration
     runs-on: ubuntu-latest
-    needs: [lint, typecheck]
+    needs: [lint, typecheck, vitest]
     steps:
       - name: ⬇️ Checkout repo
         uses: actions/checkout@v4
@@ -83,7 +104,7 @@ jobs:
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, migration]
+    needs: [lint, typecheck, vitest, migration]
 
     steps:
       - name: ⬇️ Checkout repo
