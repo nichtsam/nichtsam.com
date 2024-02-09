@@ -86,6 +86,7 @@
     "@types/react": "18.2.39",
     "@types/react-dom": "18.2.17",
     "@types/source-map-support": "0.5.10",
+    "autoprefixer": "10.4.17",
     "chokidar": "3.5.3",
     "drizzle-kit": "0.20.13",
     "eslint": "8.54.0",
