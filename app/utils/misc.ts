@@ -30,6 +30,7 @@ const reuseUsefulLoaderHeaders: HeadersFunction = ({
   return headers;
 };
 
+export const ERROR_FALL_BACK_MESSAGE = "Unknown Error";
 const getErrorMessage = (error: unknown) => {
   if (typeof error === "string") return error;
 
@@ -43,7 +44,7 @@ const getErrorMessage = (error: unknown) => {
   }
 
   console.error("Unable to get error message for error", error);
-  return "Unknown Error";
+  return ERROR_FALL_BACK_MESSAGE;
 };
 
 const combineHeaders = (
@@ -97,7 +98,7 @@ const useDelayedIsPending = ({
   return delayedIsPending;
 };
 
-const generateCallAll = <Args extends Array<unknown>>(
+export const generateCallAll = <Args extends Array<unknown>>(
   ...fns: Array<((...arg: Args) => unknown) | null | undefined>
 ) => {
   return (...arg: Args) => fns.forEach((fn) => fn?.(...arg));
