@@ -1,3 +1,6 @@
+# IDE specific
+.vscode
+
 node_modules
 
 /.cache
