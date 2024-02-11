@@ -2,11 +2,11 @@ import type { ActionFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { parse } from "@conform-to/zod";
 import { z } from "zod";
-import { setTheme } from "@/utils/theme.server.ts";
+import { setTheme } from "#app/utils/theme.server.ts";
 import {
   GeneralErrorBoundary,
   generalNotFoundHandler,
-} from "@/components/error-boundary.tsx";
+} from "#app/components/error-boundary.tsx";
 
 export const ThemeFormSchema = z.object({
   theme: z.enum(["system", "light", "dark"]),

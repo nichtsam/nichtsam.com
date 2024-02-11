@@ -3,15 +3,15 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card.tsx";
+} from "#app/components/ui/card.tsx";
 import {
   providerConfigs,
   ProviderNameSchema,
   type ProviderName,
   ProviderConnectionForm,
   providerNames as supportedProviderNames,
-} from "@/utils/connections.tsx";
-import { useDoubleCheck } from "@/utils/misc.ts";
+} from "#app/utils/connections.tsx";
+import { useDoubleCheck } from "#app/utils/misc.ts";
 import { json } from "@remix-run/node";
 import type {
   MetaFunction,
@@ -20,11 +20,11 @@ import type {
 } from "@remix-run/node";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { StatusButton } from "@/components/status-button.tsx";
+import { StatusButton } from "#app/components/status-button.tsx";
 import { Link as LinkIcon, Trash } from "lucide-react";
-import { requireUserId } from "@/utils/auth.server.ts";
-import { db } from "@/utils/db.server.ts";
-import { resolveConnectionInfo } from "@/utils/connections.server.ts";
+import { requireUserId } from "#app/utils/auth.server.ts";
+import { db } from "#app/utils/db.server.ts";
+import { resolveConnectionInfo } from "#app/utils/connections.server.ts";
 import {
   Table,
   TableBody,
@@ -33,15 +33,15 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table.tsx";
+} from "#app/components/ui/table.tsx";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@/components/ui/tooltip.tsx";
+} from "#app/components/ui/tooltip.tsx";
 import dayjs from "dayjs";
-import { validateCSRF } from "@/utils/csrf.server.ts";
-import { connectionTable } from "drizzle/schema.ts";
+import { validateCSRF } from "#app/utils/csrf.server.ts";
+import { connectionTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import { without } from "ramda";
 

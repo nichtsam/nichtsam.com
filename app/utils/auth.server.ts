@@ -8,8 +8,8 @@ import {
   userImageTable,
   sessionTable,
   userTable,
-} from "drizzle/schema.ts";
-import type { userSchema, connectionSchema } from "drizzle/schema.ts";
+} from "#drizzle/schema.ts";
+import type { userSchema, connectionSchema } from "#drizzle/schema.ts";
 import type { z } from "zod";
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
 import { env } from "./env.server.ts";

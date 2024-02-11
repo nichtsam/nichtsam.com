@@ -1,4 +1,4 @@
-import { cn } from "@/utils/ui.ts";
+import { cn } from "#app/utils/ui.ts";
 import { useNavigation } from "@remix-run/react";
 import { Loader2 } from "lucide-react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";

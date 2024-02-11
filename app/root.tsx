@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import appStylesheet from "@/styles/app.css";
+import appStylesheet from "#app/styles/app.css";
 import { json } from "@remix-run/node";
 import type {
   MetaFunction,
@@ -15,11 +15,11 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import { NavBar } from "@/components/navbar/index.tsx";
-import { Footer } from "@/components/footer.tsx";
+import { NavBar } from "#app/components/navbar/index.tsx";
+import { Footer } from "#app/components/footer.tsx";
 import clsx from "clsx";
-import { publicEnv, forceEnvValidation } from "@/utils/env.server.ts";
-import { FaviconMeta, faviconLinks } from "@/utils/favicon.tsx";
+import { publicEnv, forceEnvValidation } from "#app/utils/env.server.ts";
+import { FaviconMeta, faviconLinks } from "#app/utils/favicon.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
 import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
 import { getTheme, type Theme } from "./utils/theme.server.ts";

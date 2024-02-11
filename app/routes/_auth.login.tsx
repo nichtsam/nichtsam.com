@@ -4,9 +4,12 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card.tsx";
-import { requireAnonymous } from "@/utils/auth.server.ts";
-import { ProviderConnectionForm, providerNames } from "@/utils/connections.tsx";
+} from "#app/components/ui/card.tsx";
+import { requireAnonymous } from "#app/utils/auth.server.ts";
+import {
+  ProviderConnectionForm,
+  providerNames,
+} from "#app/utils/connections.tsx";
 import type {
   DataFunctionArgs,
   HeadersFunction,

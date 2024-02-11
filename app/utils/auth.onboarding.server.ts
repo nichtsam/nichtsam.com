@@ -2,7 +2,7 @@ import { createCookie } from "@remix-run/node";
 import { env } from "./env.server.ts";
 import { unvariant } from "./misc.ts";
 import { z } from "zod";
-import { onboardingFormSchema } from "@/routes/_auth.onboarding.tsx";
+import { onboardingFormSchema } from "#app/routes/_auth.onboarding.tsx";
 import { createTypedCookie } from "remix-utils/typed-cookie";
 
 export const onboardingCookie = createTypedCookie({

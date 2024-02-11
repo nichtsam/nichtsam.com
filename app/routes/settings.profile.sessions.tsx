@@ -4,8 +4,8 @@ import {
   CardContent,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card.tsx";
-import { useDoubleCheck } from "@/utils/misc.ts";
+} from "#app/components/ui/card.tsx";
+import { useDoubleCheck } from "#app/utils/misc.ts";
 import { BookUser, KeyRound, LogOut } from "lucide-react";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { json } from "@remix-run/node";
@@ -14,12 +14,12 @@ import type {
   ActionFunctionArgs,
   DataFunctionArgs,
 } from "@remix-run/node";
-import { StatusButton } from "@/components/status-button.tsx";
-import { db } from "@/utils/db.server.ts";
+import { StatusButton } from "#app/components/status-button.tsx";
+import { db } from "#app/utils/db.server.ts";
 import { and, count, eq, not } from "drizzle-orm";
-import { sessionTable } from "drizzle/schema.ts";
-import { validateCSRF } from "@/utils/csrf.server.ts";
-import { getAuthSession, requireUserId } from "@/utils/auth.server.ts";
+import { sessionTable } from "#drizzle/schema.ts";
+import { validateCSRF } from "#app/utils/csrf.server.ts";
+import { getAuthSession, requireUserId } from "#app/utils/auth.server.ts";
 
 export const handle = {
   breadcrumb: (

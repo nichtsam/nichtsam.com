@@ -7,12 +7,12 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu.tsx";
-import { useOptionalUser, useUser } from "@/utils/user.tsx";
+import { useOptionalUser, useUser } from "#app/utils/user.tsx";
 import { useRef } from "react";
-import { getUserImgSrc } from "@/routes/resources.user-images.$imageId.ts";
+import { getUserImgSrc } from "#app/routes/resources.user-images.$imageId.ts";
 import { LogOut, User } from "lucide-react";
-import { useIsPending } from "@/utils/misc.ts";
-import { cn } from "@/utils/ui.ts";
+import { useIsPending } from "#app/utils/misc.ts";
+import { cn } from "#app/utils/ui.ts";
 
 export const UserButton = () => {
   const maybeUser = useOptionalUser();

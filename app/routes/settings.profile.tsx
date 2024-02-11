@@ -2,17 +2,17 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar.tsx";
-import { useUser } from "@/utils/user.tsx";
+} from "#app/components/ui/avatar.tsx";
+import { useUser } from "#app/utils/user.tsx";
 import { Form, Outlet } from "@remix-run/react";
 import { getUserImgSrc } from "./resources.user-images.$imageId.ts";
-import { useBreadcrumbs } from "@/utils/breadcrumb.tsx";
+import { useBreadcrumbs } from "#app/utils/breadcrumb.tsx";
 import { ChevronRight, LogOut, User } from "lucide-react";
-import { cn } from "@/utils/ui.ts";
-import { unvariant, useIsPending } from "@/utils/misc.ts";
-import { requireUserId } from "@/utils/auth.server.ts";
+import { cn } from "#app/utils/ui.ts";
+import { unvariant, useIsPending } from "#app/utils/misc.ts";
+import { requireUserId } from "#app/utils/auth.server.ts";
 import type { DataFunctionArgs } from "@remix-run/node";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "#app/components/ui/button.tsx";
 
 export const handle = {
   breadcrumb: (

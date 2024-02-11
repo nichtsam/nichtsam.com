@@ -5,13 +5,13 @@ import type {
   MetaFunction,
 } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { getBlogPost } from "@/utils/blog.server.ts";
-import { useMdxComponent } from "@/utils/mdx.tsx";
-import { compileMdxCached } from "@/utils/compile-mdx.server.ts";
+import { getBlogPost } from "#app/utils/blog.server.ts";
+import { useMdxComponent } from "#app/utils/mdx.tsx";
+import { compileMdxCached } from "#app/utils/compile-mdx.server.ts";
 import {
   GeneralErrorBoundary,
   generalNotFoundHandler,
-} from "@/components/error-boundary.tsx";
+} from "#app/components/error-boundary.tsx";
 
 export const meta: MetaFunction = () => {
   return [

@@ -1,22 +1,22 @@
-import { CheckboxField, ErrorList, Field } from "@/components/forms.tsx";
-import { StatusButton } from "@/components/status-button.tsx";
+import { CheckboxField, ErrorList, Field } from "#app/components/forms.tsx";
+import { StatusButton } from "#app/components/status-button.tsx";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card.tsx";
+} from "#app/components/ui/card.tsx";
 import {
   SESSION_ID_KEY,
   authSessionStorage,
   getAuthSession,
   requireAnonymous,
   signUpWithConnection,
-} from "@/utils/auth.server.ts";
-import { db } from "@/utils/db.server.ts";
-import { destroyCookie, useIsPending } from "@/utils/misc.ts";
-import { onboardingCookie } from "@/utils/auth.onboarding.server.ts";
+} from "#app/utils/auth.server.ts";
+import { db } from "#app/utils/db.server.ts";
+import { destroyCookie, useIsPending } from "#app/utils/misc.ts";
+import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
 import type { Submission } from "@conform-to/react";
 import { conform, useForm } from "@conform-to/react";
 import { getFieldsetConstraint, parse } from "@conform-to/zod";

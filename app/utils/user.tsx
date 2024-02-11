@@ -1,6 +1,6 @@
-import type { loader as rootLoader } from "@/root.tsx";
+import type { loader as rootLoader } from "#app/root.tsx";
 import { Link, useRouteLoaderData } from "@remix-run/react";
-import { Button } from "@/components/ui/button.tsx";
+import { Button } from "#app/components/ui/button.tsx";
 import type { SerializeFrom } from "@remix-run/node";
 
 export const isUser = (

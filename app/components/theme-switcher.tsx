@@ -1,12 +1,12 @@
 import { LaptopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useFetcher } from "@remix-run/react";
 import { useForm, conform } from "@conform-to/react";
-import type { action as setThemeAction } from "@/routes/action.set-theme.tsx";
-import { useOptimisticThemeMode } from "@/utils/theme.ts";
-import { useRequestInfo } from "@/utils/request-info.ts";
+import type { action as setThemeAction } from "#app/routes/action.set-theme.tsx";
+import { useOptimisticThemeMode } from "#app/utils/theme.ts";
+import { useRequestInfo } from "#app/utils/request-info.ts";
 import { Button } from "./ui/button.tsx";
 import { useEffect, useState } from "react";
-import { unvariant } from "@/utils/misc.ts";
+import { unvariant } from "#app/utils/misc.ts";
 
 export const ThemeSwitcher = () => {
   const [clientJavascriptEnable, setClientJavascriptEnable] = useState(false);

@@ -8,7 +8,7 @@
 import {
   GeneralErrorBoundary,
   generalNotFoundHandler,
-} from "@/components/error-boundary.tsx";
+} from "#app/components/error-boundary.tsx";
 
 export async function loader() {
   throw new Response("Not found", { status: 404 });

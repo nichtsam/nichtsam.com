@@ -1,4 +1,4 @@
-import { logout } from "@/utils/auth.server.ts";
+import { logout } from "#app/utils/auth.server.ts";
 import type { DataFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 
 export async function loader({ request }: LoaderFunctionArgs) {

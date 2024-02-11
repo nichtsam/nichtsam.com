@@ -5,17 +5,17 @@ import {
   getSessionExpirationDate,
   getUserId,
   login,
-} from "@/utils/auth.server.ts";
+} from "#app/utils/auth.server.ts";
 import {
   authenticator,
   connectionSessionStorage,
-} from "@/utils/connections.server.ts";
-import { ProviderNameSchema } from "@/utils/connections.tsx";
-import { db } from "@/utils/db.server.ts";
-import { combineHeaders, destroySession } from "@/utils/misc.ts";
+} from "#app/utils/connections.server.ts";
+import { ProviderNameSchema } from "#app/utils/connections.tsx";
+import { db } from "#app/utils/db.server.ts";
+import { combineHeaders, destroySession } from "#app/utils/misc.ts";
 import { redirect, type DataFunctionArgs } from "@remix-run/node";
-import { connectionTable, sessionTable } from "drizzle/schema.ts";
-import { onboardingCookie } from "@/utils/auth.onboarding.server.ts";
+import { connectionTable, sessionTable } from "#drizzle/schema.ts";
+import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
 
 export const loader = async ({ request, params }: DataFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);

@@ -6,9 +6,9 @@ import {
 } from "@remix-run/node";
 import { Link, useFetcher } from "@remix-run/react";
 import { Trash } from "lucide-react";
-import { StatusButton } from "@/components/status-button.tsx";
-import { useDoubleCheck } from "@/utils/misc.ts";
-import { validateCSRF } from "@/utils/csrf.server.ts";
+import { StatusButton } from "#app/components/status-button.tsx";
+import { useDoubleCheck } from "#app/utils/misc.ts";
+import { validateCSRF } from "#app/utils/csrf.server.ts";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import {
   NavigationMenu,
@@ -16,14 +16,14 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu.tsx";
+} from "#app/components/ui/navigation-menu.tsx";
 import {
   authSessionStorage,
   getAuthSession,
   requireUserId,
-} from "@/utils/auth.server.ts";
-import { db } from "@/utils/db.server.ts";
-import { userTable } from "drizzle/schema.ts";
+} from "#app/utils/auth.server.ts";
+import { db } from "#app/utils/db.server.ts";
+import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 
 export const meta: MetaFunction = () => {

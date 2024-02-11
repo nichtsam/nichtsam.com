@@ -1,7 +1,7 @@
 import { useFetchers } from "@remix-run/react";
 import { useRequestInfo } from "./request-info.ts";
 import { parse } from "@conform-to/zod";
-import { ThemeFormSchema } from "@/routes/action.set-theme.tsx";
+import { ThemeFormSchema } from "#app/routes/action.set-theme.tsx";
 import { useHints } from "./client-hints.tsx";
 
 export const useTheme = () => {

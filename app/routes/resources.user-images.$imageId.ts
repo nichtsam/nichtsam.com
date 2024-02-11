@@ -1,5 +1,5 @@
-import { db } from "@/utils/db.server.ts";
-import { unvariant } from "@/utils/misc.ts";
+import { db } from "#app/utils/db.server.ts";
+import { unvariant } from "#app/utils/misc.ts";
 import { type LoaderFunctionArgs } from "@remix-run/node";
 
 export const getUserImgSrc = (imageId?: string | null) =>

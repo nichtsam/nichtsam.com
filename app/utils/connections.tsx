@@ -1,4 +1,4 @@
-import { StatusButton } from "@/components/status-button.tsx";
+import { StatusButton } from "#app/components/status-button.tsx";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Form } from "@remix-run/react";
 import { GitHubStrategyDefaultName } from "remix-auth-github";

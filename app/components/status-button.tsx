@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import type { ButtonProps } from "./ui/button.tsx";
 import { Button } from "./ui/button.tsx";
-import { cn } from "@/utils/ui.ts";
+import { cn } from "#app/utils/ui.ts";
 import { CrossCircledIcon, UpdateIcon } from "@radix-ui/react-icons";
 
 export interface StatusButtonProps extends ButtonProps {

@@ -1,5 +1,5 @@
 import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
-import { ExternalLink } from "@/components/link.tsx";
+import { ExternalLink } from "#app/components/link.tsx";
 import {
   NavigationMenu,
   NavigationMenuItem,
