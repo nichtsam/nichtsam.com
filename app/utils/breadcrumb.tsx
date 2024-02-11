@@ -1,47 +1,71 @@
+import type { UIMatch } from "@remix-run/react";
 import { Link, useMatches } from "@remix-run/react";
 import { isValidElement, type ReactNode } from "react";
 import { z } from "zod";
 
-export const breadcrumbSchema = z.custom<
+const breadcrumbSchema = z.custom<
   Exclude<ReactNode, boolean | null | undefined>
 >((data) => !!data && (isValidElement(data) || typeof data !== "object"));
-
-export const breadcrumbHandleSchema = z.object({
-  handle: z.object({ breadcrumb: breadcrumbSchema }),
+const breadcrumbHandleSchema = z.object({ breadcrumb: breadcrumbSchema });
+const breadcrumbMatchSchema = z.object({
+  handle: breadcrumbHandleSchema,
 });
+export type BreadcrumbHandle = z.infer<typeof breadcrumbHandleSchema>;
 
-export const useBreadcrumbs = (args?: {
+interface BreadcrumbsOptions {
   skip?: number;
-  minCrumbs?: number;
-}) => {
-  const { skip = 0, minCrumbs = 0 } = args ?? {};
+  minBreadcrumbs?: number;
+}
 
+export const useBreadcrumbs = (args?: BreadcrumbsOptions) => {
   const matches = useMatches();
 
-  const breadcrumbs = [];
+  return matchesToBreadcrumbs(matches, args);
+};
 
-  for (let i = skip; i < matches.length; i += 1) {
+export const matchesToBreadcrumbs = (
+  matches: UIMatch[],
+  { skip = 0, minBreadcrumbs = 0 }: BreadcrumbsOptions = {},
+) => {
+  const rawBreadcrumbs = matchesToRawBreadcrumbs(matches);
+  rawBreadcrumbs.splice(0, skip);
+
+  const noBreadcrumbs = rawBreadcrumbs.length === 0;
+  const notEnoughBreadcrumbs = rawBreadcrumbs.length < minBreadcrumbs;
+
+  if (noBreadcrumbs || notEnoughBreadcrumbs) {
+    return null;
+  }
+
+  return rawBreadcrumbs.map(({ id, pathname, breadcrumb }, index) => ({
+    id,
+    element:
+      index === rawBreadcrumbs.length - 1 ? (
+        breadcrumb
+      ) : (
+        <Link to={pathname}>{breadcrumb}</Link>
+      ),
+  }));
+};
+
+const matchesToRawBreadcrumbs = (matches: UIMatch[]) => {
+  const rawBreadcrumbs = [];
+
+  for (let i = 0; i < matches.length; i += 1) {
     const match = matches[i]!;
 
-    const result = breadcrumbHandleSchema.safeParse(match);
+    const result = breadcrumbMatchSchema.safeParse(match);
+
     if (!result.success) {
       continue;
     }
 
-    breadcrumbs.push({
+    rawBreadcrumbs.push({
       id: match.id,
-      element:
-        i === matches.length - 1 ? (
-          result.data.handle.breadcrumb
-        ) : (
-          <Link to={match.pathname}>{result.data.handle.breadcrumb}</Link>
-        ),
+      pathname: match.pathname,
+      breadcrumb: result.data.handle.breadcrumb,
     });
   }
 
-  if (breadcrumbs.length < minCrumbs) {
-    return null;
-  }
-
-  return breadcrumbs;
+  return rawBreadcrumbs;
 };

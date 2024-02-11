@@ -75,7 +75,7 @@ const UserHeader = () => {
 };
 
 const Breadcrumbs = () => {
-  const breadcrumbs = useBreadcrumbs({ minCrumbs: 2 });
+  const breadcrumbs = useBreadcrumbs({ minBreadcrumbs: 2 });
 
   if (!breadcrumbs) {
     return null;
