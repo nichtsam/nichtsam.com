@@ -10,7 +10,6 @@ const breadcrumbHandleSchema = z.object({ breadcrumb: breadcrumbSchema });
 const breadcrumbMatchSchema = z.object({
   handle: breadcrumbHandleSchema,
 });
-export type BreadcrumbHandle = z.infer<typeof breadcrumbHandleSchema>;
 
 interface BreadcrumbsOptions {
   skip?: number;
@@ -23,7 +22,7 @@ export const useBreadcrumbs = (args?: BreadcrumbsOptions) => {
   return matchesToBreadcrumbs(matches, args);
 };
 
-export const matchesToBreadcrumbs = (
+const matchesToBreadcrumbs = (
   matches: UIMatch[],
   { skip = 0, minBreadcrumbs = 0 }: BreadcrumbsOptions = {},
 ) => {
