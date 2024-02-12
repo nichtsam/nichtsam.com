@@ -6,7 +6,7 @@
 
 ## System Requirement
 
-- [Node.js](https://nodejs.org/) >= 18
+- [Node.js](https://nodejs.org/) >= 20
 - [Pnpm](https://pnpm.io/) >= 8
 
 ## Development
