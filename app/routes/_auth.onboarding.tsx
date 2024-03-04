@@ -197,17 +197,7 @@ export default function OnBoarding() {
               help="A unique identifier for your account."
             />
 
-            <CheckboxField
-              inputProps={{
-                ...conform.input(fields.rememberMe, {
-                  type: "checkbox",
-                  hidden: true,
-                }),
-              }}
-              labelProps={{ children: "Remember Me" }}
-              errors={fields.rememberMe.errors}
-              help="We will remember you for a while."
-            />
+            {/* TODO Remember Me Checkbox */}
 
             <ErrorList errorId={form.errorId} errors={form.errors} />
 
