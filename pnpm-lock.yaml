@@ -103,7 +103,7 @@ dependencies:
     version: 16.3.2
   drizzle-orm:
     specifier: 0.29.1
-    version: 0.29.1(@libsql/client@0.4.3)(@types/better-sqlite3@7.6.8)
+    version: 0.29.1(@libsql/client@0.4.3)
   drizzle-zod:
     specifier: 0.5.1
     version: 0.5.1(drizzle-orm@0.29.1)(zod@3.22.4)
@@ -202,9 +202,6 @@ devDependencies:
   '@testing-library/react':
     specifier: 14.2.1
     version: 14.2.1(react-dom@18.2.0)(react@18.2.0)
-  '@types/better-sqlite3':
-    specifier: 7.6.8
-    version: 7.6.8
   '@types/compression':
     specifier: 1.7.5
     version: 1.7.5
@@ -3384,11 +3381,6 @@ packages:
     resolution: {integrity: sha512-XTIieEY+gvJ39ChLcB4If5zHtPxt3Syj5rgZR+e1ctpmK8NjPf0zFqsz4JpLJT0xla9GFDKjy8Cpu331nrmE1Q==}
     dev: true
 
-  /@types/better-sqlite3@7.6.8:
-    resolution: {integrity: sha512-ASndM4rdGrzk7iXXqyNC4fbwt4UEjpK0i3j4q4FyeQrLAthfB6s7EF135ZJE0qQxtKIMFwmyT6x0switET7uIw==}
-    dependencies:
-      '@types/node': 20.10.1
-
   /@types/body-parser@1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
@@ -4859,7 +4851,7 @@ packages:
       - supports-color
     dev: true
 
-  /drizzle-orm@0.29.1(@libsql/client@0.4.3)(@types/better-sqlite3@7.6.8):
+  /drizzle-orm@0.29.1(@libsql/client@0.4.3):
     resolution: {integrity: sha512-yItc4unfHnk8XkDD3/bdC63vdboTY7e7I03lCF1OJYABXSIfQYU9BFTQJXMMovVeb3T1/OJWwfW/70T1XPnuUA==}
     peerDependencies:
       '@aws-sdk/client-rds-data': '>=3'
@@ -4922,7 +4914,6 @@ packages:
         optional: true
     dependencies:
       '@libsql/client': 0.4.3
-      '@types/better-sqlite3': 7.6.8
     dev: false
 
   /drizzle-zod@0.5.1(drizzle-orm@0.29.1)(zod@3.22.4):
@@ -4931,7 +4922,7 @@ packages:
       drizzle-orm: '>=0.23.13'
       zod: '*'
     dependencies:
-      drizzle-orm: 0.29.1(@libsql/client@0.4.3)(@types/better-sqlite3@7.6.8)
+      drizzle-orm: 0.29.1(@libsql/client@0.4.3)
       zod: 3.22.4
     dev: false
 
