@@ -1,6 +1,6 @@
 import { useFetchers } from "@remix-run/react";
 import { useRequestInfo } from "./request-info.ts";
-import { parse } from "@conform-to/zod";
+import { parseWithZod } from "@conform-to/zod";
 import { ThemeFormSchema } from "#app/routes/action.set-theme.tsx";
 import { useHints } from "./client-hints.tsx";
 
@@ -23,9 +23,12 @@ export function useOptimisticThemeMode() {
   );
 
   if (themeFetcher && themeFetcher.formData) {
-    const submission = parse(themeFetcher.formData, {
+    const submission = parseWithZod(themeFetcher.formData, {
       schema: ThemeFormSchema,
     });
-    return submission.value?.theme;
+
+    if (submission.status === "success") {
+      return submission.value.theme;
+    }
   }
 }

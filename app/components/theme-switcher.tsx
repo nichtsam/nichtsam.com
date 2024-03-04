@@ -1,6 +1,6 @@
 import { LaptopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
 import { useFetcher } from "@remix-run/react";
-import { useForm, conform } from "@conform-to/react";
+import { useForm, getFormProps } from "@conform-to/react";
 import type { action as setThemeAction } from "#app/routes/action.set-theme.tsx";
 import { useOptimisticThemeMode } from "#app/utils/theme.ts";
 import { useRequestInfo } from "#app/utils/request-info.ts";
@@ -18,7 +18,7 @@ export const ThemeSwitcher = () => {
 
   const [form] = useForm({
     id: "theme-switch",
-    lastSubmission: fetcher.data?.submission,
+    lastResult: fetcher.data?.result,
   });
 
   const optimisticMode = useOptimisticThemeMode();
@@ -36,12 +36,14 @@ export const ThemeSwitcher = () => {
   }, []);
 
   return (
-    <fetcher.Form method="POST" action="/action/set-theme" {...form.props}>
+    <fetcher.Form
+      method="POST"
+      action="/action/set-theme"
+      {...getFormProps(form)}
+    >
       <input type="hidden" name="theme" value={nextMode} />
 
       <Button
-        name={conform.INTENT}
-        value="update-theme"
         type="submit"
         size="icon"
         variant="ghost"

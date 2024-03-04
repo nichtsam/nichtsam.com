@@ -6,11 +6,11 @@ settings:
 
 dependencies:
   '@conform-to/react':
-    specifier: 0.9.1
-    version: 0.9.1(react@18.2.0)
+    specifier: 1.0.2
+    version: 1.0.2(react@18.2.0)
   '@conform-to/zod':
-    specifier: 0.9.1
-    version: 0.9.1(@conform-to/dom@0.9.1)(zod@3.22.4)
+    specifier: 1.0.2
+    version: 1.0.2(zod@3.22.4)
   '@libsql/client':
     specifier: 0.4.3
     version: 0.4.3
@@ -830,26 +830,25 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@conform-to/dom@0.9.1:
-    resolution: {integrity: sha512-+T6QgpLDPZ29j4y5nWW61WMe8qj0cQBymyzbi5sq1f3CcBO3wBbR0VPI7mbm+rLoErHWM3ghhdNlIkw0UPoLLA==}
+  /@conform-to/dom@1.0.2:
+    resolution: {integrity: sha512-iIY7xwkAFboxwE+Y+W7D60RLqFIP2YdRzu5SY+TXBJPPuQTUxcW7ia4YVV/y9SSc105c9mLpNgh2jGKiulGCBQ==}
     dev: false
 
-  /@conform-to/react@0.9.1(react@18.2.0):
-    resolution: {integrity: sha512-SibYHk86IFh60LRPk4aJHJOgyLTgb3JYphKvG4vcemyuntdOwncd5YM/GDoccVzeCTmJi4Os/fDtOOAaDcSa9w==}
+  /@conform-to/react@1.0.2(react@18.2.0):
+    resolution: {integrity: sha512-0kG6sDmmwSQ9ooyhXL82wR6bnScGwH7YCBgbgDQOBEqdTJW8x0P8ETpigdHW1rdIEq5uMubiMs7eps3Qf4F8Og==}
     peerDependencies:
-      react: '>=16.8'
+      react: '>=18'
     dependencies:
-      '@conform-to/dom': 0.9.1
+      '@conform-to/dom': 1.0.2
       react: 18.2.0
     dev: false
 
-  /@conform-to/zod@0.9.1(@conform-to/dom@0.9.1)(zod@3.22.4):
-    resolution: {integrity: sha512-4hWBGzRpSd4RrlBFRXjS6QQ2MWFpMZDbDwz8H/xiq38Xl5yaL1RSZMhOJ4pmsmy8CIKghs78qvaD8ltTFlrNvQ==}
+  /@conform-to/zod@1.0.2(zod@3.22.4):
+    resolution: {integrity: sha512-cC5fKDNj+lFnVYCCYHRNjTfck3X8Hmj8gmP/++8cqjFDO/4+NNXICP/+DpppZKl5XMqqCzUVAZkM4/PzG2qjFQ==}
     peerDependencies:
-      '@conform-to/dom': 0.9.1
       zod: ^3.21.0
     dependencies:
-      '@conform-to/dom': 0.9.1
+      '@conform-to/dom': 1.0.2
       zod: 3.22.4
     dev: false
 

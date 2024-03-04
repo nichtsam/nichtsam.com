@@ -14,8 +14,8 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@conform-to/react": "0.9.1",
-    "@conform-to/zod": "0.9.1",
+    "@conform-to/react": "1.0.2",
+    "@conform-to/zod": "1.0.2",
     "@libsql/client": "0.4.3",
     "@radix-ui/react-avatar": "1.0.4",
     "@radix-ui/react-checkbox": "1.0.4",

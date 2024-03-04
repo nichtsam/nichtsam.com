@@ -1,4 +1,4 @@
-import { CheckboxField, ErrorList, Field } from "#app/components/forms.tsx";
+import { ErrorList, Field } from "#app/components/forms.tsx";
 import { StatusButton } from "#app/components/status-button.tsx";
 import {
   Card,
@@ -17,9 +17,9 @@ import {
 import { db } from "#app/utils/db.server.ts";
 import { destroyCookie, useIsPending } from "#app/utils/misc.ts";
 import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
-import type { Submission } from "@conform-to/react";
-import { conform, useForm } from "@conform-to/react";
-import { getFieldsetConstraint, parse } from "@conform-to/zod";
+import type { SubmissionResult } from "@conform-to/react";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import type { ActionFunctionArgs, DataFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
@@ -54,11 +54,10 @@ export const loader = async ({ request }: DataFunctionArgs) => {
 
   return json({
     email: profile.email,
-    prefillSubmission: {
-      intent: "",
-      payload: prefill,
+    prefillResult: {
+      initialValue: prefill,
       error: {},
-    } satisfies Submission,
+    } satisfies SubmissionResult,
   });
 };
 
@@ -66,7 +65,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
   const { providerId, providerName, profile } = await requireData(request);
   const formData = await request.formData();
 
-  const submission = await parse(formData, {
+  const submission = await parseWithZod(formData, {
     schema: onboardingFormSchema
       .refine(
         async (data) => {
@@ -99,12 +98,11 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     async: true,
   });
 
-  if (submission.intent !== "submit") {
-    return json({ status: "idle", submission } as const);
-  }
-
-  if (!submission.value?.session) {
-    return json({ status: "error", submission } as const, { status: 400 });
+  if (submission.status !== "success") {
+    return json(
+      { result: submission.reply() },
+      { status: submission.status === "error" ? 400 : 200 },
+    );
   }
 
   const { session, rememberMe } = submission.value;
@@ -134,11 +132,11 @@ export default function OnBoarding() {
 
   const [form, fields] = useForm({
     id: "onboarding-provider-form",
-    constraint: getFieldsetConstraint(onboardingFormSchema),
-    lastSubmission: actionData?.submission ?? data.prefillSubmission,
+    constraint: getZodConstraint(onboardingFormSchema),
+    lastResult: actionData?.result ?? data.prefillResult,
     shouldRevalidate: "onBlur",
     onValidate: ({ formData }) =>
-      parse(formData, { schema: onboardingFormSchema }),
+      parseWithZod(formData, { schema: onboardingFormSchema }),
   });
 
   return (
@@ -153,11 +151,11 @@ export default function OnBoarding() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form method="post" {...form.props}>
-            {fields.imageUrl.defaultValue ? (
+          <Form method="post" {...getFormProps(form)}>
+            {fields.imageUrl.initialValue ? (
               <div className="mb-8 flex flex-col items-center justify-start gap-2">
                 <img
-                  src={fields.imageUrl.defaultValue}
+                  src={fields.imageUrl.initialValue}
                   alt={`avatar of you`}
                   className="h-24 w-24 rounded-full"
                 />
@@ -166,30 +164,27 @@ export default function OnBoarding() {
                 </p>
 
                 <input
-                  {...conform.input(fields.imageUrl, { type: "hidden" })}
+                  {...getInputProps(fields.imageUrl, { type: "hidden" })}
                 />
               </div>
             ) : null}
-
             <div className="text-sm">
               <p className="font-medium leading-none">Email</p>
               <p className="overflow-x-auto font-light">{data.email}</p>
             </div>
-
             <Field
               labelProps={{ children: "How should we call you?" }}
               inputProps={{
-                ...conform.input(fields.displayName),
+                ...getInputProps(fields.displayName, { type: "text" }),
                 autoComplete: "name",
               }}
               errors={fields.displayName.errors}
               help="Name for display purpose."
             />
-
             <Field
               labelProps={{ children: "Choose a username!" }}
               inputProps={{
-                ...conform.input(fields.username),
+                ...getInputProps(fields.username, { type: "text" }),
                 autoComplete: "username",
                 className: "lowercase",
               }}
@@ -200,11 +195,10 @@ export default function OnBoarding() {
             {/* TODO Remember Me Checkbox */}
 
             <ErrorList errorId={form.errorId} errors={form.errors} />
-
             <StatusButton
               type="submit"
               className="mt-6 w-full"
-              status={isPending ? "pending" : actionData?.status ?? "idle"}
+              status={isPending ? "pending" : form.status ?? "idle"}
               disabled={isPending}
             >
               Go onboard!
