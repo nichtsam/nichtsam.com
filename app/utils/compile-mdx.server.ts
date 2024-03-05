@@ -10,11 +10,11 @@ import { cachified } from "cachified";
 import { lruCache } from "./cache.server.ts";
 import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __filename = fileURLToPath(import.meta.url); // build/server/index.js
+const __dirname = dirname(__filename); // build/server/
 
-const root = resolve(__dirname, "../");
-const publicDir = resolve(root, "./public");
+const rootPath = resolve(__dirname, "../../");
+const assetsDirPath = resolve(rootPath, "./build/client/assets/");
 
 export interface BundleMdx {
   source: string;
@@ -50,8 +50,8 @@ export const compileMdx = async ({ source, files }: BundleMdx) => {
         ".jpeg": "file",
         ".gif": "file",
       };
-      options.outdir = resolve(publicDir, "./generated/assets");
-      options.publicPath = "/generated/assets";
+      options.outdir = resolve(assetsDirPath, "./blog/");
+      options.publicPath = "/assets/blog/";
       options.write = true;
 
       return options;

@@ -1,5 +1,4 @@
-import { cssBundleHref } from "@remix-run/css-bundle";
-import appStylesheet from "#app/styles/app.css";
+import appStylesheet from "#app/styles/app.css?url";
 import { json } from "@remix-run/node";
 import type {
   MetaFunction,
@@ -8,7 +7,6 @@ import type {
 } from "@remix-run/node";
 import {
   Links,
-  LiveReload,
   Meta,
   Outlet,
   Scripts,
@@ -33,7 +31,6 @@ import { csrf } from "./utils/csrf.server.ts";
 import { AuthenticityTokenProvider } from "remix-utils/csrf/react";
 
 export const links: LinksFunction = () => [
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
   { rel: "stylesheet", href: appStylesheet },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,
@@ -126,13 +123,12 @@ function Document({
         />
         <Scripts nonce={nonce} />
         <ScrollRestoration nonce={nonce} />
-        <LiveReload nonce={nonce} />
       </body>
     </html>
   );
 }
 
-export function App() {
+function App() {
   const data = useLoaderData<typeof loader>();
   const nonce = useNonce();
   const env = data.env;

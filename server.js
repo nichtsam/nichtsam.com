@@ -1,8 +1,7 @@
 import "dotenv/config";
-import * as fs from "node:fs";
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";
-import { broadcastDevReady, installGlobals } from "@remix-run/node";
+import { installGlobals } from "@remix-run/node";
 import compression from "compression";
 import express from "express";
 import helmet from "helmet";
@@ -12,16 +11,19 @@ import getPort, { portNumbers } from "get-port";
 import chalk from "chalk";
 import { printUrls } from "./server-utils.js";
 
+const MODE = process.env.NODE_ENV ?? "development";
+
 sourceMapSupport.install();
 installGlobals();
 
-const MODE = process.env.NODE_ENV;
-
-const BUILD_PATH = "./build/index.js";
-/**
- * @type { import('@remix-run/node').ServerBuild | Promise<import('@remix-run/node').ServerBuild> }
- */
-let build = await import(BUILD_PATH);
+const viteDevServer =
+  MODE === "production"
+    ? undefined
+    : await import("vite").then((vite) =>
+        vite.createServer({
+          server: { middlewareMode: true },
+        }),
+      );
 
 const app = express();
 
@@ -29,16 +31,6 @@ app.use(compression());
 
 // http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 app.disable("x-powered-by");
-
-// Remix fingerprints its assets so we can cache forever.
-app.use(
-  "/build",
-  express.static("public/build", { immutable: true, maxAge: "1y" }),
-);
-
-// Everything else (like favicon.ico) is cached for an hour. You may want to be
-// more aggressive with this caching.
-app.use(express.static("public", { maxAge: "1h" }));
 
 app.use(morgan("tiny"));
 
@@ -77,18 +69,29 @@ app.use(
   }),
 );
 
-function getRequestHandler(build) {
-  function getLoadContext(_, res) {
-    return { cspNonce: res.locals.cspNonce };
-  }
-  return createRequestHandler({ build, mode: MODE, getLoadContext });
+// handle asset requests
+if (viteDevServer) {
+  app.use(viteDevServer.middlewares);
+} else {
+  app.use(
+    "/assets",
+    express.static("build/client/assets", {
+      immutable: true,
+      maxAge: "1y",
+    }),
+  );
 }
+app.use(express.static("build/client", { maxAge: "1h" }));
 
+// handle SSR requests
 app.all(
   "*",
-  MODE === "development"
-    ? await createDevRequestHandler()
-    : getRequestHandler(build),
+  createRequestHandler({
+    getLoadContext: (_, res) => ({ cspNonce: res.locals.cspNonce }),
+    build: viteDevServer
+      ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
+      : await import("./build/server/index.js"),
+  }),
 );
 
 const desiredPort = Number(process.env.PORT || 3000);
@@ -113,29 +116,4 @@ const server = app.listen(portToUse, async () => {
   printUrls(portUsed);
 
   console.log(chalk.bold("Press Ctrl+C to stop"));
-
-  if (MODE === "development") {
-    broadcastDevReady(build);
-  }
 });
-
-async function createDevRequestHandler() {
-  const chokidar = await import("chokidar");
-  const watcher = chokidar.watch(BUILD_PATH, { ignoreInitial: true });
-
-  watcher.on("all", async () => {
-    // 1. purge require cache && load updated server build
-    const stat = fs.statSync(BUILD_PATH);
-    build = import(BUILD_PATH + "?t=" + stat.mtimeMs);
-    // 2. tell dev server that this app server is now ready
-    broadcastDevReady(await build);
-  });
-
-  return async (req, res, next) => {
-    try {
-      return getRequestHandler(await build)(req, res, next);
-    } catch (error) {
-      next(error);
-    }
-  };
-}

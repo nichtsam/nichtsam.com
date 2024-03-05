@@ -1,9 +1,6 @@
 node_modules
 
 /build
-/public/build
-/public/generated
-/server-build
 .env
 
 pnpm-lock.yaml

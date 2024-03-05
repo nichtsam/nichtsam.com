@@ -3,8 +3,8 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "build": "remix build",
-    "dev": "remix dev --manual -c \"node server.js\"",
+    "dev": "node ./server.js",
+    "build": "remix vite:build",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "typecheck": "tsc",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
@@ -103,6 +103,7 @@
     "tailwindcss-animate": "1.0.7",
     "tsx": "4.7.1",
     "typescript": "5.3.3",
+    "vite": "5.1.5",
     "vite-tsconfig-paths": "4.3.1",
     "vitest": "1.3.1"
   },

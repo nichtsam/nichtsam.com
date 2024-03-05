@@ -5,10 +5,7 @@ node_modules
 
 /.cache
 /build
-/public/build
 .env
-
-/public/generated
 
 /local
 *.local.*
