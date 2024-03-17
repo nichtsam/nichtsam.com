@@ -52,7 +52,12 @@ app.use(
         ].filter(Boolean),
         "font-src": ["'self'"],
         "frame-src": ["'self'"],
-        "img-src": ["'self'", "data:", "avatars.githubusercontent.com"],
+        "img-src": [
+          "'self'",
+          "data:",
+          "avatars.githubusercontent.com",
+          "res.cloudinary.com",
+        ],
         "form-action": ["'self'", "github.com/login/oauth/authorize"],
         "script-src": [
           "'strict-dynamic'",
