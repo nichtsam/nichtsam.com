@@ -57,3 +57,26 @@ export function CloudinaryImage({
     />
   );
 }
+
+export function BlogImage({
+  id,
+  alt,
+}: {
+  id: CloudinaryImageProps["id"];
+  alt: string;
+}) {
+  return (
+    <CloudinaryImage
+      id={id}
+      alt={alt}
+      className="w-full"
+      sizes={[
+        "(min-width: 1536px) 97.5ch",
+        "(min-width: 1280px) 73.125ch",
+        "(min-width: 655px) 65ch",
+        "100vw",
+      ]}
+      widths={[300, 600, 900, 1200, 1500, 1800]}
+    />
+  );
+}
