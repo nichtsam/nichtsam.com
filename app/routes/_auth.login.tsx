@@ -11,8 +11,8 @@ import {
   providerNames,
 } from "#app/utils/connections.tsx";
 import type {
-  DataFunctionArgs,
   HeadersFunction,
+  LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
 
@@ -31,7 +31,7 @@ export const headers: HeadersFunction = () => ({
   Vary: "Cookie",
 });
 
-export async function loader({ request }: DataFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   await requireAnonymous(request);
 
   return null;

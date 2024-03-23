@@ -56,6 +56,7 @@ app.use(
           "'self'",
           "data:",
           "avatars.githubusercontent.com",
+          "cdn.discordapp.com",
           "res.cloudinary.com",
         ],
         "form-action": ["'self'", "github.com/login/oauth/authorize"],

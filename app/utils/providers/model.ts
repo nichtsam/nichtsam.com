@@ -13,7 +13,7 @@ export interface AuthProvider {
   resolveConnectionInfo(profileId: string): Promise<
     | {
         connectionUserDisplayName: string;
-        profileLink: string;
+        profileLink: string | null;
       }
     | {
         connectionUserDisplayName: "Unknown";

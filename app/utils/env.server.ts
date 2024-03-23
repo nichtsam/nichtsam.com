@@ -15,6 +15,10 @@ const envSchema = z.object({
   GITHUB_CLIENT_ID: z.string(),
   GITHUB_CLIENT_SECRET: z.string(),
 
+  DISCORD_CLIENT_ID: z.string(),
+  DISCORD_CLIENT_SECRET: z.string(),
+  DISCORD_BOT_TOKEN: z.string(),
+
   TURSO_DB_URL: z.string().url(),
   TURSO_DB_AUTH_TOKEN: z.string(),
 });

@@ -4,9 +4,9 @@ import {
 } from "#app/components/error-boundary.tsx";
 import { authenticator } from "#app/utils/connections.server.ts";
 import { ProviderNameSchema } from "#app/utils/connections.tsx";
-import type { DataFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs } from "@remix-run/node";
 
-export const action = async ({ request, params }: DataFunctionArgs) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);
 
   return await authenticator.authenticate(providerName, request);

@@ -13,11 +13,11 @@ import {
 import { ProviderNameSchema } from "#app/utils/connections.tsx";
 import { db } from "#app/utils/db.server.ts";
 import { combineHeaders, destroySession } from "#app/utils/misc.ts";
-import { redirect, type DataFunctionArgs } from "@remix-run/node";
+import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import { connectionTable, sessionTable } from "#drizzle/schema.ts";
 import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
 
-export const loader = async ({ request, params }: DataFunctionArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);
 
   const profile = await authenticator.authenticate(providerName, request, {

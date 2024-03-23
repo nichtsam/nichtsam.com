@@ -20,7 +20,7 @@ import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
 import type { SubmissionResult } from "@conform-to/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
-import type { ActionFunctionArgs, DataFunctionArgs } from "@remix-run/node";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
@@ -47,7 +47,7 @@ const requireData = async (request: Request) => {
   }
 };
 
-export const loader = async ({ request }: DataFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   const { profile } = await requireData(request);
 
   const prefill = profile;

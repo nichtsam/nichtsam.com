@@ -4,6 +4,7 @@ import type { ProviderName } from "./connections.tsx";
 import { GitHubProvider } from "./providers/github.server.ts";
 import type { AuthProvider, ProviderUser } from "./providers/model.ts";
 import { Authenticator } from "remix-auth";
+import { DiscordProvider } from "./providers/discord.server.ts";
 
 export const connectionSessionStorage = createCookieSessionStorage({
   cookie: {
@@ -18,6 +19,7 @@ export const connectionSessionStorage = createCookieSessionStorage({
 
 export const providers: Record<ProviderName, AuthProvider> = {
   github: new GitHubProvider(),
+  discord: new DiscordProvider(),
 };
 
 export const authenticator = new Authenticator<ProviderUser>(

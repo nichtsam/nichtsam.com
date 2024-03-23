@@ -15,7 +15,7 @@ import { useDoubleCheck } from "#app/utils/misc.ts";
 import { json } from "@remix-run/node";
 import type {
   MetaFunction,
-  DataFunctionArgs,
+  LoaderFunctionArgs,
   ActionFunctionArgs,
 } from "@remix-run/node";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
@@ -64,7 +64,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ request }: DataFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   const connections = await getConnections(userId);
 

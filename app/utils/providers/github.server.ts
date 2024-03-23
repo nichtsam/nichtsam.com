@@ -1,4 +1,4 @@
-import { GitHubStrategy } from "remix-auth-github";
+import { GitHubStrategy } from "remix-auth-socials";
 import type { AuthProvider } from "./model.ts";
 import { env } from "../env.server.ts";
 import { z } from "zod";
