@@ -1,5 +1,10 @@
 # Welcome to nichtsam.com!
 
+Production : https://nichtsam.com  
+Staging : https://staging.nichtsam.com
+
+## Stack
+
 - Framework: [Remix](https://remix.run/)
 - Deployment: [Fly.io](https://fly.io/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
