@@ -39,6 +39,12 @@ function NavProgress() {
   return (
     <div
       role="progressbar"
+      aria-label="Page Navigation Progress"
+      aria-hidden={busy ? undefined : true}
+      aria-valuetext={busy ? "Loading" : "Idle"}
+      aria-valuenow={progressRate}
+      aria-valuemax={100}
+      aria-valuemin={0}
       className={cn(
         "pointer-events-none fixed inset-x-0 top-0 z-[60] flex flex-col items-end transition-all duration-500",
         !busy && "opacity-0",
