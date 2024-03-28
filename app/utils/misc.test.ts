@@ -1,10 +1,5 @@
 import { describe, expect, test, vi } from "vitest";
-import {
-  ERROR_FALL_BACK_MESSAGE,
-  generateCallAll,
-  getErrorMessage,
-  unvariant,
-} from "./misc.ts";
+import { generateCallAll, unvariant } from "./misc.ts";
 import { faker } from "@faker-js/faker";
 import type { Assertion, ExpectStatic } from "vitest";
 
@@ -17,24 +12,6 @@ describe("fn unvariant", () => {
   test("returns undefined if condition is false", () => {
     const value = faker.lorem.text();
     expect(unvariant(false, value)).toBe(undefined);
-  });
-});
-
-describe("fn getErrorMessage", () => {
-  test("gets message from Error object", () => {
-    const message = faker.lorem.sentence();
-    const error = new Error(message);
-    expect(getErrorMessage(error)).toBe(message);
-  });
-
-  test("returns string right away", () => {
-    const message = faker.lorem.sentence();
-    expect(getErrorMessage(message)).toBe(message);
-  });
-
-  test("cases not covered fallback", () => {
-    const error = null;
-    expect(getErrorMessage(error)).toBe(ERROR_FALL_BACK_MESSAGE);
   });
 });
 

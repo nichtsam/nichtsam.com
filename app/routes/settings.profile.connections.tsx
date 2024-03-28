@@ -11,7 +11,7 @@ import {
   ProviderConnectionForm,
   providerNames as supportedProviderNames,
 } from "#app/utils/connections.tsx";
-import { useDoubleCheck } from "#app/utils/misc.ts";
+import { useDoubleCheck } from "#app/utils/ui.ts";
 import { json } from "@remix-run/node";
 import type {
   MetaFunction,

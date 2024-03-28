@@ -1,5 +1,6 @@
 import type { Prettify } from "./misc.ts";
-import { combineHeaders, downloadFile } from "./misc.ts";
+import { downloadFile } from "./misc.ts";
+import { combineHeaders } from "./request.server.ts";
 import { redirectBack } from "remix-utils/redirect-back";
 import { safeRedirect } from "remix-utils/safe-redirect";
 import { db } from "./db.server.ts";

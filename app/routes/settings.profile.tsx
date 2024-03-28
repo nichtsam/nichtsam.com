@@ -1,18 +1,18 @@
+import type { LoaderFunctionArgs } from "@remix-run/node";
+import { Form, Outlet } from "@remix-run/react";
+import { ChevronRight, LogOut, User } from "lucide-react";
+import { Button } from "#app/components/ui/button.tsx";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "#app/components/ui/avatar.tsx";
-import { useUser } from "#app/utils/user.tsx";
-import { Form, Outlet } from "@remix-run/react";
 import { getUserImgSrc } from "./resources.user-images.$imageId.ts";
-import { useBreadcrumbs } from "#app/utils/breadcrumb.tsx";
-import { ChevronRight, LogOut, User } from "lucide-react";
-import { cn } from "#app/utils/ui.ts";
-import { unvariant, useIsPending } from "#app/utils/misc.ts";
 import { requireUserId } from "#app/utils/auth.server.ts";
-import type { DataFunctionArgs } from "@remix-run/node";
-import { Button } from "#app/components/ui/button.tsx";
+import { useUser } from "#app/utils/user.tsx";
+import { useBreadcrumbs } from "#app/utils/breadcrumb.tsx";
+import { unvariant } from "#app/utils/misc.ts";
+import { cn, useIsPending } from "#app/utils/ui.ts";
 
 export const handle = {
   breadcrumb: (
@@ -23,7 +23,7 @@ export const handle = {
   ),
 };
 
-export const loader = async ({ request }: DataFunctionArgs) => {
+export const loader = async ({ request }: LoaderFunctionArgs) => {
   await requireUserId(request);
 
   return null;

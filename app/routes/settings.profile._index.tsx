@@ -7,7 +7,7 @@ import {
 import { Link, useFetcher } from "@remix-run/react";
 import { Trash } from "lucide-react";
 import { StatusButton } from "#app/components/status-button.tsx";
-import { useDoubleCheck } from "#app/utils/misc.ts";
+import { useDoubleCheck } from "#app/utils/ui.ts";
 import { validateCSRF } from "#app/utils/csrf.server.ts";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import {

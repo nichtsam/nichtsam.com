@@ -15,7 +15,8 @@ import {
   signUpWithConnection,
 } from "#app/utils/auth.server.ts";
 import { db } from "#app/utils/db.server.ts";
-import { destroyCookie, useIsPending } from "#app/utils/misc.ts";
+import { destroyCookie } from "#app/utils/request.server.ts";
+import { useIsPending } from "#app/utils/ui.ts";
 import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
 import type { SubmissionResult } from "@conform-to/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";

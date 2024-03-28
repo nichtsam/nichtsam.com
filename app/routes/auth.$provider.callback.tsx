@@ -12,7 +12,7 @@ import {
 } from "#app/utils/connections.server.ts";
 import { ProviderNameSchema } from "#app/utils/connections.tsx";
 import { db } from "#app/utils/db.server.ts";
-import { combineHeaders, destroySession } from "#app/utils/misc.ts";
+import { combineHeaders, destroySession } from "#app/utils/request.server.ts";
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import { connectionTable, sessionTable } from "#drizzle/schema.ts";
 import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";

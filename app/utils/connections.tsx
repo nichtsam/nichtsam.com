@@ -3,7 +3,7 @@ import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Form } from "@remix-run/react";
 import { SocialsProvider } from "remix-auth-socials";
 import { z } from "zod";
-import { useIsPending } from "./misc.ts";
+import { useIsPending } from "./ui.ts";
 
 export const GITHUB_PROVIDER_NAME = SocialsProvider.GITHUB;
 export const DISCORD_PROVIDER_NAME = SocialsProvider.DISCORD;

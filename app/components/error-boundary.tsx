@@ -6,7 +6,7 @@ import {
   useRouteError,
 } from "@remix-run/react";
 import type { ErrorResponse, Location } from "@remix-run/react";
-import { getErrorMessage } from "#app/utils/misc.ts";
+import { getErrorMessage } from "#app/utils/error.ts";
 import { ArrowLeft } from "lucide-react";
 
 type StatusHandler = (info: {

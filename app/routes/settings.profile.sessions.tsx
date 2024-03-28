@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "#app/components/ui/card.tsx";
-import { useDoubleCheck } from "#app/utils/misc.ts";
+import { useDoubleCheck } from "#app/utils/ui.ts";
 import { BookUser, KeyRound, LogOut } from "lucide-react";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { json } from "@remix-run/node";
