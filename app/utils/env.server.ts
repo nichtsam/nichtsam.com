@@ -2,26 +2,24 @@ import { pick } from "ramda";
 import { z } from "zod";
 
 export type Env = z.infer<typeof envSchema>;
-const envSchema = z.object({
-  NODE_ENV: z.union([
-    z.literal("development"),
-    z.literal("production"),
-    z.literal("test"),
-  ]),
+const envSchema = z
+  .object({
+    NODE_ENV: z.enum(["development", "production", "test"]),
 
-  SESSION_SECRET: z.string(),
-  CSRF_SECRET: z.string().optional(),
+    SESSION_SECRET: z.string(),
+    CSRF_SECRET: z.string().optional(),
 
-  GITHUB_CLIENT_ID: z.string(),
-  GITHUB_CLIENT_SECRET: z.string(),
+    GITHUB_CLIENT_ID: z.string(),
+    GITHUB_CLIENT_SECRET: z.string(),
 
-  DISCORD_CLIENT_ID: z.string(),
-  DISCORD_CLIENT_SECRET: z.string(),
-  DISCORD_BOT_TOKEN: z.string(),
+    DISCORD_CLIENT_ID: z.string(),
+    DISCORD_CLIENT_SECRET: z.string(),
+    DISCORD_BOT_TOKEN: z.string(),
 
-  TURSO_DB_URL: z.string().url(),
-  TURSO_DB_AUTH_TOKEN: z.string(),
-});
+    TURSO_DB_URL: z.string().url(),
+    TURSO_DB_AUTH_TOKEN: z.string(),
+  })
+  .readonly();
 
 const parsedEnv = envSchema.safeParse(process.env);
 
@@ -36,7 +34,7 @@ if (!parsedEnv.success) {
 
 export const env = parsedEnv.data;
 
-const PUBLIC_ENV = ["NODE_ENV"] as const satisfies readonly (keyof Env)[];
+const PUBLIC_ENV = ["NODE_ENV"] as const satisfies (keyof Env)[];
 
 export type PublicEnv = typeof publicEnv;
 export const publicEnv = pick(PUBLIC_ENV, env);
