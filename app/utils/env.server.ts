@@ -6,6 +6,11 @@ const envSchema = z
   .object({
     NODE_ENV: z.enum(["development", "production", "test"]),
 
+    ALLOW_INDEXING: z
+      .enum(["true", "false"])
+      .optional()
+      .transform((s) => s === "true"),
+
     SESSION_SECRET: z.string(),
     CSRF_SECRET: z.string().optional(),
 
@@ -34,7 +39,10 @@ if (!parsedEnv.success) {
 
 export const env = parsedEnv.data;
 
-const PUBLIC_ENV = ["NODE_ENV"] as const satisfies (keyof Env)[];
+const PUBLIC_ENV = [
+  "NODE_ENV",
+  "ALLOW_INDEXING",
+] as const satisfies (keyof Env)[];
 
 export type PublicEnv = typeof publicEnv;
 export const publicEnv = pick(PUBLIC_ENV, env);

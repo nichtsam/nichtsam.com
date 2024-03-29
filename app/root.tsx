@@ -16,7 +16,11 @@ import {
 import { NavBar } from "#app/components/navbar/index.tsx";
 import { Footer } from "#app/components/footer.tsx";
 import clsx from "clsx";
-import { publicEnv, forceEnvValidation } from "#app/utils/env.server.ts";
+import {
+  publicEnv,
+  forceEnvValidation,
+  type PublicEnv,
+} from "#app/utils/env.server.ts";
 import { FaviconMeta, faviconLinks } from "#app/utils/favicon.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
 import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
@@ -92,12 +96,12 @@ function Document({
   children,
   nonce,
   theme = "light",
-  env = {},
+  env,
 }: {
   children: React.ReactNode;
   nonce: string;
   theme?: Theme;
-  env?: Record<string, string>;
+  env?: PublicEnv;
 }) {
   return (
     <html lang="en" className={clsx(theme, "relative")}>
@@ -105,6 +109,9 @@ function Document({
         <ClientHintsCheck nonce={nonce} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        {!env?.ALLOW_INDEXING && (
+          <meta name="robots" content="noindex, nofollow" />
+        )}
         <FaviconMeta />
 
         <Meta />
@@ -118,7 +125,7 @@ function Document({
         <script
           nonce={nonce}
           dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(env)}`,
+            __html: `window.ENV = ${JSON.stringify(env ?? {})}`,
           }}
         />
         <Scripts nonce={nonce} />

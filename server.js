@@ -12,6 +12,7 @@ import chalk from "chalk";
 import { printUrls } from "./server-utils.js";
 
 const MODE = process.env.NODE_ENV ?? "development";
+const ALLOW_INDEXING = process.env.ALLOW_INDEXING === "true";
 
 sourceMapSupport.install();
 installGlobals();
@@ -74,6 +75,13 @@ app.use(
     },
   }),
 );
+
+if (!ALLOW_INDEXING) {
+  app.use((_, res, next) => {
+    res.set("X-Robots-Tag", "noindex, nofollow");
+    next();
+  });
+}
 
 // handle asset requests
 if (viteDevServer) {
