@@ -20,9 +20,20 @@ import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);
 
-  const profile = await authenticator.authenticate(providerName, request, {
-    failureRedirect: "/login",
-  });
+  const authResult = await authenticator
+    .authenticate(providerName, request, { throwOnError: true })
+    .then(
+      (data) => ({ success: true, data }) as const,
+      (error) => ({ success: false, error }) as const,
+    );
+
+  if (!authResult.success) {
+    console.error(authResult.error);
+
+    throw redirect("/login");
+  }
+
+  const profile = authResult.data;
 
   const headers = new Headers({
     "set-cookie": await destroySession(connectionSessionStorage, request),
