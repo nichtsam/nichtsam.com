@@ -111,9 +111,7 @@ function Document({
         <ClientHintsCheck nonce={nonce} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {(env?.DISALLOW_INDEXING || disallowIndexing) && (
-          <meta name="robots" content="noindex, nofollow" />
-        )}
+        {disallowIndexing && <meta name="robots" content="noindex, nofollow" />}
         <FaviconMeta />
 
         <Meta />
@@ -142,9 +140,15 @@ function App() {
   const nonce = useNonce();
   const env = data.env;
   const theme = useTheme();
+  const disallowIndexing = env.DISALLOW_INDEXING;
 
   return (
-    <Document nonce={nonce} env={env} theme={theme}>
+    <Document
+      nonce={nonce}
+      env={env}
+      theme={theme}
+      disallowIndexing={disallowIndexing}
+    >
       <div className="flex h-full min-h-screen flex-col">
         <header>
           <NavBar />
