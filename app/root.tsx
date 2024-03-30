@@ -97,11 +97,13 @@ function Document({
   nonce,
   theme = "light",
   env,
+  disallowIndexing,
 }: {
   children: React.ReactNode;
   nonce: string;
   theme?: Theme;
   env?: PublicEnv;
+  disallowIndexing?: boolean;
 }) {
   return (
     <html lang="en" className={clsx(theme, "relative")}>
@@ -109,7 +111,7 @@ function Document({
         <ClientHintsCheck nonce={nonce} />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {!env?.ALLOW_INDEXING && (
+        {(env?.DISALLOW_INDEXING || disallowIndexing) && (
           <meta name="robots" content="noindex, nofollow" />
         )}
         <FaviconMeta />
@@ -185,7 +187,7 @@ export function ErrorBoundary() {
   // to give the user a better UX.
 
   return (
-    <Document nonce={nonce}>
+    <Document nonce={nonce} disallowIndexing={true}>
       <GeneralErrorBoundary />
     </Document>
   );
