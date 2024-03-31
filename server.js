@@ -97,14 +97,18 @@ if (viteDevServer) {
 }
 app.use(express.static("build/client", { maxAge: "1h" }));
 
+function getBuild() {
+  return viteDevServer
+    ? viteDevServer.ssrLoadModule("virtual:remix/server-build")
+    : import("./build/server/index.js");
+}
+
 // handle SSR requests
 app.all(
   "*",
   createRequestHandler({
     getLoadContext: (_, res) => ({ cspNonce: res.locals.cspNonce }),
-    build: viteDevServer
-      ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
-      : await import("./build/server/index.js"),
+    build: getBuild,
   }),
 );
 
