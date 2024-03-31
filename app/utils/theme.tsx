@@ -1,12 +1,49 @@
-import { LaptopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
-import { useFetcher } from "@remix-run/react";
-import { useForm, getFormProps } from "@conform-to/react";
-import type { action as setThemeAction } from "#app/routes/action.set-theme.tsx";
-import { useOptimisticThemeMode } from "#app/utils/theme.ts";
-import { useRequestInfo } from "#app/utils/request-info.ts";
-import { Button } from "./ui/button.tsx";
+import { useFetcher, useFetchers } from "@remix-run/react";
+import { useRequestInfo } from "./request-info.ts";
+import { parseWithZod } from "@conform-to/zod";
+import { useHints } from "./client-hints.tsx";
+import { z } from "zod";
 import { useEffect, useState } from "react";
-import { unvariant } from "#app/utils/misc.ts";
+import { type setTheme as setThemeAction } from "./theme.server.ts";
+import { getFormProps, useForm } from "@conform-to/react";
+import { LaptopIcon, MoonIcon, SunIcon } from "@radix-ui/react-icons";
+import { Button } from "#app/components/ui/button.tsx";
+import { unvariant } from "./misc.ts";
+
+export const SET_THEME_INTENT = "set-theme";
+
+export const ThemeFormSchema = z.object({
+  theme: z.enum(["system", "light", "dark"]),
+});
+
+export const useTheme = () => {
+  const requestInfo = useRequestInfo();
+  const hints = useHints();
+
+  const optimisticMode = useOptimisticThemeMode();
+  if (optimisticMode) {
+    return optimisticMode === "system" ? hints.theme : optimisticMode;
+  }
+
+  return requestInfo.userPreferences.theme ?? hints.theme;
+};
+
+export function useOptimisticThemeMode() {
+  const fetchers = useFetchers();
+  const themeFetcher = fetchers.find(
+    (f) => f.formAction === "/action/set-theme",
+  );
+
+  if (themeFetcher && themeFetcher.formData) {
+    const submission = parseWithZod(themeFetcher.formData, {
+      schema: ThemeFormSchema,
+    });
+
+    if (submission.status === "success") {
+      return submission.value.theme;
+    }
+  }
+}
 
 export const ThemeSwitcher = () => {
   const [clientJavascriptEnable, setClientJavascriptEnable] = useState(false);
@@ -36,14 +73,12 @@ export const ThemeSwitcher = () => {
   }, []);
 
   return (
-    <fetcher.Form
-      method="POST"
-      action="/action/set-theme"
-      {...getFormProps(form)}
-    >
+    <fetcher.Form method="POST" action="/" {...getFormProps(form)}>
       <input type="hidden" name="theme" value={nextMode} />
 
       <Button
+        name="intent"
+        value={SET_THEME_INTENT}
         type="submit"
         size="icon"
         variant="ghost"

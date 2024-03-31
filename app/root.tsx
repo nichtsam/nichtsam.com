@@ -4,6 +4,7 @@ import type {
   MetaFunction,
   LinksFunction,
   LoaderFunctionArgs,
+  ActionFunctionArgs,
 } from "@remix-run/node";
 import {
   Links,
@@ -24,8 +25,8 @@ import {
 import { FaviconMeta, faviconLinks } from "#app/utils/favicon.tsx";
 import { useNonce } from "./utils/nonce-provider.tsx";
 import { ClientHintsCheck, getHints } from "./utils/client-hints.tsx";
-import { getTheme, type Theme } from "./utils/theme.server.ts";
-import { useTheme } from "./utils/theme.ts";
+import { setTheme, getTheme, type Theme } from "./utils/theme.server.ts";
+import { SET_THEME_INTENT, useTheme } from "./utils/theme.tsx";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 import { NavProgress } from "./components/nav-progress.tsx";
@@ -90,6 +91,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       headers,
     },
   );
+};
+
+export const action = async (args: ActionFunctionArgs) => {
+  const formData = await args.request.formData();
+  const intent = formData.get("intent");
+
+  switch (intent) {
+    case SET_THEME_INTENT: {
+      return setTheme(formData);
+    }
+    default: {
+      throw new Response(`Invalid intent "${intent}"`, { status: 400 });
+    }
+  }
 };
 
 function Document({

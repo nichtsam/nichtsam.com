@@ -1,4 +1,3 @@
-import { ThemeSwitcher } from "../theme-switcher.tsx";
 import { MobileNavigation } from "./mobile.tsx";
 import { CORE_CONTENT_LINKS } from "./constant.ts";
 import {
@@ -10,6 +9,7 @@ import {
 } from "../ui/navigation-menu.tsx";
 import { NavLink } from "../link.tsx";
 import { UserButton } from "../user.tsx";
+import { ThemeSwitcher } from "#app/utils/theme.tsx";
 
 export const NavBar = () => {
   return (
