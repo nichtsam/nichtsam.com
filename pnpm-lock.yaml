@@ -205,6 +205,9 @@ devDependencies:
   '@testing-library/react':
     specifier: 14.2.1
     version: 14.2.1(react-dom@18.2.0)(react@18.2.0)
+  '@total-typescript/ts-reset':
+    specifier: 0.5.1
+    version: 0.5.1
   '@types/compression':
     specifier: 1.7.5
     version: 1.7.5
@@ -3304,6 +3307,10 @@ packages:
       '@types/react-dom': 18.2.19
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: true
+
+  /@total-typescript/ts-reset@0.5.1:
+    resolution: {integrity: sha512-AqlrT8YA1o7Ff5wPfMOL0pvL+1X+sw60NN6CcOCqs658emD6RfiXhF7Gu9QcfKBH7ELY2nInLhKSCWVoNL70MQ==}
     dev: true
 
   /@types/acorn@4.0.6:
