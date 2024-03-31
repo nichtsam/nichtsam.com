@@ -10,11 +10,16 @@ import {
   ProviderConnectionForm,
   providerNames,
 } from "#app/utils/connections.tsx";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import type {
   HeadersFunction,
   LoaderFunctionArgs,
   MetaFunction,
 } from "@remix-run/node";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: () => null,
+};
 
 export const meta: MetaFunction = () => {
   return [

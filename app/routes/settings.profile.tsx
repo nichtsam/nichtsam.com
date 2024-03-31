@@ -10,11 +10,16 @@ import {
 import { getUserImgSrc } from "./resources.user-images.$imageId.ts";
 import { requireUserId } from "#app/utils/auth.server.ts";
 import { useUser } from "#app/utils/user.tsx";
-import { useBreadcrumbs } from "#app/utils/breadcrumb.tsx";
 import { unvariant } from "#app/utils/misc.ts";
 import { cn, useIsPending } from "#app/utils/ui.ts";
+import {
+  type BreadcrumbHandle,
+  useBreadcrumbs,
+} from "#app/utils/breadcrumb.tsx";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
 
-export const handle = {
+export const handle: SEOHandle & BreadcrumbHandle = {
+  getSitemapEntries: () => null,
   breadcrumb: (
     <span className="flex items-center gap-x-2">
       <User size={16} />

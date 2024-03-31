@@ -1,8 +1,8 @@
 import {
   redirect,
-  type DataFunctionArgs,
   type HeadersFunction,
   type MetaFunction,
+  type LoaderFunctionArgs,
 } from "@remix-run/node";
 import { Link, useFetcher } from "@remix-run/react";
 import { Trash } from "lucide-react";
@@ -25,6 +25,11 @@ import {
 import { db } from "#app/utils/db.server.ts";
 import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: () => null,
+};
 
 export const meta: MetaFunction = () => {
   return [
@@ -43,7 +48,7 @@ export const headers: HeadersFunction = () => ({
 
 const INTENT_DELETE_ACCOUNT = "INTENT_DELETE_ACCOUNT";
 
-export const action = async ({ request }: DataFunctionArgs) => {
+export const action = async ({ request }: LoaderFunctionArgs) => {
   const userId = await requireUserId(request);
   const formData = await request.formData();
   await validateCSRF(formData, request.headers);

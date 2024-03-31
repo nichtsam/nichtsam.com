@@ -9,6 +9,11 @@ import {
   GeneralErrorBoundary,
   generalNotFoundHandler,
 } from "#app/components/error-boundary.tsx";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: () => null,
+};
 
 export async function loader() {
   throw new Response("Not found", { status: 404 });

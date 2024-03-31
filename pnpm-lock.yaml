@@ -14,6 +14,9 @@ dependencies:
   '@libsql/client':
     specifier: 0.4.3
     version: 0.4.3
+  '@nasa-gcn/remix-seo':
+    specifier: 2.0.0
+    version: 2.0.0(@remix-run/react@2.8.0)(@remix-run/server-runtime@2.8.0)
   '@radix-ui/react-aspect-ratio':
     specifier: 1.0.3
     version: 1.0.3(@types/react-dom@18.2.19)(@types/react@18.2.61)(react-dom@18.2.0)(react@18.2.0)
@@ -1947,6 +1950,17 @@ packages:
       vfile: 6.0.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@nasa-gcn/remix-seo@2.0.0(@remix-run/react@2.8.0)(@remix-run/server-runtime@2.8.0):
+    resolution: {integrity: sha512-jawoxrjMMbFGgj20d61KblrQNkSFcW2yP7vWWQn2a+eK2J8uYYbw99j2GD7A4XbpQUxy7dg0yvRVsYYJ5uZnLQ==}
+    peerDependencies:
+      '@remix-run/react': ^1.0.0 || ^2.0.0
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+    dependencies:
+      '@remix-run/react': 2.8.0(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+      '@remix-run/server-runtime': 2.8.0(typescript@5.3.3)
+      lodash: 4.17.21
     dev: false
 
   /@neon-rs/load@0.0.4:
@@ -7177,7 +7191,6 @@ packages:
 
   /lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols@4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}

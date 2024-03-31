@@ -11,6 +11,8 @@ const breadcrumbMatchSchema = z.object({
   handle: breadcrumbHandleSchema,
 });
 
+export type BreadcrumbHandle = z.infer<typeof breadcrumbHandleSchema>;
+
 interface BreadcrumbsOptions {
   skip?: number;
   minBreadcrumbs?: number;

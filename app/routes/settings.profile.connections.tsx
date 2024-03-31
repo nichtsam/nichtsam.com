@@ -44,8 +44,11 @@ import { validateCSRF } from "#app/utils/csrf.server.ts";
 import { connectionTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import { without } from "ramda";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
+import type { BreadcrumbHandle } from "#app/utils/breadcrumb";
 
-export const handle = {
+export const handle: SEOHandle & BreadcrumbHandle = {
+  getSitemapEntries: () => null,
   breadcrumb: (
     <span className="flex items-center gap-x-2">
       <LinkIcon size={16} />

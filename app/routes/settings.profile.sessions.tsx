@@ -12,7 +12,7 @@ import { json } from "@remix-run/node";
 import type {
   MetaFunction,
   ActionFunctionArgs,
-  DataFunctionArgs,
+  LoaderFunctionArgs,
 } from "@remix-run/node";
 import { StatusButton } from "#app/components/status-button.tsx";
 import { db } from "#app/utils/db.server.ts";
@@ -20,8 +20,11 @@ import { and, count, eq, not } from "drizzle-orm";
 import { sessionTable } from "#drizzle/schema.ts";
 import { validateCSRF } from "#app/utils/csrf.server.ts";
 import { getAuthSession, requireUserId } from "#app/utils/auth.server.ts";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
+import type { BreadcrumbHandle } from "#app/utils/breadcrumb";
 
-export const handle = {
+export const handle: SEOHandle & BreadcrumbHandle = {
+  getSitemapEntries: () => null,
   breadcrumb: (
     <span className="flex items-center gap-x-2">
       <BookUser size={16} />
@@ -40,7 +43,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ request }: DataFunctionArgs) {
+export async function loader({ request }: LoaderFunctionArgs) {
   const userId = await requireUserId(request);
   const { sessionId } = await getAuthSession(request);
 

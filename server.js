@@ -107,7 +107,10 @@ function getBuild() {
 app.all(
   "*",
   createRequestHandler({
-    getLoadContext: (_, res) => ({ cspNonce: res.locals.cspNonce }),
+    getLoadContext: (_, res) => ({
+      cspNonce: res.locals.cspNonce,
+      serverBuild: getBuild(),
+    }),
     build: getBuild,
   }),
 );

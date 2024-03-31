@@ -25,6 +25,11 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import { z } from "zod";
+import type { SEOHandle } from "@nasa-gcn/remix-seo";
+
+export const handle: SEOHandle = {
+  getSitemapEntries: () => null,
+};
 
 export const onboardingFormSchema = z.object({
   username: z.string(),
