@@ -4,10 +4,10 @@ import {
   type MetaFunction,
   type LoaderFunctionArgs,
 } from "@remix-run/node";
-import { Link, useFetcher } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import { Trash } from "lucide-react";
 import { StatusButton } from "#app/components/status-button.tsx";
-import { useDoubleCheck } from "#app/utils/ui.ts";
+import { useDoubleCheck, useIsPending } from "#app/utils/ui.ts";
 import { validateCSRF } from "#app/utils/csrf.server.ts";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import {
@@ -100,11 +100,11 @@ export default function SettingProfile() {
 }
 
 const DeleteAccount = () => {
-  const fetcher = useFetcher<typeof deleteAccount>();
+  const isPending = useIsPending();
   const dc = useDoubleCheck();
 
   return (
-    <fetcher.Form method="POST">
+    <Form method="POST">
       <AuthenticityTokenInput />
       <StatusButton
         {...dc.getButtonProps({
@@ -113,13 +113,13 @@ const DeleteAccount = () => {
           value: INTENT_DELETE_ACCOUNT,
         })}
         variant={dc.doubleCheck ? "destructive" : "default"}
-        status={fetcher.state !== "idle" ? "pending" : "idle"}
+        status={isPending ? "pending" : "idle"}
         className="flex gap-2 transition-none"
       >
         <Trash size={16} />
         {dc.doubleCheck ? "Are you sure?" : "Delete My Account"}
       </StatusButton>
-    </fetcher.Form>
+    </Form>
   );
 };
 
