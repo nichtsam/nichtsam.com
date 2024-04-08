@@ -24,20 +24,12 @@ import { getZodConstraint, parseWithZod } from "@conform-to/zod";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { z } from "zod";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
+import { onboardingFormSchema } from "#app/utils/auth.onboarding";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,
 };
-
-export const onboardingFormSchema = z.object({
-  username: z.string(),
-  displayName: z.string(),
-  imageUrl: z.string().url().optional(),
-
-  rememberMe: z.boolean().default(false),
-});
 
 const requireData = async (request: Request) => {
   await requireAnonymous(request);
