@@ -7,7 +7,6 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "#app/components/ui/avatar.tsx";
-import { getUserImgSrc } from "./resources.user-images.$imageId.ts";
 import { requireUserId } from "#app/utils/auth.server.ts";
 import { useUser } from "#app/utils/user.tsx";
 import { unvariant } from "#app/utils/misc.ts";
@@ -17,6 +16,7 @@ import {
   useBreadcrumbs,
 } from "#app/utils/breadcrumb.tsx";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
+import { getUserImgSrc } from "../resources+/user-images.$imageId";
 
 export const handle: SEOHandle & BreadcrumbHandle = {
   getSitemapEntries: () => null,

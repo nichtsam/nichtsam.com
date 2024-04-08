@@ -9,7 +9,7 @@ import {
 } from "./ui/dropdown-menu.tsx";
 import { useOptionalUser, useUser } from "#app/utils/user.tsx";
 import { useRef } from "react";
-import { getUserImgSrc } from "#app/routes/resources.user-images.$imageId.ts";
+import { getUserImgSrc } from "#app/routes/resources+/user-images.$imageId.ts";
 import { LogOut, User } from "lucide-react";
 import { cn, useIsPending } from "#app/utils/ui.ts";
 
