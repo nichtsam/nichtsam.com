@@ -10,7 +10,7 @@ import {
   type ProviderName,
   ProviderConnectionForm,
   providerNames as supportedProviderNames,
-} from "#app/utils/connections.tsx";
+} from "#app/utils/auth/connections.tsx";
 import { useDoubleCheck } from "#app/utils/ui.ts";
 import { json } from "@remix-run/node";
 import type {
@@ -22,9 +22,9 @@ import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { StatusButton } from "#app/components/status-button.tsx";
 import { Link as LinkIcon, Trash } from "lucide-react";
-import { requireUserId } from "#app/utils/auth.server.ts";
+import { requireUserId } from "#app/utils/auth/auth.server.ts";
 import { db } from "#app/utils/db.server.ts";
-import { resolveConnectionInfo } from "#app/utils/connections.server.ts";
+import { resolveConnectionInfo } from "#app/utils/auth/connections.server.ts";
 import {
   Table,
   TableBody,

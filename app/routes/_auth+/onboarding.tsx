@@ -13,11 +13,11 @@ import {
   getAuthSession,
   requireAnonymous,
   signUpWithConnection,
-} from "#app/utils/auth.server.ts";
+} from "#app/utils/auth/auth.server.ts";
 import { db } from "#app/utils/db.server.ts";
 import { destroyCookie } from "#app/utils/request.server.ts";
 import { useIsPending } from "#app/utils/ui.ts";
-import { onboardingCookie } from "#app/utils/auth.onboarding.server.ts";
+import { onboardingCookie } from "#app/utils/auth/onboarding.server.ts";
 import type { SubmissionResult } from "@conform-to/react";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod";
@@ -25,7 +25,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
-import { onboardingFormSchema } from "#app/utils/auth.onboarding";
+import { onboardingFormSchema } from "#app/utils/auth/onboarding.ts";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,

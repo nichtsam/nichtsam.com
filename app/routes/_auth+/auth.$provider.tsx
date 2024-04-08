@@ -2,8 +2,8 @@ import {
   GeneralErrorBoundary,
   generalNotFoundHandler,
 } from "#app/components/error-boundary.tsx";
-import { authenticator } from "#app/utils/connections.server.ts";
-import { ProviderNameSchema } from "#app/utils/connections.tsx";
+import { authenticator } from "#app/utils/auth/connections.server.ts";
+import { ProviderNameSchema } from "#app/utils/auth/connections.tsx";
 import type { ActionFunctionArgs } from "@remix-run/node";
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {

@@ -30,7 +30,7 @@ import { SET_THEME_INTENT, useTheme } from "./utils/theme.tsx";
 import { TooltipProvider } from "./components/ui/tooltip.tsx";
 import { GeneralErrorBoundary } from "./components/error-boundary.tsx";
 import { NavProgress } from "./components/nav-progress.tsx";
-import { getUserId, logout } from "./utils/auth.server.ts";
+import { getUserId, logout } from "./utils/auth/auth.server.ts";
 import { db } from "./utils/db.server.ts";
 import { csrf } from "./utils/csrf.server.ts";
 import { AuthenticityTokenProvider } from "remix-utils/csrf/react";

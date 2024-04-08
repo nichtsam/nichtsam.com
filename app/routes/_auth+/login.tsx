@@ -5,11 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from "#app/components/ui/card.tsx";
-import { requireAnonymous } from "#app/utils/auth.server.ts";
+import { requireAnonymous } from "#app/utils/auth/auth.server.ts";
 import {
   ProviderConnectionForm,
   providerNames,
-} from "#app/utils/connections.tsx";
+} from "#app/utils/auth/connections.tsx";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import type {
   HeadersFunction,

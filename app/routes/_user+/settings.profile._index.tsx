@@ -21,7 +21,7 @@ import {
   authSessionStorage,
   getAuthSession,
   requireUserId,
-} from "#app/utils/auth.server.ts";
+} from "#app/utils/auth/auth.server.ts";
 import { db } from "#app/utils/db.server.ts";
 import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";

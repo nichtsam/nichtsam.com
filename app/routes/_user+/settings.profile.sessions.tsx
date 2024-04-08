@@ -19,7 +19,7 @@ import { db } from "#app/utils/db.server.ts";
 import { and, count, eq, not } from "drizzle-orm";
 import { sessionTable } from "#drizzle/schema.ts";
 import { validateCSRF } from "#app/utils/csrf.server.ts";
-import { getAuthSession, requireUserId } from "#app/utils/auth.server.ts";
+import { getAuthSession, requireUserId } from "#app/utils/auth/auth.server.ts";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import type { BreadcrumbHandle } from "#app/utils/breadcrumb";
 

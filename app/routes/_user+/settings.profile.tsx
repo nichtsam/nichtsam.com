@@ -7,7 +7,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "#app/components/ui/avatar.tsx";
-import { requireUserId } from "#app/utils/auth.server.ts";
+import { requireUserId } from "#app/utils/auth/auth.server.ts";
 import { useUser } from "#app/utils/user.tsx";
 import { unvariant } from "#app/utils/misc.ts";
 import { cn, useIsPending } from "#app/utils/ui.ts";

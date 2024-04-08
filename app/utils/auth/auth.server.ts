@@ -1,9 +1,9 @@
-import type { Prettify } from "./misc.ts";
-import { downloadFile } from "./misc.ts";
-import { combineHeaders } from "./request.server.ts";
+import type { Prettify } from "../misc.ts";
+import { downloadFile } from "../misc.ts";
+import { combineHeaders } from "../request.server.ts";
 import { redirectBack } from "remix-utils/redirect-back";
 import { safeRedirect } from "remix-utils/safe-redirect";
-import { db } from "./db.server.ts";
+import { db } from "../db.server.ts";
 import {
   connectionTable,
   userImageTable,
@@ -13,7 +13,7 @@ import {
 import type { userSchema, connectionSchema } from "#drizzle/schema.ts";
 import type { z } from "zod";
 import { createCookieSessionStorage, redirect } from "@remix-run/node";
-import { env } from "./env.server.ts";
+import { env } from "../env.server.ts";
 import { eq } from "drizzle-orm";
 
 export const SESSION_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30;
