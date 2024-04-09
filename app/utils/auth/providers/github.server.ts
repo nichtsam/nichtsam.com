@@ -1,6 +1,6 @@
 import { GitHubStrategy } from "remix-auth-socials";
 import type { AuthProvider } from "./model.ts";
-import { env } from "../env.server.ts";
+import { env } from "#app/utils/env.server.ts";
 import { z } from "zod";
 
 // pick needed from here: https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user

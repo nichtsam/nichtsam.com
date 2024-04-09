@@ -1,6 +1,6 @@
 import { type DiscordProfile, DiscordStrategy } from "remix-auth-socials";
 import type { AuthProvider } from "./model.ts";
-import { env } from "../env.server.ts";
+import { env } from "#app/utils/env.server.ts";
 import { z } from "zod";
 
 const DiscordUserSchema = z.object({ username: z.string() });

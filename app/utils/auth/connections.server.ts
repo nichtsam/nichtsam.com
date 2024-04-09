@@ -1,10 +1,10 @@
 import { createCookieSessionStorage } from "@remix-run/node";
-import { env } from "../env.server.ts";
-import type { ProviderName } from "./connections.tsx";
-import { GitHubProvider } from "../providers/github.server.ts";
-import type { AuthProvider, ProviderUser } from "../providers/model.ts";
+import { env } from "#app/utils/env.server.ts";
 import { Authenticator } from "remix-auth";
-import { DiscordProvider } from "../providers/discord.server.ts";
+import type { ProviderName } from "./connections.tsx";
+import type { AuthProvider, ProviderUser } from "./providers/model.ts";
+import { GitHubProvider } from "./providers/github.server.ts";
+import { DiscordProvider } from "./providers/discord.server.ts";
 
 export const connectionSessionStorage = createCookieSessionStorage({
   cookie: {
