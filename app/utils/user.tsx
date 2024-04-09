@@ -1,6 +1,5 @@
 import type { loader as rootLoader } from "#app/root.tsx";
-import { Link, useRouteLoaderData } from "@remix-run/react";
-import { Button } from "#app/components/ui/button.tsx";
+import { useRouteLoaderData } from "@remix-run/react";
 import type { SerializeFrom } from "@remix-run/node";
 
 export const isUser = (
@@ -35,9 +34,3 @@ export const useUser = () => {
 
   return maybeUser;
 };
-
-export const LoginButton = () => (
-  <Button asChild>
-    <Link to="/login">Login</Link>
-  </Button>
-);
