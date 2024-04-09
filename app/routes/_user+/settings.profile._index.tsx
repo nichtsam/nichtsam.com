@@ -5,7 +5,6 @@ import {
   type LoaderFunctionArgs,
 } from "@remix-run/node";
 import { Form, Link } from "@remix-run/react";
-import { Trash } from "lucide-react";
 import { StatusButton } from "#app/components/status-button.tsx";
 import { useDoubleCheck, useIsPending } from "#app/utils/ui.ts";
 import { validateCSRF } from "#app/utils/csrf.server.ts";
@@ -26,6 +25,7 @@ import { db } from "#app/utils/db.server.ts";
 import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
+import { Icon } from "#app/components/ui/icon";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,
@@ -116,8 +116,9 @@ const DeleteAccount = () => {
         status={isPending ? "pending" : "idle"}
         className="flex gap-2 transition-none"
       >
-        <Trash size={16} />
-        {dc.doubleCheck ? "Are you sure?" : "Delete My Account"}
+        <Icon name="trash">
+          {dc.doubleCheck ? "Are you sure?" : "Delete My Account"}
+        </Icon>
       </StatusButton>
     </Form>
   );

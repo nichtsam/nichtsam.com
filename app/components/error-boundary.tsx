@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import type { ErrorResponse, Location } from "@remix-run/react";
 import { getErrorMessage } from "#app/utils/error.ts";
-import { ArrowLeft } from "lucide-react";
+import { Icon } from "./ui/icon";
 
 type StatusHandler = (info: {
   error: ErrorResponse;
@@ -81,8 +81,7 @@ export const generalNotFoundHandler: StatusHandler & UnexpectedErrorHandler = ({
         <pre className="text-sm sm:text-lg md:text-xl">{location.pathname}</pre>
       </div>
       <Link to="/" className="flex items-center gap-2 self-start text-lg">
-        <ArrowLeft />
-        Back to home
+        <Icon name="arrow-left">Back to home</Icon>
       </Link>
     </div>
   );

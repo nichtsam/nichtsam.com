@@ -1,6 +1,5 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { Form, Outlet } from "@remix-run/react";
-import { ChevronRight, LogOut, User } from "lucide-react";
 import { Button } from "#app/components/ui/button.tsx";
 import {
   Avatar,
@@ -17,15 +16,11 @@ import {
 } from "#app/utils/breadcrumb.tsx";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import { getUserImgSrc } from "../resources+/user-images.$imageId";
+import { Icon } from "#app/components/ui/icon";
 
 export const handle: SEOHandle & BreadcrumbHandle = {
   getSitemapEntries: () => null,
-  breadcrumb: (
-    <span className="flex items-center gap-x-2">
-      <User size={16} />
-      Profile
-    </span>
-  ),
+  breadcrumb: <Icon name="user">Profile</Icon>,
 };
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -67,11 +62,11 @@ const UserHeader = () => {
           <Button
             variant="link"
             type="submit"
-            className={cn("inline-flex w-full items-center gap-x-2", {
+            className={cn("inline-flex items-center gap-x-2", {
               "animate-pulse": isLoggingOut,
             })}
           >
-            <LogOut size={16} /> Log out
+            <Icon name="log-out">Log out</Icon>
           </Button>
         </Form>
       </div>
@@ -95,7 +90,7 @@ const Breadcrumbs = () => {
             "text-muted-foreground": i < arr.length - 1,
           })}
         >
-          {unvariant(i !== 0, <ChevronRight size={16} />)}
+          {unvariant(i !== 0, <Icon name="chevron-right" />)}
           {element}
         </li>
       ))}

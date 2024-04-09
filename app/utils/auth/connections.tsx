@@ -1,9 +1,9 @@
 import { StatusButton } from "#app/components/status-button.tsx";
-import { DiscordLogoIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
 import { Form } from "@remix-run/react";
 import { SocialsProvider } from "remix-auth-socials";
 import { z } from "zod";
 import { useIsPending } from "../ui.ts";
+import { Icon } from "#app/components/ui/icon.tsx";
 
 export const GITHUB_PROVIDER_NAME = SocialsProvider.GITHUB;
 export const DISCORD_PROVIDER_NAME = SocialsProvider.DISCORD;
@@ -22,11 +22,11 @@ export type ProviderConfig = {
 export const providerConfigs: Record<ProviderName, ProviderConfig> = {
   [GITHUB_PROVIDER_NAME]: {
     label: "Github",
-    icon: <GitHubLogoIcon className="inline-block" />,
+    icon: <Icon name="github-logo" className="inline-block" />,
   },
   [DISCORD_PROVIDER_NAME]: {
     label: "Discord",
-    icon: <DiscordLogoIcon className="inline-block" />,
+    icon: <Icon name="discord-logo" className="inline-block" />,
   },
 };
 

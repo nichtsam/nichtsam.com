@@ -6,7 +6,6 @@ import {
   CardTitle,
 } from "#app/components/ui/card.tsx";
 import { useDoubleCheck } from "#app/utils/ui.ts";
-import { BookUser, KeyRound, LogOut } from "lucide-react";
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { json } from "@remix-run/node";
 import type {
@@ -22,13 +21,13 @@ import { validateCSRF } from "#app/utils/csrf.server.ts";
 import { getAuthSession, requireUserId } from "#app/utils/auth/auth.server.ts";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import type { BreadcrumbHandle } from "#app/utils/breadcrumb";
+import { Icon } from "#app/components/ui/icon";
 
 export const handle: SEOHandle & BreadcrumbHandle = {
   getSitemapEntries: () => null,
   breadcrumb: (
     <span className="flex items-center gap-x-2">
-      <BookUser size={16} />
-      Sessions
+      <Icon name="book-user">Sessions</Icon>
     </span>
   ),
 };
@@ -89,8 +88,7 @@ export default function ProfileConnections() {
           <SignOutOtherSessions otherSessionsCount={otherSessionsCount} />
         ) : (
           <p className="flex items-center gap-x-2">
-            <KeyRound size={16} />
-            This is your only session
+            <Icon name="key-round">This is your only session</Icon>
           </p>
         )}
       </CardContent>
@@ -124,8 +122,9 @@ const SignOutOtherSessions = ({
           status={fetcher.state !== "idle" ? "pending" : "idle"}
           className="flex items-center gap-x-2 transition-none"
         >
-          <LogOut size={16} />
-          {dc.doubleCheck ? "Are you sure?" : "Sign them out"}
+          <Icon name="log-out">
+            {dc.doubleCheck ? "Are you sure?" : "Sign them out"}
+          </Icon>
         </StatusButton>
       </fetcher.Form>
     </div>
@@ -134,7 +133,6 @@ const SignOutOtherSessions = ({
 
 const getSessionsCount = async ({
   userId,
-  sessionId,
 }: {
   userId: string;
   sessionId: string;

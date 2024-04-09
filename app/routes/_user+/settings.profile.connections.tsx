@@ -21,7 +21,6 @@ import type {
 import { AuthenticityTokenInput } from "remix-utils/csrf/react";
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { StatusButton } from "#app/components/status-button.tsx";
-import { Link as LinkIcon, Trash } from "lucide-react";
 import { requireUserId } from "#app/utils/auth/auth.server.ts";
 import { db } from "#app/utils/db.server.ts";
 import { resolveConnectionInfo } from "#app/utils/auth/connections.server.ts";
@@ -46,13 +45,13 @@ import { eq } from "drizzle-orm";
 import { without } from "ramda";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import type { BreadcrumbHandle } from "#app/utils/breadcrumb";
+import { Icon } from "#app/components/ui/icon";
 
 export const handle: SEOHandle & BreadcrumbHandle = {
   getSitemapEntries: () => null,
   breadcrumb: (
     <span className="flex items-center gap-x-2">
-      <LinkIcon size={16} />
-      Connections
+      <Icon name="link">Connections</Icon>
     </span>
   ),
 };
@@ -205,7 +204,7 @@ const DeleteConnectionButton = ({ connectionId }: { connectionId: string }) => {
             variant={dc.doubleCheck ? "destructive" : "ghost"}
             status={fetcher.state !== "idle" ? "pending" : "idle"}
           >
-            {fetcher.state === "idle" && <Trash size={16} />}
+            {fetcher.state === "idle" && <Icon name="trash" />}
           </StatusButton>
         </TooltipTrigger>
         <TooltipContent>Disconnect this account</TooltipContent>

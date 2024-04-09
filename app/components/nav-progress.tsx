@@ -1,9 +1,9 @@
 import { cn } from "#app/utils/ui.ts";
 import { useNavigation } from "@remix-run/react";
-import { Loader2 } from "lucide-react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { useSpinDelay } from "spin-delay";
 import { useEffect, useRef, useState } from "react";
+import { Icon } from "./ui/icon";
 
 function NavProgress() {
   const navigation = useNavigation();
@@ -59,7 +59,8 @@ function NavProgress() {
           style={{ transform: `translateX(-${100 - progressRate}%)` }}
         />
       </ProgressPrimitive.Root>
-      <Loader2
+      <Icon
+        name="loader-circle"
         className={cn("m-1", { "animate-spin": !animationComplete })}
         aria-hidden
       />

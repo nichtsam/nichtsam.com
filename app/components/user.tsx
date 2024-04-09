@@ -10,8 +10,8 @@ import {
 import { useOptionalUser, useUser } from "#app/utils/user.tsx";
 import { useRef } from "react";
 import { getUserImgSrc } from "#app/routes/resources+/user-images.$imageId.ts";
-import { LogOut, User } from "lucide-react";
 import { cn, useIsPending } from "#app/utils/ui.ts";
+import { Icon } from "./ui/icon.tsx";
 
 export const UserButton = () => {
   const maybeUser = useOptionalUser();
@@ -62,7 +62,7 @@ export const UserActions = () => {
             to={`/settings/profile`}
             className="flex items-center gap-x-2"
           >
-            <User size={16} /> Profile
+            <Icon name="user">Profile</Icon>
           </Link>
         </DropdownMenuItem>
 
@@ -80,7 +80,7 @@ export const UserActions = () => {
                 "animate-pulse": isLoggingOut,
               })}
             >
-              <LogOut size={16} /> Log out
+              <Icon name="log-out">Log out</Icon>
             </button>
           </Form>
         </DropdownMenuItem>

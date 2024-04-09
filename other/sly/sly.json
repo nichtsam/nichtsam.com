@@ -1,0 +1,31 @@
+{
+  "$schema": "https://sly-cli.fly.dev/registry/config.json",
+  "libraries": [
+    {
+      "name": "@radix-ui/icons",
+      "directory": "./other/svg-icons",
+      "postinstall": ["pnpm", "build:icons"],
+      "transformers": [
+        "./transformers/svg-remove-dimensions.js",
+        "./transformers/html-meta-comments.js",
+        "./transformers/html-prettier.js"
+      ]
+    },
+    {
+      "name": "lucide-icons",
+      "directory": "./other/svg-icons",
+      "postinstall": ["pnpm", "build:icons"],
+      "transformers": [
+        "./transformers/svg-remove-dimensions.js",
+        "./transformers/html-meta-comments.js",
+        "./transformers/html-prettier.js"
+      ]
+    },
+    {
+      "name": "@sly-cli/transformers",
+      "directory": "./other/sly/transformers",
+      "postinstall": [],
+      "transformers": []
+    }
+  ]
+}

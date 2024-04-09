@@ -1,4 +1,3 @@
-import { GitHubLogoIcon, LinkedInLogoIcon } from "@radix-ui/react-icons";
 import { ExternalLink } from "#app/components/link.tsx";
 import {
   NavigationMenu,
@@ -7,17 +6,18 @@ import {
 } from "./ui/navigation-menu.tsx";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip.tsx";
 import { Button } from "./ui/button.tsx";
+import { Icon } from "./ui/icon.tsx";
 
 const LINKS = [
   {
     name: "Github",
     to: "https://github.com/nichtsam",
-    Icon: GitHubLogoIcon,
+    icon: <Icon name="github-logo" />,
   },
   {
     name: "LinkedIn",
     to: "https://www.linkedin.com/in/nichtsam/",
-    Icon: LinkedInLogoIcon,
+    icon: <Icon name="linkedin-logo" />,
   },
 ];
 
@@ -26,13 +26,13 @@ export const Footer = () => {
     <div className="flex justify-center py-4">
       <NavigationMenu>
         <NavigationMenuList>
-          {LINKS.map(({ to, name, Icon }) => (
+          {LINKS.map(({ to, name, icon }) => (
             <NavigationMenuItem key={to}>
               <Tooltip>
                 <TooltipTrigger asChild>
                   <Button variant="ghost" size="icon" asChild>
                     <ExternalLink href={to} aria-label={name}>
-                      <Icon className="h-4 w-4" />
+                      {icon}
                     </ExternalLink>
                   </Button>
                 </TooltipTrigger>

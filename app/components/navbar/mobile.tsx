@@ -1,5 +1,4 @@
 import { DialogTitle, DialogDescription } from "@radix-ui/react-dialog";
-import { HamburgerMenuIcon } from "@radix-ui/react-icons";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useEffect, useState } from "react";
@@ -15,6 +14,7 @@ import { NavLink } from "../link.tsx";
 import { ScrollArea } from "../ui/scroll-area.tsx";
 import { UserButton } from "../user.tsx";
 import { useLocation } from "@remix-run/react";
+import { Icon } from "../ui/icon.tsx";
 
 let firstRender = true;
 
@@ -47,7 +47,7 @@ export const MobileNavigation = () => {
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetTrigger asChild>
         <Button size="icon" variant="ghost" aria-label="Navigation Menu">
-          <HamburgerMenuIcon />
+          <Icon name="hamburger-menu" />
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col gap-y-4" forceMount>
