@@ -16,7 +16,7 @@ permissions:
 jobs:
   lint:
     name: 🧶 ESLint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: 👀 Checkout repo
         uses: actions/checkout@v4
@@ -33,11 +33,11 @@ jobs:
           run_install: true
 
       - name: 🧶 Lint
-        run: pnpm run lint
+        run: pnpm lint
 
   typecheck:
     name: 🔬 TypeScript
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: 👀 Checkout repo
         uses: actions/checkout@v4
@@ -54,7 +54,7 @@ jobs:
           run_install: true
 
       - name: 🔬 Type check
-        run: pnpm run typecheck
+        run: pnpm typecheck
 
   vitest:
     name: ⚡ Vitest
@@ -79,7 +79,7 @@ jobs:
 
   migration:
     name: 🧬 Migration
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [lint, typecheck, vitest]
     if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
 
@@ -100,21 +100,21 @@ jobs:
 
       - name: 🧬 Staging Migration
         if: ${{ github.ref_name == 'dev'}}
-        run: pnpm run db:migrate
+        run: pnpm db:migrate
         env:
           TURSO_DB_URL: ${{ secrets.STAGING_TURSO_DB_URL }}
           TURSO_DB_AUTH_TOKEN: ${{ secrets.STAGING_TURSO_DB_AUTH_TOKEN }}
 
       - name: 🧬 Production Migration
         if: ${{ github.ref_name == 'main'}}
-        run: pnpm run db:migrate
+        run: pnpm db:migrate
         env:
           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
           TURSO_DB_AUTH_TOKEN: ${{ secrets.TURSO_DB_AUTH_TOKEN }}
 
   deploy:
     name: 🚀 Deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [lint, typecheck, vitest, migration]
     if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
 
