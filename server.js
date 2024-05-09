@@ -15,7 +15,7 @@ const MODE = process.env.NODE_ENV ?? "development";
 const DISALLOW_INDEXING = process.env.DISALLOW_INDEXING === "true";
 
 sourceMapSupport.install();
-installGlobals();
+installGlobals({nativeFetch:true});
 
 const viteDevServer =
   MODE === "production"
