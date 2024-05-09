@@ -10,6 +10,7 @@ const env = z
   .parse(process.env);
 
 export default {
+  dialect: "sqlite",
   driver: "turso",
   schema: "./drizzle/schema.ts",
   out: "./drizzle",

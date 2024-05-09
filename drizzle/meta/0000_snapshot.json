@@ -1,8 +1,6 @@
 {
-  "version": "5",
+  "version": "6",
   "dialect": "sqlite",
-  "id": "ff1a202c-b789-43f8-a8a2-008a199fe05c",
-  "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "connection": {
       "name": "connection",
@@ -58,15 +56,15 @@
         "connection_user_id_user_id_fk": {
           "name": "connection_user_id_user_id_fk",
           "tableFrom": "connection",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -110,15 +108,15 @@
         "session_user_id_user_id_fk": {
           "name": "session_user_id_user_id_fk",
           "tableFrom": "session",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -169,15 +167,15 @@
         "user_image_user_id_user_id_fk": {
           "name": "user_image_user_id_user_id_fk",
           "tableFrom": "user_image",
-          "tableTo": "user",
           "columnsFrom": [
             "user_id"
           ],
+          "tableTo": "user",
           "columnsTo": [
             "id"
           ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "onDelete": "cascade"
         }
       },
       "compositePrimaryKeys": {},
@@ -246,8 +244,9 @@
   },
   "enums": {},
   "_meta": {
-    "schemas": {},
     "tables": {},
     "columns": {}
-  }
+  },
+  "id": "ff1a202c-b789-43f8-a8a2-008a199fe05c",
+  "prevId": "00000000-0000-0000-0000-000000000000"
 }
