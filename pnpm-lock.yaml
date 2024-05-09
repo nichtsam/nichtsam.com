@@ -62,9 +62,6 @@ importers:
       '@radix-ui/react-visually-hidden':
         specifier: 1.0.3
         version: 1.0.3(@types/react-dom@18.3.0)(@types/react@18.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@remix-run/css-bundle':
-        specifier: 2.9.1
-        version: 2.9.1
       '@remix-run/express':
         specifier: 2.9.1
         version: 2.9.1(express@4.19.2)(typescript@5.4.5)
@@ -1850,10 +1847,6 @@ packages:
 
   '@radix-ui/rect@1.0.1':
     resolution: {integrity: sha512-fyrgCaedtvMg9NK3en0pnOYJdtfwxUcNolezkNPUsoX57X8oQk+NkqcvzHXD2uKNij6GXmWU9NDru2IWjrO4BQ==}
-
-  '@remix-run/css-bundle@2.9.1':
-    resolution: {integrity: sha512-M1Nm3oOBKg6Kozb17CFR7hYfrJ+jp6lgBnwNmmRk5QZnz1fyiRU8Po8EZ3muLlBeEsu7KqiYlrH8UeWtSAXKEg==}
-    engines: {node: '>=18.0.0'}
 
   '@remix-run/dev@2.9.1':
     resolution: {integrity: sha512-/YhegnnRrarsqU+11+HdGwjcIT1KgkS9L7kWCM0+ivDvyiBYAuI6xbPG/q/FY6LqLAPYeOxsJmUNl+aj+yMltA==}
@@ -7996,8 +7989,6 @@ snapshots:
   '@radix-ui/rect@1.0.1':
     dependencies:
       '@babel/runtime': 7.24.0
-
-  '@remix-run/css-bundle@2.9.1': {}
 
   '@remix-run/dev@2.9.1(@remix-run/react@2.9.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.4.5))(@remix-run/serve@2.9.1(typescript@5.4.5))(@types/node@20.12.11)(typescript@5.4.5)(vite@5.2.11(@types/node@20.12.11))':
     dependencies:
