@@ -34,6 +34,10 @@ import { getUserId, logout } from "./utils/auth/auth.server.ts";
 import { db } from "./utils/db.server.ts";
 import { csrf } from "./utils/csrf.server.ts";
 import { AuthenticityTokenProvider } from "remix-utils/csrf/react";
+import { Toaster } from "./components/ui/sonner.tsx";
+import { getToast } from "./utils/toast.server.ts";
+import { combineHeaders } from "./utils/request.server.ts";
+import { useToast } from "./utils/toast.ts";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesheet },
@@ -75,6 +79,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     headers.append("set-cookie", csrfCookieHeader);
   }
 
+  const toast = await getToast(request);
+
   return json(
     {
       user,
@@ -85,10 +91,11 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
           theme: getTheme(request),
         },
       },
+      toast: toast?.toast,
       csrfToken,
     },
     {
-      headers,
+      headers: combineHeaders(headers, toast?.discardHeaders),
     },
   );
 };
@@ -136,6 +143,7 @@ function Document({
         {children}
 
         <NavProgress />
+        <Toaster />
 
         <script
           nonce={nonce}
@@ -156,6 +164,7 @@ function App() {
   const env = data.env;
   const theme = useTheme();
   const disallowIndexing = env.DISALLOW_INDEXING;
+  useToast(data.toast);
 
   return (
     <Document

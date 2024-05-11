@@ -1,0 +1,13 @@
+diff --git a/build/server/typed-cookie.d.ts b/build/server/typed-cookie.d.ts
+index bf65a60eb104be5faf64cd35f3194f9b084658bb..49d9edc3956ba47f734794d0d05583ef9b183b32 100644
+--- a/build/server/typed-cookie.d.ts
++++ b/build/server/typed-cookie.d.ts
+@@ -3,7 +3,7 @@ import type { z } from "zod";
+ export interface TypedCookie<Schema extends z.ZodTypeAny> extends Cookie {
+     isTyped: true;
+     parse(cookieHeader: string | null, options?: CookieParseOptions): Promise<z.infer<Schema> | null>;
+-    serialize(value: z.infer<Schema>, options?: CookieSerializeOptions): Promise<string>;
++    serialize(value: z.input<Schema>, options?: CookieSerializeOptions): Promise<string>;
+ }
+ export declare function createTypedCookie<Schema extends z.ZodTypeAny>({ cookie, schema, }: {
+     cookie: Cookie;

@@ -10,15 +10,20 @@ import {
   authenticator,
   connectionSessionStorage,
 } from "#app/utils/auth/connections.server.ts";
-import { ProviderNameSchema } from "#app/utils/auth/connections.tsx";
+import {
+  ProviderNameSchema,
+  providerConfigs,
+} from "#app/utils/auth/connections.tsx";
 import { db } from "#app/utils/db.server.ts";
 import { combineHeaders, destroySession } from "#app/utils/request.server.ts";
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import { connectionTable, sessionTable } from "#drizzle/schema.ts";
 import { onboardingCookie } from "#app/utils/auth/onboarding.server.ts";
+import { redirectWithToast } from "#app/utils/toast.server";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);
+  const label = providerConfigs[providerName].label;
 
   const authResult = await authenticator
     .authenticate(providerName, request, { throwOnError: true })
@@ -51,11 +56,24 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
   if (existingConnection && userId) {
     if (existingConnection.user_id === userId) {
-      // TODO: connection already bound to user
-      throw redirect("/already-bound", { headers: combineHeaders(headers) });
+      return redirectWithToast(
+        "/settings/profile/connections",
+        {
+          title: "Already Connected",
+          message: `Your "${profile.username}" ${label} account is already connected.`,
+        },
+        { headers },
+      );
     } else {
-      // TODO: connection already bound to another user
-      throw redirect("/already-taken", { headers: combineHeaders(headers) });
+      return redirectWithToast(
+        "/settings/profile/connections",
+        {
+          type: "error",
+          title: "Already Taken",
+          message: `The "${profile.username}" ${label} account is already taken by another account.`,
+        },
+        { headers },
+      );
     }
   }
 
@@ -67,10 +85,15 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
       provider_name: providerName,
     });
 
-    // TODO: toast help message
-    throw redirect("/settings/profile/connections", {
-      headers: combineHeaders(headers),
-    });
+    return redirectWithToast(
+      "/settings/profile/connections",
+      {
+        type: "success",
+        title: "Connected",
+        message: `Your "${profile.username}" ${label} account has been connected.`,
+      },
+      { headers },
+    );
   }
 
   // * not logged in but connection bind to a user, login that user
