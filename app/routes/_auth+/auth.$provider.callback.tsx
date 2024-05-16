@@ -1,11 +1,4 @@
-import {
-  SESSION_ID_KEY,
-  authSessionStorage,
-  getAuthSession,
-  getSessionExpirationDate,
-  getUserId,
-  login,
-} from "#app/utils/auth/auth.server.ts";
+import { getUserId, login } from "#app/utils/auth/auth.server.ts";
 import {
   authenticator,
   connectionSessionStorage,
@@ -17,9 +10,9 @@ import {
 import { db } from "#app/utils/db.server.ts";
 import { combineHeaders, destroySession } from "#app/utils/request.server.ts";
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
-import { connectionTable, sessionTable } from "#drizzle/schema.ts";
+import { connectionTable } from "#drizzle/schema.ts";
 import { onboardingCookie } from "#app/utils/auth/onboarding.server.ts";
-import { redirectWithToast } from "#app/utils/toast.server";
+import { createToastHeaders, redirectWithToast } from "#app/utils/toast.server";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);
@@ -54,13 +47,34 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
   const userId = await getUserId(request);
 
-  if (existingConnection && userId) {
+  // logged in
+  if (userId) {
+    // new connection coming in, bind it to user
+    if (!existingConnection) {
+      await db.insert(connectionTable).values({
+        user_id: userId,
+        provider_id: profile.id,
+        provider_name: providerName,
+      });
+
+      return redirectWithToast(
+        "/settings/profile/connections",
+        {
+          type: "success",
+          title: "Connected",
+          message: `Your ${label} account "${profile.username}" has been connected.`,
+        },
+        { headers },
+      );
+    }
+
+    // notify connection status
     if (existingConnection.user_id === userId) {
       return redirectWithToast(
         "/settings/profile/connections",
         {
           title: "Already Connected",
-          message: `Your "${profile.username}" ${label} account is already connected.`,
+          message: `Your ${label} account "${profile.username}" is already connected.`,
         },
         { headers },
       );
@@ -70,55 +84,23 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
         {
           type: "error",
           title: "Already Taken",
-          message: `The "${profile.username}" ${label} account is already taken by another account.`,
+          message: `The ${label} account "${profile.username}" is already taken by another account.`,
         },
         { headers },
       );
     }
   }
 
-  // * logged in, bind connection to user
-  if (userId) {
-    await db.insert(connectionTable).values({
-      user_id: userId,
-      provider_id: profile.id,
-      provider_name: providerName,
-    });
-
-    return redirectWithToast(
-      "/settings/profile/connections",
-      {
-        type: "success",
-        title: "Connected",
-        message: `Your "${profile.username}" ${label} account has been connected.`,
-      },
-      { headers },
-    );
-  }
-
-  // * not logged in but connection bind to a user, login that user
+  // not logged in but the connection is bound to a user, login that user
   if (existingConnection) {
-    const session = (
-      await db
-        .insert(sessionTable)
-        .values({
-          expiration_at: getSessionExpirationDate(),
-          user_id: existingConnection.user_id,
-        })
-        .returning()
-    )[0]!;
-
-    const { authSession } = await getAuthSession(request);
-    authSession.set(SESSION_ID_KEY, session.id);
-
-    throw redirect("/", {
-      headers: combineHeaders(headers, {
-        "set-cookie": await authSessionStorage.commitSession(authSession),
-      }),
+    return await login({
+      request,
+      userId: existingConnection.user_id,
+      headers,
     });
   }
 
-  // * check if any user owns this connection's email, bind to that user and login
+  // check if any user owns this connection's email, bind to that user and login
   const emailOwner = await db.query.userTable.findFirst({
     where: (userTable, { eq }) => eq(userTable.email, profile.email),
   });
@@ -130,23 +112,33 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
       user_id: emailOwner.id,
     });
 
-    await login({ request, userId: emailOwner.id, headers });
+    return await login({
+      request,
+      userId: emailOwner.id,
+      headers: combineHeaders(
+        headers,
+        await createToastHeaders({
+          title: "One User Per Email",
+          message: `Your ${label} account "${profile.username}" has been connected to the email user.`,
+        }),
+      ),
+    });
   }
 
-  // TODO: new user, get them onboard
-
-  throw redirect("/onboarding", {
-    headers: combineHeaders(headers, {
-      "set-cookie": await onboardingCookie.serialize({
-        providerId: profile.id,
-        providerName,
-        profile: {
-          email: profile.email,
-          imageUrl: profile.imageUrl,
-          displayName: profile.name,
-          username: profile.username,
-        },
-      }),
+  // real new user, send to onboarding
+  headers.append(
+    "set-cookie",
+    await onboardingCookie.serialize({
+      providerId: profile.id,
+      providerName,
+      profile: {
+        email: profile.email,
+        imageUrl: profile.imageUrl,
+        displayName: profile.name,
+        username: profile.username,
+      },
     }),
-  });
+  );
+
+  throw redirect("/onboarding", { headers });
 };
