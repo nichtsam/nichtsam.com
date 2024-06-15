@@ -16,3 +16,9 @@ coverage
 
 # generated files
 /app/components/ui/icons
+
+# Sentry Config File
+.sentryclirc
+
+# Sentry Config File
+.env.sentry-build-plugin

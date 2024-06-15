@@ -23,6 +23,8 @@ const envSchema = z
 
     TURSO_DB_URL: z.string().url(),
     TURSO_DB_AUTH_TOKEN: z.string(),
+
+    SENTRY_DSN: z.string().url().optional(),
   })
   .readonly();
 
@@ -41,6 +43,7 @@ export const env = parsedEnv.data;
 
 const PUBLIC_ENV = [
   "NODE_ENV",
+  "SENTRY_DSN",
   "DISALLOW_INDEXING",
 ] as const satisfies (keyof Env)[];
 

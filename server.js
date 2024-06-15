@@ -1,3 +1,4 @@
+import { wrapExpressCreateRequestHandler } from "@sentry/remix";
 import "dotenv/config";
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";
@@ -11,11 +12,14 @@ import getPort, { portNumbers } from "get-port";
 import chalk from "chalk";
 import { printUrls } from "./server-utils.js";
 
+const sentryCreateRequestHandler =
+  wrapExpressCreateRequestHandler(createRequestHandler);
+
 const MODE = process.env.NODE_ENV ?? "development";
 const DISALLOW_INDEXING = process.env.DISALLOW_INDEXING === "true";
 
 sourceMapSupport.install();
-installGlobals({nativeFetch:true});
+installGlobals({ nativeFetch: true });
 
 const viteDevServer =
   MODE === "production"
@@ -48,7 +52,7 @@ app.use(
       directives: {
         "connect-src": [
           MODE === "development" ? "ws:" : null,
-          process.env.SENTRY_DSN ? "*.ingest.sentry.io" : null,
+          process.env.SENTRY_DSN ? "*.sentry.io" : null,
           "'self'",
         ].filter(Boolean),
         "font-src": ["'self'"],
@@ -106,7 +110,7 @@ function getBuild() {
 // handle SSR requests
 app.all(
   "*",
-  createRequestHandler({
+  sentryCreateRequestHandler({
     getLoadContext: (_, res) => ({
       cspNonce: res.locals.cspNonce,
       serverBuild: getBuild(),

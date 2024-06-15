@@ -1,3 +1,4 @@
+import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
 import appStylesheet from "#app/styles/app.css?url";
 import { json } from "@remix-run/node";
 import type {
@@ -13,6 +14,7 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  useRouteError,
 } from "@remix-run/react";
 import { NavBar } from "#app/components/navbar/index.tsx";
 import { Footer } from "#app/components/footer.tsx";
@@ -190,7 +192,7 @@ function App() {
   );
 }
 
-export default function AppWithProviders() {
+function AppWithProviders() {
   const { csrfToken } = useLoaderData<typeof loader>();
 
   return (
@@ -202,9 +204,14 @@ export default function AppWithProviders() {
   );
 }
 
+export default withSentry(AppWithProviders);
+
 export function ErrorBoundary() {
   // the nonce doesn't rely on the loader so we can access that
   const nonce = useNonce();
+
+  const error = useRouteError();
+  captureRemixErrorBoundaryError(error);
 
   // NOTE: you cannot use useLoaderData in an ErrorBoundary because the loader
   // likely failed to run so we have to do the best we can.

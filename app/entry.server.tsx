@@ -6,13 +6,36 @@
 
 import { PassThrough } from "node:stream";
 
-import type { AppLoadContext, EntryContext } from "@remix-run/node";
+import type {
+  ActionFunctionArgs,
+  AppLoadContext,
+  EntryContext,
+  LoaderFunctionArgs,
+} from "@remix-run/node";
 import { createReadableStreamFromReadable } from "@remix-run/node";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToPipeableStream } from "react-dom/server";
-import { forceEnvValidation } from "#app/utils/env.server.ts";
+import { env, forceEnvValidation } from "#app/utils/env.server.ts";
 import { NonceProvider } from "./utils/nonce-provider.tsx";
+import chalk from "chalk";
+import { captureRemixServerException } from "@sentry/remix";
+
+if (env.NODE_ENV === "production" && env.SENTRY_DSN) {
+  import("./utils/monitoring.server.ts").then(({ init }) => init());
+}
+
+export function handleError(
+  error: void,
+  { request }: LoaderFunctionArgs | ActionFunctionArgs,
+) {
+  if (request.signal.aborted) {
+    return;
+  }
+
+  console.error(chalk.red(error));
+  captureRemixServerException(error, "remix.server", request);
+}
 
 forceEnvValidation();
 

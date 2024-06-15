@@ -19,8 +19,21 @@ RUN pnpm prune --prod
 
 FROM deps as build
 
+ARG COMMIT_SHA
+ENV COMMIT_SHA $COMMIT_SHA
+
 COPY . .
-RUN pnpm build
+
+# Sentry monitoring
+ARG SENTRY_ORG 
+ARG SENTRY_PROJECT 
+ENV SENTRY_ORG $SENTRY_ORG
+ENV SENTRY_PROJECT $SENTRY_PROJECT
+# Secured way to expose secret to the build 
+# https://docs.docker.com/build/building/secrets/
+RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
+  export SENTRY_AUTH_TOKEN=$(cat /run/secrets/SENTRY_AUTH_TOKEN) && \
+  pnpm build
 
 FROM base
 
