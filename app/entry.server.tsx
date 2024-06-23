@@ -1,15 +1,7 @@
-/**
- * By default, Remix will handle generating the HTTP Response for you.
- * You are free to delete this file if you'd like to, but if you ever want it revealed again, you can run `npx remix reveal` ✨
- * For more information, see https://remix.run/file-conventions/entry.server
- */
-
 import { PassThrough } from "node:stream";
-
 import type {
   ActionFunctionArgs,
-  AppLoadContext,
-  EntryContext,
+  HandleDocumentRequestFunction,
   LoaderFunctionArgs,
 } from "@remix-run/node";
 import { createReadableStreamFromReadable } from "@remix-run/node";
@@ -19,111 +11,34 @@ import { renderToPipeableStream } from "react-dom/server";
 import { env, forceEnvValidation } from "#app/utils/env.server.ts";
 import { NonceProvider } from "./utils/nonce-provider.tsx";
 import chalk from "chalk";
-import { captureRemixServerException } from "@sentry/remix";
-
-if (env.NODE_ENV === "production" && env.SENTRY_DSN) {
-  import("./utils/monitoring.server.ts").then(({ init }) => init());
-}
-
-export function handleError(
-  error: void,
-  { request }: LoaderFunctionArgs | ActionFunctionArgs,
-) {
-  if (request.signal.aborted) {
-    return;
-  }
-
-  console.error(chalk.red(error));
-  captureRemixServerException(error, "remix.server", request);
-}
+import { captureException, captureRemixServerException } from "@sentry/remix";
 
 forceEnvValidation();
 
 const ABORT_DELAY = 5_000;
 
+if (env.NODE_ENV === "production" && env.SENTRY_DSN) {
+  import("./utils/monitoring.server.ts").then(({ init }) => init());
+}
+
+type DocRequestArgs = Parameters<HandleDocumentRequestFunction>;
 export default function handleRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-  loadContext: AppLoadContext,
+  ...[
+    request,
+    responseStatusCode,
+    responseHeaders,
+    remixContext,
+    loadContext,
+  ]: DocRequestArgs
 ) {
   const nonce = String(loadContext.cspNonce);
+  const callbackName = isbot(request.headers.get("user-agent"))
+    ? "onAllReady"
+    : "onShellReady";
 
-  return isbot(request.headers.get("user-agent"))
-    ? handleBotRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext,
-      )
-    : handleBrowserRequest(
-        request,
-        responseStatusCode,
-        responseHeaders,
-        remixContext,
-        nonce,
-      );
-}
-
-function handleBotRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-) {
-  let shellRendered = false;
   return new Promise((resolve, reject) => {
-    const { pipe, abort } = renderToPipeableStream(
-      <RemixServer
-        context={remixContext}
-        url={request.url}
-        abortDelay={ABORT_DELAY}
-      />,
-      {
-        onAllReady() {
-          shellRendered = true;
-          const body = new PassThrough();
-          const stream = createReadableStreamFromReadable(body);
-          responseHeaders.set("Content-Type", "text/html");
+    let didError = false;
 
-          resolve(
-            new Response(stream, {
-              headers: responseHeaders,
-              status: responseStatusCode,
-            }),
-          );
-
-          pipe(body);
-        },
-        onShellError(error: unknown) {
-          reject(error);
-        },
-        onError(error: unknown) {
-          responseStatusCode = 500;
-          // Log streaming rendering errors from inside the shell.  Don't log
-          // errors encountered during initial shell rendering since they'll
-          // reject and get logged in handleDocumentRequest.
-          if (shellRendered) {
-            console.error(error);
-          }
-        },
-      },
-    );
-
-    setTimeout(abort, ABORT_DELAY);
-  });
-}
-
-function handleBrowserRequest(
-  request: Request,
-  responseStatusCode: number,
-  responseHeaders: Headers,
-  remixContext: EntryContext,
-  nonce: string,
-) {
-  let shellRendered = false;
-  return new Promise((resolve, reject) => {
     const { pipe, abort } = renderToPipeableStream(
       <NonceProvider value={nonce}>
         <RemixServer
@@ -132,38 +47,48 @@ function handleBrowserRequest(
           abortDelay={ABORT_DELAY}
         />
       </NonceProvider>,
+
       {
-        onShellReady() {
-          shellRendered = true;
+        [callbackName]: () => {
           const body = new PassThrough();
           const stream = createReadableStreamFromReadable(body);
-
           responseHeaders.set("Content-Type", "text/html");
 
           resolve(
             new Response(stream, {
               headers: responseHeaders,
-              status: responseStatusCode,
+              status: didError ? 500 : responseStatusCode,
             }),
           );
-
           pipe(body);
         },
-        onShellError(error: unknown) {
-          reject(error);
+        onShellError: (err) => {
+          reject(err);
         },
-        onError(error: unknown) {
-          responseStatusCode = 500;
-          // Log streaming rendering errors from inside the shell.  Don't log
-          // errors encountered during initial shell rendering since they'll
-          // reject and get logged in handleDocumentRequest.
-          if (shellRendered) {
-            console.error(error);
-          }
+        onError: () => {
+          didError = true;
         },
+        nonce,
       },
     );
 
     setTimeout(abort, ABORT_DELAY);
   });
+}
+
+export function handleError(
+  error: unknown,
+  { request }: LoaderFunctionArgs | ActionFunctionArgs,
+) {
+  if (request.signal.aborted) {
+    return;
+  }
+
+  if (error instanceof Error) {
+    console.error(chalk.red(error.stack));
+    captureRemixServerException(error, "remix.server", request);
+  } else {
+    console.error(chalk.red(error));
+    captureException(error);
+  }
 }
