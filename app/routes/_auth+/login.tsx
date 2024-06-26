@@ -11,11 +11,7 @@ import {
   providerNames,
 } from "#app/utils/auth/connections.tsx";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
-import type {
-  HeadersFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,
@@ -30,11 +26,6 @@ export const meta: MetaFunction = () => {
     },
   ];
 };
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": "private, max-age=3600",
-  Vary: "Cookie",
-});
 
 export async function loader({ request }: LoaderFunctionArgs) {
   await requireAnonymous(request);
