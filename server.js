@@ -2,7 +2,6 @@ import { wrapExpressCreateRequestHandler } from "@sentry/remix";
 import "dotenv/config";
 import crypto from "crypto";
 import { createRequestHandler } from "@remix-run/express";
-import { installGlobals } from "@remix-run/node";
 import compression from "compression";
 import express from "express";
 import helmet from "helmet";
@@ -19,7 +18,6 @@ const MODE = process.env.NODE_ENV ?? "development";
 const DISALLOW_INDEXING = process.env.DISALLOW_INDEXING === "true";
 
 sourceMapSupport.install();
-installGlobals({ nativeFetch: true });
 
 const viteDevServer =
   MODE === "production"
