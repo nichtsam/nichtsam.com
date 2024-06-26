@@ -1,7 +1,6 @@
 import { useFetcher, useFetchers } from "@remix-run/react";
-import { useRequestInfo } from "./request-info.ts";
+import { useRequestInfo, useHints } from "./request-info.ts";
 import { parseWithZod } from "@conform-to/zod";
-import { useHints } from "./client-hints.tsx";
 import { z } from "zod";
 import { useEffect, useState } from "react";
 import { type setTheme as setThemeAction } from "./theme.server.ts";

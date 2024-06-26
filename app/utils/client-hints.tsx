@@ -2,7 +2,6 @@ import { useRevalidator } from "@remix-run/react";
 import { useEffect } from "react";
 import { parse as parseCookie } from "cookie";
 import type { Theme } from "./theme.server.ts";
-import { useRequestInfo } from "./request-info.ts";
 
 type ClientHintConfigSchema = {
   cookieName: string;
@@ -64,11 +63,6 @@ export const getHints = (request?: Request): ClientHints => {
 
     return acc;
   }, {} as ClientHints);
-};
-
-export const useHints = () => {
-  const requestInfo = useRequestInfo();
-  return requestInfo.hints;
 };
 
 export const ClientHintsCheck = ({ nonce }: { nonce: string }) => {

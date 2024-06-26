@@ -9,3 +9,8 @@ export function useRequestInfo() {
 
   return data.requestInfo;
 }
+
+export const useHints = () => {
+  const requestInfo = useRequestInfo();
+  return requestInfo.hints;
+};
