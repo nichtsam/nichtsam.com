@@ -1,3 +1,4 @@
+import { pipeHeaders } from "#app/utils/remix.server";
 import type { HeadersFunction, MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {
@@ -10,10 +11,10 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": "private, max-age=3600",
-  Vary: "Cookie",
-});
+export const headers: HeadersFunction = (args) => {
+  args.loaderHeaders.set("Cache-Control", "max-age=86400");
+  return pipeHeaders(args);
+};
 
 export default function About() {
   return (

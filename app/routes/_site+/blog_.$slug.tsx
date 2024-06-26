@@ -2,9 +2,16 @@ import { getPostMeta } from "#app/utils/mdx/blog.server";
 import { bundleMDX } from "#app/utils/mdx/compile-mdx.server";
 import { useMdxComponent } from "#app/utils/mdx/mdx";
 import { getMdxBundleSource, getMdxEntry } from "#app/utils/mdx/mdx.server";
+import { pipeHeaders } from "#app/utils/remix.server";
 import { json } from "@remix-run/node";
-import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
+
+export const headers: HeadersFunction = pipeHeaders;
 
 export const meta: MetaFunction<typeof loader> = ({ data }) => {
   if (!data) {
@@ -39,7 +46,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     },
     {
       headers: {
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "max-age=86400",
       },
     },
   );

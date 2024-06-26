@@ -4,6 +4,7 @@ import { getPostThumbnailAlt } from "#app/utils/mdx/blog";
 import { Link, useLoaderData } from "@remix-run/react";
 import { AspectRatio } from "#app/components/ui/aspect-ratio";
 import { CloudinaryImage } from "#app/components/image";
+import { pipeHeaders } from "#app/utils/remix.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,10 +13,7 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": "private, max-age=3600",
-  Vary: "Cookie",
-});
+export const headers: HeadersFunction = pipeHeaders;
 
 export const loader = async () => {
   const posts = await getPostInfos();
@@ -24,7 +22,7 @@ export const loader = async () => {
     { posts },
     {
       headers: {
-        "Cache-Control": "public, max-age=3600",
+        "Cache-Control": "max-age=86400",
       },
     },
   );

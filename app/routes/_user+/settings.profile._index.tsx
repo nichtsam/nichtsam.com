@@ -26,6 +26,7 @@ import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import { Icon } from "#app/components/ui/icon";
+import { pipeHeaders } from "#app/utils/remix.server";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,
@@ -40,11 +41,6 @@ export const meta: MetaFunction = () => {
     },
   ];
 };
-
-export const headers: HeadersFunction = () => ({
-  "Cache-Control": "private, max-age=3600",
-  Vary: "Cookie",
-});
 
 const INTENT_DELETE_ACCOUNT = "INTENT_DELETE_ACCOUNT";
 

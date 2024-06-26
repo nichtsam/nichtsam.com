@@ -41,6 +41,7 @@
     "@sentry/remix": "8.9.2",
     "@sentry/vite-plugin": "2.18.0",
     "address": "2.0.2",
+    "cache-control-parser": "2.0.6",
     "cachified": "3.5.4",
     "chalk": "5.3.0",
     "class-variance-authority": "0.7.0",

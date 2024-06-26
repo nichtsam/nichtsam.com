@@ -6,6 +6,7 @@ import type {
   LinksFunction,
   LoaderFunctionArgs,
   ActionFunctionArgs,
+  HeadersFunction,
 } from "@remix-run/node";
 import {
   Links,
@@ -40,6 +41,7 @@ import { Toaster } from "./components/ui/sonner.tsx";
 import { getToast } from "./utils/toast.server.ts";
 import { combineHeaders } from "./utils/request.server.ts";
 import { useToast } from "./utils/toast.ts";
+import { pipeHeaders } from "./utils/remix.server.ts";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesheet },
@@ -51,6 +53,14 @@ export const meta: MetaFunction = ({ data }) => [
   { title: data ? "nichtsam.com" : "Error | nichtsam" },
   { name: "description", content: `Samuel Jensen, aka nichtsam's website.` },
 ];
+
+export const headers: HeadersFunction = (args) => {
+  // document has authed personalized content
+  args.loaderHeaders.append("Cache-Control", "private")
+  args.loaderHeaders.append("Vary", "Cookie");
+
+  return pipeHeaders(args);
+};
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   forceEnvValidation();

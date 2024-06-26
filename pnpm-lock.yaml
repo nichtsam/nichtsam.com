@@ -88,6 +88,9 @@ importers:
       address:
         specifier: 2.0.2
         version: 2.0.2
+      cache-control-parser:
+        specifier: 2.0.6
+        version: 2.0.6
       cachified:
         specifier: 3.5.4
         version: 3.5.4
@@ -2927,6 +2930,9 @@ packages:
   cacache@17.1.4:
     resolution: {integrity: sha512-/aJwG2l3ZMJ1xNAnqbMpA40of9dj/pIH3QfiuQSqjfPJF747VR0J/bHn+/KdNnHKc6XQcWt/AfRSBft82W1d2A==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
+
+  cache-control-parser@2.0.6:
+    resolution: {integrity: sha512-N4rxCk7V8NLfUVONXG0d7S4IyTQh3KEDW5k2I4CAcEUcMQCmVkfAMn37JSWfUQudiR883vDBy5XM5+TS2Xo7uQ==}
 
   cachified@3.5.4:
     resolution: {integrity: sha512-RO7jQl7vL1qulRvr+o++iVVduFlKb2pJUYxY48LULusyqmGUFaRESERu1Z7UI895JNtTB4yvfErNv64OsayK8g==}
@@ -9913,6 +9919,8 @@ snapshots:
       ssri: 10.0.5
       tar: 6.1.15
       unique-filename: 3.0.0
+
+  cache-control-parser@2.0.6: {}
 
   cachified@3.5.4: {}
 
