@@ -42,6 +42,7 @@ import { getToast } from "./utils/toast.server.ts";
 import { combineHeaders } from "./utils/request.server.ts";
 import { useToast } from "./utils/toast.ts";
 import { pipeHeaders } from "./utils/remix.server.ts";
+import { ServerTiming } from "./utils/timings.server.ts";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesheet },
@@ -56,7 +57,7 @@ export const meta: MetaFunction = ({ data }) => [
 
 export const headers: HeadersFunction = (args) => {
   // document has authed personalized content
-  args.loaderHeaders.append("Cache-Control", "private")
+  args.loaderHeaders.append("Cache-Control", "private");
   args.loaderHeaders.append("Vary", "Cookie");
 
   return pipeHeaders(args);
@@ -65,8 +66,13 @@ export const headers: HeadersFunction = (args) => {
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   forceEnvValidation();
 
-  const userId = await getUserId(request);
+  const timing = new ServerTiming();
 
+  timing.time("get user id", "Get user id from cookie");
+  const userId = await getUserId(request);
+  timing.timeEnd("get user id");
+
+  timing.time("find user", "Find user in database");
   const user = userId
     ? (await db.query.userTable.findFirst({
         where: (userTable, { eq }) => eq(userTable.id, userId),
@@ -77,6 +83,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
         },
       })) ?? null
     : null;
+  timing.timeEnd("find user");
 
   if (userId && !user) {
     console.info("something weird happened");
@@ -107,7 +114,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
       csrfToken,
     },
     {
-      headers: combineHeaders(headers, toast?.discardHeaders),
+      headers: combineHeaders(headers, toast?.discardHeaders, {
+        "Server-Timing": timing.toString(),
+      }),
     },
   );
 };

@@ -3,6 +3,7 @@ import { bundleMDX } from "#app/utils/mdx/compile-mdx.server";
 import { useMdxComponent } from "#app/utils/mdx/mdx";
 import { getMdxBundleSource, getMdxEntry } from "#app/utils/mdx/mdx.server";
 import { pipeHeaders } from "#app/utils/remix.server";
+import { ServerTiming } from "#app/utils/timings.server";
 import { json } from "@remix-run/node";
 import type {
   HeadersFunction,
@@ -32,12 +33,20 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   }
 
   const slug = params.slug;
+  const timing = new ServerTiming();
 
+  timing.time("get post mdx bundle", "Get post mdx bundle");
   const mdxEntry = getMdxEntry("blog", slug);
   const mdxBundle = await getMdxBundleSource(mdxEntry);
+  timing.timeEnd("get post mdx bundle");
 
-  const meta = getPostMeta(mdxBundle.source);
+  timing.time("bundle post mdx", "Bundle post mdx");
   const { code } = await bundleMDX({ slug, bundle: mdxBundle });
+  timing.timeEnd("bundle post mdx");
+
+  timing.time("get post meta", "Get post meta");
+  const meta = getPostMeta(mdxBundle.source);
+  timing.timeEnd("get post meta");
 
   return json(
     {
@@ -47,6 +56,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
     {
       headers: {
         "Cache-Control": "max-age=86400",
+        "Server-Timing": timing.toString(),
       },
     },
   );

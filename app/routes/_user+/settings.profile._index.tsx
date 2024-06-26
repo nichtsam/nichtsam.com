@@ -1,6 +1,5 @@
 import {
   redirect,
-  type HeadersFunction,
   type MetaFunction,
   type LoaderFunctionArgs,
 } from "@remix-run/node";
@@ -26,7 +25,6 @@ import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
 import { Icon } from "#app/components/ui/icon";
-import { pipeHeaders } from "#app/utils/remix.server";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,

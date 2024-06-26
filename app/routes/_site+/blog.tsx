@@ -5,6 +5,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { AspectRatio } from "#app/components/ui/aspect-ratio";
 import { CloudinaryImage } from "#app/components/image";
 import { pipeHeaders } from "#app/utils/remix.server";
+import { ServerTiming } from "#app/utils/timings.server";
 
 export const meta: MetaFunction = () => {
   return [
@@ -16,13 +17,18 @@ export const meta: MetaFunction = () => {
 export const headers: HeadersFunction = pipeHeaders;
 
 export const loader = async () => {
+  const timing = new ServerTiming();
+
+  timing.time("get posts", "Get posts");
   const posts = await getPostInfos();
+  timing.timeEnd("get posts");
 
   return json(
     { posts },
     {
       headers: {
         "Cache-Control": "max-age=86400",
+        "Server-Timing": timing.toString(),
       },
     },
   );
