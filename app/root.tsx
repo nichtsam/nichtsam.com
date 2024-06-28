@@ -68,7 +68,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   const timing = new ServerTiming();
 
-  timing.time("get user id", "Get user id from cookie");
+  timing.time("get user id", "Get user id in database");
   const userId = await getUserId(request);
   timing.timeEnd("get user id");
 

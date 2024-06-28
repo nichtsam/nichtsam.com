@@ -13,17 +13,22 @@ import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import { connectionTable } from "#drizzle/schema.ts";
 import { onboardingCookie } from "#app/utils/auth/onboarding.server.ts";
 import { createToastHeaders, redirectWithToast } from "#app/utils/toast.server";
+import { ServerTiming } from "#app/utils/timings.server";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);
   const label = providerConfigs[providerName].label;
 
+  const timing = new ServerTiming();
+
+  timing.time("get oauth profile", "Get OAuth Profile");
   const authResult = await authenticator
     .authenticate(providerName, request, { throwOnError: true })
     .then(
       (data) => ({ success: true, data }) as const,
       (error) => ({ success: false, error }) as const,
     );
+  timing.timeEnd("get oauth profile");
 
   if (!authResult.success) {
     console.error(authResult.error);
@@ -37,6 +42,10 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     "set-cookie": await destroySession(connectionSessionStorage, request),
   });
 
+  timing.time(
+    "find existing connection",
+    "Find existing connection in database",
+  );
   const existingConnection = await db.query.connectionTable.findFirst({
     where: (connections, { eq, and }) =>
       and(
@@ -44,19 +53,25 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
         eq(connections.provider_id, profile.id),
       ),
   });
+  timing.timeEnd("find existing connection");
 
+  timing.time("get user id", "Get user id in database");
   const userId = await getUserId(request);
+  timing.timeEnd("get user id");
 
   // logged in
   if (userId) {
     // new connection coming in, bind it to user
     if (!existingConnection) {
+      timing.time("insert connection", "Relate connection to user");
       await db.insert(connectionTable).values({
         user_id: userId,
         provider_id: profile.id,
         provider_name: providerName,
       });
+      timing.timeEnd("insert connection");
 
+      headers.append("Server-Timing", timing.toString());
       return redirectWithToast(
         "/settings/profile/connections",
         {
@@ -70,6 +85,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
     // notify connection status
     if (existingConnection.user_id === userId) {
+      headers.append("Server-Timing", timing.toString());
       return redirectWithToast(
         "/settings/profile/connections",
         {
@@ -79,6 +95,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
         { headers },
       );
     } else {
+      headers.append("Server-Timing", timing.toString());
       return redirectWithToast(
         "/settings/profile/connections",
         {
@@ -93,6 +110,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
   // not logged in but the connection is bound to a user, login that user
   if (existingConnection) {
+    headers.append("Server-Timing", timing.toString());
     return await login({
       request,
       userId: existingConnection.user_id,
@@ -106,12 +124,15 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   });
 
   if (emailOwner) {
+    timing.time("insert connection", "Relate connection to user");
     await db.insert(connectionTable).values({
       provider_id: profile.id,
       provider_name: providerName,
       user_id: emailOwner.id,
     });
+    timing.timeEnd("insert connection");
 
+    headers.append("Server-Timing", timing.toString());
     return await login({
       request,
       userId: emailOwner.id,
@@ -140,5 +161,6 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
     }),
   );
 
+  headers.append("Server-Timing", timing.toString());
   throw redirect("/onboarding", { headers });
 };
