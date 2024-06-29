@@ -49,6 +49,7 @@ COPY --from=build /app/public /app/public
 COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/server.js /app/server.js
 COPY --from=build /app/server-utils.js /app/server-utils.js
+COPY --from=build /app/server-monitoring.js /app/server-monitoring.js
 COPY ./mdx ./mdx
 
 CMD [ "pnpm","start" ]

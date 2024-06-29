@@ -17,10 +17,6 @@ forceEnvValidation();
 
 const ABORT_DELAY = 5_000;
 
-if (env.NODE_ENV === "production" && env.SENTRY_DSN) {
-  import("./utils/monitoring.server.ts").then(({ init }) => init());
-}
-
 type DocRequestArgs = Parameters<HandleDocumentRequestFunction>;
 export default function handleRequest(
   ...[
@@ -31,6 +27,10 @@ export default function handleRequest(
     loadContext,
   ]: DocRequestArgs
 ) {
+  if (env.NODE_ENV === "production" && env.SENTRY_DSN) {
+    responseHeaders.append("Document-Policy", "js-profiling");
+  }
+
   const nonce = String(loadContext.cspNonce);
   const callbackName = isbot(request.headers.get("user-agent"))
     ? "onAllReady"
