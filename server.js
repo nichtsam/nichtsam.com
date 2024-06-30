@@ -8,6 +8,7 @@ import morgan from "morgan";
 import sourceMapSupport from "source-map-support";
 import getPort, { portNumbers } from "get-port";
 import chalk from "chalk";
+import closeWithGrace from "close-with-grace";
 import { printUrls } from "./server-utils.js";
 
 const MODE = process.env.NODE_ENV ?? "development";
@@ -139,4 +140,10 @@ const server = app.listen(portToUse, async () => {
   printUrls(portUsed);
 
   console.log(chalk.bold("Press Ctrl+C to stop"));
+});
+
+closeWithGrace(async () => {
+  await new Promise((resolve, reject) => {
+    server.close((e) => (e ? reject(e) : resolve("ok")));
+  });
 });
