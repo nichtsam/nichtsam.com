@@ -18,7 +18,7 @@
   "dependencies": {
     "@conform-to/react": "1.1.3",
     "@conform-to/zod": "1.1.3",
-    "@libsql/client": "0.4.3",
+    "@libsql/client": "0.7.0",
     "@nasa-gcn/remix-seo": "2.0.0",
     "@radix-ui/react-aspect-ratio": "1.0.3",
     "@radix-ui/react-avatar": "1.0.4",
