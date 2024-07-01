@@ -142,7 +142,13 @@ const server = app.listen(portToUse, async () => {
   console.log(chalk.bold("Press Ctrl+C to stop"));
 });
 
-closeWithGrace(async () => {
+closeWithGrace(async ({ err }) => {
+  if (err) {
+    console.error(chalk.red(err));
+    console.error(chalk.red(err.stack));
+    process.exit(1);
+  }
+
   await new Promise((resolve, reject) => {
     server.close((e) => (e ? reject(e) : resolve("ok")));
   });
