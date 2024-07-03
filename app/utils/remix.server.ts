@@ -62,28 +62,44 @@ export function pipeHeaders({
   return headers;
 }
 
-function getConservativeCacheControl(
+export function getConservativeCacheControl(
   ...cacheControlHeaders: Array<string | null>
 ): string {
   return cacheControl.stringify(
     cacheControlHeaders
       .filter(Boolean)
       .map((header) => cacheControl.parse(header))
-      .reduce<CacheControl>((final, current) => {
-        if (current.private) {
-          final.private = true;
+      .reduce<CacheControl>((acc, current) => {
+        let directive: keyof CacheControl;
+        for (directive in current) {
+          const currentValue = current[directive];
+
+          switch (typeof currentValue) {
+            case "boolean": {
+              if (currentValue) {
+                // @ts-expect-error
+                acc[directive] = true;
+              }
+              break;
+            }
+            case "number": {
+              const accValue = acc[directive] as number;
+
+              if (accValue !== undefined && currentValue !== undefined) {
+                const result = Math.min(accValue, currentValue);
+                // @ts-expect-error
+                acc[directive] = result;
+              } else if (accValue === undefined) {
+                // @ts-expect-error
+                acc[directive] = currentValue;
+              }
+
+              break;
+            }
+          }
         }
 
-        const finalMaxAge = final["max-age"];
-        const currentMaxAge = current["max-age"];
-
-        if (finalMaxAge !== undefined && currentMaxAge !== undefined) {
-          final["max-age"] = Math.min(finalMaxAge, currentMaxAge);
-        } else if (finalMaxAge === undefined) {
-          final["max-age"] = currentMaxAge;
-        }
-
-        return final;
+        return acc;
       }, {}),
   );
 }
