@@ -138,7 +138,7 @@ export default function OnBoarding() {
   });
 
   return (
-    <div className="container max-w-lg md:mt-10 lg:max-w-3xl ">
+    <div className="container max-w-lg md:mt-10 lg:max-w-3xl">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-4xl md:text-6xl lg:text-7xl">
