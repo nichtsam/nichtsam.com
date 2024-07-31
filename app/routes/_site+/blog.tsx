@@ -35,11 +35,9 @@ export default function Blog() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="container max-w-prose">
-      <ul className="flex flex-col gap-y-4">
+      <ul className="flex flex-col gap-y-4 border-l border-muted-foreground">
         {data.posts.map((post) => (
-          <li key={post.slug}>
-            <PostItem post={post} />
-          </li>
+          <PostItem key={post.slug} post={post} />
         ))}
       </ul>
     </div>
@@ -48,14 +46,26 @@ export default function Blog() {
 
 function PostItem({ post }: { post: PostInfo }) {
   return (
-    <div>
-      <Link
-        to={post.slug}
-        className="inline-block text-xl leading-tight underline-offset-4 hover:underline"
+    <li className="relative ml-4">
+      <div className="absolute -left-5 mt-2 h-2 w-2 rounded-full bg-muted-foreground" />
+      <time
+        dateTime={post.meta.matter.publishedDate}
+        className="text-sm text-muted-foreground"
       >
-        {post.meta.matter.title}
-      </Link>
-      <p className="text-muted-foreground">{post.meta.readingTime.text}</p>
-    </div>
+        {post.meta.matter.publishedDate}
+      </time>
+
+      <h3>
+        <Link
+          to={post.slug}
+          className="inline-block text-xl leading-tight underline-offset-4 hover:underline"
+        >
+          {post.meta.matter.title}
+        </Link>
+      </h3>
+      <p className="text-sm text-muted-foreground">
+        {post.meta.readingTime.text}
+      </p>
+    </li>
   );
 }
