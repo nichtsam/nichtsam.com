@@ -17,6 +17,7 @@ export function CloudinaryImage({
   widths,
   sizes,
   alt,
+  loading = "lazy",
   ...imgProps
 }: CloudinaryImageProps) {
   const buildImageUrl = getImageUrlBuilder(id);
@@ -54,6 +55,7 @@ export function CloudinaryImage({
       src={src}
       srcSet={srcSet}
       sizes={sizes.join(", ")}
+      loading={loading}
     />
   );
 }
