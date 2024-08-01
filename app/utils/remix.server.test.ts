@@ -3,7 +3,7 @@ import { getConservativeCacheControl } from "./remix.server";
 import cacheControl from "cache-control-parser";
 
 describe("getConservativeCacheControl", () => {
-  test("it works for basic usecase", () => {
+  test("works for basic usecase", () => {
     const result = getConservativeCacheControl(
       "max-age=3600",
       "max-age=1800, s-maxage=600",
@@ -27,7 +27,7 @@ describe("getConservativeCacheControl", () => {
     expect(result["no-cache"]).toEqual(true);
     expect(result["no-store"]).toEqual(true);
   });
-  test("get shortest number directive", () => {
+  test("gets shortest number directive", () => {
     const result = cacheControl.parse(
       getConservativeCacheControl(
         "max-age=10, s-maxage=300",

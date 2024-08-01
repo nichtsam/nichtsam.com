@@ -74,24 +74,26 @@ export function getConservativeCacheControl(
         for (directive in current) {
           const currentValue = current[directive];
 
+          // ts-expect-error because typescript doesn't know it's the same directive.
           switch (typeof currentValue) {
             case "boolean": {
               if (currentValue) {
                 // @ts-expect-error
                 acc[directive] = true;
               }
+
               break;
             }
             case "number": {
-              const accValue = acc[directive] as number;
+              const accValue = acc[directive] as number | undefined;
 
-              if (accValue !== undefined && currentValue !== undefined) {
+              if (accValue === undefined) {
+                // @ts-expect-error
+                acc[directive] = currentValue;
+              } else {
                 const result = Math.min(accValue, currentValue);
                 // @ts-expect-error
                 acc[directive] = result;
-              } else if (accValue === undefined) {
-                // @ts-expect-error
-                acc[directive] = currentValue;
               }
 
               break;
