@@ -5,9 +5,8 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
-    "module": "ESNext",
+    "module": "preserve",
     "target": "ES2022",
-    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "allowJs": true,
 
