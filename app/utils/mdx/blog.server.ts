@@ -1,8 +1,8 @@
 import { resolve } from "path";
 import { readFile, readdir } from "fs/promises";
-import { rootPath } from "../path.server";
-import { getMdxEntry } from "./mdx.server";
-import { getMdxMeta } from "./mdx-meta.server";
+import { rootPath } from "../path.server.ts";
+import { getMdxEntry } from "./mdx.server.ts";
+import { getMdxMeta } from "./mdx-meta.server.ts";
 import { z } from "zod";
 import type { ReadTimeResults } from "reading-time";
 import dayjs from "dayjs";

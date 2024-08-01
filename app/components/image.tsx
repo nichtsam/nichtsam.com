@@ -1,4 +1,4 @@
-import { getImageUrlBuilder } from "#app/utils/image";
+import { getImageUrlBuilder } from "#app/utils/image.ts";
 
 interface CloudinaryImageProps
   extends Omit<

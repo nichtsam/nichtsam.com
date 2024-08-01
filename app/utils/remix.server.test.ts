@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { getConservativeCacheControl } from "./remix.server";
+import { getConservativeCacheControl } from "./remix.server.ts";
 import cacheControl from "cache-control-parser";
 
 describe("getConservativeCacheControl", () => {

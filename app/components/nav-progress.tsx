@@ -3,7 +3,7 @@ import { useNavigation } from "@remix-run/react";
 import * as ProgressPrimitive from "@radix-ui/react-progress";
 import { useSpinDelay } from "spin-delay";
 import { useEffect, useRef, useState } from "react";
-import { Icon } from "./ui/icon";
+import { Icon } from "./ui/icon.tsx";
 
 function NavProgress() {
   const navigation = useNavigation();

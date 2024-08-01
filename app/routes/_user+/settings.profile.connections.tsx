@@ -44,8 +44,8 @@ import { connectionTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import { without } from "ramda";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
-import type { BreadcrumbHandle } from "#app/utils/breadcrumb";
-import { Icon } from "#app/components/ui/icon";
+import type { BreadcrumbHandle } from "#app/utils/breadcrumb.tsx";
+import { Icon } from "#app/components/ui/icon.tsx";
 
 export const handle: SEOHandle & BreadcrumbHandle = {
   getSitemapEntries: () => null,

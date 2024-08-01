@@ -2,7 +2,7 @@ import { useFormAction, useNavigation } from "@remix-run/react";
 import { type ClassValue, clsx } from "clsx";
 import { useSpinDelay } from "spin-delay";
 import { twMerge } from "tailwind-merge";
-import { generateCallAll } from "./misc";
+import { generateCallAll } from "./misc.ts";
 import { useState } from "react";
 
 function cn(...inputs: ClassValue[]) {

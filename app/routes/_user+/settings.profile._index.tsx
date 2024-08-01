@@ -24,7 +24,7 @@ import { db } from "#app/utils/db.server.ts";
 import { userTable } from "#drizzle/schema.ts";
 import { eq } from "drizzle-orm";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
-import { Icon } from "#app/components/ui/icon";
+import { Icon } from "#app/components/ui/icon.tsx";
 
 export const handle: SEOHandle = {
   getSitemapEntries: () => null,

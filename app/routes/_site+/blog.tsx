@@ -1,8 +1,8 @@
 import { json, type HeadersFunction, type MetaFunction } from "@remix-run/node";
-import { type PostInfo, getPostInfos } from "#app/utils/mdx/blog.server";
+import { type PostInfo, getPostInfos } from "#app/utils/mdx/blog.server.ts";
 import { Link, useLoaderData } from "@remix-run/react";
-import { pipeHeaders } from "#app/utils/remix.server";
-import { ServerTiming } from "#app/utils/timings.server";
+import { pipeHeaders } from "#app/utils/remix.server.ts";
+import { ServerTiming } from "#app/utils/timings.server.ts";
 
 export const meta: MetaFunction = () => {
   return [

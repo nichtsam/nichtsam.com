@@ -15,8 +15,8 @@ import {
   useBreadcrumbs,
 } from "#app/utils/breadcrumb.tsx";
 import type { SEOHandle } from "@nasa-gcn/remix-seo";
-import { getUserImgSrc } from "../resources+/user-images.$imageId";
-import { Icon } from "#app/components/ui/icon";
+import { getUserImgSrc } from "../resources+/user-images.$imageId.ts";
+import { Icon } from "#app/components/ui/icon.tsx";
 
 export const handle: SEOHandle & BreadcrumbHandle = {
   getSitemapEntries: () => null,

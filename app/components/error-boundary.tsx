@@ -7,7 +7,7 @@ import {
 } from "@remix-run/react";
 import type { ErrorResponse, Location } from "@remix-run/react";
 import { getErrorMessage } from "#app/utils/error.ts";
-import { Icon } from "./ui/icon";
+import { Icon } from "./ui/icon.tsx";
 
 type StatusHandler = (info: {
   error: ErrorResponse;

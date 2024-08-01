@@ -12,8 +12,11 @@ import { combineHeaders, destroySession } from "#app/utils/request.server.ts";
 import { redirect, type LoaderFunctionArgs } from "@remix-run/node";
 import { connectionTable } from "#drizzle/schema.ts";
 import { onboardingCookie } from "#app/utils/auth/onboarding.server.ts";
-import { createToastHeaders, redirectWithToast } from "#app/utils/toast.server";
-import { ServerTiming } from "#app/utils/timings.server";
+import {
+  createToastHeaders,
+  redirectWithToast,
+} from "#app/utils/toast.server.ts";
+import { ServerTiming } from "#app/utils/timings.server.ts";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   const providerName = ProviderNameSchema.parse(params.provider);

@@ -1,7 +1,7 @@
 import { parseWithZod } from "@conform-to/zod";
 import { json } from "@remix-run/node";
 import { parse as parseCookie, serialize as serializeCookie } from "cookie";
-import { ThemeFormSchema } from "./theme";
+import { ThemeFormSchema } from "./theme.tsx";
 
 const cookieName = "theme";
 export type Theme = "light" | "dark";

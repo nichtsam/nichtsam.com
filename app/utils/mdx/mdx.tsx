@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import * as mdxBundler from "mdx-bundler/client/index.js";
-import { BlogImage } from "#app/components/image";
+import { BlogImage } from "#app/components/image.tsx";
 
 const customMdxComponents = { BlogImage };
 

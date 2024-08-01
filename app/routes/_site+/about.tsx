@@ -1,4 +1,4 @@
-import { pipeHeaders } from "#app/utils/remix.server";
+import { pipeHeaders } from "#app/utils/remix.server.ts";
 import type { HeadersFunction, MetaFunction } from "@remix-run/node";
 
 export const meta: MetaFunction = () => {

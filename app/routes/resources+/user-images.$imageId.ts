@@ -1,6 +1,6 @@
 import { db } from "#app/utils/db.server.ts";
 import { unvariant } from "#app/utils/misc.ts";
-import { ServerTiming } from "#app/utils/timings.server";
+import { ServerTiming } from "#app/utils/timings.server.ts";
 import { type LoaderFunctionArgs } from "@remix-run/node";
 
 export const getUserImgSrc = (imageId?: string | null) =>

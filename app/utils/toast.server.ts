@@ -1,6 +1,6 @@
 import { createCookie, redirect } from "@remix-run/node";
 import { createTypedCookie } from "remix-utils/typed-cookie";
-import { env } from "./env.server";
+import { env } from "./env.server.ts";
 import { z } from "zod";
 import type { toast } from "sonner";
 import { nanoid } from "nanoid";
@@ -8,7 +8,7 @@ import {
   combineHeaders,
   destroyCookie,
   getCookieHeader,
-} from "./request.server";
+} from "./request.server.ts";
 
 const toastSchema = z
   .object({

@@ -1,8 +1,8 @@
 import { bundleMDX as _bundleMDX } from "mdx-bundler";
-import type { MdxBundleSource } from "./mdx.server";
+import type { MdxBundleSource } from "./mdx.server.ts";
 import PQueue from "p-queue";
-import { singleton } from "../singleton.server";
-import { lruCache } from "../cache.server";
+import { singleton } from "../singleton.server.ts";
+import { lruCache } from "../cache.server.ts";
 import { cachified } from "cachified";
 
 async function bundleMDX({ source, files }: MdxBundleSource) {

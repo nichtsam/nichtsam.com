@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { generateRobotsTxt } from "@nasa-gcn/remix-seo";
-import { getDomainUrl } from "#app/utils/request.server";
+import { getDomainUrl } from "#app/utils/request.server.ts";
 
 export function loader({ request }: LoaderFunctionArgs) {
   return generateRobotsTxt([

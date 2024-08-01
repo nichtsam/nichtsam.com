@@ -1,7 +1,7 @@
 import { existsSync, statSync } from "fs";
 import { readFile, readdir } from "fs/promises";
 import { relative, resolve } from "path";
-import { rootPath, getFilePathInDirectoryByName } from "../path.server";
+import { rootPath, getFilePathInDirectoryByName } from "../path.server.ts";
 
 type Files = Record<string, string>;
 export type MdxBundleSource = {
