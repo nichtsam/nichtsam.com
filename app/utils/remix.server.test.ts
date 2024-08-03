@@ -27,7 +27,7 @@ describe("getConservativeCacheControl", () => {
     expect(result["no-cache"]).toEqual(true);
     expect(result["no-store"]).toEqual(true);
   });
-  test("gets shortest number directive", () => {
+  test("gets smallest number directive", () => {
     const result = cacheControl.parse(
       getConservativeCacheControl(
         "max-age=10, s-maxage=300",
