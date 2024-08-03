@@ -16,7 +16,8 @@
     "forceConsistentCasingInFileNames": true,
 
     "paths": {
-      "#*": ["./*"],
+      "#app/*": ["./app/*"],
+      "#drizzle/*": ["./drizzle/*"],
       "@/icon-name": [
         "./app/components/ui/icons/name.ts",
         "./types/fallback.ts"

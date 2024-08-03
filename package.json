@@ -2,6 +2,10 @@
   "private": true,
   "sideEffects": false,
   "type": "module",
+  "imports": {
+    "#app/*": "./app/*",
+    "#drizzle/*": "./drizzle/*"
+  },
   "scripts": {
     "dev": "node ./server.js",
     "build": "run-s build:*",

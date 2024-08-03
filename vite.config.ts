@@ -2,7 +2,6 @@ import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { vitePlugin as remix } from "@remix-run/dev";
 import { flatRoutes } from "remix-flat-routes";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
   build: {
@@ -12,8 +11,6 @@ export default defineConfig({
   },
 
   plugins: [
-    tsconfigPaths(),
-
     remix({
       serverModuleFormat: "esm",
 
