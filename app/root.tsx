@@ -1,5 +1,6 @@
 import { captureRemixErrorBoundaryError, withSentry } from "@sentry/remix";
 import appStylesheet from "#app/styles/app.css?url";
+import iconSpriteHref from "#app/components/ui/icons/sprite.svg?url";
 import { json } from "@remix-run/node";
 import type {
   MetaFunction,
@@ -46,6 +47,12 @@ import { ServerTiming } from "./utils/timings.server.ts";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesheet },
+  {
+    rel: "preload",
+    href: iconSpriteHref,
+    as: "image",
+    type: "image/svg+xml",
+  },
   { rel: "manifest", href: "/site.webmanifest" },
   ...faviconLinks,
 ];
