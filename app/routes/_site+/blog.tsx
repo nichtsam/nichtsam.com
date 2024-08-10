@@ -34,7 +34,7 @@ export const loader = async () => {
 export default function Blog() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="container max-w-prose">
+    <div className="container max-w-[80ch]">
       <ul className="flex flex-col gap-y-2">
         {data.posts.map((post) => (
           <PostItem key={post.slug} post={post} />
@@ -51,16 +51,16 @@ function PostItem({ post }: { post: PostInfo }) {
         to={post.slug}
         className="inline-block w-full rounded-md p-4 hover:bg-accent hover:text-accent-foreground"
       >
-        <div className="flex items-center justify-between">
-          <div className="flex items-baseline gap-x-2">
-            <h3 className="text-lg">{post.meta.matter.title}</h3>
+        <div className="flex items-baseline justify-between gap-x-2">
+          <div>
+            <h3 className="mr-2 inline text-lg">{post.meta.matter.title}</h3>
 
-            <span className="text-sm text-muted-foreground">
+            <span className="whitespace-pre text-sm text-muted-foreground">
               {post.meta.readingTime.text}
             </span>
           </div>
 
-          <time dateTime={post.meta.matter.publishedDate}>
+          <time dateTime={post.meta.matter.publishedDate} className="shrink-0">
             {post.meta.matter.publishedDate}
           </time>
         </div>
