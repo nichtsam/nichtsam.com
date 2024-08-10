@@ -1,6 +1,6 @@
 import type { ReactNode, SVGProps } from "react";
 import { cn } from "#app/utils/ui.ts";
-import href from "./icons/sprite.svg";
+import href from "./icons/sprite.svg?url";
 import { type IconName } from "@/icon-name";
 
 const sizeClassName = {
