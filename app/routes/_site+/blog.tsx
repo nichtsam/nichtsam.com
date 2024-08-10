@@ -35,7 +35,7 @@ export default function Blog() {
   const data = useLoaderData<typeof loader>();
   return (
     <div className="container max-w-prose">
-      <ul className="flex flex-col gap-y-4 border-l border-muted-foreground">
+      <ul className="flex flex-col gap-y-2">
         {data.posts.map((post) => (
           <PostItem key={post.slug} post={post} />
         ))}
@@ -46,26 +46,27 @@ export default function Blog() {
 
 function PostItem({ post }: { post: PostInfo }) {
   return (
-    <li className="relative ml-4">
-      <div className="absolute -left-5 mt-2 h-2 w-2 rounded-full bg-muted-foreground" />
-      <time
-        dateTime={post.meta.matter.publishedDate}
-        className="text-sm text-muted-foreground"
+    <li>
+      <Link
+        to={post.slug}
+        className="inline-block w-full rounded-md p-4 hover:bg-accent hover:text-accent-foreground"
       >
-        {post.meta.matter.publishedDate}
-      </time>
+        <div className="flex items-center justify-between">
+          <div className="flex items-baseline gap-x-2">
+            <h3 className="text-lg">{post.meta.matter.title}</h3>
 
-      <h3>
-        <Link
-          to={post.slug}
-          className="inline-block text-xl leading-tight underline-offset-4 hover:underline"
-        >
-          {post.meta.matter.title}
-        </Link>
-      </h3>
-      <p className="text-sm text-muted-foreground">
-        {post.meta.readingTime.text}
-      </p>
+            <span className="text-sm text-muted-foreground">
+              {post.meta.readingTime.text}
+            </span>
+          </div>
+
+          <time dateTime={post.meta.matter.publishedDate}>
+            {post.meta.matter.publishedDate}
+          </time>
+        </div>
+
+        <p className="text-muted-foreground">{post.meta.matter.description}</p>
+      </Link>
     </li>
   );
 }

@@ -13,7 +13,7 @@ const blogDirPath = resolve(rootPath, "mdx", ENTRY);
 export const matterSchema = z.object({
   title: z.string(),
   description: z.string(),
-  publishedDate: z.date().transform((date) => dayjs(date).format("YYYY-MM-DD")),
+  publishedDate: z.date().transform((date) => dayjs(date).format("MMM YYYY")),
   thumbnailId: z.string(),
   thumbnailAlt: z.string().optional(),
 });
