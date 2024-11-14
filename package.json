@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@cld-apis/types": "0.1.6",
-    "@faker-js/faker": "8.4.1",
+    "@faker-js/faker": "9.2.0",
     "@remix-run/dev": "2.10.2",
     "@remix-run/eslint-config": "2.10.2",
     "@sly-cli/sly": "1.14.0",
@@ -105,7 +105,7 @@
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "@types/source-map-support": "0.5.10",
-    "@vitest/coverage-v8": "1.6.0",
+    "@vitest/coverage-v8": "2.1.5",
     "autoprefixer": "10.4.20",
     "drizzle-kit": "0.24.0",
     "eslint": "8.57.0",
@@ -121,7 +121,7 @@
     "tsx": "4.19.2",
     "typescript": "5.6.3",
     "vite": "5.4.11",
-    "vitest": "1.6.0"
+    "vitest": "2.1.5"
   },
   "engines": {
     "node": "20",
