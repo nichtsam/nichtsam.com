@@ -74,14 +74,14 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
   timing.time("find user", "Find user in database");
   const user = userId
-    ? (await db.query.userTable.findFirst({
+    ? ((await db.query.userTable.findFirst({
         where: (userTable, { eq }) => eq(userTable.id, userId),
         with: {
           image: {
             columns: { id: true },
           },
         },
-      })) ?? null
+      })) ?? null)
     : null;
   timing.timeEnd("find user");
 
@@ -164,7 +164,7 @@ function Document({
         {children}
 
         <NavProgress />
-        <Toaster />
+        <Toaster theme={theme} />
 
         <script
           nonce={nonce}
