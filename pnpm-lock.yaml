@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  remix-utils@7.6.0:
-    hash: xk4hhvrus5zptgvm2bqk2nhlke
-    path: patches/remix-utils@7.6.0.patch
-
 importers:
 
   .:
@@ -17,14 +12,14 @@ importers:
         specifier: 1.2.2
         version: 1.2.2(react@18.3.1)
       '@conform-to/zod':
-        specifier: 1.1.5
-        version: 1.1.5(zod@3.23.8)
+        specifier: 1.2.2
+        version: 1.2.2(zod@3.23.8)
       '@libsql/client':
         specifier: 0.7.0
         version: 0.7.0
       '@nasa-gcn/remix-seo':
         specifier: 2.0.1
-        version: 2.0.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
+        version: 2.0.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))
       '@radix-ui/react-aspect-ratio':
         specifier: 1.1.0
         version: 1.1.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -69,22 +64,22 @@ importers:
         version: 1.1.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@remix-run/express':
         specifier: 2.10.2
-        version: 2.10.2(express@4.21.1)(typescript@5.5.3)
+        version: 2.10.2(express@4.21.1)(typescript@5.6.3)
       '@remix-run/node':
         specifier: 2.10.2
-        version: 2.10.2(typescript@5.5.3)
+        version: 2.10.2(typescript@5.6.3)
       '@remix-run/react':
         specifier: 2.10.2
-        version: 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
+        version: 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
       '@remix-run/serve':
         specifier: 2.10.2
-        version: 2.10.2(typescript@5.5.3)
+        version: 2.10.2(typescript@5.6.3)
       '@sentry/profiling-node':
         specifier: 8.38.0
         version: 8.38.0
       '@sentry/remix':
         specifier: 8.38.0
-        version: 8.38.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.27.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.27.0)(@remix-run/node@2.10.2(typescript@5.5.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(react@18.3.1)
+        version: 8.38.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.27.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.27.0)(@remix-run/node@2.10.2(typescript@5.6.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(react@18.3.1)
       '@sentry/vite-plugin':
         specifier: 2.22.6
         version: 2.22.6
@@ -107,8 +102,8 @@ importers:
         specifier: 0.7.0
         version: 0.7.0
       close-with-grace:
-        specifier: 1.3.0
-        version: 1.3.0
+        specifier: 2.1.0
+        version: 2.1.0
       cloudinary-build-url:
         specifier: 0.2.4
         version: 0.2.4
@@ -119,8 +114,8 @@ importers:
         specifier: 1.7.5
         version: 1.7.5
       cookie:
-        specifier: 0.6.0
-        version: 0.6.0
+        specifier: 1.0.1
+        version: 1.0.1
       cross-env:
         specifier: 7.0.3
         version: 7.0.3
@@ -189,16 +184,19 @@ importers:
         version: 1.5.0
       remix-auth:
         specifier: 3.7.0
-        version: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-socials:
-        specifier: 2.0.6
-        version: 2.0.6(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
+        version: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))
+      remix-auth-discord:
+        specifier: 1.4.1
+        version: 1.4.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))
+      remix-auth-github:
+        specifier: 1.7.0
+        version: 1.7.0(@remix-run/server-runtime@2.10.2(typescript@5.6.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3)))
       remix-utils:
-        specifier: 7.6.0
-        version: 7.6.0(patch_hash=xk4hhvrus5zptgvm2bqk2nhlke)(@remix-run/node@2.10.2(typescript@5.5.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/router@1.17.1)(crypto-js@4.2.0)(react@18.3.1)(zod@3.23.8)
+        specifier: 7.7.0
+        version: 7.7.0(@remix-run/node@2.10.2(typescript@5.6.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/router@1.17.1)(crypto-js@4.2.0)(react@18.3.1)(zod@3.23.8)
       sonner:
-        specifier: 1.5.0
-        version: 1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 1.7.0
+        version: 1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       source-map-support:
         specifier: 0.5.21
         version: 0.5.21
@@ -206,8 +204,8 @@ importers:
         specifier: 2.0.1
         version: 2.0.1(react@18.3.1)
       tailwind-merge:
-        specifier: 2.3.0
-        version: 2.3.0
+        specifier: 2.5.4
+        version: 2.5.4
       zod:
         specifier: 3.23.8
         version: 3.23.8
@@ -220,13 +218,13 @@ importers:
         version: 8.4.1
       '@remix-run/dev':
         specifier: 2.10.2
-        version: 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0))
+        version: 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0))
       '@remix-run/eslint-config':
         specifier: 2.10.2
-        version: 2.10.2(eslint@8.57.0)(react@18.3.1)(typescript@5.5.3)
+        version: 2.10.2(eslint@8.57.0)(react@18.3.1)(typescript@5.6.3)
       '@sly-cli/sly':
         specifier: 1.14.0
-        version: 1.14.0(typescript@5.5.3)
+        version: 1.14.0(typescript@5.6.3)
       '@tailwindcss/typography':
         specifier: 0.5.15
         version: 0.5.15(tailwindcss@3.4.14)
@@ -242,9 +240,6 @@ importers:
       '@types/compression':
         specifier: 1.7.5
         version: 1.7.5
-      '@types/cookie':
-        specifier: 0.6.0
-        version: 0.6.0
       '@types/express':
         specifier: 5.0.0
         version: 5.0.0
@@ -297,11 +292,11 @@ importers:
         specifier: 3.3.3
         version: 3.3.3
       prettier-plugin-tailwindcss:
-        specifier: 0.6.5
-        version: 0.6.5(prettier@3.3.3)
+        specifier: 0.6.8
+        version: 0.6.8(prettier@3.3.3)
       remix-flat-routes:
         specifier: 0.6.5
-        version: 0.6.5(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0)))
+        version: 0.6.5(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0)))
       tailwindcss:
         specifier: 3.4.14
         version: 3.4.14
@@ -309,17 +304,14 @@ importers:
         specifier: 1.0.7
         version: 1.0.7(tailwindcss@3.4.14)
       tsx:
-        specifier: 4.16.2
-        version: 4.16.2
+        specifier: 4.19.2
+        version: 4.19.2
       typescript:
-        specifier: 5.5.3
-        version: 5.5.3
+        specifier: 5.6.3
+        version: 5.6.3
       vite:
-        specifier: 5.3.3
-        version: 5.3.3(@types/node@22.9.0)
-      vite-tsconfig-paths:
-        specifier: 4.3.2
-        version: 4.3.2(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0))
+        specifier: 5.4.11
+        version: 5.4.11(@types/node@22.9.0)
       vitest:
         specifier: 1.6.0
         version: 1.6.0(@types/node@22.9.0)(jsdom@24.1.0)
@@ -544,9 +536,6 @@ packages:
   '@cld-apis/utils@0.2.0':
     resolution: {integrity: sha512-WBhOZ+wz93G/vsqkfmIBsPYf7FH4i5ZKN3QYlUfg9Ni5A2E09CCfsNG6RUuGeLjDPaFXFbta1rkNf3+2hFlavQ==}
 
-  '@conform-to/dom@1.1.5':
-    resolution: {integrity: sha512-tWI3YxWvDaZFSl4QN8Y0WbgBxsWEfcTrSMtKic3YTt/hGVJXjQ8qURBdsJXudzJ38zwAr5GhpLWmyI6BbG9+gA==}
-
   '@conform-to/dom@1.2.2':
     resolution: {integrity: sha512-f05EClpNP31o6lX4LYmmLqgsiTOHdGfY7z2XXK6U6rRp+EtxrkUBdrFlIGsfkf7e9AFO19h3/Cb/cXHVd1k1FA==}
 
@@ -555,8 +544,8 @@ packages:
     peerDependencies:
       react: '>=18'
 
-  '@conform-to/zod@1.1.5':
-    resolution: {integrity: sha512-ho/742wgfTWf2u5tKo4GT88xcKcvTOCDPOi4o1WEmePPmJNP5ezeMQSKSdKdS0rFinZl9ZTH8gV5FQUNPHAA7A==}
+  '@conform-to/zod@1.2.2':
+    resolution: {integrity: sha512-mNCzh0XsF2vhCtD8bfHYMYayEJ9dP6/KsGjmq8DFcO1ykDTNQZwfi1MIm4evGYVempSS3poYr4xZjd7cXEbtaw==}
     peerDependencies:
       zod: ^3.21.0
 
@@ -589,6 +578,12 @@ packages:
     cpu: [ppc64]
     os: [aix]
 
+  '@esbuild/aix-ppc64@0.23.1':
+    resolution: {integrity: sha512-6VhYk1diRqrhBAqpJEdjASR/+WVRtfjpqKuNw11cLiaWpAT/Uu+nokB+UJnevzy/P9C/ty6AOe0dwueMrGh/iQ==}
+    engines: {node: '>=18'}
+    cpu: [ppc64]
+    os: [aix]
+
   '@esbuild/android-arm64@0.17.6':
     resolution: {integrity: sha512-YnYSCceN/dUzUr5kdtUzB+wZprCafuD89Hs0Aqv9QSdwhYQybhXTaSTcrl6X/aWThn1a/j0eEpUBGOE7269REg==}
     engines: {node: '>=12'}
@@ -610,6 +605,12 @@ packages:
   '@esbuild/android-arm64@0.21.5':
     resolution: {integrity: sha512-c0uX9VAUBQ7dTDCjq+wdyGLowMdtR/GoC2U5IYk/7D1H1JYC0qseD7+11iMP2mRLN9RcCMRcjC4YMclCzGwS/A==}
     engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [android]
+
+  '@esbuild/android-arm64@0.23.1':
+    resolution: {integrity: sha512-xw50ipykXcLstLeWH7WRdQuysJqejuAGPd30vd1i5zSyKK3WE+ijzHmLKxdiCMtH1pHz78rOg0BKSYOSB/2Khw==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [android]
 
@@ -637,6 +638,12 @@ packages:
     cpu: [arm]
     os: [android]
 
+  '@esbuild/android-arm@0.23.1':
+    resolution: {integrity: sha512-uz6/tEy2IFm9RYOyvKl88zdzZfwEfKZmnX9Cj1BHjeSGNuGLuMD1kR8y5bteYmwqKm1tj8m4cb/aKEorr6fHWQ==}
+    engines: {node: '>=18'}
+    cpu: [arm]
+    os: [android]
+
   '@esbuild/android-x64@0.17.6':
     resolution: {integrity: sha512-MVcYcgSO7pfu/x34uX9u2QIZHmXAB7dEiLQC5bBl5Ryqtpj9lT2sg3gNDEsrPEmimSJW2FXIaxqSQ501YLDsZQ==}
     engines: {node: '>=12'}
@@ -658,6 +665,12 @@ packages:
   '@esbuild/android-x64@0.21.5':
     resolution: {integrity: sha512-D7aPRUUNHRBwHxzxRvp856rjUHRFW1SdQATKXH2hqA0kAZb1hKmi02OpYRacl0TxIGz/ZmXWlbZgjwWYaCakTA==}
     engines: {node: '>=12'}
+    cpu: [x64]
+    os: [android]
+
+  '@esbuild/android-x64@0.23.1':
+    resolution: {integrity: sha512-nlN9B69St9BwUoB+jkyU090bru8L0NA3yFvAd7k8dNsVH8bi9a8cUAUSEcEEgTp2z3dbEDGJGfP6VUnkQnlReg==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [android]
 
@@ -685,6 +698,12 @@ packages:
     cpu: [arm64]
     os: [darwin]
 
+  '@esbuild/darwin-arm64@0.23.1':
+    resolution: {integrity: sha512-YsS2e3Wtgnw7Wq53XXBLcV6JhRsEq8hkfg91ESVadIrzr9wO6jJDMZnCQbHm1Guc5t/CdDiFSSfWP58FNuvT3Q==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [darwin]
+
   '@esbuild/darwin-x64@0.17.6':
     resolution: {integrity: sha512-xh2A5oPrYRfMFz74QXIQTQo8uA+hYzGWJFoeTE8EvoZGHb+idyV4ATaukaUvnnxJiauhs/fPx3vYhU4wiGfosg==}
     engines: {node: '>=12'}
@@ -706,6 +725,12 @@ packages:
   '@esbuild/darwin-x64@0.21.5':
     resolution: {integrity: sha512-se/JjF8NlmKVG4kNIuyWMV/22ZaerB+qaSi5MdrXtd6R08kvs2qCN4C09miupktDitvh8jRFflwGFBQcxZRjbw==}
     engines: {node: '>=12'}
+    cpu: [x64]
+    os: [darwin]
+
+  '@esbuild/darwin-x64@0.23.1':
+    resolution: {integrity: sha512-aClqdgTDVPSEGgoCS8QDG37Gu8yc9lTHNAQlsztQ6ENetKEO//b8y31MMu2ZaPbn4kVsIABzVLXYLhCGekGDqw==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [darwin]
 
@@ -733,6 +758,12 @@ packages:
     cpu: [arm64]
     os: [freebsd]
 
+  '@esbuild/freebsd-arm64@0.23.1':
+    resolution: {integrity: sha512-h1k6yS8/pN/NHlMl5+v4XPfikhJulk4G+tKGFIOwURBSFzE8bixw1ebjluLOjfwtLqY0kewfjLSrO6tN2MgIhA==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [freebsd]
+
   '@esbuild/freebsd-x64@0.17.6':
     resolution: {integrity: sha512-Uh3HLWGzH6FwpviUcLMKPCbZUAFzv67Wj5MTwK6jn89b576SR2IbEp+tqUHTr8DIl0iDmBAf51MVaP7pw6PY5Q==}
     engines: {node: '>=12'}
@@ -754,6 +785,12 @@ packages:
   '@esbuild/freebsd-x64@0.21.5':
     resolution: {integrity: sha512-J95kNBj1zkbMXtHVH29bBriQygMXqoVQOQYA+ISs0/2l3T9/kj42ow2mpqerRBxDJnmkUDCaQT/dfNXWX/ZZCQ==}
     engines: {node: '>=12'}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@esbuild/freebsd-x64@0.23.1':
+    resolution: {integrity: sha512-lK1eJeyk1ZX8UklqFd/3A60UuZ/6UVfGT2LuGo3Wp4/z7eRTRYY+0xOu2kpClP+vMTi9wKOfXi2vjUpO1Ro76g==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [freebsd]
 
@@ -781,6 +818,12 @@ packages:
     cpu: [arm64]
     os: [linux]
 
+  '@esbuild/linux-arm64@0.23.1':
+    resolution: {integrity: sha512-/93bf2yxencYDnItMYV/v116zff6UyTjo4EtEQjUBeGiVpMmffDNUyD9UN2zV+V3LRV3/on4xdZ26NKzn6754g==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [linux]
+
   '@esbuild/linux-arm@0.17.6':
     resolution: {integrity: sha512-7YdGiurNt7lqO0Bf/U9/arrPWPqdPqcV6JCZda4LZgEn+PTQ5SMEI4MGR52Bfn3+d6bNEGcWFzlIxiQdS48YUw==}
     engines: {node: '>=12'}
@@ -802,6 +845,12 @@ packages:
   '@esbuild/linux-arm@0.21.5':
     resolution: {integrity: sha512-bPb5AHZtbeNGjCKVZ9UGqGwo8EUu4cLq68E95A53KlxAPRmUyYv2D6F0uUI65XisGOL1hBP5mTronbgo+0bFcA==}
     engines: {node: '>=12'}
+    cpu: [arm]
+    os: [linux]
+
+  '@esbuild/linux-arm@0.23.1':
+    resolution: {integrity: sha512-CXXkzgn+dXAPs3WBwE+Kvnrf4WECwBdfjfeYHpMeVxWE0EceB6vhWGShs6wi0IYEqMSIzdOF1XjQ/Mkm5d7ZdQ==}
+    engines: {node: '>=18'}
     cpu: [arm]
     os: [linux]
 
@@ -829,6 +878,12 @@ packages:
     cpu: [ia32]
     os: [linux]
 
+  '@esbuild/linux-ia32@0.23.1':
+    resolution: {integrity: sha512-VTN4EuOHwXEkXzX5nTvVY4s7E/Krz7COC8xkftbbKRYAl96vPiUssGkeMELQMOnLOJ8k3BY1+ZY52tttZnHcXQ==}
+    engines: {node: '>=18'}
+    cpu: [ia32]
+    os: [linux]
+
   '@esbuild/linux-loong64@0.17.6':
     resolution: {integrity: sha512-y2NX1+X/Nt+izj9bLoiaYB9YXT/LoaQFYvCkVD77G/4F+/yuVXYCWz4SE9yr5CBMbOxOfBcy/xFL4LlOeNlzYQ==}
     engines: {node: '>=12'}
@@ -850,6 +905,12 @@ packages:
   '@esbuild/linux-loong64@0.21.5':
     resolution: {integrity: sha512-uHf1BmMG8qEvzdrzAqg2SIG/02+4/DHB6a9Kbya0XDvwDEKCoC8ZRWI5JJvNdUjtciBGFQ5PuBlpEOXQj+JQSg==}
     engines: {node: '>=12'}
+    cpu: [loong64]
+    os: [linux]
+
+  '@esbuild/linux-loong64@0.23.1':
+    resolution: {integrity: sha512-Vx09LzEoBa5zDnieH8LSMRToj7ir/Jeq0Gu6qJ/1GcBq9GkfoEAoXvLiW1U9J1qE/Y/Oyaq33w5p2ZWrNNHNEw==}
+    engines: {node: '>=18'}
     cpu: [loong64]
     os: [linux]
 
@@ -877,6 +938,12 @@ packages:
     cpu: [mips64el]
     os: [linux]
 
+  '@esbuild/linux-mips64el@0.23.1':
+    resolution: {integrity: sha512-nrFzzMQ7W4WRLNUOU5dlWAqa6yVeI0P78WKGUo7lg2HShq/yx+UYkeNSE0SSfSure0SqgnsxPvmAUu/vu0E+3Q==}
+    engines: {node: '>=18'}
+    cpu: [mips64el]
+    os: [linux]
+
   '@esbuild/linux-ppc64@0.17.6':
     resolution: {integrity: sha512-AmLhMzkM8JuqTIOhxnX4ubh0XWJIznEynRnZAVdA2mMKE6FAfwT2TWKTwdqMG+qEaeyDPtfNoZRpJbD4ZBv0Tg==}
     engines: {node: '>=12'}
@@ -898,6 +965,12 @@ packages:
   '@esbuild/linux-ppc64@0.21.5':
     resolution: {integrity: sha512-1hHV/Z4OEfMwpLO8rp7CvlhBDnjsC3CttJXIhBi+5Aj5r+MBvy4egg7wCbe//hSsT+RvDAG7s81tAvpL2XAE4w==}
     engines: {node: '>=12'}
+    cpu: [ppc64]
+    os: [linux]
+
+  '@esbuild/linux-ppc64@0.23.1':
+    resolution: {integrity: sha512-dKN8fgVqd0vUIjxuJI6P/9SSSe/mB9rvA98CSH2sJnlZ/OCZWO1DJvxj8jvKTfYUdGfcq2dDxoKaC6bHuTlgcw==}
+    engines: {node: '>=18'}
     cpu: [ppc64]
     os: [linux]
 
@@ -925,6 +998,12 @@ packages:
     cpu: [riscv64]
     os: [linux]
 
+  '@esbuild/linux-riscv64@0.23.1':
+    resolution: {integrity: sha512-5AV4Pzp80fhHL83JM6LoA6pTQVWgB1HovMBsLQ9OZWLDqVY8MVobBXNSmAJi//Csh6tcY7e7Lny2Hg1tElMjIA==}
+    engines: {node: '>=18'}
+    cpu: [riscv64]
+    os: [linux]
+
   '@esbuild/linux-s390x@0.17.6':
     resolution: {integrity: sha512-SPUiz4fDbnNEm3JSdUW8pBJ/vkop3M1YwZAVwvdwlFLoJwKEZ9L98l3tzeyMzq27CyepDQ3Qgoba44StgbiN5Q==}
     engines: {node: '>=12'}
@@ -946,6 +1025,12 @@ packages:
   '@esbuild/linux-s390x@0.21.5':
     resolution: {integrity: sha512-zus5sxzqBJD3eXxwvjN1yQkRepANgxE9lgOW2qLnmr8ikMTphkjgXu1HR01K4FJg8h1kEEDAqDcZQtbrRnB41A==}
     engines: {node: '>=12'}
+    cpu: [s390x]
+    os: [linux]
+
+  '@esbuild/linux-s390x@0.23.1':
+    resolution: {integrity: sha512-9ygs73tuFCe6f6m/Tb+9LtYxWR4c9yg7zjt2cYkjDbDpV/xVn+68cQxMXCjUpYwEkze2RcU/rMnfIXNRFmSoDw==}
+    engines: {node: '>=18'}
     cpu: [s390x]
     os: [linux]
 
@@ -973,6 +1058,12 @@ packages:
     cpu: [x64]
     os: [linux]
 
+  '@esbuild/linux-x64@0.23.1':
+    resolution: {integrity: sha512-EV6+ovTsEXCPAp58g2dD68LxoP/wK5pRvgy0J/HxPGB009omFPv3Yet0HiaqvrIrgPTBuC6wCH1LTOY91EO5hQ==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [linux]
+
   '@esbuild/netbsd-x64@0.17.6':
     resolution: {integrity: sha512-EanJqcU/4uZIBreTrnbnre2DXgXSa+Gjap7ifRfllpmyAU7YMvaXmljdArptTHmjrkkKm9BK6GH5D5Yo+p6y5A==}
     engines: {node: '>=12'}
@@ -997,6 +1088,18 @@ packages:
     cpu: [x64]
     os: [netbsd]
 
+  '@esbuild/netbsd-x64@0.23.1':
+    resolution: {integrity: sha512-aevEkCNu7KlPRpYLjwmdcuNz6bDFiE7Z8XC4CPqExjTvrHugh28QzUXVOZtiYghciKUacNktqxdpymplil1beA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [netbsd]
+
+  '@esbuild/openbsd-arm64@0.23.1':
+    resolution: {integrity: sha512-3x37szhLexNA4bXhLrCC/LImN/YtWis6WXr1VESlfVtVeoFJBRINPJ3f0a/6LV8zpikqoUg4hyXw0sFBt5Cr+Q==}
+    engines: {node: '>=18'}
+    cpu: [arm64]
+    os: [openbsd]
+
   '@esbuild/openbsd-x64@0.17.6':
     resolution: {integrity: sha512-xaxeSunhQRsTNGFanoOkkLtnmMn5QbA0qBhNet/XLVsc+OVkpIWPHcr3zTW2gxVU5YOHFbIHR9ODuaUdNza2Vw==}
     engines: {node: '>=12'}
@@ -1018,6 +1121,12 @@ packages:
   '@esbuild/openbsd-x64@0.21.5':
     resolution: {integrity: sha512-HLNNw99xsvx12lFBUwoT8EVCsSvRNDVxNpjZ7bPn947b8gJPzeHWyNVhFsaerc0n3TsbOINvRP2byTZ5LKezow==}
     engines: {node: '>=12'}
+    cpu: [x64]
+    os: [openbsd]
+
+  '@esbuild/openbsd-x64@0.23.1':
+    resolution: {integrity: sha512-aY2gMmKmPhxfU+0EdnN+XNtGbjfQgwZj43k8G3fyrDM/UdZww6xrWxmDkuz2eCZchqVeABjV5BpildOrUbBTqA==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [openbsd]
 
@@ -1045,6 +1154,12 @@ packages:
     cpu: [x64]
     os: [sunos]
 
+  '@esbuild/sunos-x64@0.23.1':
+    resolution: {integrity: sha512-RBRT2gqEl0IKQABT4XTj78tpk9v7ehp+mazn2HbUeZl1YMdaGAQqhapjGTCe7uw7y0frDi4gS0uHzhvpFuI1sA==}
+    engines: {node: '>=18'}
+    cpu: [x64]
+    os: [sunos]
+
   '@esbuild/win32-arm64@0.17.6':
     resolution: {integrity: sha512-G95n7vP1UnGJPsVdKXllAJPtqjMvFYbN20e8RK8LVLhlTiSOH1sd7+Gt7rm70xiG+I5tM58nYgwWrLs6I1jHqg==}
     engines: {node: '>=12'}
@@ -1066,6 +1181,12 @@ packages:
   '@esbuild/win32-arm64@0.21.5':
     resolution: {integrity: sha512-Z0gOTd75VvXqyq7nsl93zwahcTROgqvuAcYDUr+vOv8uHhNSKROyU961kgtCD1e95IqPKSQKH7tBTslnS3tA8A==}
     engines: {node: '>=12'}
+    cpu: [arm64]
+    os: [win32]
+
+  '@esbuild/win32-arm64@0.23.1':
+    resolution: {integrity: sha512-4O+gPR5rEBe2FpKOVyiJ7wNDPA8nGzDuJ6gN4okSA1gEOYZ67N8JPk58tkWtdtPeLz7lBnY6I5L3jdsr3S+A6A==}
+    engines: {node: '>=18'}
     cpu: [arm64]
     os: [win32]
 
@@ -1093,6 +1214,12 @@ packages:
     cpu: [ia32]
     os: [win32]
 
+  '@esbuild/win32-ia32@0.23.1':
+    resolution: {integrity: sha512-BcaL0Vn6QwCwre3Y717nVHZbAa4UBEigzFm6VdsVdT/MbZ38xoj1X9HPkZhbmaBGUD1W8vxAfffbDe8bA6AKnQ==}
+    engines: {node: '>=18'}
+    cpu: [ia32]
+    os: [win32]
+
   '@esbuild/win32-x64@0.17.6':
     resolution: {integrity: sha512-n6d8MOyUrNp6G4VSpRcgjs5xj4A91svJSaiwLIDWVWEsZtpN5FA9NlBbZHDmAJc2e8e6SF4tkBD3HAvPF+7igA==}
     engines: {node: '>=12'}
@@ -1114,6 +1241,12 @@ packages:
   '@esbuild/win32-x64@0.21.5':
     resolution: {integrity: sha512-tQd/1efJuzPC6rCFwEvLtci/xNFcTZknmXs98FYDfGE4wP9ClFV98nyKrzJKVPMhdDnjzLhdUyMX4PsQAPjwIw==}
     engines: {node: '>=12'}
+    cpu: [x64]
+    os: [win32]
+
+  '@esbuild/win32-x64@0.23.1':
+    resolution: {integrity: sha512-BHpFFeslkWrXWyUPnbKm+xYYVYruCinGcftSBaa8zoF9hZO4BcSCFUvHVTtzpIY6YzUnYtuEhZ+C9iEXjxnasg==}
+    engines: {node: '>=18'}
     cpu: [x64]
     os: [win32]
 
@@ -2080,78 +2213,93 @@ packages:
   '@remix-run/web-stream@1.1.0':
     resolution: {integrity: sha512-KRJtwrjRV5Bb+pM7zxcTJkhIqWWSy+MYsIxHK+0m5atcznsf15YwUBWHWulZerV2+vvHH1Lp1DD7pw6qKW8SgA==}
 
-  '@rollup/rollup-android-arm-eabi@4.13.2':
-    resolution: {integrity: sha512-3XFIDKWMFZrMnao1mJhnOT1h2g0169Os848NhhmGweEcfJ4rCi+3yMCOLG4zA61rbJdkcrM/DjVZm9Hg5p5w7g==}
+  '@rollup/rollup-android-arm-eabi@4.26.0':
+    resolution: {integrity: sha512-gJNwtPDGEaOEgejbaseY6xMFu+CPltsc8/T+diUTTbOQLqD+bnrJq9ulH6WD69TqwqWmrfRAtUv30cCFZlbGTQ==}
     cpu: [arm]
     os: [android]
 
-  '@rollup/rollup-android-arm64@4.13.2':
-    resolution: {integrity: sha512-GdxxXbAuM7Y/YQM9/TwwP+L0omeE/lJAR1J+olu36c3LqqZEBdsIWeQ91KBe6nxwOnb06Xh7JS2U5ooWU5/LgQ==}
+  '@rollup/rollup-android-arm64@4.26.0':
+    resolution: {integrity: sha512-YJa5Gy8mEZgz5JquFruhJODMq3lTHWLm1fOy+HIANquLzfIOzE9RA5ie3JjCdVb9r46qfAQY/l947V0zfGJ0OQ==}
     cpu: [arm64]
     os: [android]
 
-  '@rollup/rollup-darwin-arm64@4.13.2':
-    resolution: {integrity: sha512-mCMlpzlBgOTdaFs83I4XRr8wNPveJiJX1RLfv4hggyIVhfB5mJfN4P8Z6yKh+oE4Luz+qq1P3kVdWrCKcMYrrA==}
+  '@rollup/rollup-darwin-arm64@4.26.0':
+    resolution: {integrity: sha512-ErTASs8YKbqTBoPLp/kA1B1Um5YSom8QAc4rKhg7b9tyyVqDBlQxy7Bf2wW7yIlPGPg2UODDQcbkTlruPzDosw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rollup/rollup-darwin-x64@4.13.2':
-    resolution: {integrity: sha512-yUoEvnH0FBef/NbB1u6d3HNGyruAKnN74LrPAfDQL3O32e3k3OSfLrPgSJmgb3PJrBZWfPyt6m4ZhAFa2nZp2A==}
+  '@rollup/rollup-darwin-x64@4.26.0':
+    resolution: {integrity: sha512-wbgkYDHcdWW+NqP2mnf2NOuEbOLzDblalrOWcPyY6+BRbVhliavon15UploG7PpBRQ2bZJnbmh8o3yLoBvDIHA==}
     cpu: [x64]
     os: [darwin]
 
-  '@rollup/rollup-linux-arm-gnueabihf@4.13.2':
-    resolution: {integrity: sha512-GYbLs5ErswU/Xs7aGXqzc3RrdEjKdmoCrgzhJWyFL0r5fL3qd1NPcDKDowDnmcoSiGJeU68/Vy+OMUluRxPiLQ==}
+  '@rollup/rollup-freebsd-arm64@4.26.0':
+    resolution: {integrity: sha512-Y9vpjfp9CDkAG4q/uwuhZk96LP11fBz/bYdyg9oaHYhtGZp7NrbkQrj/66DYMMP2Yo/QPAsVHkV891KyO52fhg==}
+    cpu: [arm64]
+    os: [freebsd]
+
+  '@rollup/rollup-freebsd-x64@4.26.0':
+    resolution: {integrity: sha512-A/jvfCZ55EYPsqeaAt/yDAG4q5tt1ZboWMHEvKAH9Zl92DWvMIbnZe/f/eOXze65aJaaKbL+YeM0Hz4kLQvdwg==}
+    cpu: [x64]
+    os: [freebsd]
+
+  '@rollup/rollup-linux-arm-gnueabihf@4.26.0':
+    resolution: {integrity: sha512-paHF1bMXKDuizaMODm2bBTjRiHxESWiIyIdMugKeLnjuS1TCS54MF5+Y5Dx8Ui/1RBPVRE09i5OUlaLnv8OGnA==}
     cpu: [arm]
     os: [linux]
 
-  '@rollup/rollup-linux-arm64-gnu@4.13.2':
-    resolution: {integrity: sha512-L1+D8/wqGnKQIlh4Zre9i4R4b4noxzH5DDciyahX4oOz62CphY7WDWqJoQ66zNR4oScLNOqQJfNSIAe/6TPUmQ==}
+  '@rollup/rollup-linux-arm-musleabihf@4.26.0':
+    resolution: {integrity: sha512-cwxiHZU1GAs+TMxvgPfUDtVZjdBdTsQwVnNlzRXC5QzIJ6nhfB4I1ahKoe9yPmoaA/Vhf7m9dB1chGPpDRdGXg==}
+    cpu: [arm]
+    os: [linux]
+
+  '@rollup/rollup-linux-arm64-gnu@4.26.0':
+    resolution: {integrity: sha512-4daeEUQutGRCW/9zEo8JtdAgtJ1q2g5oHaoQaZbMSKaIWKDQwQ3Yx0/3jJNmpzrsScIPtx/V+1AfibLisb3AMQ==}
     cpu: [arm64]
     os: [linux]
 
-  '@rollup/rollup-linux-arm64-musl@4.13.2':
-    resolution: {integrity: sha512-tK5eoKFkXdz6vjfkSTCupUzCo40xueTOiOO6PeEIadlNBkadH1wNOH8ILCPIl8by/Gmb5AGAeQOFeLev7iZDOA==}
+  '@rollup/rollup-linux-arm64-musl@4.26.0':
+    resolution: {integrity: sha512-eGkX7zzkNxvvS05ROzJ/cO/AKqNvR/7t1jA3VZDi2vRniLKwAWxUr85fH3NsvtxU5vnUUKFHKh8flIBdlo2b3Q==}
     cpu: [arm64]
     os: [linux]
 
-  '@rollup/rollup-linux-powerpc64le-gnu@4.13.2':
-    resolution: {integrity: sha512-zvXvAUGGEYi6tYhcDmb9wlOckVbuD+7z3mzInCSTACJ4DQrdSLPNUeDIcAQW39M3q6PDquqLWu7pnO39uSMRzQ==}
-    cpu: [ppc64le]
+  '@rollup/rollup-linux-powerpc64le-gnu@4.26.0':
+    resolution: {integrity: sha512-Odp/lgHbW/mAqw/pU21goo5ruWsytP7/HCC/liOt0zcGG0llYWKrd10k9Fj0pdj3prQ63N5yQLCLiE7HTX+MYw==}
+    cpu: [ppc64]
     os: [linux]
 
-  '@rollup/rollup-linux-riscv64-gnu@4.13.2':
-    resolution: {integrity: sha512-C3GSKvMtdudHCN5HdmAMSRYR2kkhgdOfye4w0xzyii7lebVr4riCgmM6lRiSCnJn2w1Xz7ZZzHKuLrjx5620kw==}
+  '@rollup/rollup-linux-riscv64-gnu@4.26.0':
+    resolution: {integrity: sha512-MBR2ZhCTzUgVD0OJdTzNeF4+zsVogIR1U/FsyuFerwcqjZGvg2nYe24SAHp8O5sN8ZkRVbHwlYeHqcSQ8tcYew==}
     cpu: [riscv64]
     os: [linux]
 
-  '@rollup/rollup-linux-s390x-gnu@4.13.2':
-    resolution: {integrity: sha512-l4U0KDFwzD36j7HdfJ5/TveEQ1fUTjFFQP5qIt9gBqBgu1G8/kCaq5Ok05kd5TG9F8Lltf3MoYsUMw3rNlJ0Yg==}
+  '@rollup/rollup-linux-s390x-gnu@4.26.0':
+    resolution: {integrity: sha512-YYcg8MkbN17fMbRMZuxwmxWqsmQufh3ZJFxFGoHjrE7bv0X+T6l3glcdzd7IKLiwhT+PZOJCblpnNlz1/C3kGQ==}
     cpu: [s390x]
     os: [linux]
 
-  '@rollup/rollup-linux-x64-gnu@4.13.2':
-    resolution: {integrity: sha512-xXMLUAMzrtsvh3cZ448vbXqlUa7ZL8z0MwHp63K2IIID2+DeP5iWIT6g1SN7hg1VxPzqx0xZdiDM9l4n9LRU1A==}
+  '@rollup/rollup-linux-x64-gnu@4.26.0':
+    resolution: {integrity: sha512-ZuwpfjCwjPkAOxpjAEjabg6LRSfL7cAJb6gSQGZYjGhadlzKKywDkCUnJ+KEfrNY1jH5EEoSIKLCb572jSiglA==}
     cpu: [x64]
     os: [linux]
 
-  '@rollup/rollup-linux-x64-musl@4.13.2':
-    resolution: {integrity: sha512-M/JYAWickafUijWPai4ehrjzVPKRCyDb1SLuO+ZyPfoXgeCEAlgPkNXewFZx0zcnoIe3ay4UjXIMdXQXOZXWqA==}
+  '@rollup/rollup-linux-x64-musl@4.26.0':
+    resolution: {integrity: sha512-+HJD2lFS86qkeF8kNu0kALtifMpPCZU80HvwztIKnYwym3KnA1os6nsX4BGSTLtS2QVAGG1P3guRgsYyMA0Yhg==}
     cpu: [x64]
     os: [linux]
 
-  '@rollup/rollup-win32-arm64-msvc@4.13.2':
-    resolution: {integrity: sha512-2YWwoVg9KRkIKaXSh0mz3NmfurpmYoBBTAXA9qt7VXk0Xy12PoOP40EFuau+ajgALbbhi4uTj3tSG3tVseCjuA==}
+  '@rollup/rollup-win32-arm64-msvc@4.26.0':
+    resolution: {integrity: sha512-WUQzVFWPSw2uJzX4j6YEbMAiLbs0BUysgysh8s817doAYhR5ybqTI1wtKARQKo6cGop3pHnrUJPFCsXdoFaimQ==}
     cpu: [arm64]
     os: [win32]
 
-  '@rollup/rollup-win32-ia32-msvc@4.13.2':
-    resolution: {integrity: sha512-2FSsE9aQ6OWD20E498NYKEQLneShWes0NGMPQwxWOdws35qQXH+FplabOSP5zEe1pVjurSDOGEVCE2agFwSEsw==}
+  '@rollup/rollup-win32-ia32-msvc@4.26.0':
+    resolution: {integrity: sha512-D4CxkazFKBfN1akAIY6ieyOqzoOoBV1OICxgUblWxff/pSjCA2khXlASUx7mK6W1oP4McqhgcCsu6QaLj3WMWg==}
     cpu: [ia32]
     os: [win32]
 
-  '@rollup/rollup-win32-x64-msvc@4.13.2':
-    resolution: {integrity: sha512-7h7J2nokcdPePdKykd8wtc8QqqkqxIrUz7MHj6aNr8waBRU//NLDVnNjQnqQO6fqtjrtCdftpbTuOKAyrAQETQ==}
+  '@rollup/rollup-win32-x64-msvc@4.26.0':
+    resolution: {integrity: sha512-2x8MO1rm4PGEP0xWbubJW5RtbNLk3puzAMaLQd3B3JHVw4KcHlmXcO+Wewx9zCoo7EUFiMlu/aZbCJ7VjMzAag==}
     cpu: [x64]
     os: [win32]
 
@@ -2353,6 +2501,9 @@ packages:
 
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  '@types/estree@1.0.6':
+    resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
 
   '@types/express-serve-static-core@5.0.1':
     resolution: {integrity: sha512-CRICJIl0N5cXDONAdlTv5ShATZ4HEwk6kDDIW2/w9qOWKg+NU/5F8wYRWCrONad0/UKkloNSmmyN/wX4rtpbVA==}
@@ -2955,8 +3106,8 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
 
-  close-with-grace@1.3.0:
-    resolution: {integrity: sha512-lvm0rmLIR5bNz4CRKW6YvCfn9Wg5Wb9A8PJ3Bb+hjyikgC1RO1W3J4z9rBXQYw97mAte7dNSQI8BmUsxdlXQyw==}
+  close-with-grace@2.1.0:
+    resolution: {integrity: sha512-rME1AtzKc9dfpLr8XBVhXqhVZDvtaIA7FIpjPaO+DmDsomaTNtuEBZMoNDgIvjHYK5q8/Afxy34YTXInUBsT1A==}
 
   cloudinary-build-url@0.2.4:
     resolution: {integrity: sha512-Wi0aZPHOa90xDCCC4k9eoTVPIm3aWNyycO+rJUXvOyusQqmkPSprHSuJh3s2zNxEtuGj24aCM13iLDpilWMpSw==}
@@ -3046,6 +3197,10 @@ packages:
   cookie@0.7.1:
     resolution: {integrity: sha512-6DnInpx7SJ2AK3+CTUE/ZM0vWTUboZCegxhC2xiIydHR9jNuTAASBrfEpHhiGOZw/nX51bHt6YQl8jsGo4y/0w==}
     engines: {node: '>= 0.6'}
+
+  cookie@1.0.1:
+    resolution: {integrity: sha512-Xd8lFX4LM9QEEwxQpF9J9NTUh8pmdJO0cyRJhFiDoLTk2eH8FXlRv2IFGYVadZpqI3j8fhNrSdKCeYPxiAhLXw==}
+    engines: {node: '>=18'}
 
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
@@ -3492,6 +3647,11 @@ packages:
   esbuild@0.21.5:
     resolution: {integrity: sha512-mg3OPMV4hXywwpoDxu3Qda5xCKQi+vCTZq8S9J/EpkhB2HzKXq4SNFZE3+NK93JYxc8VMSep+lOUSC/RVKaBqw==}
     engines: {node: '>=12'}
+    hasBin: true
+
+  esbuild@0.23.1:
+    resolution: {integrity: sha512-VVNz/9Sa0bs5SELtn3f7qhJCDPCF5oMEl5cO9/SSinpE9hbPVvxbd572HH5AKiP7WD8INO53GgfDDhRjkylHEg==}
+    engines: {node: '>=18'}
     hasBin: true
 
   escalade@3.2.0:
@@ -3983,9 +4143,6 @@ packages:
   globby@13.1.4:
     resolution: {integrity: sha512-iui/IiiW+QrJ1X1hKH5qwlMQyv34wJAYwH1vrf8b9kBA4sNiif3gKsMHa+BrdnOpEudWjpotfa7LrTzB1ERS/g==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
-
-  globrex@0.1.2:
-    resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
 
   gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -5508,6 +5665,10 @@ packages:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
     engines: {node: ^10 || ^12 || >=14}
 
+  postcss@8.4.49:
+    resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
+    engines: {node: ^10 || ^12 || >=14}
+
   postgres-array@2.0.0:
     resolution: {integrity: sha512-VpZrUqU5A69eQyW2c5CA1jtLecCsN2U/bD6VilrFDWq5+5UIEVO7nazS3TEcHf1zuPYO/sqGvUvW62g86RXZuA==}
     engines: {node: '>=4'}
@@ -5528,8 +5689,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-tailwindcss@0.6.5:
-    resolution: {integrity: sha512-axfeOArc/RiGHjOIy9HytehlC0ZLeMaqY09mm8YCkMzznKiDkwFzOpBvtuhuv3xG5qB73+Mj7OCe2j/L1ryfuQ==}
+  prettier-plugin-tailwindcss@0.6.8:
+    resolution: {integrity: sha512-dGu3kdm7SXPkiW4nzeWKCl3uoImdd5CTZEJGxyypEPL37Wj0HT2pLqjrvSei1nTeuQfO4PUfjeW5cTUNRLZ4sA==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -5543,6 +5704,7 @@ packages:
       prettier-plugin-import-sort: '*'
       prettier-plugin-jsdoc: '*'
       prettier-plugin-marko: '*'
+      prettier-plugin-multiline-arrays: '*'
       prettier-plugin-organize-attributes: '*'
       prettier-plugin-organize-imports: '*'
       prettier-plugin-sort-imports: '*'
@@ -5568,6 +5730,8 @@ packages:
       prettier-plugin-jsdoc:
         optional: true
       prettier-plugin-marko:
+        optional: true
+      prettier-plugin-multiline-arrays:
         optional: true
       prettier-plugin-organize-attributes:
         optional: true
@@ -5826,52 +5990,22 @@ packages:
   remark-rehype@11.0.0:
     resolution: {integrity: sha512-vx8x2MDMcxuE4lBmQ46zYUDfcFMmvg80WYX+UNLeG6ixjdCCLcw1lrgAukwBTuOFsS78eoAedHGn9sNM0w7TPw==}
 
-  remix-auth-discord@1.3.3:
-    resolution: {integrity: sha512-xu/NTV/wHM3zUOlKtav8k3OBBzEBcr9ADrVPPV2aoLuNX432kK9QLAT/oDysfJyKnvKjZwVhlJNBkD8wBSnhMQ==}
+  remix-auth-discord@1.4.1:
+    resolution: {integrity: sha512-H46DiPMYodLwr0TBoLmHy5D2fgfBJH3JjJM1drK5frJoN9XoL/OCvq3TYu/enDbuI2NPLjHLk7k/die4fnv/lQ==}
     peerDependencies:
       '@remix-run/server-runtime': ^2.1.0
 
-  remix-auth-facebook@1.0.1:
-    resolution: {integrity: sha512-i8uTyNGV97fRKzZ1+HTaEDjvH6rg3oyVPRbvHVU2FxWzjUtTCbpqudsQZbCSL40oO5ct+V7NIt+lT+DRCl3dlA==}
-    peerDependencies:
-      '@remix-run/server-runtime': ^1.5.1
-      remix-auth: ^3.2.2
-
-  remix-auth-github@1.6.0:
-    resolution: {integrity: sha512-qdQmWVVEDHxnzMPn7XE0s7QX5GYba0uH3MDW+lVJiCoHDZCGymqmGCajLThL5vFJdwSx0C4GpQJ5EgEsIjQ3pA==}
-    peerDependencies:
-      '@remix-run/server-runtime': ^1.0.0
-      remix-auth: ^3.4.0
-
-  remix-auth-google@1.3.0:
-    resolution: {integrity: sha512-HQ9UH7cKR6pDQAuxmdPjDsZe5/PGIQDsheM5q702wJRoXTbKVXPzni/Y1ZdPNaw3sOQkqQ8q5tSbiSwUHeqcCA==}
-    peerDependencies:
-      '@remix-run/server-runtime': ^2.0.1
-      remix-auth: ^3.2.1
-
-  remix-auth-linkedin@2.0.0:
-    resolution: {integrity: sha512-zRoyC9x8kzr8vRzsuR3gML8BYREp8MqETFPBou8IpDqyqbM55GCkWa8lEkU68sBbl4XOYZoxKdo4Hpa1dEMkJA==}
-    peerDependencies:
-      '@remix-run/server-runtime': ^1.1.3
-
-  remix-auth-microsoft@2.0.1:
-    resolution: {integrity: sha512-7utTr9/5ax9f8VKrl4x2khguD0xRtBIaJSRaHJ2qOkan0WlcwHpcC18i3bktr6UfcXqjsgZVzBDnh0eOkEbruA==}
+  remix-auth-github@1.7.0:
+    resolution: {integrity: sha512-xuy/DW44y/eWU+vUsf9NlQUtLhayMZEJszgaVr1txwjA0OzpPee5qNxPQ9RBg8WdnY3pMWck5m070MW5Jt7nxg==}
     peerDependencies:
       '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+      remix-auth: ^3.4.0
 
-  remix-auth-oauth2@1.11.0:
-    resolution: {integrity: sha512-Yf1LF6NLYPFa7X2Rax/VEhXmYXFjZOi/q+7DmbMeoMHjAfkpqxbvzqqYSKIKDGR51z5TXR5na4to4380mir5bg==}
+  remix-auth-oauth2@1.11.2:
+    resolution: {integrity: sha512-5ORP+LMi5CVCA/Wb8Z+FCAJ73Uiy4uyjEzhlVwNBfdAkPOnfxzoi+q/pY/CrueYv3OniCXRM35ZYqkVi3G1UPw==}
     peerDependencies:
       '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
       remix-auth: ^3.6.0
-
-  remix-auth-socials@2.0.6:
-    resolution: {integrity: sha512-T8ZaX+sR85WVBCrYWm/vd+dwQRjcilLmKdWG/HLY0Wn2xSxVUvNqTEPj6uslS0ywIN6GAePXgK/yUNVQcHutHA==}
-
-  remix-auth-twitter@0.1.2:
-    resolution: {integrity: sha512-rRu/hpxPiRv4N5yHACCdUFbQysNMsmmCT9FpqstuRhAJWQIu1/wk3wEZmxbWF95aalhlHgHBQMXq1s2Jt6LRUQ==}
-    peerDependencies:
-      '@remix-run/server-runtime': ^1.6.3
 
   remix-auth@3.7.0:
     resolution: {integrity: sha512-2QVjp2nJVaYxuFBecMQwzixCO7CLSssttLBU5eVlNcNlVeNMmY1g7OkmZ1Ogw9sBcoMXZ18J7xXSK0AISVFcfQ==}
@@ -5885,12 +6019,11 @@ packages:
     peerDependencies:
       '@remix-run/dev': ^1.15.0 || ^2
 
-  remix-utils@7.6.0:
-    resolution: {integrity: sha512-BPhCUEy+nwrhDDDg2v3+LFSszV6tluMbeSkbffj2o4tqZxt5Kn69Y9sNpGxYLAj8gjqeYDuxjv55of+gYnnykA==}
+  remix-utils@7.7.0:
+    resolution: {integrity: sha512-J8NhP044nrNIam/xOT1L9a4RQ9FSaA2wyrUwmN8ZT+c/+CdAAf70yfaLnvMyKcV5U+8BcURQ/aVbth77sT6jGA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@remix-run/cloudflare': ^2.0.0
-      '@remix-run/deno': ^2.0.0
       '@remix-run/node': ^2.0.0
       '@remix-run/react': ^2.0.0
       '@remix-run/router': ^1.7.2
@@ -5901,8 +6034,6 @@ packages:
       zod: ^3.22.4
     peerDependenciesMeta:
       '@remix-run/cloudflare':
-        optional: true
-      '@remix-run/deno':
         optional: true
       '@remix-run/node':
         optional: true
@@ -5991,8 +6122,8 @@ packages:
     engines: {node: '>=14.18.0', npm: '>=8.0.0'}
     hasBin: true
 
-  rollup@4.13.2:
-    resolution: {integrity: sha512-MIlLgsdMprDBXC+4hsPgzWUasLO9CE4zOkj/u6j+Z6j5A4zRY+CtiXAdJyPtgCsc42g658Aeh1DlrdVEJhsL2g==}
+  rollup@4.26.0:
+    resolution: {integrity: sha512-ilcl12hnWonG8f+NxU6BlgysVA0gvY2l8N0R84S1HcINbW20bvwuCngJkkInV6LXhwRpucsW5k1ovDwEdBVrNg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -6136,14 +6267,18 @@ packages:
   snake-case@3.0.4:
     resolution: {integrity: sha512-LAOh4z89bGQvl9pFfNF8V146i7o7/CqFPbqzYgP+yYzDIDeS9HaNFtXABamRW+AQzEVODcvE79ljJ+8a9YSdMg==}
 
-  sonner@1.5.0:
-    resolution: {integrity: sha512-FBjhG/gnnbN6FY0jaNnqZOMmB73R+5IiyYAw8yBj7L54ER7HB3fOSE5OFiQiE2iXWxeXKvg6fIP4LtVppHEdJA==}
+  sonner@1.7.0:
+    resolution: {integrity: sha512-W6dH7m5MujEPyug3lpI2l3TC3Pp1+LTgK0Efg+IHDrBbtEjyCmCHHo6yfNBOsf1tFZ6zf+jceWwB38baC8yO9g==}
     peerDependencies:
-      react: ^18.0.0
-      react-dom: ^18.0.0
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
 
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
+    engines: {node: '>=0.10.0'}
+
+  source-map-js@1.2.1:
+    resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
 
   source-map-support@0.5.21:
@@ -6308,8 +6443,8 @@ packages:
     resolution: {integrity: sha512-L1dapNV6vu2s/4Sputv8xGsCdAVlb5nRDMFU/E27D44l5U6cw1g0dGd45uLc+OXjNMmF4ntiMdCimzcjFKQI8Q==}
     engines: {node: ^14.18.0 || >=16.0.0}
 
-  tailwind-merge@2.3.0:
-    resolution: {integrity: sha512-vkYrLpIP+lgR0tQCG6AP7zZXCTLc1Lnv/CCRT3BqJ9CZ3ui2++GPaGb1x/ILsINIMSYqqvrpqjUFsMNLlW99EA==}
+  tailwind-merge@2.5.4:
+    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
 
   tailwindcss-animate@1.0.7:
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
@@ -6406,16 +6541,6 @@ packages:
   ts-toolbelt@9.6.0:
     resolution: {integrity: sha512-nsZd8ZeNUzukXPlJmTBwUAuABDe/9qtVDelJeT/qW0ow3ZS3BsQJtNkan1802aM9Uf68/Y8ljw86Hu0h5IUW3w==}
 
-  tsconfck@3.0.3:
-    resolution: {integrity: sha512-4t0noZX9t6GcPTfBAbIbbIU4pfpCwh0ueq3S4O/5qXI1VwK1outmxhe9dOiEWqMz3MW2LKgDTpqWV+37IWuVbA==}
-    engines: {node: ^18 || >=20}
-    hasBin: true
-    peerDependencies:
-      typescript: ^5.0.0
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-
   tsconfig-paths@3.14.2:
     resolution: {integrity: sha512-o/9iXgCYc5L/JxCHPe3Hvh8Q/2xm5Z+p18PESBU6Ff33695QnCHBEjcytY2q19ua7Mbl/DavtBOLq+oG0RCL+g==}
 
@@ -6435,8 +6560,8 @@ packages:
     peerDependencies:
       typescript: '>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta'
 
-  tsx@4.16.2:
-    resolution: {integrity: sha512-C1uWweJDgdtX2x600HjaFaucXTilT7tgUZHbOE4+ypskZ1OP8CRCSDkCxG6Vya9EwaFIVagWwpaVAn5wzypaqQ==}
+  tsx@4.19.2:
+    resolution: {integrity: sha512-pOUl6Vo2LUq/bSa8S5q7b91cgNSjctn9ugq/+Mvow99qW6x/UZYwzxy/3NmqoT66eHYfCVvFvACC58UBPFf28g==}
     engines: {node: '>=18.0.0'}
     hasBin: true
 
@@ -6463,8 +6588,8 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@4.4.0:
-    resolution: {integrity: sha512-HT3RRs7sTfY22KuPQJkD/XjbTbxgP2Je5HPt6H6JEGvcjHd5Lqru75EbrP3tb4FYjNJ+DjLp+MNQTFQU0mhXNw==}
+  type-fest@4.26.1:
+    resolution: {integrity: sha512-yOGpmOAL7CkKe/91I5O3gPICmJNLJ1G4zFYVAsRHg7M64biSnPtRj0WNQt++bRkjYOqjWXrhnUw1utzmVErAdg==}
     engines: {node: '>=16'}
 
   type-is@1.6.18:
@@ -6490,8 +6615,8 @@ packages:
   types-ramda@0.30.0:
     resolution: {integrity: sha512-oVPw/KHB5M0Du0txTEKKM8xZOG9cZBRdCVXvwHYuNJUVkAiJ9oWyqkA+9Bj2gjMsHgkkhsYevobQBWs8I2/Xvw==}
 
-  typescript@5.5.3:
-    resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
+  typescript@5.6.3:
+    resolution: {integrity: sha512-hjcS1mhfuyi4WW8IWtjP7brDrG2cuDZukyrYrSauoXGNgx0S7zceP07adYkJycEr56BOUTNPzbInooiN3fn1qw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -6680,14 +6805,6 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-tsconfig-paths@4.3.2:
-    resolution: {integrity: sha512-0Vd/a6po6Q+86rPlntHye7F31zA2URZMbH8M3saAZ/xR9QoGN/L21bxEGfXdWmFdNkqPpRdxFT7nmNe12e9/uA==}
-    peerDependencies:
-      vite: '*'
-    peerDependenciesMeta:
-      vite:
-        optional: true
-
   vite@4.3.8:
     resolution: {integrity: sha512-uYB8PwN7hbMrf4j1xzGDk/lqjsZvCDbt/JC5dyfxc19Pg8kRm14LinK/uq+HSLNswZEoKmweGdtpbnxRtrAXiQ==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -6713,8 +6830,8 @@ packages:
       terser:
         optional: true
 
-  vite@5.3.3:
-    resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
+  vite@5.4.11:
+    resolution: {integrity: sha512-c7jFQRklXua0mTzneGW9QVyxFjUgwcihC4bXEtujIo2ouWCe1Ajt/amn2PCxYnhYfd5k09JX3SB7OYWFKYqj8Q==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -6722,6 +6839,7 @@ packages:
       less: '*'
       lightningcss: ^1.21.0
       sass: '*'
+      sass-embedded: '*'
       stylus: '*'
       sugarss: '*'
       terser: ^5.4.0
@@ -6733,6 +6851,8 @@ packages:
       lightningcss:
         optional: true
       sass:
+        optional: true
+      sass-embedded:
         optional: true
       stylus:
         optional: true
@@ -7239,8 +7359,6 @@ snapshots:
     dependencies:
       snake-case: 3.0.4
 
-  '@conform-to/dom@1.1.5': {}
-
   '@conform-to/dom@1.2.2': {}
 
   '@conform-to/react@1.2.2(react@18.3.1)':
@@ -7248,9 +7366,9 @@ snapshots:
       '@conform-to/dom': 1.2.2
       react: 18.3.1
 
-  '@conform-to/zod@1.1.5(zod@3.23.8)':
+  '@conform-to/zod@1.2.2(zod@3.23.8)':
     dependencies:
-      '@conform-to/dom': 1.1.5
+      '@conform-to/dom': 1.2.2
       zod: 3.23.8
 
   '@emotion/hash@0.9.1': {}
@@ -7283,6 +7401,9 @@ snapshots:
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
 
+  '@esbuild/aix-ppc64@0.23.1':
+    optional: true
+
   '@esbuild/android-arm64@0.17.6':
     optional: true
 
@@ -7293,6 +7414,9 @@ snapshots:
     optional: true
 
   '@esbuild/android-arm64@0.21.5':
+    optional: true
+
+  '@esbuild/android-arm64@0.23.1':
     optional: true
 
   '@esbuild/android-arm@0.17.6':
@@ -7307,6 +7431,9 @@ snapshots:
   '@esbuild/android-arm@0.21.5':
     optional: true
 
+  '@esbuild/android-arm@0.23.1':
+    optional: true
+
   '@esbuild/android-x64@0.17.6':
     optional: true
 
@@ -7317,6 +7444,9 @@ snapshots:
     optional: true
 
   '@esbuild/android-x64@0.21.5':
+    optional: true
+
+  '@esbuild/android-x64@0.23.1':
     optional: true
 
   '@esbuild/darwin-arm64@0.17.6':
@@ -7331,6 +7461,9 @@ snapshots:
   '@esbuild/darwin-arm64@0.21.5':
     optional: true
 
+  '@esbuild/darwin-arm64@0.23.1':
+    optional: true
+
   '@esbuild/darwin-x64@0.17.6':
     optional: true
 
@@ -7341,6 +7474,9 @@ snapshots:
     optional: true
 
   '@esbuild/darwin-x64@0.21.5':
+    optional: true
+
+  '@esbuild/darwin-x64@0.23.1':
     optional: true
 
   '@esbuild/freebsd-arm64@0.17.6':
@@ -7355,6 +7491,9 @@ snapshots:
   '@esbuild/freebsd-arm64@0.21.5':
     optional: true
 
+  '@esbuild/freebsd-arm64@0.23.1':
+    optional: true
+
   '@esbuild/freebsd-x64@0.17.6':
     optional: true
 
@@ -7365,6 +7504,9 @@ snapshots:
     optional: true
 
   '@esbuild/freebsd-x64@0.21.5':
+    optional: true
+
+  '@esbuild/freebsd-x64@0.23.1':
     optional: true
 
   '@esbuild/linux-arm64@0.17.6':
@@ -7379,6 +7521,9 @@ snapshots:
   '@esbuild/linux-arm64@0.21.5':
     optional: true
 
+  '@esbuild/linux-arm64@0.23.1':
+    optional: true
+
   '@esbuild/linux-arm@0.17.6':
     optional: true
 
@@ -7389,6 +7534,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-arm@0.21.5':
+    optional: true
+
+  '@esbuild/linux-arm@0.23.1':
     optional: true
 
   '@esbuild/linux-ia32@0.17.6':
@@ -7403,6 +7551,9 @@ snapshots:
   '@esbuild/linux-ia32@0.21.5':
     optional: true
 
+  '@esbuild/linux-ia32@0.23.1':
+    optional: true
+
   '@esbuild/linux-loong64@0.17.6':
     optional: true
 
@@ -7413,6 +7564,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-loong64@0.21.5':
+    optional: true
+
+  '@esbuild/linux-loong64@0.23.1':
     optional: true
 
   '@esbuild/linux-mips64el@0.17.6':
@@ -7427,6 +7581,9 @@ snapshots:
   '@esbuild/linux-mips64el@0.21.5':
     optional: true
 
+  '@esbuild/linux-mips64el@0.23.1':
+    optional: true
+
   '@esbuild/linux-ppc64@0.17.6':
     optional: true
 
@@ -7437,6 +7594,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-ppc64@0.21.5':
+    optional: true
+
+  '@esbuild/linux-ppc64@0.23.1':
     optional: true
 
   '@esbuild/linux-riscv64@0.17.6':
@@ -7451,6 +7611,9 @@ snapshots:
   '@esbuild/linux-riscv64@0.21.5':
     optional: true
 
+  '@esbuild/linux-riscv64@0.23.1':
+    optional: true
+
   '@esbuild/linux-s390x@0.17.6':
     optional: true
 
@@ -7461,6 +7624,9 @@ snapshots:
     optional: true
 
   '@esbuild/linux-s390x@0.21.5':
+    optional: true
+
+  '@esbuild/linux-s390x@0.23.1':
     optional: true
 
   '@esbuild/linux-x64@0.17.6':
@@ -7475,6 +7641,9 @@ snapshots:
   '@esbuild/linux-x64@0.21.5':
     optional: true
 
+  '@esbuild/linux-x64@0.23.1':
+    optional: true
+
   '@esbuild/netbsd-x64@0.17.6':
     optional: true
 
@@ -7485,6 +7654,12 @@ snapshots:
     optional: true
 
   '@esbuild/netbsd-x64@0.21.5':
+    optional: true
+
+  '@esbuild/netbsd-x64@0.23.1':
+    optional: true
+
+  '@esbuild/openbsd-arm64@0.23.1':
     optional: true
 
   '@esbuild/openbsd-x64@0.17.6':
@@ -7499,6 +7674,9 @@ snapshots:
   '@esbuild/openbsd-x64@0.21.5':
     optional: true
 
+  '@esbuild/openbsd-x64@0.23.1':
+    optional: true
+
   '@esbuild/sunos-x64@0.17.6':
     optional: true
 
@@ -7509,6 +7687,9 @@ snapshots:
     optional: true
 
   '@esbuild/sunos-x64@0.21.5':
+    optional: true
+
+  '@esbuild/sunos-x64@0.23.1':
     optional: true
 
   '@esbuild/win32-arm64@0.17.6':
@@ -7523,6 +7704,9 @@ snapshots:
   '@esbuild/win32-arm64@0.21.5':
     optional: true
 
+  '@esbuild/win32-arm64@0.23.1':
+    optional: true
+
   '@esbuild/win32-ia32@0.17.6':
     optional: true
 
@@ -7535,6 +7719,9 @@ snapshots:
   '@esbuild/win32-ia32@0.21.5':
     optional: true
 
+  '@esbuild/win32-ia32@0.23.1':
+    optional: true
+
   '@esbuild/win32-x64@0.17.6':
     optional: true
 
@@ -7545,6 +7732,9 @@ snapshots:
     optional: true
 
   '@esbuild/win32-x64@0.21.5':
+    optional: true
+
+  '@esbuild/win32-x64@0.23.1':
     optional: true
 
   '@eslint-community/eslint-utils@4.4.0(eslint@8.57.0)':
@@ -7755,10 +7945,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@nasa-gcn/remix-seo@2.0.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))':
+  '@nasa-gcn/remix-seo@2.0.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))':
     dependencies:
-      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
+      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
       lodash: 4.17.21
 
   '@neon-rs/load@0.0.4': {}
@@ -8558,7 +8748,7 @@ snapshots:
 
   '@radix-ui/rect@1.1.0': {}
 
-  '@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0))':
+  '@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0))':
     dependencies:
       '@babel/core': 7.21.8
       '@babel/generator': 7.23.5
@@ -8570,10 +8760,10 @@ snapshots:
       '@babel/types': 7.23.9
       '@mdx-js/mdx': 2.3.0
       '@npmcli/package-json': 4.0.1
-      '@remix-run/node': 2.10.2(typescript@5.5.3)
-      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
+      '@remix-run/node': 2.10.2(typescript@5.6.3)
+      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
       '@remix-run/router': 1.17.1
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
       '@types/mdx': 2.0.5
       '@vanilla-extract/integration': 6.2.1(@types/node@22.9.0)
       arg: 5.0.2
@@ -8615,9 +8805,9 @@ snapshots:
       tsconfig-paths: 4.2.0
       ws: 7.5.9
     optionalDependencies:
-      '@remix-run/serve': 2.10.2(typescript@5.5.3)
-      typescript: 5.5.3
-      vite: 5.3.3(@types/node@22.9.0)
+      '@remix-run/serve': 2.10.2(typescript@5.6.3)
+      typescript: 5.6.3
+      vite: 5.4.11(@types/node@22.9.0)
     transitivePeerDependencies:
       - '@types/node'
       - bluebird
@@ -8631,43 +8821,43 @@ snapshots:
       - ts-node
       - utf-8-validate
 
-  '@remix-run/eslint-config@2.10.2(eslint@8.57.0)(react@18.3.1)(typescript@5.5.3)':
+  '@remix-run/eslint-config@2.10.2(eslint@8.57.0)(react@18.3.1)(typescript@5.6.3)':
     dependencies:
       '@babel/core': 7.21.8
       '@babel/eslint-parser': 7.21.8(@babel/core@7.21.8)(eslint@8.57.0)
       '@babel/preset-react': 7.18.6(@babel/core@7.21.8)
       '@rushstack/eslint-patch': 1.3.0
-      '@typescript-eslint/eslint-plugin': 5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3)
-      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/eslint-plugin': 5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3)
+      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0)
-      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.5.5)(eslint@8.57.0)
-      eslint-plugin-jest: 26.9.0(@typescript-eslint/eslint-plugin@5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3)
+      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0)
+      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.5.5)(eslint@8.57.0)
+      eslint-plugin-jest: 26.9.0(@typescript-eslint/eslint-plugin@5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3)
       eslint-plugin-jest-dom: 4.0.3(eslint@8.57.0)
       eslint-plugin-jsx-a11y: 6.7.1(eslint@8.57.0)
       eslint-plugin-node: 11.1.0(eslint@8.57.0)
       eslint-plugin-react: 7.32.2(eslint@8.57.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.57.0)
-      eslint-plugin-testing-library: 5.11.0(eslint@8.57.0)(typescript@5.5.3)
+      eslint-plugin-testing-library: 5.11.0(eslint@8.57.0)(typescript@5.6.3)
       react: 18.3.1
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
       - jest
       - supports-color
 
-  '@remix-run/express@2.10.2(express@4.21.1)(typescript@5.5.3)':
+  '@remix-run/express@2.10.2(express@4.21.1)(typescript@5.6.3)':
     dependencies:
-      '@remix-run/node': 2.10.2(typescript@5.5.3)
+      '@remix-run/node': 2.10.2(typescript@5.6.3)
       express: 4.21.1
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
 
-  '@remix-run/node@2.10.2(typescript@5.5.3)':
+  '@remix-run/node@2.10.2(typescript@5.6.3)':
     dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
       '@remix-run/web-fetch': 4.4.2
       '@web3-storage/multipart-parser': 1.0.0
       cookie-signature: 1.2.1
@@ -8675,26 +8865,26 @@ snapshots:
       stream-slice: 0.1.2
       undici: 6.16.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
 
-  '@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)':
+  '@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)':
     dependencies:
       '@remix-run/router': 1.17.1
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-router: 6.24.1(react@18.3.1)
       react-router-dom: 6.24.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       turbo-stream: 2.2.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
 
   '@remix-run/router@1.17.1': {}
 
-  '@remix-run/serve@2.10.2(typescript@5.5.3)':
+  '@remix-run/serve@2.10.2(typescript@5.6.3)':
     dependencies:
-      '@remix-run/express': 2.10.2(express@4.21.1)(typescript@5.5.3)
-      '@remix-run/node': 2.10.2(typescript@5.5.3)
+      '@remix-run/express': 2.10.2(express@4.21.1)(typescript@5.6.3)
+      '@remix-run/node': 2.10.2(typescript@5.6.3)
       chokidar: 3.6.0
       compression: 1.7.5
       express: 4.21.1
@@ -8705,7 +8895,7 @@ snapshots:
       - supports-color
       - typescript
 
-  '@remix-run/server-runtime@2.10.2(typescript@5.5.3)':
+  '@remix-run/server-runtime@2.10.2(typescript@5.6.3)':
     dependencies:
       '@remix-run/router': 1.17.1
       '@types/cookie': 0.6.0
@@ -8715,11 +8905,11 @@ snapshots:
       source-map: 0.7.4
       turbo-stream: 2.2.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
 
-  '@remix-run/v1-route-convention@0.1.4(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0)))':
+  '@remix-run/v1-route-convention@0.1.4(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0)))':
     dependencies:
-      '@remix-run/dev': 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0))
+      '@remix-run/dev': 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0))
       minimatch: 7.4.6
 
   '@remix-run/web-blob@3.1.0':
@@ -8750,49 +8940,58 @@ snapshots:
     dependencies:
       web-streams-polyfill: 3.2.1
 
-  '@rollup/rollup-android-arm-eabi@4.13.2':
+  '@rollup/rollup-android-arm-eabi@4.26.0':
     optional: true
 
-  '@rollup/rollup-android-arm64@4.13.2':
+  '@rollup/rollup-android-arm64@4.26.0':
     optional: true
 
-  '@rollup/rollup-darwin-arm64@4.13.2':
+  '@rollup/rollup-darwin-arm64@4.26.0':
     optional: true
 
-  '@rollup/rollup-darwin-x64@4.13.2':
+  '@rollup/rollup-darwin-x64@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-arm-gnueabihf@4.13.2':
+  '@rollup/rollup-freebsd-arm64@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-arm64-gnu@4.13.2':
+  '@rollup/rollup-freebsd-x64@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-arm64-musl@4.13.2':
+  '@rollup/rollup-linux-arm-gnueabihf@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-powerpc64le-gnu@4.13.2':
+  '@rollup/rollup-linux-arm-musleabihf@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-riscv64-gnu@4.13.2':
+  '@rollup/rollup-linux-arm64-gnu@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-s390x-gnu@4.13.2':
+  '@rollup/rollup-linux-arm64-musl@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-x64-gnu@4.13.2':
+  '@rollup/rollup-linux-powerpc64le-gnu@4.26.0':
     optional: true
 
-  '@rollup/rollup-linux-x64-musl@4.13.2':
+  '@rollup/rollup-linux-riscv64-gnu@4.26.0':
     optional: true
 
-  '@rollup/rollup-win32-arm64-msvc@4.13.2':
+  '@rollup/rollup-linux-s390x-gnu@4.26.0':
     optional: true
 
-  '@rollup/rollup-win32-ia32-msvc@4.13.2':
+  '@rollup/rollup-linux-x64-gnu@4.26.0':
     optional: true
 
-  '@rollup/rollup-win32-x64-msvc@4.13.2':
+  '@rollup/rollup-linux-x64-musl@4.26.0':
+    optional: true
+
+  '@rollup/rollup-win32-arm64-msvc@4.26.0':
+    optional: true
+
+  '@rollup/rollup-win32-ia32-msvc@4.26.0':
+    optional: true
+
+  '@rollup/rollup-win32-x64-msvc@4.26.0':
     optional: true
 
   '@rushstack/eslint-patch@1.3.0': {}
@@ -8967,10 +9166,10 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       react: 18.3.1
 
-  '@sentry/remix@8.38.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.27.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.27.0)(@remix-run/node@2.10.2(typescript@5.5.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(react@18.3.1)':
+  '@sentry/remix@8.38.0(@opentelemetry/api@1.9.0)(@opentelemetry/core@1.25.1(@opentelemetry/api@1.9.0))(@opentelemetry/instrumentation@0.54.2(@opentelemetry/api@1.9.0))(@opentelemetry/sdk-trace-base@1.27.0(@opentelemetry/api@1.9.0))(@opentelemetry/semantic-conventions@1.27.0)(@remix-run/node@2.10.2(typescript@5.6.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(react@18.3.1)':
     dependencies:
-      '@remix-run/node': 2.10.2(typescript@5.5.3)
-      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
+      '@remix-run/node': 2.10.2(typescript@5.6.3)
+      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
       '@remix-run/router': 1.17.1
       '@sentry/cli': 2.38.2
       '@sentry/core': 8.38.0
@@ -9008,13 +9207,13 @@ snapshots:
 
   '@sinclair/typebox@0.27.8': {}
 
-  '@sly-cli/sly@1.14.0(typescript@5.5.3)':
+  '@sly-cli/sly@1.14.0(typescript@5.6.3)':
     dependencies:
       '@epic-web/cachified': 5.1.2
       chalk: 5.3.0
       commander: 11.1.0
       compare-versions: 6.1.0
-      cosmiconfig: 8.3.6(typescript@5.5.3)
+      cosmiconfig: 8.3.6(typescript@5.6.3)
       esbuild: 0.19.11
       execa: 7.1.1
       lru-cache: 10.3.0
@@ -9108,6 +9307,8 @@ snapshots:
   '@types/estree@1.0.1': {}
 
   '@types/estree@1.0.5': {}
+
+  '@types/estree@1.0.6': {}
 
   '@types/express-serve-static-core@5.0.1':
     dependencies:
@@ -9235,34 +9436,34 @@ snapshots:
     dependencies:
       '@types/node': 22.9.0
 
-  '@typescript-eslint/eslint-plugin@5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3)':
+  '@typescript-eslint/eslint-plugin@5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/regexpp': 4.6.2
-      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       '@typescript-eslint/scope-manager': 5.59.7
-      '@typescript-eslint/type-utils': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
-      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/type-utils': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
+      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       debug: 4.3.4
       eslint: 8.57.0
       grapheme-splitter: 1.0.4
       ignore: 5.2.4
       natural-compare-lite: 1.4.0
       semver: 7.5.4
-      tsutils: 3.21.0(typescript@5.5.3)
+      tsutils: 3.21.0(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3)':
+  '@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3)':
     dependencies:
       '@typescript-eslint/scope-manager': 5.59.7
       '@typescript-eslint/types': 5.59.7
-      '@typescript-eslint/typescript-estree': 5.59.7(typescript@5.5.3)
+      '@typescript-eslint/typescript-estree': 5.59.7(typescript@5.6.3)
       debug: 4.3.4
       eslint: 8.57.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
@@ -9271,21 +9472,21 @@ snapshots:
       '@typescript-eslint/types': 5.59.7
       '@typescript-eslint/visitor-keys': 5.59.7
 
-  '@typescript-eslint/type-utils@5.59.7(eslint@8.57.0)(typescript@5.5.3)':
+  '@typescript-eslint/type-utils@5.59.7(eslint@8.57.0)(typescript@5.6.3)':
     dependencies:
-      '@typescript-eslint/typescript-estree': 5.59.7(typescript@5.5.3)
-      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/typescript-estree': 5.59.7(typescript@5.6.3)
+      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       debug: 4.3.4
       eslint: 8.57.0
-      tsutils: 3.21.0(typescript@5.5.3)
+      tsutils: 3.21.0(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
   '@typescript-eslint/types@5.59.7': {}
 
-  '@typescript-eslint/typescript-estree@5.59.7(typescript@5.5.3)':
+  '@typescript-eslint/typescript-estree@5.59.7(typescript@5.6.3)':
     dependencies:
       '@typescript-eslint/types': 5.59.7
       '@typescript-eslint/visitor-keys': 5.59.7
@@ -9293,20 +9494,20 @@ snapshots:
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
-      tsutils: 3.21.0(typescript@5.5.3)
+      tsutils: 3.21.0(typescript@5.6.3)
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
     transitivePeerDependencies:
       - supports-color
 
-  '@typescript-eslint/utils@5.59.7(eslint@8.57.0)(typescript@5.5.3)':
+  '@typescript-eslint/utils@5.59.7(eslint@8.57.0)(typescript@5.6.3)':
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.57.0)
       '@types/json-schema': 7.0.11
       '@types/semver': 7.5.0
       '@typescript-eslint/scope-manager': 5.59.7
       '@typescript-eslint/types': 5.59.7
-      '@typescript-eslint/typescript-estree': 5.59.7(typescript@5.5.3)
+      '@typescript-eslint/typescript-estree': 5.59.7(typescript@5.6.3)
       eslint: 8.57.0
       eslint-scope: 5.1.1
       semver: 7.5.4
@@ -9858,7 +10059,7 @@ snapshots:
 
   clone@1.0.4: {}
 
-  close-with-grace@1.3.0: {}
+  close-with-grace@2.1.0: {}
 
   cloudinary-build-url@0.2.4:
     dependencies:
@@ -9932,6 +10133,8 @@ snapshots:
 
   cookie@0.7.1: {}
 
+  cookie@1.0.1: {}
+
   core-util-is@1.0.3: {}
 
   cosmiconfig@7.1.0:
@@ -9942,14 +10145,14 @@ snapshots:
       path-type: 4.0.0
       yaml: 1.10.2
 
-  cosmiconfig@8.3.6(typescript@5.5.3):
+  cosmiconfig@8.3.6(typescript@5.6.3):
     dependencies:
       import-fresh: 3.3.0
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
-      typescript: 5.5.3
+      typescript: 5.6.3
 
   cross-env@7.0.3:
     dependencies:
@@ -10441,6 +10644,33 @@ snapshots:
       '@esbuild/win32-ia32': 0.21.5
       '@esbuild/win32-x64': 0.21.5
 
+  esbuild@0.23.1:
+    optionalDependencies:
+      '@esbuild/aix-ppc64': 0.23.1
+      '@esbuild/android-arm': 0.23.1
+      '@esbuild/android-arm64': 0.23.1
+      '@esbuild/android-x64': 0.23.1
+      '@esbuild/darwin-arm64': 0.23.1
+      '@esbuild/darwin-x64': 0.23.1
+      '@esbuild/freebsd-arm64': 0.23.1
+      '@esbuild/freebsd-x64': 0.23.1
+      '@esbuild/linux-arm': 0.23.1
+      '@esbuild/linux-arm64': 0.23.1
+      '@esbuild/linux-ia32': 0.23.1
+      '@esbuild/linux-loong64': 0.23.1
+      '@esbuild/linux-mips64el': 0.23.1
+      '@esbuild/linux-ppc64': 0.23.1
+      '@esbuild/linux-riscv64': 0.23.1
+      '@esbuild/linux-s390x': 0.23.1
+      '@esbuild/linux-x64': 0.23.1
+      '@esbuild/netbsd-x64': 0.23.1
+      '@esbuild/openbsd-arm64': 0.23.1
+      '@esbuild/openbsd-x64': 0.23.1
+      '@esbuild/sunos-x64': 0.23.1
+      '@esbuild/win32-arm64': 0.23.1
+      '@esbuild/win32-ia32': 0.23.1
+      '@esbuild/win32-x64': 0.23.1
+
   escalade@3.2.0: {}
 
   escape-html@1.0.3: {}
@@ -10463,13 +10693,13 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0):
+  eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0):
     dependencies:
       debug: 4.3.4
       enhanced-resolve: 5.14.0
       eslint: 8.57.0
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0))(eslint@8.57.0)
-      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.5.5)(eslint@8.57.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-plugin-import: 2.27.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.5.5)(eslint@8.57.0)
       get-tsconfig: 4.7.5
       globby: 13.1.4
       is-core-module: 2.12.1
@@ -10481,14 +10711,14 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0))(eslint@8.57.0):
+  eslint-module-utils@2.8.0(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0))(eslint@8.57.0):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
-      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.7
-      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0)
+      eslint-import-resolver-typescript: 3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -10498,7 +10728,7 @@ snapshots:
       eslint-utils: 2.1.0
       regexpp: 3.2.0
 
-  eslint-plugin-import@2.27.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-typescript@3.5.5)(eslint@8.57.0):
+  eslint-plugin-import@2.27.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-typescript@3.5.5)(eslint@8.57.0):
     dependencies:
       array-includes: 3.1.6
       array.prototype.flat: 1.3.1
@@ -10507,7 +10737,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.57.0
       eslint-import-resolver-node: 0.3.7
-      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0))(eslint@8.57.0)
+      eslint-module-utils: 2.8.0(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-import-resolver-typescript@3.5.5(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint-import-resolver-node@0.3.7)(eslint-plugin-import@2.27.5)(eslint@8.57.0))(eslint@8.57.0)
       has: 1.0.3
       is-core-module: 2.12.1
       is-glob: 4.0.3
@@ -10517,7 +10747,7 @@ snapshots:
       semver: 6.3.0
       tsconfig-paths: 3.14.2
     optionalDependencies:
-      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/parser': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -10530,12 +10760,12 @@ snapshots:
       eslint: 8.57.0
       requireindex: 1.2.0
 
-  eslint-plugin-jest@26.9.0(@typescript-eslint/eslint-plugin@5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3):
+  eslint-plugin-jest@26.9.0(@typescript-eslint/eslint-plugin@5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3):
     dependencies:
-      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       eslint: 8.57.0
     optionalDependencies:
-      '@typescript-eslint/eslint-plugin': 5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.5.3))(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/eslint-plugin': 5.59.7(@typescript-eslint/parser@5.59.7(eslint@8.57.0)(typescript@5.6.3))(eslint@8.57.0)(typescript@5.6.3)
     transitivePeerDependencies:
       - supports-color
       - typescript
@@ -10593,9 +10823,9 @@ snapshots:
       semver: 6.3.0
       string.prototype.matchall: 4.0.8
 
-  eslint-plugin-testing-library@5.11.0(eslint@8.57.0)(typescript@5.5.3):
+  eslint-plugin-testing-library@5.11.0(eslint@8.57.0)(typescript@5.6.3):
     dependencies:
-      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.5.3)
+      '@typescript-eslint/utils': 5.59.7(eslint@8.57.0)(typescript@5.6.3)
       eslint: 8.57.0
     transitivePeerDependencies:
       - supports-color
@@ -11087,8 +11317,6 @@ snapshots:
       ignore: 5.2.4
       merge2: 1.4.1
       slash: 4.0.0
-
-  globrex@0.1.2: {}
 
   gopd@1.0.1:
     dependencies:
@@ -13034,6 +13262,12 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
+  postcss@8.4.49:
+    dependencies:
+      nanoid: 3.3.7
+      picocolors: 1.1.1
+      source-map-js: 1.2.1
+
   postgres-array@2.0.0: {}
 
   postgres-bytea@1.0.0: {}
@@ -13046,7 +13280,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.6.5(prettier@3.3.3):
+  prettier-plugin-tailwindcss@0.6.8(prettier@3.3.3):
     dependencies:
       prettier: 3.3.3
 
@@ -13347,110 +13581,51 @@ snapshots:
       unified: 11.0.3
       vfile: 6.0.1
 
-  remix-auth-discord@1.3.3(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)):
+  remix-auth-discord@1.4.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3)):
     dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
+      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))
+      remix-auth-oauth2: 1.11.2(@remix-run/server-runtime@2.10.2(typescript@5.6.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3)))
     transitivePeerDependencies:
       - '@remix-run/react'
       - supports-color
 
-  remix-auth-facebook@1.0.1(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))):
+  remix-auth-github@1.7.0(@remix-run/server-runtime@2.10.2(typescript@5.6.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))):
     dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
+      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))
+      remix-auth-oauth2: 1.11.2(@remix-run/server-runtime@2.10.2(typescript@5.6.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3)))
     transitivePeerDependencies:
       - supports-color
 
-  remix-auth-github@1.6.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))):
+  remix-auth-oauth2@1.11.2(@remix-run/server-runtime@2.10.2(typescript@5.6.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))):
     dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-    transitivePeerDependencies:
-      - supports-color
-
-  remix-auth-google@1.3.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))):
-    dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-    transitivePeerDependencies:
-      - supports-color
-
-  remix-auth-linkedin@2.0.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)):
-    dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-    transitivePeerDependencies:
-      - '@remix-run/react'
-      - supports-color
-
-  remix-auth-microsoft@2.0.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)):
-    dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-    transitivePeerDependencies:
-      - '@remix-run/react'
-      - supports-color
-
-  remix-auth-oauth2@1.11.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))):
-    dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
       debug: 4.3.4
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
+      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3))
+      uuid: 9.0.1
     transitivePeerDependencies:
       - supports-color
 
-  remix-auth-socials@2.0.6(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)):
+  remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/server-runtime@2.10.2(typescript@5.6.3)):
     dependencies:
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-discord: 1.3.3(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-facebook: 1.0.1(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-      remix-auth-github: 1.6.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-      remix-auth-google: 1.3.0(@remix-run/server-runtime@2.10.2(typescript@5.5.3))(remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)))
-      remix-auth-linkedin: 2.0.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-microsoft: 2.0.1(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      remix-auth-twitter: 0.1.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-    transitivePeerDependencies:
-      - '@remix-run/react'
-      - '@remix-run/server-runtime'
-      - supports-color
-
-  remix-auth-twitter@0.1.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)):
-    dependencies:
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
-      crypto-js: 4.2.0
-      debug: 4.3.4
-      remix-auth: 3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3))
-      uuid: 8.3.2
-    transitivePeerDependencies:
-      - '@remix-run/react'
-      - supports-color
-
-  remix-auth@3.7.0(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/server-runtime@2.10.2(typescript@5.5.3)):
-    dependencies:
-      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
-      '@remix-run/server-runtime': 2.10.2(typescript@5.5.3)
+      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
+      '@remix-run/server-runtime': 2.10.2(typescript@5.6.3)
       uuid: 8.3.2
 
-  remix-flat-routes@0.6.5(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0))):
+  remix-flat-routes@0.6.5(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0))):
     dependencies:
-      '@remix-run/dev': 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0))
-      '@remix-run/v1-route-convention': 0.1.4(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/serve@2.10.2(typescript@5.5.3))(@types/node@22.9.0)(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0)))
+      '@remix-run/dev': 2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0))
+      '@remix-run/v1-route-convention': 0.1.4(@remix-run/dev@2.10.2(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/serve@2.10.2(typescript@5.6.3))(@types/node@22.9.0)(typescript@5.6.3)(vite@5.4.11(@types/node@22.9.0)))
       fs-extra: 11.2.0
       minimatch: 5.1.6
 
-  remix-utils@7.6.0(patch_hash=xk4hhvrus5zptgvm2bqk2nhlke)(@remix-run/node@2.10.2(typescript@5.5.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3))(@remix-run/router@1.17.1)(crypto-js@4.2.0)(react@18.3.1)(zod@3.23.8):
+  remix-utils@7.7.0(@remix-run/node@2.10.2(typescript@5.6.3))(@remix-run/react@2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3))(@remix-run/router@1.17.1)(crypto-js@4.2.0)(react@18.3.1)(zod@3.23.8):
     dependencies:
-      type-fest: 4.4.0
+      type-fest: 4.26.1
     optionalDependencies:
-      '@remix-run/node': 2.10.2(typescript@5.5.3)
-      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.5.3)
+      '@remix-run/node': 2.10.2(typescript@5.6.3)
+      '@remix-run/react': 2.10.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(typescript@5.6.3)
       '@remix-run/router': 1.17.1
       crypto-js: 4.2.0
       react: 18.3.1
@@ -13520,25 +13695,28 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
-  rollup@4.13.2:
+  rollup@4.26.0:
     dependencies:
-      '@types/estree': 1.0.5
+      '@types/estree': 1.0.6
     optionalDependencies:
-      '@rollup/rollup-android-arm-eabi': 4.13.2
-      '@rollup/rollup-android-arm64': 4.13.2
-      '@rollup/rollup-darwin-arm64': 4.13.2
-      '@rollup/rollup-darwin-x64': 4.13.2
-      '@rollup/rollup-linux-arm-gnueabihf': 4.13.2
-      '@rollup/rollup-linux-arm64-gnu': 4.13.2
-      '@rollup/rollup-linux-arm64-musl': 4.13.2
-      '@rollup/rollup-linux-powerpc64le-gnu': 4.13.2
-      '@rollup/rollup-linux-riscv64-gnu': 4.13.2
-      '@rollup/rollup-linux-s390x-gnu': 4.13.2
-      '@rollup/rollup-linux-x64-gnu': 4.13.2
-      '@rollup/rollup-linux-x64-musl': 4.13.2
-      '@rollup/rollup-win32-arm64-msvc': 4.13.2
-      '@rollup/rollup-win32-ia32-msvc': 4.13.2
-      '@rollup/rollup-win32-x64-msvc': 4.13.2
+      '@rollup/rollup-android-arm-eabi': 4.26.0
+      '@rollup/rollup-android-arm64': 4.26.0
+      '@rollup/rollup-darwin-arm64': 4.26.0
+      '@rollup/rollup-darwin-x64': 4.26.0
+      '@rollup/rollup-freebsd-arm64': 4.26.0
+      '@rollup/rollup-freebsd-x64': 4.26.0
+      '@rollup/rollup-linux-arm-gnueabihf': 4.26.0
+      '@rollup/rollup-linux-arm-musleabihf': 4.26.0
+      '@rollup/rollup-linux-arm64-gnu': 4.26.0
+      '@rollup/rollup-linux-arm64-musl': 4.26.0
+      '@rollup/rollup-linux-powerpc64le-gnu': 4.26.0
+      '@rollup/rollup-linux-riscv64-gnu': 4.26.0
+      '@rollup/rollup-linux-s390x-gnu': 4.26.0
+      '@rollup/rollup-linux-x64-gnu': 4.26.0
+      '@rollup/rollup-linux-x64-musl': 4.26.0
+      '@rollup/rollup-win32-arm64-msvc': 4.26.0
+      '@rollup/rollup-win32-ia32-msvc': 4.26.0
+      '@rollup/rollup-win32-x64-msvc': 4.26.0
       fsevents: 2.3.3
 
   rrweb-cssom@0.6.0: {}
@@ -13694,12 +13872,14 @@ snapshots:
       dot-case: 3.0.4
       tslib: 2.5.2
 
-  sonner@1.5.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  sonner@1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
   source-map-js@1.2.0: {}
+
+  source-map-js@1.2.1: {}
 
   source-map-support@0.5.21:
     dependencies:
@@ -13875,9 +14055,7 @@ snapshots:
       '@pkgr/utils': 2.4.0
       tslib: 2.5.2
 
-  tailwind-merge@2.3.0:
-    dependencies:
-      '@babel/runtime': 7.24.5
+  tailwind-merge@2.5.4: {}
 
   tailwindcss-animate@1.0.7(tailwindcss@3.4.14):
     dependencies:
@@ -13996,10 +14174,6 @@ snapshots:
 
   ts-toolbelt@9.6.0: {}
 
-  tsconfck@3.0.3(typescript@5.5.3):
-    optionalDependencies:
-      typescript: 5.5.3
-
   tsconfig-paths@3.14.2:
     dependencies:
       '@types/json5': 0.0.29
@@ -14017,14 +14191,14 @@ snapshots:
 
   tslib@2.5.2: {}
 
-  tsutils@3.21.0(typescript@5.5.3):
+  tsutils@3.21.0(typescript@5.6.3):
     dependencies:
       tslib: 1.14.1
-      typescript: 5.5.3
+      typescript: 5.6.3
 
-  tsx@4.16.2:
+  tsx@4.19.2:
     dependencies:
-      esbuild: 0.21.5
+      esbuild: 0.23.1
       get-tsconfig: 4.7.5
     optionalDependencies:
       fsevents: 2.3.3
@@ -14043,7 +14217,7 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@4.4.0: {}
+  type-fest@4.26.1: {}
 
   type-is@1.6.18:
     dependencies:
@@ -14086,7 +14260,7 @@ snapshots:
     dependencies:
       ts-toolbelt: 9.6.0
 
-  typescript@5.5.3: {}
+  typescript@5.6.3: {}
 
   ufo@1.4.0: {}
 
@@ -14328,27 +14502,17 @@ snapshots:
       debug: 4.3.4
       pathe: 1.1.2
       picocolors: 1.0.0
-      vite: 5.3.3(@types/node@22.9.0)
+      vite: 5.4.11(@types/node@22.9.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
       - lightningcss
       - sass
+      - sass-embedded
       - stylus
       - sugarss
       - supports-color
       - terser
-
-  vite-tsconfig-paths@4.3.2(typescript@5.5.3)(vite@5.3.3(@types/node@22.9.0)):
-    dependencies:
-      debug: 4.3.4
-      globrex: 0.1.2
-      tsconfck: 3.0.3(typescript@5.5.3)
-    optionalDependencies:
-      vite: 5.3.3(@types/node@22.9.0)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
 
   vite@4.3.8(@types/node@22.9.0):
     dependencies:
@@ -14359,11 +14523,11 @@ snapshots:
       '@types/node': 22.9.0
       fsevents: 2.3.3
 
-  vite@5.3.3(@types/node@22.9.0):
+  vite@5.4.11(@types/node@22.9.0):
     dependencies:
       esbuild: 0.21.5
-      postcss: 8.4.39
-      rollup: 4.13.2
+      postcss: 8.4.49
+      rollup: 4.26.0
     optionalDependencies:
       '@types/node': 22.9.0
       fsevents: 2.3.3
@@ -14387,7 +14551,7 @@ snapshots:
       strip-literal: 2.0.0
       tinybench: 2.6.0
       tinypool: 0.8.4
-      vite: 5.3.3(@types/node@22.9.0)
+      vite: 5.4.11(@types/node@22.9.0)
       vite-node: 1.6.0(@types/node@22.9.0)
       why-is-node-running: 2.2.2
     optionalDependencies:
@@ -14397,6 +14561,7 @@ snapshots:
       - less
       - lightningcss
       - sass
+      - sass-embedded
       - stylus
       - sugarss
       - supports-color

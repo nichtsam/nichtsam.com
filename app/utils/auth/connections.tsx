@@ -1,12 +1,11 @@
 import { StatusButton } from "#app/components/status-button.tsx";
 import { Form } from "@remix-run/react";
-import { SocialsProvider } from "remix-auth-socials";
 import { z } from "zod";
 import { useIsPending } from "../ui.ts";
 import { Icon } from "#app/components/ui/icon.tsx";
 
-export const GITHUB_PROVIDER_NAME = SocialsProvider.GITHUB;
-export const DISCORD_PROVIDER_NAME = SocialsProvider.DISCORD;
+export const GITHUB_PROVIDER_NAME = "github";
+export const DISCORD_PROVIDER_NAME = "discord";
 
 export const providerNames = [
   GITHUB_PROVIDER_NAME,

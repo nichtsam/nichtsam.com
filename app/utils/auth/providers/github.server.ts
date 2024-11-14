@@ -1,4 +1,4 @@
-import { GitHubStrategy } from "remix-auth-socials";
+import { GitHubStrategy } from "remix-auth-github";
 import type { AuthProvider } from "./model.ts";
 import { env } from "#app/utils/env.server.ts";
 import { z } from "zod";
@@ -20,7 +20,7 @@ export class GitHubProvider implements AuthProvider {
       async ({ profile }) => {
         const email = profile.emails[0]!.value.trim().toLowerCase();
         const username = profile.displayName;
-        const imageUrl = profile.photos[0].value;
+        const imageUrl = profile.photos[0]?.value;
 
         return {
           email,

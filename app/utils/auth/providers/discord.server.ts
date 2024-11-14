@@ -1,4 +1,4 @@
-import { type DiscordProfile, DiscordStrategy } from "remix-auth-socials";
+import { type DiscordProfile, DiscordStrategy } from "remix-auth-discord";
 import type { AuthProvider } from "./model.ts";
 import { env } from "#app/utils/env.server.ts";
 import { z } from "zod";
