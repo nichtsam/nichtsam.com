@@ -4,8 +4,8 @@
 
 // If this seems to be not working properly, it might be that the dev server isn't sustaining the `global` variable.
 export function singleton<Value>(name: string, value: () => Value): Value {
-  const yolo = global as any;
-  yolo.__singletons ??= {};
-  yolo.__singletons[name] ??= value();
-  return yolo.__singletons[name];
+	const yolo = global as any
+	yolo.__singletons ??= {}
+	yolo.__singletons[name] ??= value()
+	return yolo.__singletons[name]
 }

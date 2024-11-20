@@ -4,10 +4,10 @@
  * @type {import('@sly-cli/sly').Transformer}
  */
 export default function htmlMetaComments(input, meta) {
-  return [
-    `<!-- Downloaded from ${meta.name} -->`,
-    `<!-- License ${meta.license} -->`,
-    `<!-- ${meta.source} -->`,
-    input,
-  ].join("\n");
+	return [
+		`<!-- Downloaded from ${meta.name} -->`,
+		`<!-- License ${meta.license} -->`,
+		`<!-- ${meta.source} -->`,
+		input,
+	].join('\n')
 }

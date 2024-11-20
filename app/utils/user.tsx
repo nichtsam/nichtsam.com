@@ -1,36 +1,36 @@
-import type { loader as rootLoader } from "#app/root.tsx";
-import { useRouteLoaderData } from "@remix-run/react";
-import type { SerializeFrom } from "@remix-run/node";
+import { type SerializeFrom } from '@remix-run/node'
+import { useRouteLoaderData } from '@remix-run/react'
+import { type loader as rootLoader } from '#app/root.tsx'
 
 export const isUser = (
-  user: unknown,
-): user is SerializeFrom<typeof rootLoader>["user"] => {
-  return (
-    !!user &&
-    typeof user === "object" &&
-    "id" in user &&
-    typeof user.id === "string"
-  );
-};
+	user: unknown,
+): user is SerializeFrom<typeof rootLoader>['user'] => {
+	return (
+		!!user &&
+		typeof user === 'object' &&
+		'id' in user &&
+		typeof user.id === 'string'
+	)
+}
 
 export const useOptionalUser = () => {
-  const data = useRouteLoaderData<typeof rootLoader>("root");
+	const data = useRouteLoaderData<typeof rootLoader>('root')
 
-  if (!data || !isUser(data.user)) {
-    return null;
-  }
+	if (!data || !isUser(data.user)) {
+		return null
+	}
 
-  return data.user;
-};
+	return data.user
+}
 
 export const useUser = () => {
-  const maybeUser = useOptionalUser();
+	const maybeUser = useOptionalUser()
 
-  if (!maybeUser) {
-    throw new Error(
-      "No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead.",
-    );
-  }
+	if (!maybeUser) {
+		throw new Error(
+			'No user found in root loader, but user is required by useUser. If user is optional, try useOptionalUser instead.',
+		)
+	}
 
-  return maybeUser;
-};
+	return maybeUser
+}

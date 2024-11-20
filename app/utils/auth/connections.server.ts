@@ -1,41 +1,41 @@
-import { createCookieSessionStorage } from "@remix-run/node";
-import { env } from "#app/utils/env.server.ts";
-import { Authenticator } from "remix-auth";
-import type { ProviderName } from "./connections.tsx";
-import type { AuthProvider, ProviderUser } from "./providers/model.ts";
-import { GitHubProvider } from "./providers/github.server.ts";
-import { DiscordProvider } from "./providers/discord.server.ts";
+import { createCookieSessionStorage } from '@remix-run/node'
+import { Authenticator } from 'remix-auth'
+import { env } from '#app/utils/env.server.ts'
+import { type ProviderName } from './connections.tsx'
+import { DiscordProvider } from './providers/discord.server.ts'
+import { GitHubProvider } from './providers/github.server.ts'
+import { type AuthProvider, type ProviderUser } from './providers/model.ts'
 
 export const connectionSessionStorage = createCookieSessionStorage({
-  cookie: {
-    name: "_connection",
-    sameSite: "lax",
-    path: "/",
-    httpOnly: true,
-    secrets: env.SESSION_SECRET.split(","),
-    secure: process.env.NODE_ENV === "production",
-  },
-});
+	cookie: {
+		name: '_connection',
+		sameSite: 'lax',
+		path: '/',
+		httpOnly: true,
+		secrets: env.SESSION_SECRET.split(','),
+		secure: process.env.NODE_ENV === 'production',
+	},
+})
 
 export const providers: Record<ProviderName, AuthProvider> = {
-  github: new GitHubProvider(),
-  discord: new DiscordProvider(),
-};
+	github: new GitHubProvider(),
+	discord: new DiscordProvider(),
+}
 
 export const authenticator = new Authenticator<ProviderUser>(
-  connectionSessionStorage,
-);
+	connectionSessionStorage,
+)
 
 for (const [providerName, provider] of Object.entries(providers)) {
-  authenticator.use(provider.getAuthStrategy(), providerName);
+	authenticator.use(provider.getAuthStrategy(), providerName)
 }
 
 export function resolveConnectionInfo({
-  providerId,
-  providerName,
+	providerId,
+	providerName,
 }: {
-  providerName: ProviderName;
-  providerId: string;
+	providerName: ProviderName
+	providerId: string
 }) {
-  return providers[providerName].resolveConnectionInfo(providerId);
+	return providers[providerName].resolveConnectionInfo(providerId)
 }

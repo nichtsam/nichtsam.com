@@ -1,54 +1,54 @@
-import { bundleMDX as _bundleMDX } from "mdx-bundler";
-import type { MdxBundleSource } from "./mdx.server.ts";
-import PQueue from "p-queue";
-import { singleton } from "../singleton.server.ts";
-import { lruCache } from "../cache.server.ts";
-import { cachified } from "cachified";
+import { cachified } from 'cachified'
+import { bundleMDX as _bundleMDX } from 'mdx-bundler'
+import PQueue from 'p-queue'
+import { lruCache } from '../cache.server.ts'
+import { singleton } from '../singleton.server.ts'
+import { type MdxBundleSource } from './mdx.server.ts'
 
 async function bundleMDX({ source, files }: MdxBundleSource) {
-  const mdxBundle = await _bundleMDX({
-    source,
-    files,
-    mdxOptions(options) {
-      options.remarkPlugins = [...(options.remarkPlugins ?? [])];
-      options.rehypePlugins = [...(options.rehypePlugins ?? [])];
-      return options;
-    },
-  });
+	const mdxBundle = await _bundleMDX({
+		source,
+		files,
+		mdxOptions(options) {
+			options.remarkPlugins = [...(options.remarkPlugins ?? [])]
+			options.rehypePlugins = [...(options.rehypePlugins ?? [])]
+			return options
+		},
+	})
 
-  return {
-    code: mdxBundle.code,
-  };
+	return {
+		code: mdxBundle.code,
+	}
 }
 
 const queue = singleton(
-  "compile-mdx-queue",
-  () =>
-    new PQueue({
-      concurrency: 1,
-      throwOnTimeout: true,
-      timeout: 1000 * 30,
-    }),
-);
+	'compile-mdx-queue',
+	() =>
+		new PQueue({
+			concurrency: 1,
+			throwOnTimeout: true,
+			timeout: 1000 * 30,
+		}),
+)
 
 const queuedBundleMDX = async (...args: Parameters<typeof bundleMDX>) =>
-  await queue.add(() => bundleMDX(...args), { throwOnTimeout: true });
+	await queue.add(() => bundleMDX(...args), { throwOnTimeout: true })
 
 const cachedBundleMDX = ({
-  slug,
-  bundle,
+	slug,
+	bundle,
 }: {
-  slug: string;
-  bundle: MdxBundleSource;
+	slug: string
+	bundle: MdxBundleSource
 }) => {
-  const key = `${slug}:compiled`;
-  const compileMdx = cachified({
-    key,
-    cache: lruCache,
-    getFreshValue: () => queuedBundleMDX(bundle),
-  });
+	const key = `${slug}:compiled`
+	const compileMdx = cachified({
+		key,
+		cache: lruCache,
+		getFreshValue: () => queuedBundleMDX(bundle),
+	})
 
-  return compileMdx;
-};
+	return compileMdx
+}
 
-export { cachedBundleMDX as bundleMDX };
+export { cachedBundleMDX as bundleMDX }

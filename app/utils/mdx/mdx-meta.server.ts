@@ -1,10 +1,10 @@
-import getGrayMatter from "gray-matter";
-import calculateReadingTime from "reading-time";
+import getGrayMatter from 'gray-matter'
+import calculateReadingTime from 'reading-time'
 
 export function getMdxMeta(file: string) {
-  const grayMatter = getGrayMatter(file);
+	const grayMatter = getGrayMatter(file)
 
-  const readingTime = calculateReadingTime(grayMatter.content);
+	const readingTime = calculateReadingTime(grayMatter.content)
 
-  return { readingTime, matter: grayMatter.data as Record<string, unknown> };
+	return { readingTime, matter: grayMatter.data as Record<string, unknown> }
 }

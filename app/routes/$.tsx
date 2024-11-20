@@ -5,32 +5,32 @@
 // ensure the user gets the right status code and we can display a nicer error
 // message for them than the Remix and/or browser default.
 
+import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
-  GeneralErrorBoundary,
-  generalNotFoundHandler,
-} from "#app/components/error-boundary.tsx";
-import type { SEOHandle } from "@nasa-gcn/remix-seo";
+	GeneralErrorBoundary,
+	generalNotFoundHandler,
+} from '#app/components/error-boundary.tsx'
 
 export const handle: SEOHandle = {
-  getSitemapEntries: () => null,
-};
+	getSitemapEntries: () => null,
+}
 
 export async function loader() {
-  throw new Response("Not found", { status: 404 });
+	throw new Response('Not found', { status: 404 })
 }
 
 export default function NotFound() {
-  // due to the loader, this component will never be rendered, but we'll return
-  // the error boundary just in case.
-  return <ErrorBoundary />;
+	// due to the loader, this component will never be rendered, but we'll return
+	// the error boundary just in case.
+	return <ErrorBoundary />
 }
 
 export function ErrorBoundary() {
-  return (
-    <GeneralErrorBoundary
-      statusHandlers={{
-        404: generalNotFoundHandler,
-      }}
-    />
-  );
+	return (
+		<GeneralErrorBoundary
+			statusHandlers={{
+				404: generalNotFoundHandler,
+			}}
+		/>
+	)
 }

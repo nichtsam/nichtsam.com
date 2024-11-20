@@ -1,4 +1,4 @@
-import prettier from "prettier";
+import prettier from 'prettier'
 
 /**
  * Prettifies the input HTML
@@ -6,7 +6,7 @@ import prettier from "prettier";
  * @type {import('@sly-cli/sly').Transformer}
  */
 export default function htmlPrettify(input) {
-  return prettier.format(input, {
-    parser: "html",
-  });
+	return prettier.format(input, {
+		parser: 'html',
+	})
 }

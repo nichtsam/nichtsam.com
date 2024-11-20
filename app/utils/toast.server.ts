@@ -1,69 +1,69 @@
-import { createCookie, redirect } from "@remix-run/node";
-import { createTypedCookie } from "remix-utils/typed-cookie";
-import { env } from "./env.server.ts";
-import { z } from "zod";
-import type { toast } from "sonner";
-import { nanoid } from "nanoid";
+import { createCookie, redirect } from '@remix-run/node'
+import { nanoid } from 'nanoid'
+import { createTypedCookie } from 'remix-utils/typed-cookie'
+import { type toast } from 'sonner'
+import { z } from 'zod'
+import { env } from './env.server.ts'
 import {
-  combineHeaders,
-  destroyCookie,
-  getCookieHeader,
-} from "./request.server.ts";
+	combineHeaders,
+	destroyCookie,
+	getCookieHeader,
+} from './request.server.ts'
 
 const toastSchema = z
-  .object({
-    id: z.string().default(() => nanoid()),
-    title: z.string().optional(),
-    message: z.string(),
-    type: z
-      .enum(["message", "success", "error"] as const satisfies Array<
-        keyof typeof toast
-      >)
-      .default("message"),
-  })
-  .nullable();
+	.object({
+		id: z.string().default(() => nanoid()),
+		title: z.string().optional(),
+		message: z.string(),
+		type: z
+			.enum(['message', 'success', 'error'] as const satisfies Array<
+				keyof typeof toast
+			>)
+			.default('message'),
+	})
+	.nullable()
 
-export type Toast = z.infer<typeof toastSchema>;
-export type ToastInput = NonNullable<z.input<typeof toastSchema>>;
+export type Toast = z.infer<typeof toastSchema>
+export type ToastInput = NonNullable<z.input<typeof toastSchema>>
 
 export const toastCookie = createTypedCookie({
-  cookie: createCookie("_toast", {
-    sameSite: "lax",
-    path: "/",
-    httpOnly: true,
-    secrets: env.SESSION_SECRET.split(","),
-    secure: env.NODE_ENV === "production",
-  }),
-  schema: toastSchema,
-});
+	cookie: createCookie('_toast', {
+		sameSite: 'lax',
+		path: '/',
+		httpOnly: true,
+		secrets: env.SESSION_SECRET.split(','),
+		secure: env.NODE_ENV === 'production',
+	}),
+	schema: toastSchema,
+})
 
 export async function redirectWithToast(
-  url: string,
-  toast: ToastInput,
-  init?: ResponseInit,
+	url: string,
+	toast: ToastInput,
+	init?: ResponseInit,
 ) {
-  return redirect(url, {
-    ...init,
-    headers: combineHeaders(init?.headers, await createToastHeaders(toast)),
-  });
+	return redirect(url, {
+		...init,
+		headers: combineHeaders(init?.headers, await createToastHeaders(toast)),
+	})
 }
 
 export async function createToastHeaders(toastInput: ToastInput) {
-  const cookie = await toastCookie.serialize(toastInput);
-  return new Headers({ "set-cookie": cookie });
+	const cookie = await toastCookie.serialize(toastInput)
+	return new Headers({ 'set-cookie': cookie })
 }
 
 export async function getToast(request: Request) {
-  const toast = await toastCookie.parse(getCookieHeader(request));
+	const toast = await toastCookie.parse(getCookieHeader(request))
 
-  if (!toast) {
-    return null;
-  }
+	if (!toast) {
+		return null
+	}
 
-  return {
-    toast,
-    discardHeaders: new Headers({
-      "set-cookie": await destroyCookie(toastCookie),
-    }),
-  };
+	return {
+		toast,
+		discardHeaders: new Headers({
+			'set-cookie': await destroyCookie(toastCookie),
+		}),
+	}
 }

@@ -26,8 +26,10 @@ Staging : https://staging.nichtsam.com
 
 ## Deployment
 
-This repository has a [Github Workflow](.github/workflows/deploy.yml) set up to deploy automatically. \
-If you want to deploy manually, refer to [Deploy a Fly App](https://fly.io/docs/apps/deploy/).
+This repository has a [Github Workflow](.github/workflows/deploy.yml) set up to
+deploy automatically. \
+If you want to deploy manually, refer to
+[Deploy a Fly App](https://fly.io/docs/apps/deploy/).
 
 ## Make it yours
 
@@ -35,7 +37,9 @@ If you want to deploy manually, refer to [Deploy a Fly App](https://fly.io/docs/
 
 - [sign up on fiy.io](https://fly.io/docs/hands-on/)
 - [setup deployment for fly.io](https://fly.io/docs/apps/launch/)
-- set up [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository) needed by [project's Github Workflows](./.github/workflows/).
+- set up
+  [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
+  needed by [project's Github Workflows](./.github/workflows/).
   - [`FLY_API_TOKEN`](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#api-tokens)
 
 ### Content
@@ -45,7 +49,8 @@ Here are some stuff you will need to adjust to make it your website.
 #### Blog
 
 - `/content/blog` \
-  Written in mdx, every top-level file or directory with index file is a blog post.
+  Written in mdx, every top-level file or directory with index file is a blog
+  post.
 
 #### Favicons
 

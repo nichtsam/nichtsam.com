@@ -1,13 +1,13 @@
-import { useEffect } from "react";
-import { toast as showToast } from "sonner";
-import type { Toast } from "./toast.server.ts";
+import { useEffect } from 'react'
+import { toast as showToast } from 'sonner'
+import { type Toast } from './toast.server.ts'
 
 export const useToast = (toast?: Toast) => {
-  useEffect(() => {
-    if (!toast) return;
+	useEffect(() => {
+		if (!toast) return
 
-    showToast[toast.type](toast.title, {
-      description: toast.message,
-    });
-  }, [toast]);
-};
+		showToast[toast.type](toast.title, {
+			description: toast.message,
+		})
+	}, [toast])
+}

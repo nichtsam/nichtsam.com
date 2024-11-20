@@ -1,32 +1,28 @@
 {
-  "include": ["**/*.ts", "**/*.tsx"],
-  "compilerOptions": {
-    "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "jsx": "react-jsx",
-    "module": "preserve",
-    "target": "ES2022",
-    "resolveJsonModule": true,
-    "allowJs": true,
+	"include": ["**/*.ts", "**/*.tsx"],
+	"compilerOptions": {
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"module": "preserve",
+		"target": "ES2022",
 
-    "strict": true,
-    "noImplicitAny": true,
-    "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"noUncheckedIndexedAccess": true,
+		"forceConsistentCasingInFileNames": true,
 
-    "paths": {
-      "#app/*": ["./app/*"],
-      "#drizzle/*": ["./drizzle/*"],
-      "@/icon-name": [
-        "./app/components/ui/icons/name.ts",
-        "./types/fallback.ts"
-      ]
-    },
+		"paths": {
+			"#app/*": ["./app/*"],
+			"#drizzle/*": ["./drizzle/*"],
+			"@/icon-name": [
+				"./app/components/ui/icons/name.ts",
+				"./types/fallback.ts"
+			]
+		},
 
-    // Remix takes care of building everything in `remix build`.
-    "noEmit": true,
-    "skipLibCheck": true,
-    "allowImportingTsExtensions": true
-  }
+		// Remix takes care of building everything in `remix build`.
+		"noEmit": true,
+		"skipLibCheck": true,
+		"allowImportingTsExtensions": true
+	}
 }
