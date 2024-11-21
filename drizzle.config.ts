@@ -10,8 +10,7 @@ const env = z
 	.parse(process.env)
 
 export default {
-	dialect: 'sqlite',
-	driver: 'turso',
+	dialect: 'turso',
 	schema: './drizzle/schema.ts',
 	out: './drizzle',
 	dbCredentials: {
