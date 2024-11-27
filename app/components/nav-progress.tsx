@@ -16,7 +16,7 @@ function NavProgress() {
 	const indicatorRef = useRef<HTMLDivElement>(null)
 
 	let progressRate = 0
-	if (!busy && !animationComplete) progressRate = 100
+	if (busy && !animationComplete) progressRate = 100
 	if (busy && navigation.state === 'submitting') progressRate = 35
 	if (busy && navigation.state === 'loading') progressRate = 70
 
