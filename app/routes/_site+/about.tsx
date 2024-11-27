@@ -20,43 +20,50 @@ export default function About() {
 	return (
 		<section className="container py-9">
 			<article className="prose dark:prose-invert lg:prose-xl">
-				<h1>About me</h1>
-				<p>
-					Hello there!
-					<br />
-				</p>
-				<p>
-					My name is Samuel Jensen, one developer with a multicultural
-					background. I was born to German and Polish parents and grew up in
-					Taiwan. This unique blend of cultures has shaped my perspective and
-					instilled a deep appreciation for diversity. Language has always been
-					something special to me. I am most fluent in Chinese, followed by
-					English and German.
-				</p>
-				<p>
-					I've always been a self-taught developer with a curiosity for
-					technology. I love diving into various aspects of development, whether
-					front-end, back-end, or even with CLIs and tooling. I like trying out
-					different things and playing around with stuff to understand them. The
-					versatility of the developing world continues to amaze and inspire me.
-				</p>
-				<p>
-					My programming journey began with Typescript, which I've been using at
-					work. While it's been a valuable experience, I'd like to step out
-					there and get to know more. Currently, I'm exploring the world of
-					Rust, uncovering its unique capabilities and potential applications.
-					Learning new things and embracing endless possibilities is something I
-					genuinely enjoy.
-				</p>
-				<p>
-					I also go by the name "nichtsam". You can look me up on GitHub. Feel
-					free to explore my repositories and see some weird things I've been
-					working on. Thank you for visiting my corner of the digital world. I'm
-					always excited to collaborate and connect with like-minded
-					individuals, so feel free to reach out and share your thoughts or
-					projects.
-				</p>
+				{questions.map((question) => (
+					<>
+						<h2>{question.q}</h2>
+						<p>{question.a}</p>
+					</>
+				))}
 			</article>
 		</section>
 	)
 }
+
+const questions = [
+	{
+		q: 'Who am I?',
+		a: 'I’m Samuel Jensen. I’m half German and half Polish, and I grew up in Taiwan. I believe this unique cultural blend has allowed me to grow up free from the constraints of any single environment, shaping me into an independent and open-minded individual.',
+	},
+
+	{
+		q: "What's my daily life like?",
+		a: 'Well, I don’t have a fixed routine. Most of the time, I take things easy and simply enjoy life. When something catches my interest, I dive deep into it with focus and curiosity. Aside from that, I spend time studying and working on my personal growth.',
+	},
+
+	{
+		q: 'What programming language and tools do you use?',
+		a: 'I primarily use TypeScript for my day-to-day work, especially in front-end development. Remix is my go-to front-end framework. For learning and side projects, I use both Golang and Rust, with Golang being more suited for everyday use due to its simplicity, while I explore Rust for its challenges and learning opportunities.',
+	},
+
+	{
+		q: "What's your favorite part about programming?",
+		a: 'My favorite part about programming is the constant problem-solving and creativity it involves. Every challenge feels like a puzzle that can be approached in multiple ways, and the satisfaction of finding an elegant solution is what keeps me going. I love streamlining thought processes into the most concise, intuitive, and fundamental solution.',
+	},
+
+	{
+		q: 'What languages do you speak?',
+		a: 'I would say that Chinese is my native language. I’m fluent in English, as I read, write, and listen to it daily, though I speak it occasionally. I’m conversational in German, as we spoke it at home growing up. In addition, I’ve also been learning French on the side for a while now.',
+	},
+
+	{
+		q: 'What am I doing lately?',
+		a: 'I’m casually learning French and German to improve my language skills. I’ve also been doing Leetcode challenges to sharpen my knowledge of data structures and algorithms, mainly in Golang. Additionally, I’m learning how interpreters work by building one in Golang, which has been a fascinating subject.',
+	},
+
+	{
+		q: 'What do you want to achieve in the next few years?',
+		a: 'I hope to return to university and gain a more professional perspective on things. I quit studying after one year in college because I didn’t have a clear goal at the time. However, after a few years of exploring different experiences, I realized how much I enjoy studying and the opportunities it can bring.',
+	},
+]
