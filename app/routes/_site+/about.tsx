@@ -33,8 +33,8 @@ export default function About() {
 
 const questions = [
 	{
-		q: 'Who am I?',
-		a: 'I’m Samuel Jensen. I’m half German and half Polish, and I grew up in Taiwan. I believe this unique cultural blend has allowed me to grow up free from the constraints of any single environment, shaping me into an independent and open-minded individual.',
+		q: 'A tiny bit about me?',
+		a: "Hi, I’m Samuel Jensen. I'm half German and half Polish, and I was raised in Taiwan.",
 	},
 
 	{
