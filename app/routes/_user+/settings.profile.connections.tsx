@@ -250,7 +250,7 @@ const getConnections = async (userId: string) => {
 			providerName: providerName,
 			connectionId: connection.id,
 			createdAtFormatted: dayjs(connection.created_at).format(
-				'MM/DD/YYYY HH:mm:ss Z',
+				'YYYY-MM-DD HH:mm:ss ZZ',
 			),
 		})
 	}

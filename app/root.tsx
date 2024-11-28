@@ -17,6 +17,7 @@ import {
 } from '@remix-run/react'
 import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix'
 import clsx from 'clsx'
+import dayjs from 'dayjs'
 import { AuthenticityTokenProvider } from 'remix-utils/csrf/react'
 import { Footer } from '#app/components/footer.tsx'
 import { NavBar } from '#app/components/navbar/index.tsx'
@@ -31,7 +32,7 @@ import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { NavProgress } from './components/nav-progress.tsx'
 import { Toaster } from './components/ui/sonner.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
-import { getUserId, logout } from './utils/auth/auth.server.ts'
+import { getUser, getUserId, logout } from './utils/auth/auth.server.ts'
 import { ClientHintsCheck, getHints } from './utils/client-hints.tsx'
 import { csrf } from './utils/csrf.server.ts'
 import { db } from './utils/db.server.ts'
@@ -73,16 +74,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	timing.timeEnd('get user id')
 
 	timing.time('find user', 'Find user in database')
-	const user = userId
-		? ((await db.query.userTable.findFirst({
-				where: (userTable, { eq }) => eq(userTable.id, userId),
-				with: {
-					image: {
-						columns: { id: true },
-					},
-				},
-			})) ?? null)
-		: null
+	const user = userId ? await getUser(userId) : null
 	timing.timeEnd('find user')
 
 	if (userId && !user) {

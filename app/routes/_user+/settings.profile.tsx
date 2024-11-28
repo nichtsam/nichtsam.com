@@ -56,7 +56,7 @@ const UserHeader = () => {
 					{user.display_name}
 				</h1>
 				<p className="text-muted-foreground">
-					Joined {new Date(user.created_at).toLocaleDateString('en')}
+					Joined {user.createdAtFormatted}
 				</p>
 				<Form action="/logout" method="POST">
 					<Button

@@ -1,4 +1,5 @@
 import { createCookieSessionStorage, redirect } from '@remix-run/node'
+import dayjs from 'dayjs'
 import { eq } from 'drizzle-orm'
 import { redirectBack } from 'remix-utils/redirect-back'
 import { safeRedirect } from 'remix-utils/safe-redirect'
@@ -88,6 +89,26 @@ export const getUserId = async (request: Request) => {
 	}
 
 	return session.user_id
+}
+
+export const getUser = async (userId: string) => {
+	const user = await db.query.userTable.findFirst({
+		where: (userTable, { eq }) => eq(userTable.id, userId),
+		with: {
+			image: {
+				columns: { id: true },
+			},
+		},
+	})
+
+	if (!user) {
+		return null
+	}
+
+	return {
+		...user,
+		createdAtFormatted: dayjs(user.created_at).format('MMM DD, YYYY'),
+	}
 }
 
 export const requireAnonymous = async (request: Request) => {
