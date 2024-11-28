@@ -1,10 +1,9 @@
-import { type SerializeFrom } from '@remix-run/node'
-import { useRouteLoaderData } from '@remix-run/react'
+import { type useLoaderData, useRouteLoaderData } from '@remix-run/react'
 import { type loader as rootLoader } from '#app/root.tsx'
 
 export const isUser = (
 	user: unknown,
-): user is SerializeFrom<typeof rootLoader>['user'] => {
+): user is ReturnType<typeof useLoaderData<typeof rootLoader>>['user'] => {
 	return (
 		!!user &&
 		typeof user === 'object' &&
