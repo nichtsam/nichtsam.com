@@ -4,11 +4,15 @@ export const CORE_CONTENT_LINKS = [
 		to: '/',
 	},
 	{
-		name: 'About',
+		name: 'About Me',
 		to: '/about',
 	},
 	{
-		name: 'Blog',
+		name: 'Reach Out',
+		to: '/contact',
+	},
+	{
+		name: 'My Blog',
 		to: '/blog',
 	},
 ]
