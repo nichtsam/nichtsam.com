@@ -1,15 +1,22 @@
 import { type Cookie, type SessionStorage } from '@remix-run/node'
 
+const mergeHeaders = (
+	main: Headers,
+	...headers: Array<ResponseInit['headers'] | null | undefined>
+) => {
+	for (const header of headers) {
+		if (!header) continue
+		for (const [key, value] of new Headers(header).entries()) {
+			main.append(key, value)
+		}
+	}
+}
+
 const combineHeaders = (
 	...headers: Array<ResponseInit['headers'] | null | undefined>
 ) => {
 	const combined = new Headers()
-	for (const header of headers) {
-		if (!header) continue
-		for (const [key, value] of new Headers(header).entries()) {
-			combined.append(key, value)
-		}
-	}
+	mergeHeaders(combined, ...headers)
 	return combined
 }
 
@@ -43,6 +50,7 @@ const getDomainUrl = (request: Request) => {
 }
 
 export {
+	mergeHeaders,
 	combineHeaders,
 	getCookieHeader,
 	destroyCookie,
