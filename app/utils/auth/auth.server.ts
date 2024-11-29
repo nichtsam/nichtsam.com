@@ -16,6 +16,7 @@ import { db } from '../db.server.ts'
 import { env } from '../env.server.ts'
 import { type Prettify, downloadFile } from '../misc.ts'
 import { combineHeaders } from '../request.server.ts'
+import { getRedirect } from '../redirect.server.ts'
 
 export const SESSION_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30
 export const getSessionExpirationDate = () =>
@@ -127,15 +128,17 @@ export const requireUserId = async (request: Request) => {
 	return userId
 }
 
-export const logout = async ({
-	request,
-	redirectTo,
-	responseInit: outerResponseInit,
-}: {
-	request: Request
-	redirectTo?: string
-	responseInit?: ResponseInit
-}) => {
+export const logout = async (
+	{
+		request,
+		redirectTo,
+	}: {
+		request: Request
+		redirectTo?: string
+	},
+
+	init?: ResponseInit,
+) => {
 	const { authSession, sessionId } = await getAuthSession(request)
 
 	if (sessionId) {
@@ -143,12 +146,12 @@ export const logout = async ({
 	}
 
 	const responseInit = {
-		...outerResponseInit,
+		...init,
 		headers: combineHeaders(
 			{
 				'set-cookie': await authSessionStorage.destroySession(authSession),
 			},
-			outerResponseInit?.headers,
+			init?.headers,
 		),
 	}
 
@@ -162,15 +165,18 @@ export const logout = async ({
 	}
 }
 
-export const login = async ({
-	request,
-	userId,
-	headers,
-}: {
-	request: Request
-	userId: string
-	headers?: Headers
-}) => {
+export const login = async (
+	{
+		request,
+		redirectTo = '/',
+		userId,
+	}: {
+		request: Request
+		redirectTo?: string
+		userId: string
+	},
+	init?: ResponseInit,
+) => {
 	const session = (
 		await db
 			.insert(sessionTable)
@@ -184,8 +190,8 @@ export const login = async ({
 	const { authSession } = await getAuthSession(request)
 	authSession.set(SESSION_ID_KEY, session.id)
 
-	throw redirect('/', {
-		headers: combineHeaders(headers, {
+	throw redirect(safeRedirect(redirectTo), {
+		headers: combineHeaders(init?.headers, {
 			'set-cookie': await authSessionStorage.commitSession(authSession),
 		}),
 	})

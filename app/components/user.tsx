@@ -1,4 +1,4 @@
-import { Form, Link, useSubmit } from '@remix-run/react'
+import { Form, Link, useLocation, useSubmit } from '@remix-run/react'
 import { useRef } from 'react'
 import { getUserImgSrc } from '#app/routes/resources+/user-images.$imageId.ts'
 import { cn, useIsPending } from '#app/utils/ui.ts'
@@ -15,11 +15,20 @@ import { Icon } from './ui/icon.tsx'
 
 export const UserButton = () => {
 	const maybeUser = useOptionalUser()
+	const location = useLocation()
 
 	if (!maybeUser) {
 		return (
 			<Button asChild>
-				<Link to="login">Login</Link>
+				<Link
+					to={
+						location.pathname !== '/'
+							? `login?redirectTo=${location.pathname}`
+							: 'login'
+					}
+				>
+					Login
+				</Link>
 			</Button>
 		)
 	}

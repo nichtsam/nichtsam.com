@@ -31,8 +31,10 @@ export const providerConfigs: Record<ProviderName, ProviderConfig> = {
 
 export const ProviderConnectionForm = ({
 	providerName,
+	redirectTo,
 }: {
 	providerName: ProviderName
+	redirectTo?: string | null
 }) => {
 	const formAction = `/auth/${providerName}`
 
@@ -44,6 +46,9 @@ export const ProviderConnectionForm = ({
 
 	return (
 		<Form method="POST" action={formAction}>
+			{redirectTo ? (
+				<input type="hidden" name="redirectTo" value={redirectTo} />
+			) : null}
 			<StatusButton
 				status={isPending ? 'pending' : 'idle'}
 				type="submit"

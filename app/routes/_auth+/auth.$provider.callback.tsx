@@ -10,7 +10,12 @@ import {
 } from '#app/utils/auth/connections.tsx'
 import { onboardingCookie } from '#app/utils/auth/onboarding.server.ts'
 import { db } from '#app/utils/db.server.ts'
-import { combineHeaders, destroySession } from '#app/utils/request.server.ts'
+import { getRedirect } from '#app/utils/redirect.server.ts'
+import {
+	combineHeaders,
+	destroySession,
+	mergeHeaders,
+} from '#app/utils/request.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import {
 	createToastHeaders,
@@ -41,9 +46,11 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
 	const profile = authResult.data
 
+	const { redirectTo, discardHeaders } = getRedirect(request) ?? {}
 	const headers = new Headers({
 		'set-cookie': await destroySession(connectionSessionStorage, request),
 	})
+	mergeHeaders(headers, discardHeaders)
 
 	timing.time(
 		'find existing connection',
@@ -114,11 +121,14 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	// not logged in but the connection is bound to a user, login that user
 	if (existingConnection) {
 		headers.append('Server-Timing', timing.toString())
-		return await login({
-			request,
-			userId: existingConnection.user_id,
-			headers,
-		})
+		return await login(
+			{
+				request,
+				redirectTo,
+				userId: existingConnection.user_id,
+			},
+			{ headers },
+		)
 	}
 
 	// check if any user owns this connection's email, bind to that user and login
@@ -136,17 +146,22 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 		timing.timeEnd('insert connection')
 
 		headers.append('Server-Timing', timing.toString())
-		return await login({
-			request,
-			userId: emailOwner.id,
-			headers: combineHeaders(
-				headers,
-				await createToastHeaders({
-					title: 'One User Per Email',
-					message: `Your ${label} account "${profile.username}" has been connected to the email user.`,
-				}),
-			),
-		})
+		return await login(
+			{
+				request,
+				redirectTo,
+				userId: emailOwner.id,
+			},
+			{
+				headers: combineHeaders(
+					headers,
+					await createToastHeaders({
+						title: 'One User Per Email',
+						message: `Your ${label} account "${profile.username}" has been connected to the email user.`,
+					}),
+				),
+			},
+		)
 	}
 
 	// real new user, send to onboarding

@@ -1,5 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
+import { useSearchParams } from '@remix-run/react'
 import {
 	Card,
 	CardContent,
@@ -34,6 +35,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export default function Login() {
+	const [searchParams] = useSearchParams()
+	const redirectTo = searchParams.get('redirectTo')
+
 	return (
 		<div className="container max-w-lg md:mt-10">
 			<Card>
@@ -45,7 +49,10 @@ export default function Login() {
 					<ul className="flex flex-col gap-y-2">
 						{providerNames.map((providerName) => (
 							<li key={providerName}>
-								<ProviderConnectionForm providerName={providerName} />
+								<ProviderConnectionForm
+									providerName={providerName}
+									redirectTo={redirectTo}
+								/>
 							</li>
 						))}
 					</ul>
