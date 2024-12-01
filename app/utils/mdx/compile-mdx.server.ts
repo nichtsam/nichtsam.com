@@ -1,5 +1,5 @@
-import { remember } from '@epic-web/remember'
 import { cachified } from '@epic-web/cachified'
+import { remember } from '@epic-web/remember'
 import { bundleMDX as _bundleMDX } from 'mdx-bundler'
 import PQueue from 'p-queue'
 import { lruCache } from '../cache.server.ts'
