@@ -23,6 +23,7 @@
     "@conform-to/react": "1.2.2",
     "@conform-to/zod": "1.2.2",
     "@epic-web/config": "1.16.3",
+    "@epic-web/remember": "1.1.0",
     "@libsql/client": "0.14.0",
     "@nasa-gcn/remix-seo": "2.0.1",
     "@radix-ui/react-aspect-ratio": "1.1.0",

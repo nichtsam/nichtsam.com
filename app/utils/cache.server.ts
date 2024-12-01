@@ -1,8 +1,8 @@
+import { remember } from '@epic-web/remember'
 import { type CacheEntry, lruCacheAdapter } from 'cachified'
 import { LRUCache } from 'lru-cache'
-import { singleton } from './singleton.server.ts'
 
-const lru = singleton(
+const lru = remember(
 	'lru-cache',
 	() => new LRUCache<string, CacheEntry<unknown>>({ max: 5000 }),
 )

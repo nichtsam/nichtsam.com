@@ -1,8 +1,8 @@
+import { remember } from '@epic-web/remember'
 import { cachified } from 'cachified'
 import { bundleMDX as _bundleMDX } from 'mdx-bundler'
 import PQueue from 'p-queue'
 import { lruCache } from '../cache.server.ts'
-import { singleton } from '../singleton.server.ts'
 import { type MdxBundleSource } from './mdx.server.ts'
 
 async function bundleMDX({ source, files }: MdxBundleSource) {
@@ -21,7 +21,7 @@ async function bundleMDX({ source, files }: MdxBundleSource) {
 	}
 }
 
-const queue = singleton(
+const queue = remember(
 	'compile-mdx-queue',
 	() =>
 		new PQueue({
