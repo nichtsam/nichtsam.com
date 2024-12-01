@@ -1,5 +1,5 @@
 import { remember } from '@epic-web/remember'
-import { type CacheEntry, lruCacheAdapter } from 'cachified'
+import { type CacheEntry, lruCacheAdapter } from '@epic-web/cachified'
 import { LRUCache } from 'lru-cache'
 
 const lru = remember(

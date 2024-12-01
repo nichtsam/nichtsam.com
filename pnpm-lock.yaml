@@ -14,6 +14,9 @@ importers:
       '@conform-to/zod':
         specifier: 1.2.2
         version: 1.2.2(zod@3.23.8)
+      '@epic-web/cachified':
+        specifier: 4.0.0
+        version: 4.0.0
       '@epic-web/config':
         specifier: 1.16.3
         version: 1.16.3(@testing-library/dom@10.4.0)(@typescript-eslint/utils@8.15.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)(vitest@2.1.5(@types/node@22.9.1)(jsdom@25.0.1))
@@ -101,9 +104,6 @@ importers:
       cache-control-parser:
         specifier: 2.0.6
         version: 2.0.6
-      cachified:
-        specifier: 3.5.4
-        version: 3.5.4
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -581,6 +581,9 @@ packages:
 
   '@emotion/hash@0.9.1':
     resolution: {integrity: sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ==}
+
+  '@epic-web/cachified@4.0.0':
+    resolution: {integrity: sha512-5XPdddRV1NrRev5HjfvM72tBh2jnfzBXdbcirtt0G0hveDHT4pOPrYCfyHNt+QcKSX0yifXimWMirOVXtg8ewQ==}
 
   '@epic-web/cachified@5.1.2':
     resolution: {integrity: sha512-8Q1J/jF0bOKUN+XPTSUo+z34WJHMBLkuDv+HkPPS9ufs+cHvInWrLOLi3qIljhe03Xq777pwEDBKnMafetnPhA==}
@@ -3111,9 +3114,6 @@ packages:
 
   cache-control-parser@2.0.6:
     resolution: {integrity: sha512-N4rxCk7V8NLfUVONXG0d7S4IyTQh3KEDW5k2I4CAcEUcMQCmVkfAMn37JSWfUQudiR883vDBy5XM5+TS2Xo7uQ==}
-
-  cachified@3.5.4:
-    resolution: {integrity: sha512-RO7jQl7vL1qulRvr+o++iVVduFlKb2pJUYxY48LULusyqmGUFaRESERu1Z7UI895JNtTB4yvfErNv64OsayK8g==}
 
   call-bind@1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
@@ -7495,6 +7495,8 @@ snapshots:
 
   '@emotion/hash@0.9.1': {}
 
+  '@epic-web/cachified@4.0.0': {}
+
   '@epic-web/cachified@5.1.2': {}
 
   '@epic-web/config@1.16.3(@testing-library/dom@10.4.0)(@typescript-eslint/utils@8.15.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)(vitest@2.1.5(@types/node@22.9.1)(jsdom@25.0.1))':
@@ -10195,8 +10197,6 @@ snapshots:
       unique-filename: 3.0.0
 
   cache-control-parser@2.0.6: {}
-
-  cachified@3.5.4: {}
 
   call-bind@1.0.2:
     dependencies:
