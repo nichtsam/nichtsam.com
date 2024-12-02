@@ -2,6 +2,7 @@ import { remember } from '@epic-web/remember'
 import { bundleMDX as _bundleMDX } from 'mdx-bundler'
 import PQueue from 'p-queue'
 import { cachified, longLivedCache } from '../cache.server.ts'
+import { type ServerTiming } from '../timings.server.ts'
 import { type MdxBundleSource } from './mdx.server.ts'
 
 async function bundleMDX({ source, files }: MdxBundleSource) {
@@ -33,17 +34,20 @@ const queue = remember(
 const queuedBundleMDX = async (...args: Parameters<typeof bundleMDX>) =>
 	await queue.add(() => bundleMDX(...args), { throwOnTimeout: true })
 
-const cachedBundleMDX = ({
+function cachedBundleMDX({
 	slug,
 	bundle,
+	timing,
 }: {
 	slug: string
 	bundle: MdxBundleSource
-}) => {
-	const key = `${slug}:compiled`
+	timing?: ServerTiming
+}) {
+	const key = `mdx:${slug}:compile`
 	const compileMdx = cachified({
 		key,
 		cache: longLivedCache,
+		timing,
 		getFreshValue: () => queuedBundleMDX(bundle),
 	})
 

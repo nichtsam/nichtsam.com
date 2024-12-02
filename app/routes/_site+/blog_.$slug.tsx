@@ -41,7 +41,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	timing.timeEnd('get post mdx bundle')
 
 	timing.time('bundle post mdx', 'Bundle post mdx')
-	const { code } = await bundleMDX({ slug, bundle: mdxBundle })
+	const { code } = await bundleMDX({ slug, bundle: mdxBundle, timing })
 	timing.timeEnd('bundle post mdx')
 
 	timing.time('get post meta', 'Get post meta')
