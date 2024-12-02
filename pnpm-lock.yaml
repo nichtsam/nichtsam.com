@@ -15,8 +15,8 @@ importers:
         specifier: 1.2.2
         version: 1.2.2(zod@3.23.8)
       '@epic-web/cachified':
-        specifier: 4.0.0
-        version: 4.0.0
+        specifier: 5.2.0
+        version: 5.2.0
       '@epic-web/config':
         specifier: 1.16.3
         version: 1.16.3(@testing-library/dom@10.4.0)(@typescript-eslint/utils@8.15.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)(vitest@2.1.5(@types/node@22.9.1)(jsdom@25.0.1))
@@ -582,11 +582,8 @@ packages:
   '@emotion/hash@0.9.1':
     resolution: {integrity: sha512-gJB6HLm5rYwSLI6PQa+X1t5CFGrv1J1TWG+sOyMCeKz2ojaj6Fnl/rZEspogG+cvqbt4AE/2eIyD2QfLKTBNlQ==}
 
-  '@epic-web/cachified@4.0.0':
-    resolution: {integrity: sha512-5XPdddRV1NrRev5HjfvM72tBh2jnfzBXdbcirtt0G0hveDHT4pOPrYCfyHNt+QcKSX0yifXimWMirOVXtg8ewQ==}
-
-  '@epic-web/cachified@5.1.2':
-    resolution: {integrity: sha512-8Q1J/jF0bOKUN+XPTSUo+z34WJHMBLkuDv+HkPPS9ufs+cHvInWrLOLi3qIljhe03Xq777pwEDBKnMafetnPhA==}
+  '@epic-web/cachified@5.2.0':
+    resolution: {integrity: sha512-E/2LdIhS/wcn3ykV+u5xbTFahKtzReO0k4/cVtE7KBYiLCgR6bPRmlDUuyfWhbZX3zOmK+6OL7qdHkvgCWwSiA==}
 
   '@epic-web/config@1.16.3':
     resolution: {integrity: sha512-RxcokzX6bhVLiyiJD5cWTjt8mi75Os0Jut+7h9X0zr6sT22SUG0hFPDXHwQbTqSdugFBxXCfb03nvCCgHvryOw==}
@@ -7495,9 +7492,7 @@ snapshots:
 
   '@emotion/hash@0.9.1': {}
 
-  '@epic-web/cachified@4.0.0': {}
-
-  '@epic-web/cachified@5.1.2': {}
+  '@epic-web/cachified@5.2.0': {}
 
   '@epic-web/config@1.16.3(@testing-library/dom@10.4.0)(@typescript-eslint/utils@8.15.0(eslint@9.15.0(jiti@1.21.6))(typescript@5.6.3))(eslint@9.15.0(jiti@1.21.6))(prettier@3.3.3)(typescript@5.6.3)(vitest@2.1.5(@types/node@22.9.1)(jsdom@25.0.1))':
     dependencies:
@@ -9415,7 +9410,7 @@ snapshots:
 
   '@sly-cli/sly@1.14.0(typescript@5.6.3)':
     dependencies:
-      '@epic-web/cachified': 5.1.2
+      '@epic-web/cachified': 5.2.0
       chalk: 5.3.0
       commander: 11.1.0
       compare-versions: 6.1.0

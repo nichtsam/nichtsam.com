@@ -1,8 +1,7 @@
-import { cachified } from '@epic-web/cachified'
 import { remember } from '@epic-web/remember'
 import { bundleMDX as _bundleMDX } from 'mdx-bundler'
 import PQueue from 'p-queue'
-import { lruCache } from '../cache.server.ts'
+import { cachified, longLivedCache } from '../cache.server.ts'
 import { type MdxBundleSource } from './mdx.server.ts'
 
 async function bundleMDX({ source, files }: MdxBundleSource) {
@@ -44,7 +43,7 @@ const cachedBundleMDX = ({
 	const key = `${slug}:compiled`
 	const compileMdx = cachified({
 		key,
-		cache: lruCache,
+		cache: longLivedCache,
 		getFreshValue: () => queuedBundleMDX(bundle),
 	})
 

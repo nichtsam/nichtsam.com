@@ -11,7 +11,7 @@ const env = z
 
 export default {
 	dialect: 'turso',
-	schema: './drizzle/schema.ts',
+	schema: ['./drizzle/schema.ts', './drizzle/cache.ts'],
 	out: './drizzle',
 	dbCredentials: {
 		url: env.TURSO_DB_URL,
