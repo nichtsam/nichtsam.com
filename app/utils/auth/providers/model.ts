@@ -1,4 +1,5 @@
 import { type Strategy } from 'remix-auth'
+import { type ServerTiming } from '#app/utils/timings.server.ts'
 
 export type ProviderUser = {
 	id: string
@@ -10,7 +11,10 @@ export type ProviderUser = {
 
 export interface AuthProvider {
 	getAuthStrategy(): Strategy<ProviderUser, never>
-	resolveConnectionInfo(profileId: string): Promise<
+	resolveConnectionInfo(
+		profileId: string,
+		options?: { timing?: ServerTiming },
+	): Promise<
 		| {
 				connectionUserDisplayName: string
 				profileLink: string | null

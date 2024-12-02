@@ -1,6 +1,8 @@
 import { GitHubStrategy } from 'remix-auth-github'
 import { z } from 'zod'
+import { cachified, longLivedCache } from '#app/utils/cache.server.ts'
 import { env } from '#app/utils/env.server.ts'
+import { type ServerTiming } from '#app/utils/timings.server.ts'
 import { type AuthProvider } from './model.ts'
 
 // pick needed from here: https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user
@@ -33,11 +35,28 @@ export class GitHubProvider implements AuthProvider {
 		)
 	}
 
-	async resolveConnectionInfo(providerId: string) {
-		// TODO: cache this
-		const response = await fetch(`https://api.github.com/user/${providerId}`)
-		const rawJson = await response.json()
-		const result = GithubUserSchema.safeParse(rawJson)
+	async resolveConnectionInfo(
+		providerId: string,
+		{ timing }: { timing?: ServerTiming } = {},
+	) {
+		const result = await cachified({
+			key: `connection-info:github:${providerId}`,
+			cache: longLivedCache,
+			timing,
+			getFreshValue: async (context) => {
+				const response = await fetch(
+					`https://api.github.com/user/${providerId}`,
+				)
+				const rawJson = await response.json()
+				const result = GithubUserSchema.safeParse(rawJson)
+
+				if (!result.success) {
+					context.metadata.ttl = 0
+				}
+
+				return result
+			},
+		})
 
 		if (!result.success) {
 			return {

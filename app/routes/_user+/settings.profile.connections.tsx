@@ -4,6 +4,7 @@ import {
 	type MetaFunction,
 	type LoaderFunctionArgs,
 	type ActionFunctionArgs,
+	type HeadersFunction,
 } from '@remix-run/node'
 import { useFetcher, useLoaderData } from '@remix-run/react'
 import dayjs from 'dayjs'
@@ -44,6 +45,8 @@ import {
 import { type BreadcrumbHandle } from '#app/utils/breadcrumb.tsx'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
+import { pipeHeaders } from '#app/utils/remix.server.ts'
+import { ServerTiming } from '#app/utils/timings.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
 import { connectionTable } from '#drizzle/schema.ts'
 
@@ -66,11 +69,17 @@ export const meta: MetaFunction = () => {
 	]
 }
 
+export const headers: HeadersFunction = pipeHeaders
+
 export async function loader({ request }: LoaderFunctionArgs) {
 	const userId = await requireUserId(request)
-	const connections = await getConnections(userId)
+	const timing = new ServerTiming()
+	const connections = await getConnections(userId, timing)
 
-	return json({ connections })
+	return json(
+		{ connections },
+		{ headers: { 'Server-Timing': timing.toString() } },
+	)
 }
 
 type ActionArgs = {
@@ -213,7 +222,8 @@ const DeleteConnectionButton = ({ connectionId }: { connectionId: string }) => {
 	)
 }
 
-const getConnections = async (userId: string) => {
+const getConnections = async (userId: string, timing: ServerTiming) => {
+	timing.time('get user raw connections', "Get user's raw connections")
 	const rawConnections = await db.query.connectionTable.findMany({
 		where: (connections, { eq }) => eq(connections.user_id, userId),
 		columns: {
@@ -223,6 +233,7 @@ const getConnections = async (userId: string) => {
 			created_at: true,
 		},
 	})
+	timing.timeEnd('get user raw connections')
 
 	const connections: Array<{
 		providerName: ProviderName
@@ -243,6 +254,7 @@ const getConnections = async (userId: string) => {
 		const connectionInfo = await resolveConnectionInfo({
 			providerName: parsed.data,
 			providerId: connection.provider_id,
+			options: { timing },
 		})
 
 		connections.push({
