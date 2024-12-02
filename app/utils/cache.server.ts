@@ -4,6 +4,9 @@ import {
 	type CacheEntry,
 	type CachifiedOptions,
 	type Cache,
+	type CreateReporter,
+	mergeReporters,
+	verboseReporter,
 } from '@epic-web/cachified'
 import { remember } from '@epic-web/remember'
 import { eq } from 'drizzle-orm'
@@ -12,6 +15,7 @@ import { LRUCache } from 'lru-cache'
 import { z } from 'zod'
 import * as cacheDbSchema from '#drizzle/cache.ts'
 import { env } from './env.server'
+import { type ServerTiming } from './timings.server'
 
 export { longLivedCache, shortLivedCache, cachified }
 
@@ -95,6 +99,34 @@ const shortLivedCache: Cache = {
 	},
 }
 
-function cachified<Value>(options: CachifiedOptions<Value>): Promise<Value> {
-	return baseCachified(options)
+function cachified<Value>(
+	{ timing, ...options }: CachifiedOptions<Value> & { timing?: ServerTiming },
+	reporter: CreateReporter<Value> = verboseReporter<Value>(),
+): Promise<Value> {
+	return baseCachified(
+		options,
+		mergeReporters(reporter, timing ? timingReporter(timing) : null),
+	)
+}
+
+function timingReporter<Value>(timing: ServerTiming): CreateReporter<Value> {
+	return ({ key }) => {
+		timing.time(`cache:${key}`, `${key} cache retrieval`)
+		return (event) => {
+			switch (event.name) {
+				case 'getFreshValueStart':
+					timing.time(
+						`getFreshValue:${key}`,
+						`request forced to wait for a fresh ${key} value`,
+					)
+					break
+				case 'getFreshValueSuccess':
+					timing.timeEnd(`getFreshValue:${key}`)
+					break
+				case 'done':
+					timing.timeEnd(`cache:${key}`)
+					break
+			}
+		}
+	}
 }
