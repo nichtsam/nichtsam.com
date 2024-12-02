@@ -1,6 +1,7 @@
 import { vitePlugin as remix } from '@remix-run/dev'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { defineConfig } from 'vite'
+import { envOnlyMacros } from 'vite-env-only'
 
 export default defineConfig({
 	build: {
@@ -10,6 +11,7 @@ export default defineConfig({
 	},
 
 	plugins: [
+		envOnlyMacros(),
 		remix({
 			future: {
 				unstable_routeConfig: true,

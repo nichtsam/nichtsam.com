@@ -1,3 +1,4 @@
+import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
 	json,
 	type HeadersFunction,
@@ -5,12 +6,20 @@ import {
 	type MetaFunction,
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
-import { getPostMeta } from '#app/utils/mdx/blog.server'
+import { serverOnly$ } from 'vite-env-only/macros'
+import { getPostInfos, getPostMeta } from '#app/utils/mdx/blog.server'
 import { bundleMDX } from '#app/utils/mdx/compile-mdx.server'
 import { useMdxComponent } from '#app/utils/mdx/mdx'
 import { getMdxBundleSource, getMdxEntry } from '#app/utils/mdx/mdx.server'
 import { pipeHeaders } from '#app/utils/remix.server'
 import { ServerTiming } from '#app/utils/timings.server'
+
+export const handle: SEOHandle = {
+	getSitemapEntries: serverOnly$(async () => {
+		const posts = await getPostInfos()
+		return posts.map((post) => ({ route: `/blog/${post.slug}` }))
+	}),
+}
 
 export const headers: HeadersFunction = pipeHeaders
 
