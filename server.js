@@ -36,7 +36,25 @@ app.use(compression())
 // http://expressjs.com/en/advanced/best-practice-security.html#at-a-minimum-disable-x-powered-by-header
 app.disable('x-powered-by')
 
-app.use(morgan('tiny'))
+app.use(
+	morgan('tiny', {
+		skip:
+			MODE === 'development'
+				? (req, res) => {
+						if (
+							req.url.startsWith('/node_modules') ||
+							req.url.startsWith('/app') ||
+							req.url.startsWith('/@') ||
+							req.url.startsWith('/__')
+						) {
+							if (res.statusCode === 200 || res.statusCode === 304) {
+								return true
+							}
+						}
+					}
+				: undefined,
+	}),
+)
 
 app.use((_, res, next) => {
 	res.locals.cspNonce = crypto.randomBytes(16).toString('hex')
