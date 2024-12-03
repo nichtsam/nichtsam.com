@@ -42,6 +42,8 @@ export class GitHubProvider implements AuthProvider {
 		const result = await cachified({
 			key: `connection-info:github:${providerId}`,
 			cache: longLivedCache,
+			ttl: 1000 * 60,
+			swr: 1000 * 60 * 60 * 24 * 7,
 			timing,
 			getFreshValue: async (context) => {
 				const response = await fetch(

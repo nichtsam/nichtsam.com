@@ -47,6 +47,8 @@ function cachedBundleMDX({
 	const compileMdx = cachified({
 		key,
 		cache: longLivedCache,
+		ttl: 1000 * 60 * 60 * 24 * 14,
+		swr: Infinity,
 		timing,
 		getFreshValue: () => queuedBundleMDX(bundle),
 	})
