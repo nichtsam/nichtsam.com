@@ -66,6 +66,7 @@
     "drizzle-orm": "0.36.3",
     "drizzle-zod": "0.5.1",
     "express": "4.21.1",
+    "express-rate-limit": "7.4.1",
     "get-port": "7.1.0",
     "gray-matter": "4.0.3",
     "helmet": "8.0.0",

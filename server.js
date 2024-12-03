@@ -5,6 +5,7 @@ import chalk from 'chalk'
 import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
 import express from 'express'
+import { rateLimit } from 'express-rate-limit'
 import getPort, { portNumbers } from 'get-port'
 import helmet from 'helmet'
 import morgan from 'morgan'
@@ -55,6 +56,35 @@ app.use(
 				: undefined,
 	}),
 )
+
+const rateLimitConfig = {
+	skip: () => MODE !== 'production',
+	windowMs: 60 * 1000,
+	max: 1000,
+	standardHeaders: true,
+	legacyHeaders: false,
+	keyGenerator: (req) => {
+		return req.get('fly-client-ip') ?? `${req.ip}`
+	},
+}
+
+const strongestRateLimit = rateLimit({ ...rateLimitConfig, max: 10 })
+const strongRateLimit = rateLimit({ ...rateLimitConfig, max: 100 })
+const generalRateLimit = rateLimit(rateLimitConfig)
+
+app.use((req, res, next) => {
+	const criticalActions = ['/auth', '/onboarding']
+
+	if (req.method !== 'GET' && req.method !== 'HEAD') {
+		if (criticalActions.some((p) => req.path.startsWith(p))) {
+			return strongestRateLimit(req, res, next)
+		}
+
+		return strongRateLimit(req, res, next)
+	}
+
+	return generalRateLimit(req, res, next)
+})
 
 app.use((_, res, next) => {
 	res.locals.cspNonce = crypto.randomBytes(16).toString('hex')
