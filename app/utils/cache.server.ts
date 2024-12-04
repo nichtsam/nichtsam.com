@@ -67,12 +67,23 @@ const longLivedCache: Cache = {
 		return parsed.data
 	},
 	set(key, cacheEnrtry) {
+		const { metadata, value } = {
+			metadata: JSON.stringify(cacheEnrtry.metadata),
+			value: JSON.stringify(cacheEnrtry.value),
+		}
 		void cacheDb
 			.insert(cacheDbSchema.cacheTable)
 			.values({
 				key,
-				metadata: JSON.stringify(cacheEnrtry.metadata),
-				value: JSON.stringify(cacheEnrtry.value),
+				metadata,
+				value,
+			})
+			.onConflictDoUpdate({
+				target: cacheDbSchema.cacheTable.key,
+				set: {
+					metadata,
+					value,
+				},
 			})
 			.then()
 	},
