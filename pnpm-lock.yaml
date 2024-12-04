@@ -98,12 +98,12 @@ importers:
       '@testing-library/dom':
         specifier: 10.4.0
         version: 10.4.0
+      '@tusbar/cache-control':
+        specifier: 1.0.2
+        version: 1.0.2
       address:
         specifier: 2.0.3
         version: 2.0.3
-      cache-control-parser:
-        specifier: 2.0.6
-        version: 2.0.6
       chalk:
         specifier: 5.3.0
         version: 5.3.0
@@ -2552,6 +2552,9 @@ packages:
   '@total-typescript/ts-reset@0.6.1':
     resolution: {integrity: sha512-cka47fVSo6lfQDIATYqb/vO1nvFfbPw7uWLayIXIhGETj0wcOOlrlkobOMDNQOFr9QOafegUPq13V2+6vtD7yg==}
 
+  '@tusbar/cache-control@1.0.2':
+    resolution: {integrity: sha512-PXfjYTYBVvMPYCLDWj+xIOA9ITFbbhWCHzLcqUCJ5TPGm4JO4cxpGb7x3K8Q1K1ADgNgfBxLsDcTMVRydtZB9A==}
+
   '@types/acorn@4.0.6':
     resolution: {integrity: sha512-veQTnWP+1D/xbxVrPC3zHnCZRjSrKfhbMUlEA43iMZLu7EsnTtkJklIuwrCPbOi8YkvDQAiW05VQQFvvz9oieQ==}
 
@@ -3114,9 +3117,6 @@ packages:
   cacache@17.1.4:
     resolution: {integrity: sha512-/aJwG2l3ZMJ1xNAnqbMpA40of9dj/pIH3QfiuQSqjfPJF747VR0J/bHn+/KdNnHKc6XQcWt/AfRSBft82W1d2A==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-
-  cache-control-parser@2.0.6:
-    resolution: {integrity: sha512-N4rxCk7V8NLfUVONXG0d7S4IyTQh3KEDW5k2I4CAcEUcMQCmVkfAMn37JSWfUQudiR883vDBy5XM5+TS2Xo7uQ==}
 
   call-bind@1.0.2:
     resolution: {integrity: sha512-7O+FbCihrB5WGbFYesctwmTKae6rOiIzmz1icreWJ+0aA7LJfuqhEso2T9ncpcFtzMQtzXf2QGGueWJGTYsqrA==}
@@ -9482,6 +9482,8 @@ snapshots:
 
   '@total-typescript/ts-reset@0.6.1': {}
 
+  '@tusbar/cache-control@1.0.2': {}
+
   '@types/acorn@4.0.6':
     dependencies:
       '@types/estree': 1.0.6
@@ -10207,8 +10209,6 @@ snapshots:
       ssri: 10.0.5
       tar: 6.1.15
       unique-filename: 3.0.0
-
-  cache-control-parser@2.0.6: {}
 
   call-bind@1.0.2:
     dependencies:

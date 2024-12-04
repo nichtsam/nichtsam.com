@@ -1,5 +1,5 @@
 import { type HeadersArgs } from '@remix-run/node'
-import cacheControl, { type CacheControl } from 'cache-control-parser'
+import { type CacheControlValue, format, parse } from '@tusbar/cache-control'
 
 export function pipeHeaders({
 	parentHeaders,
@@ -64,21 +64,19 @@ export function pipeHeaders({
 export function getConservativeCacheControl(
 	...cacheControlHeaders: Array<string | null>
 ): string {
-	return cacheControl.stringify(
+	return format(
 		cacheControlHeaders
 			.filter(Boolean)
-			.map((header) => cacheControl.parse(header))
-			.reduce<CacheControl>((acc, current) => {
-				let directive: keyof CacheControl
-				for (directive in current) {
+			.map((header) => parse(header))
+			.reduce<CacheControlValue>((acc, current) => {
+				for (const key in current) {
+					const directive = key as keyof Required<CacheControlValue>
 					const currentValue = current[directive]
 
-					// ts-expect-error because typescript doesn't know it's the same directive.
 					switch (typeof currentValue) {
 						case 'boolean': {
 							if (currentValue) {
-								// @ts-expect-error
-								acc[directive] = true
+								acc[directive] = true as any
 							}
 
 							break
@@ -87,12 +85,10 @@ export function getConservativeCacheControl(
 							const accValue = acc[directive] as number | undefined
 
 							if (accValue === undefined) {
-								// @ts-expect-error
-								acc[directive] = currentValue
+								acc[directive] = currentValue as any
 							} else {
 								const result = Math.min(accValue, currentValue)
-								// @ts-expect-error
-								acc[directive] = result
+								acc[directive] = result as any
 							}
 
 							break
