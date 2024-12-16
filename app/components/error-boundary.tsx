@@ -7,6 +7,7 @@ import {
 	type ErrorResponse,
 	type Location,
 } from '@remix-run/react'
+import { type ReactElement } from 'react'
 import { getErrorMessage } from '#app/utils/error.ts'
 import { Icon } from './ui/icon.tsx'
 
@@ -14,13 +15,13 @@ type StatusHandler = (info: {
 	error: ErrorResponse
 	params: Record<string, string | undefined>
 	location: Location
-}) => JSX.Element | null
+}) => ReactElement | null
 
 type UnexpectedErrorHandler = (info: {
 	error: unknown
 	params: Record<string, string | undefined>
 	location: Location
-}) => JSX.Element | null
+}) => ReactElement | null
 
 export const GeneralErrorBoundary = ({
 	defaultStatusHandler,
