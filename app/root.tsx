@@ -19,8 +19,6 @@ import {
 import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix'
 import clsx from 'clsx'
 import { AuthenticityTokenProvider } from 'remix-utils/csrf/react'
-import { Footer } from '#app/components/footer.tsx'
-import { NavBar } from '#app/components/navbar/index.tsx'
 import appStylesheet from '#app/styles/app.css?url'
 import {
 	publicEnv,
@@ -30,6 +28,8 @@ import {
 import { FaviconMeta, faviconLinks } from '#app/utils/favicon.tsx'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { NavProgress } from './components/nav-progress.tsx'
+import { SiteFooter } from './components/site-footer.tsx'
+import { SiteHeader } from './components/site-header.tsx'
 import { Toaster } from './components/ui/sonner.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
 import { getUser, getUserId, logout } from './utils/auth/auth.server.ts'
@@ -176,17 +176,11 @@ function App() {
 
 	return (
 		<div className="flex h-full min-h-screen flex-col">
-			<header>
-				<NavBar />
-			</header>
-
+			<SiteHeader />
 			<main className="flex-1">
 				<Outlet />
 			</main>
-
-			<footer>
-				<Footer />
-			</footer>
+			<SiteFooter />
 		</div>
 	)
 }
