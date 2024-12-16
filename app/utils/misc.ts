@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 const sleep = (ms: number) =>
 	new Promise<void>((res) => setTimeout(() => res(), ms))
 
@@ -31,6 +33,16 @@ async function downloadFile(
 		if (retries > max_retries) throw e
 		return downloadFile(url, retries + 1, max_retries)
 	}
+}
+
+export function useClientJavascriptEnable() {
+	const [clientJavascriptEnable, setClientJavascriptEnable] = useState(false)
+
+	useEffect(() => {
+		setClientJavascriptEnable(true)
+	}, [])
+
+	return clientJavascriptEnable
 }
 
 export { sleep, generateCallAll, unvariant, downloadFile }

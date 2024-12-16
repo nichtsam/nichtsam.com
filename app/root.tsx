@@ -14,6 +14,7 @@ import {
 	ScrollRestoration,
 	useLoaderData,
 	useRouteError,
+	useRouteLoaderData,
 } from '@remix-run/react'
 import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix'
 import clsx from 'clsx'
@@ -38,7 +39,7 @@ import { useNonce } from './utils/nonce-provider.tsx'
 import { pipeHeaders } from './utils/remix.server.ts'
 import { combineHeaders } from './utils/request.server.ts'
 import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
-import { SET_THEME_INTENT, useTheme } from './utils/theme.tsx'
+import { SET_THEME_INTENT, useOptionalTheme } from './utils/theme.tsx'
 import { ServerTiming } from './utils/timings.server.ts'
 import { getToast } from './utils/toast.server.ts'
 import { useToast } from './utils/toast.ts'
@@ -130,14 +131,14 @@ function Document({
 	nonce,
 	theme = 'light',
 	env,
-	disallowIndexing,
 }: {
 	children: React.ReactNode
 	nonce: string
 	theme?: Theme
 	env?: PublicEnv
-	disallowIndexing?: boolean
 }) {
+	const disallowIndexing = !!env?.DISALLOW_INDEXING
+
 	return (
 		<html lang="en" className={clsx(theme, 'relative')}>
 			<head>
@@ -171,33 +172,22 @@ function Document({
 
 function App() {
 	const data = useLoaderData<typeof loader>()
-	const nonce = useNonce()
-	const env = data.env
-	const theme = useTheme()
-	const disallowIndexing = env.DISALLOW_INDEXING
 	useToast(data.toast)
 
 	return (
-		<Document
-			nonce={nonce}
-			env={env}
-			theme={theme}
-			disallowIndexing={disallowIndexing}
-		>
-			<div className="flex h-full min-h-screen flex-col">
-				<header>
-					<NavBar />
-				</header>
+		<div className="flex h-full min-h-screen flex-col">
+			<header>
+				<NavBar />
+			</header>
 
-				<main className="flex-1">
-					<Outlet />
-				</main>
+			<main className="flex-1">
+				<Outlet />
+			</main>
 
-				<footer>
-					<Footer />
-				</footer>
-			</div>
-		</Document>
+			<footer>
+				<Footer />
+			</footer>
+		</div>
 	)
 }
 
@@ -215,24 +205,21 @@ function AppWithProviders() {
 
 export default withSentry(AppWithProviders)
 
-export function ErrorBoundary() {
-	// the nonce doesn't rely on the loader so we can access that
+export function Layout({ children }: { children: React.ReactNode }) {
+	const data = useRouteLoaderData<typeof loader>('root')
 	const nonce = useNonce()
+	const theme = useOptionalTheme()
 
+	return (
+		<Document nonce={nonce} env={data?.env} theme={theme}>
+			{children}
+		</Document>
+	)
+}
+
+export function ErrorBoundary() {
 	const error = useRouteError()
 	captureRemixErrorBoundaryError(error)
 
-	// NOTE: you cannot use useLoaderData in an ErrorBoundary because the loader
-	// likely failed to run so we have to do the best we can.
-	// We could probably do better than this (it's possible the loader did run).
-	// This would require a change in Remix.
-
-	// Just make sure your root route never errors out and you'll always be able
-	// to give the user a better UX.
-
-	return (
-		<Document nonce={nonce} disallowIndexing={true}>
-			<GeneralErrorBoundary />
-		</Document>
-	)
+	return <GeneralErrorBoundary />
 }

@@ -2,15 +2,25 @@ import { useRouteLoaderData } from '@remix-run/react'
 import { type loader as rootLoader } from '#app/root.tsx'
 
 export function useRequestInfo() {
-	const data = useRouteLoaderData<typeof rootLoader>('root')
-	if (!data?.requestInfo) {
+	const requestInfo = useOptionalRequestInfo()
+	if (!requestInfo) {
 		throw new Error('No requestInfo found in root loader')
 	}
 
-	return data.requestInfo
+	return requestInfo
 }
 
 export const useHints = () => {
 	const requestInfo = useRequestInfo()
 	return requestInfo.hints
+}
+
+export function useOptionalRequestInfo() {
+	const data = useRouteLoaderData<typeof rootLoader>('root')
+	return data?.requestInfo
+}
+
+export const useOptionalHints = () => {
+	const requestInfo = useOptionalRequestInfo()
+	return requestInfo?.hints
 }

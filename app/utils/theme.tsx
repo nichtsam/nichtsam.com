@@ -1,12 +1,16 @@
 import { getFormProps, useForm } from '@conform-to/react'
 import { parseWithZod } from '@conform-to/zod'
 import { useFetcher, useFetchers } from '@remix-run/react'
-import { useEffect, useState } from 'react'
 import { z } from 'zod'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
-import { unvariant } from './misc.ts'
-import { useRequestInfo, useHints } from './request-info.ts'
+import { unvariant, useClientJavascriptEnable } from './misc.ts'
+import {
+	useRequestInfo,
+	useHints,
+	useOptionalRequestInfo,
+	useOptionalHints,
+} from './request-info.ts'
 import { type setTheme as setThemeAction } from './theme.server.ts'
 
 export const SET_THEME_INTENT = 'set-theme'
@@ -18,13 +22,23 @@ export const ThemeFormSchema = z.object({
 export const useTheme = () => {
 	const requestInfo = useRequestInfo()
 	const hints = useHints()
-
 	const optimisticMode = useOptimisticThemeMode()
 	if (optimisticMode) {
 		return optimisticMode === 'system' ? hints.theme : optimisticMode
 	}
 
 	return requestInfo.userPreferences.theme ?? hints.theme
+}
+
+export const useOptionalTheme = () => {
+	const requestInfo = useOptionalRequestInfo()
+	const hints = useOptionalHints()
+	const optimisticMode = useOptimisticThemeMode()
+	if (optimisticMode) {
+		return optimisticMode === 'system' ? hints?.theme : optimisticMode
+	}
+
+	return requestInfo?.userPreferences.theme ?? hints?.theme
 }
 
 export function useOptimisticThemeMode() {
@@ -42,32 +56,26 @@ export function useOptimisticThemeMode() {
 	}
 }
 
+const modeLabel = {
+	light: <Icon name="sun" className="animate-in fade-in" />,
+	dark: <Icon name="moon" className="animate-in fade-in" />,
+	system: <Icon name="laptop" className="animate-in fade-in" />,
+}
+
 export const ThemeSwitcher = () => {
-	const [clientJavascriptEnable, setClientJavascriptEnable] = useState(false)
-
-	const {
-		userPreferences: { theme: themPreference },
-	} = useRequestInfo()
 	const fetcher = useFetcher<typeof setThemeAction>()
-
 	const [form] = useForm({
 		id: 'theme-switch',
 		lastResult: fetcher.data?.result,
 	})
 
+	const themePreference = useOptionalRequestInfo()?.userPreferences.theme
 	const optimisticMode = useOptimisticThemeMode()
-	const mode = optimisticMode ?? themPreference ?? 'system'
+	const mode = optimisticMode ?? themePreference ?? 'system'
 	const nextMode =
 		mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system'
-	const modeLabel = {
-		light: <Icon name="sun" className="animate-in fade-in" />,
-		dark: <Icon name="moon" className="animate-in fade-in" />,
-		system: <Icon name="laptop" className="animate-in fade-in" />,
-	}
 
-	useEffect(() => {
-		setClientJavascriptEnable(true)
-	}, [])
+	const clientJavascriptEnable = useClientJavascriptEnable()
 
 	return (
 		<fetcher.Form method="POST" action="/" {...getFormProps(form)}>
