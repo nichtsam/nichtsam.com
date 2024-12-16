@@ -4,7 +4,15 @@ import { coreNav } from '#app/config/nav.tsx'
 import { ThemeSwitcher } from '#app/utils/theme.tsx'
 import { NavLink } from './link'
 import { Button } from './ui/button'
-import { Drawer, DrawerContent, DrawerFooter, DrawerTrigger } from './ui/drawer'
+import {
+	Drawer,
+	DrawerContent,
+	DrawerDescription,
+	DrawerFooter,
+	DrawerHeader,
+	DrawerTitle,
+	DrawerTrigger,
+} from './ui/drawer'
 import { Icon } from './ui/icon'
 import {
 	NavigationMenu,
@@ -81,6 +89,10 @@ function MobileNav() {
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent className="max-h-[60svh]">
+				<DrawerHeader inert>
+					<DrawerTitle>Menu</DrawerTitle>
+					<DrawerDescription>Links and Actions</DrawerDescription>
+				</DrawerHeader>
 				<div className="overflow-auto p-4 pb-0">
 					<nav className="text-center">
 						<ul className="flex flex-col gap-y-3">
