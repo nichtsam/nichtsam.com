@@ -13,7 +13,7 @@
     "build:remix": "remix vite:build",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "typecheck": "tsc",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "db:migrate": "tsx ./drizzle/migrate.ts",
     "test": "vitest",
