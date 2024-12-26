@@ -14,8 +14,8 @@ export default defineConfig({
 		envOnlyMacros(),
 		remix({
 			future: {
-				unstable_routeConfig: true,
 				unstable_optimizeDeps: true,
+				v3_routeConfig: true,
 				v3_fetcherPersist: true,
 				v3_relativeSplatPath: true,
 				v3_lazyRouteDiscovery: true,
