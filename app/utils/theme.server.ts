@@ -1,5 +1,5 @@
 import { parseWithZod } from '@conform-to/zod'
-import { json } from '@remix-run/node'
+import { data } from '@remix-run/node'
 import { parse as parseCookie, serialize as serializeCookie } from 'cookie'
 import { ThemeFormSchema } from './theme.tsx'
 
@@ -29,7 +29,7 @@ export const setTheme = async (formData: FormData) => {
 	})
 
 	if (submission.status !== 'success') {
-		return json(
+		return data(
 			{ result: submission.reply() },
 			{ status: submission.status === 'error' ? 400 : 200 },
 		)
@@ -40,5 +40,5 @@ export const setTheme = async (formData: FormData) => {
 	const responseInit = {
 		headers: { 'set-cookie': setThemeCookie(theme) },
 	}
-	return json({ result: submission.reply() }, responseInit)
+	return data({ result: submission.reply() }, responseInit)
 }

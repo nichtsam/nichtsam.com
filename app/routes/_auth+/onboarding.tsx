@@ -9,7 +9,7 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
-	json,
+	data,
 	redirect,
 } from '@remix-run/node'
 import { Form, useActionData, useLoaderData } from '@remix-run/react'
@@ -58,13 +58,13 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 	const prefill = profile
 
-	return json({
+	return {
 		email: profile.email,
 		prefillResult: {
 			initialValue: prefill,
 			error: {},
 		} satisfies SubmissionResult,
-	})
+	}
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
@@ -105,7 +105,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 	})
 
 	if (submission.status !== 'success') {
-		return json(
+		return data(
 			{ result: submission.reply() },
 			{ status: submission.status === 'error' ? 400 : 200 },
 		)

@@ -1,6 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
-	json,
 	type MetaFunction,
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
@@ -51,7 +50,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	}
 
 	const sessionsCount = await getSessionsCount({ userId, sessionId })
-	return json({ sessionsCount })
+	return { sessionsCount }
 }
 
 type ActionArgs = {
@@ -162,5 +161,5 @@ const signOutOtherSessions = async ({ request }: ActionArgs) => {
 			),
 		)
 
-	return json({ status: 'success' } as const)
+	return { status: 'success' } as const
 }

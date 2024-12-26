@@ -3,6 +3,12 @@ import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { defineConfig } from 'vite'
 import { envOnlyMacros } from 'vite-env-only'
 
+declare module '@remix-run/node' {
+	interface Future {
+		v3_singleFetch: true
+	}
+}
+
 export default defineConfig({
 	build: {
 		cssMinify: process.env.NODE_ENV === 'production',
@@ -20,6 +26,7 @@ export default defineConfig({
 				v3_relativeSplatPath: true,
 				v3_lazyRouteDiscovery: true,
 				v3_throwAbortReason: true,
+				v3_singleFetch: true,
 			},
 			serverModuleFormat: 'esm',
 		}),

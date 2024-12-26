@@ -1,4 +1,4 @@
-import { json, type HeadersFunction, type MetaFunction } from '@remix-run/node'
+import { data, type HeadersFunction, type MetaFunction } from '@remix-run/node'
 import { Link, useLoaderData } from '@remix-run/react'
 import { type PostInfo, getPostInfos } from '#app/utils/mdx/blog.server.ts'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
@@ -20,7 +20,7 @@ export const loader = async () => {
 	const posts = await getPostInfos()
 	timing.timeEnd('get posts')
 
-	return json(
+	return data(
 		{ posts },
 		{
 			headers: {

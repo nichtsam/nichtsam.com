@@ -1,6 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
-	json,
+	data,
 	type HeadersFunction,
 	type LoaderFunctionArgs,
 	type MetaFunction,
@@ -57,7 +57,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	const meta = getPostMeta(mdxBundle.source)
 	timing.timeEnd('get post meta')
 
-	return json(
+	return data(
 		{
 			code,
 			meta,

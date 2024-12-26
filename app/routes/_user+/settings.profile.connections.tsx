@@ -1,6 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
-	json,
+	data,
 	type MetaFunction,
 	type LoaderFunctionArgs,
 	type ActionFunctionArgs,
@@ -76,7 +76,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 	const timing = new ServerTiming()
 	const connections = await getConnections(userId, timing)
 
-	return json(
+	return data(
 		{ connections },
 		{ headers: { 'Server-Timing': timing.toString() } },
 	)
@@ -280,5 +280,5 @@ const deleteConnection = async ({ formData }: ActionArgs) => {
 
 	await db.delete(connectionTable).where(eq(connectionTable.id, connectionId))
 
-	return json({ status: 'success' } as const)
+	return { status: 'success' } as const
 }

@@ -45,6 +45,7 @@ export default function handleRequest(
 					context={remixContext}
 					url={request.url}
 					abortDelay={ABORT_DELAY}
+					nonce={nonce}
 				/>
 			</NonceProvider>,
 

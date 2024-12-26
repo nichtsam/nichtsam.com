@@ -1,5 +1,5 @@
 import {
-	json,
+	data,
 	type MetaFunction,
 	type LinksFunction,
 	type LoaderFunctionArgs,
@@ -91,7 +91,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 
 	const toast = await getToast(request)
 
-	return json(
+	return data(
 		{
 			user,
 			env: publicEnv,
