@@ -99,7 +99,6 @@
     "@tailwindcss/typography": "0.5.15",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "16.0.1",
-    "@total-typescript/ts-reset": "0.6.1",
     "@types/compression": "1.7.5",
     "@types/express": "5.0.0",
     "@types/morgan": "1.9.9",
