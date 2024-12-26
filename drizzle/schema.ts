@@ -50,9 +50,7 @@ export const connectionTable = sqliteTable(
 			.default(sql`(unixepoch('subsec') * 1000)`)
 			.notNull(),
 	},
-	(table) => ({
-		unq: unique().on(table.provider_name, table.provider_id),
-	}),
+	(table) => [unique().on(table.provider_name, table.provider_id)],
 )
 
 export const sessionTable = sqliteTable('session', {
