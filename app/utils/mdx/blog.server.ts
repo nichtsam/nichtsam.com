@@ -48,6 +48,11 @@ export async function getPostInfos(): Promise<Array<PostInfo>> {
 
 			try {
 				const entry = getMdxEntry('blog', slug)
+				if (!entry) {
+					throw new Error(
+						`No file named ${slug} with valid extension found in the blog directory`,
+					)
+				}
 				const file = await readFile(entry.mdxPath, 'utf-8')
 				const meta = getPostMeta(file)
 

@@ -19,15 +19,25 @@ type Entry = {
 const mdxDirPath = resolve(rootPath, 'mdx')
 const VALID_EXTENSION = ['md', 'mdx']
 
-export function getMdxEntry(category: string, name: string): Entry {
+export function getMdxEntry(category: string, name: string): Entry | null {
 	const maybeDirPath = resolve(mdxDirPath, category, name)
 	if (existsSync(maybeDirPath)) {
 		const dirPath = maybeDirPath
+		const mdxPath = getFilePathInDirectoryByName(
+			dirPath,
+			'index',
+			VALID_EXTENSION,
+		)
+
+		if (!mdxPath) {
+			return null
+		}
+
 		return {
 			name,
 			isFile: false,
 			bundlePath: dirPath,
-			mdxPath: getFilePathInDirectoryByName(dirPath, 'index', VALID_EXTENSION),
+			mdxPath,
 		}
 	}
 
@@ -36,6 +46,10 @@ export function getMdxEntry(category: string, name: string): Entry {
 		name,
 		VALID_EXTENSION,
 	)
+
+	if (!filePath) {
+		return null
+	}
 
 	return {
 		name,
@@ -76,7 +90,7 @@ async function getFilesInDirectory(
 
 		const fileSets = await Promise.all(
 			dir.map((dirent) =>
-				getFilesInDirectory(resolve(dirent.path, dirent.name), rootPath),
+				getFilesInDirectory(resolve(dirent.parentPath, dirent.name), rootPath),
 			),
 		)
 

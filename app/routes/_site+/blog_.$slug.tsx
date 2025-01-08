@@ -7,6 +7,10 @@ import {
 } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
 import { serverOnly$ } from 'vite-env-only/macros'
+import {
+	GeneralErrorBoundary,
+	generalNotFoundHandler,
+} from '#app/components/error-boundary.tsx'
 import { getPostInfos, getPostMeta } from '#app/utils/mdx/blog.server'
 import { bundleMDX } from '#app/utils/mdx/compile-mdx.server'
 import { useMdxComponent } from '#app/utils/mdx/mdx'
@@ -44,8 +48,20 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	const slug = params.slug
 	const timing = new ServerTiming()
 
-	timing.time('get post mdx bundle', 'Get post mdx bundle')
+	timing.time('get post mdx entry', 'Get post mdx entry')
 	const mdxEntry = getMdxEntry('blog', slug)
+	if (!mdxEntry) {
+		timing.timeEnd('get post mdx entry')
+		throw new Response('Not found', {
+			status: 404,
+			headers: {
+				'Server-Timing': timing.toString(),
+			},
+		})
+	}
+	timing.timeEnd('get post mdx entry')
+
+	timing.time('get post mdx bundle', 'Get post mdx bundle')
 	const mdxBundle = await getMdxBundleSource(mdxEntry)
 	timing.timeEnd('get post mdx bundle')
 
@@ -81,5 +97,15 @@ export default function BlogPost() {
 				<Component />
 			</article>
 		</div>
+	)
+}
+
+export function ErrorBoundary() {
+	return (
+		<GeneralErrorBoundary
+			statusHandlers={{
+				404: generalNotFoundHandler,
+			}}
+		/>
 	)
 }

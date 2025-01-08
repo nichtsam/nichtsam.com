@@ -18,7 +18,5 @@ export function getFilePathInDirectoryByName(
 		}
 	}
 
-	throw new Error(
-		`No file named ${name} with valid extension found in directory => ${dirPath}`,
-	)
+	return null
 }
