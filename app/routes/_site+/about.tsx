@@ -6,7 +6,8 @@ export const meta: MetaFunction = () => {
 		{ title: 'About | nichtsam' },
 		{
 			name: 'description',
-			content: 'nichtsam! Sam! Samuel Jensen! Website! About Page!',
+			content:
+				'Here are some questions and answers about Samuel. Read through to get to know him a bit better.',
 		},
 	]
 }

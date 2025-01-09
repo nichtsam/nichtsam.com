@@ -50,10 +50,27 @@ export const links: LinksFunction = () => [
 	...faviconLinks,
 ]
 
-export const meta: MetaFunction = ({ data }) => [
-	{ title: data ? 'nichtsam.com' : 'Error | nichtsam' },
-	{ name: 'description', content: `Samuel Jensen, aka nichtsam's website.` },
-]
+export const meta: MetaFunction = ({ data }) => {
+	if (!data) {
+		return [
+			{ title: 'Error | nichtsam' },
+			{
+				name: 'description',
+				content:
+					"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
+			},
+		]
+	}
+
+	return [
+		{ title: 'nichtsam.com' },
+		{
+			name: 'description',
+			content:
+				'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
+		},
+	]
+}
 
 export const headers: HeadersFunction = (args) => {
 	// document has authed personalized content

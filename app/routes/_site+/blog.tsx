@@ -7,7 +7,11 @@ import { ServerTiming } from '#app/utils/timings.server.ts'
 export const meta: MetaFunction = () => {
 	return [
 		{ title: 'Blog | nichtsam' },
-		{ name: 'description', content: "nichtsam's blog" },
+		{
+			name: 'description',
+			content:
+				'Blog posts written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
+		},
 	]
 }
 

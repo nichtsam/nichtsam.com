@@ -1,4 +1,22 @@
+import { type HeadersFunction, type MetaFunction } from '@remix-run/node'
+import { pipeHeaders } from '#app/utils/remix.server.ts'
 import { isUser, useOptionalUser } from '#app/utils/user.tsx'
+
+export const meta: MetaFunction = () => {
+	return [
+		{ title: 'Contact | nichtsam' },
+		{
+			name: 'description',
+			content:
+				'Get in touch with Samuel through various channels. Whether it’s via email, social media, or another method, feel free to reach out, and Samuel will respond as soon as possible.',
+		},
+	]
+}
+
+export const headers: HeadersFunction = (args) => {
+	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
+	return pipeHeaders(args)
+}
 
 export default function Contact() {
 	const optionalUser = useOptionalUser()

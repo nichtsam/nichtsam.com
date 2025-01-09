@@ -9,6 +9,7 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
 	type ActionFunctionArgs,
 	type LoaderFunctionArgs,
+	type MetaFunction,
 	data,
 	redirect,
 } from '@remix-run/node'
@@ -37,6 +38,17 @@ import { useIsPending } from '#app/utils/ui.ts'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
+}
+
+export const meta: MetaFunction = () => {
+	return [
+		{ title: 'Onboarding | nichtsam' },
+		{
+			name: 'description',
+			content:
+				'Welcome to the onboarding process! Fill in the necessary information and get started with your experience on nichtsam.com!',
+		},
+	]
 }
 
 const requireData = async (request: Request) => {
