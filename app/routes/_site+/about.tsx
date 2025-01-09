@@ -1,4 +1,5 @@
 import { type HeadersFunction, type MetaFunction } from '@remix-run/node'
+import { Fragment } from 'react/jsx-runtime'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
 
 export const meta: MetaFunction = () => {
@@ -21,11 +22,11 @@ export default function About() {
 	return (
 		<section className="container py-9">
 			<article className="prose dark:prose-invert lg:prose-xl">
-				{questions.map((question) => (
-					<>
-						<h2>{question.q}</h2>
-						<p>{question.a}</p>
-					</>
+				{questions.map(({ q, a }) => (
+					<Fragment key={q}>
+						<h2>{q}</h2>
+						<p>{a}</p>
+					</Fragment>
 				))}
 			</article>
 		</section>
