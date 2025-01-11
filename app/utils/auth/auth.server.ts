@@ -1,6 +1,6 @@
 import { createCookieSessionStorage, redirect } from '@remix-run/node'
 import dayjs from 'dayjs'
-import { eq } from 'drizzle-orm'
+import { and, eq, lt } from 'drizzle-orm'
 import { redirectBack } from 'remix-utils/redirect-back'
 import { safeRedirect } from 'remix-utils/safe-redirect'
 import { type z } from 'zod'
@@ -176,6 +176,15 @@ export const login = async (
 	},
 	init?: ResponseInit,
 ) => {
+	await db
+		.delete(sessionTable)
+		.where(
+			and(
+				eq(sessionTable.user_id, userId),
+				lt(sessionTable.expiration_at, new Date()),
+			),
+		)
+
 	const session = (
 		await db
 			.insert(sessionTable)
@@ -221,13 +230,10 @@ export const signUpWithConnection = async ({
 	)[0]!
 	const user_id = user.id
 
-	await db
-		.insert(connectionTable)
-		.values({
-			...connectionInsert,
-			user_id,
-		})
-		.then()
+	await db.insert(connectionTable).values({
+		...connectionInsert,
+		user_id,
+	})
 
 	if (userImageUrl) {
 		await downloadFile(userImageUrl)

@@ -1,6 +1,7 @@
 import { relations, sql } from 'drizzle-orm'
 import {
 	blob,
+	index,
 	integer,
 	sqliteTable,
 	text,
@@ -53,20 +54,25 @@ export const connectionTable = sqliteTable(
 	(table) => [unique().on(table.provider_name, table.provider_id)],
 )
 
-export const sessionTable = sqliteTable('session', {
-	id: text('id').primaryKey().$default(createId).notNull(),
+export const sessionTable = sqliteTable(
+	'session',
+	{
+		id: text('id').primaryKey().$default(createId).notNull(),
 
-	expiration_at: integer('expiration_at', {
-		mode: 'timestamp_ms',
-	}).notNull(),
-	user_id: text('user_id')
-		.references(() => userTable.id, { onDelete: 'cascade' })
-		.notNull(),
+		expiration_at: integer('expiration_at', {
+			mode: 'timestamp_ms',
+		}).notNull(),
 
-	created_at: integer('created_at', { mode: 'timestamp_ms' })
-		.default(sql`(unixepoch('subsec') * 1000)`)
-		.notNull(),
-})
+		user_id: text('user_id')
+			.references(() => userTable.id, { onDelete: 'cascade' })
+			.notNull(),
+
+		created_at: integer('created_at', { mode: 'timestamp_ms' })
+			.default(sql`(unixepoch('subsec') * 1000)`)
+			.notNull(),
+	},
+	(table) => [index('user_id_idx').on(table.user_id)],
+)
 
 export const userSchema = createInsertSchema(userTable)
 export const imageSchema = createInsertSchema(userImageTable)
