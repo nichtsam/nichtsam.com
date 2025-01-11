@@ -15,7 +15,11 @@ export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export async function loader() {
+export function loader() {
+	throw new Response('Not found', { status: 404 })
+}
+
+export function action() {
 	throw new Response('Not found', { status: 404 })
 }
 
