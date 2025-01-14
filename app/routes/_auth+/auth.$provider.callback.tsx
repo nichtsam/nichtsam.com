@@ -1,7 +1,7 @@
 import { redirect, type LoaderFunctionArgs } from '@remix-run/node'
 import { getUserId, login } from '#app/utils/auth/auth.server.ts'
 import {
-	authenticator,
+	createAuthenticator,
 	connectionSessionStorage,
 } from '#app/utils/auth/connections.server.ts'
 import {
@@ -24,6 +24,7 @@ import {
 import { connectionTable } from '#drizzle/schema.ts'
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+	const authenticator = createAuthenticator(request)
 	const providerName = ProviderNameSchema.parse(params.provider)
 	const label = providerConfigs[providerName].label
 
@@ -31,7 +32,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 
 	timing.time('get oauth profile', 'Get OAuth Profile')
 	const authResult = await authenticator
-		.authenticate(providerName, request, { throwOnError: true })
+		.authenticate(providerName, request)
 		.then(
 			(data) => ({ success: true, data }) as const,
 			(error) => ({ success: false, error }) as const,
@@ -132,9 +133,13 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	}
 
 	// check if any user owns this connection's email, bind to that user and login
-	const emailOwner = await db.query.userTable.findFirst({
-		where: (userTable, { eq }) => eq(userTable.email, profile.email),
-	})
+	let emailOwner
+	if (profile.email) {
+		const email = profile.email
+		emailOwner = await db.query.userTable.findFirst({
+			where: (userTable, { eq }) => eq(userTable.email, email),
+		})
+	}
 
 	if (emailOwner) {
 		timing.time('insert connection', 'Relate connection to user')
@@ -173,7 +178,7 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 			profile: {
 				email: profile.email,
 				imageUrl: profile.imageUrl,
-				displayName: profile.name,
+				displayName: profile.name ?? undefined,
 				username: profile.username,
 			},
 		}),

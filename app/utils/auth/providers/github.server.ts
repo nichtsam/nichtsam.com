@@ -5,31 +5,91 @@ import { env } from '#app/utils/env.server.ts'
 import { type ServerTiming } from '#app/utils/timings.server.ts'
 import { type AuthProvider } from './model.ts'
 
+const getDisplayName = (profile: Profile) => profile.login
+const getProfileLink = (profile: Profile) =>
+	`https://github.com/${profile.login}`
+
 // pick needed from here: https://docs.github.com/en/rest/users/users?apiVersion=2022-11-28#get-a-user
-const GithubUserSchema = z.object({ login: z.string() })
-type GithubUser = z.infer<typeof GithubUserSchema>
-const getDisplayName = (user: GithubUser) => user.login
-const getProfileLink = (user: GithubUser) => `https://github.com/${user.login}`
+type Profile = z.infer<typeof ProfileSchema>
+const ProfileSchema = z.object({
+	avatar_url: z.string().url(),
+	login: z.string(),
+	name: z.string().nullable(),
+	id: z.number(),
+})
+const getProfile = async (accessToken: string) => {
+	const response = await fetch('https://api.github.com/user', {
+		headers: {
+			Accept: 'application/vnd.github+json',
+			Authorization: `Bearer ${accessToken}`,
+			'X-GitHub-Api-Version': '2022-11-28',
+		},
+	})
+
+	const result = ProfileSchema.safeParse(await response.json())
+	if (!result.success) {
+		throw new Error(
+			'Corrupted github profile, make sure the schema is in sync with lastet github api schema',
+		)
+	}
+	return result.data
+}
+
+const EmailsSchema = z.array(
+	z.object({
+		email: z.string(),
+		primary: z.boolean(),
+		verified: z.boolean(),
+	}),
+)
+const getEmails = async (accessToken: string) => {
+	const response = await fetch('https://api.github.com/user/emails', {
+		headers: {
+			Accept: 'application/vnd.github.v3+json',
+			Authorization: `token ${accessToken}`,
+			'X-GitHub-Api-Version': '2022-11-28',
+		},
+	})
+
+	const result = EmailsSchema.safeParse(await response.json())
+	if (!result.success) {
+		throw new Error(
+			'Corrupted github emails, make sure the schema is in sync with lastet github api schema',
+		)
+	}
+
+	const emails = result.data
+		.filter(({ verified }) => verified)
+		.sort((a, b) => {
+			return -(+a.primary - +b.primary)
+		})
+		.map(({ email }) => email)
+
+	return emails
+}
 
 export class GitHubProvider implements AuthProvider {
-	getAuthStrategy() {
+	getAuthStrategy(request: Request) {
 		return new GitHubStrategy(
 			{
-				clientID: env.GITHUB_CLIENT_ID,
+				clientId: env.GITHUB_CLIENT_ID,
 				clientSecret: env.GITHUB_CLIENT_SECRET,
-				callbackURL: '/auth/github/callback',
+				redirectURI: new URL('/auth/github/callback', request.url),
+				scopes: ['user'],
 			},
-			async ({ profile }) => {
-				const email = profile.emails[0]!.value.trim().toLowerCase()
-				const username = profile.displayName
-				const imageUrl = profile.photos[0]?.value
+			async ({ tokens }) => {
+				const accessToken = tokens.accessToken()
+				const [profile, emails] = await Promise.all([
+					getProfile(accessToken),
+					getEmails(accessToken),
+				])
 
 				return {
-					email,
-					id: profile.id,
-					username,
-					name: profile.name.givenName,
-					imageUrl,
+					email: emails[0],
+					id: profile.id.toString(),
+					username: profile.login,
+					name: profile.name,
+					imageUrl: profile.avatar_url,
 				}
 			},
 		)
@@ -50,7 +110,7 @@ export class GitHubProvider implements AuthProvider {
 					`https://api.github.com/user/${providerId}`,
 				)
 				const rawJson = await response.json()
-				const result = GithubUserSchema.safeParse(rawJson)
+				const result = ProfileSchema.safeParse(rawJson)
 
 				if (!result.success) {
 					context.metadata.ttl = 0

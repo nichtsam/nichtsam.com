@@ -19,7 +19,7 @@ export const onboardingCookie = createTypedCookie({
 			providerId: z.string(),
 			providerName: z.string(),
 			profile: z
-				.object({ email: z.string().email() })
+				.object({ email: z.string().email().optional() })
 				.merge(onboardingFormSchema.omit({ rememberMe: true }).partial()),
 		})
 		.nullable(),

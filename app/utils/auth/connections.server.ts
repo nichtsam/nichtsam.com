@@ -3,7 +3,6 @@ import { Authenticator } from 'remix-auth'
 import { env } from '#app/utils/env.server.ts'
 import { type ServerTiming } from '../timings.server.ts'
 import { type ProviderName } from './connections.tsx'
-import { DiscordProvider } from './providers/discord.server.ts'
 import { GitHubProvider } from './providers/github.server.ts'
 import { type AuthProvider, type ProviderUser } from './providers/model.ts'
 
@@ -20,15 +19,16 @@ export const connectionSessionStorage = createCookieSessionStorage({
 
 export const providers: Record<ProviderName, AuthProvider> = {
 	github: new GitHubProvider(),
-	discord: new DiscordProvider(),
 }
 
-export const authenticator = new Authenticator<ProviderUser>(
-	connectionSessionStorage,
-)
+export const createAuthenticator = (request: Request) => {
+	const authenticator = new Authenticator<ProviderUser>()
 
-for (const [providerName, provider] of Object.entries(providers)) {
-	authenticator.use(provider.getAuthStrategy(), providerName)
+	for (const [providerName, provider] of Object.entries(providers)) {
+		authenticator.use(provider.getAuthStrategy(request), providerName)
+	}
+
+	return authenticator
 }
 
 export function resolveConnectionInfo({

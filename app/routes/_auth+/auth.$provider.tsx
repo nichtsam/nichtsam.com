@@ -3,11 +3,12 @@ import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
 } from '#app/components/error-boundary.tsx'
-import { authenticator } from '#app/utils/auth/connections.server.ts'
+import { createAuthenticator } from '#app/utils/auth/connections.server.ts'
 import { ProviderNameSchema } from '#app/utils/auth/connections.tsx'
 import { setRedirectCookie } from '#app/utils/redirect.server.ts'
 
 export const action = async ({ request, params }: ActionFunctionArgs) => {
+	const authenticator = createAuthenticator(request)
 	const providerName = ProviderNameSchema.parse(params.provider)
 
 	try {

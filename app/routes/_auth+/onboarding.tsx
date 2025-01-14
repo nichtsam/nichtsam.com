@@ -80,7 +80,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 }
 
 export const action = async ({ request }: ActionFunctionArgs) => {
-	const { providerId, providerName, profile } = await requireData(request)
+	const { providerId, providerName } = await requireData(request)
 	const formData = await request.formData()
 
 	const submission = await parseWithZod(formData, {
@@ -98,21 +98,23 @@ export const action = async ({ request }: ActionFunctionArgs) => {
 					path: ['username'],
 				},
 			)
-			.transform(async ({ displayName, username, imageUrl, rememberMe }) => {
-				const session = await signUpWithConnection({
-					connection: {
-						provider_id: providerId,
-						provider_name: providerName,
-					},
-					user: {
-						email: profile.email,
-						username,
-						display_name: displayName,
-						imageUrl,
-					},
-				})
-				return { session, rememberMe }
-			}),
+			.transform(
+				async ({ email, displayName, username, imageUrl, rememberMe }) => {
+					const session = await signUpWithConnection({
+						connection: {
+							provider_id: providerId,
+							provider_name: providerName,
+						},
+						user: {
+							email,
+							username,
+							display_name: displayName,
+							imageUrl,
+						},
+					})
+					return { session, rememberMe }
+				},
+			),
 		async: true,
 	})
 
@@ -186,10 +188,20 @@ export default function OnBoarding() {
 								/>
 							</div>
 						) : null}
-						<div className="text-sm">
-							<p className="font-medium leading-none">Email</p>
-							<p className="overflow-x-auto font-light">{data.email}</p>
-						</div>
+						<Field
+							labelProps={{ children: 'Email' }}
+							inputProps={{
+								...getInputProps(fields.email, { type: 'email' }),
+								readOnly: !!data.prefillResult.initialValue.email,
+								autoComplete: 'name',
+							}}
+							errors={fields.email.errors}
+							help={
+								data.prefillResult.initialValue.email
+									? undefined
+									: "We didn't find any email linked, please input one."
+							}
+						/>
 						<Field
 							labelProps={{ children: 'How should we call you?' }}
 							inputProps={{
