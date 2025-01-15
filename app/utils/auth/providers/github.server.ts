@@ -4,6 +4,7 @@ import { cachified, longLivedCache } from '#app/utils/cache.server.ts'
 import { env } from '#app/utils/env.server.ts'
 import { type ServerTiming } from '#app/utils/timings.server.ts'
 import { type AuthProvider } from './model.ts'
+import { getDomainUrl } from '#app/utils/request.server.ts'
 
 const getDisplayName = (profile: Profile) => profile.login
 const getProfileLink = (profile: Profile) =>
@@ -74,7 +75,7 @@ export class GitHubProvider implements AuthProvider {
 			{
 				clientId: env.GITHUB_CLIENT_ID,
 				clientSecret: env.GITHUB_CLIENT_SECRET,
-				redirectURI: new URL('/auth/github/callback', request.url),
+				redirectURI: new URL('/auth/github/callback', getDomainUrl(request)),
 				scopes: ['user'],
 			},
 			async ({ tokens }) => {

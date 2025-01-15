@@ -4,6 +4,7 @@ import { cachified, longLivedCache } from '#app/utils/cache.server.ts'
 import { env } from '#app/utils/env.server.ts'
 import { type ServerTiming } from '#app/utils/timings.server.ts'
 import { type AuthProvider } from './model.ts'
+import { getDomainUrl } from '#app/utils/request.server.ts'
 
 const getEmail = (profile: Profile) =>
 	profile.verified && profile.email ? profile.email : undefined
@@ -46,7 +47,7 @@ export class DiscordProvider implements AuthProvider {
 			{
 				clientId: env.DISCORD_CLIENT_ID,
 				clientSecret: env.DISCORD_CLIENT_SECRET,
-				redirectURI: new URL('/auth/discord/callback', request.url),
+				redirectURI: new URL('/auth/discord/callback', getDomainUrl(request)),
 				scopes: ['identify', 'email'],
 			},
 			async ({ tokens }) => {
