@@ -5,8 +5,12 @@ import { Icon } from '#app/components/ui/icon.tsx'
 import { useIsPending } from '../ui.ts'
 
 export const GITHUB_PROVIDER_NAME = 'github'
+export const DISCORD_PROVIDER_NAME = 'discord'
 
-export const providerNames = [GITHUB_PROVIDER_NAME] as const
+export const providerNames = [
+	GITHUB_PROVIDER_NAME,
+	DISCORD_PROVIDER_NAME,
+] as const
 export const ProviderNameSchema = z.enum(providerNames)
 export type ProviderName = z.infer<typeof ProviderNameSchema>
 
@@ -18,6 +22,10 @@ export const providerConfigs: Record<ProviderName, ProviderConfig> = {
 	[GITHUB_PROVIDER_NAME]: {
 		label: 'Github',
 		icon: <Icon name="github-logo" className="inline-block" />,
+	},
+	[DISCORD_PROVIDER_NAME]: {
+		label: 'Discord',
+		icon: <Icon name="discord-logo" className="inline-block" />,
 	},
 }
 

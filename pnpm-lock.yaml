@@ -29,6 +29,9 @@ importers:
       '@nasa-gcn/remix-seo':
         specifier: 2.0.1
         version: 2.0.1(@remix-run/react@2.15.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.2))(@remix-run/server-runtime@2.15.2(typescript@5.7.2))
+      '@nichtsam/remix-auth-discord':
+        specifier: 3.0.0
+        version: 3.0.0(remix-auth@4.1.0)
       '@radix-ui/react-aspect-ratio':
         specifier: 1.1.1
         version: 1.1.1(@types/react-dom@19.0.2(@types/react@19.0.2))(@types/react@19.0.2)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -1406,6 +1409,11 @@ packages:
 
   '@neon-rs/load@0.0.4':
     resolution: {integrity: sha512-kTPhdZyTQxB+2wpiRcFWrDcejc4JI6tkPuS7UZCG4l6Zvc5kU/gGQ/ozvHTh1XR5tS+UlfAfGuPajjzQjCiHCw==}
+
+  '@nichtsam/remix-auth-discord@3.0.0':
+    resolution: {integrity: sha512-Ex1D27v3Z8pDdSG1rBTsu6QEuQMksi06T6B73+tBdYTj87Y5UWmFZuY8NAhESgTcXpGUHgG5iuZSKQc9gcrwDw==}
+    peerDependencies:
+      remix-auth: ^4.0.0
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -7898,6 +7906,15 @@ snapshots:
       lodash: 4.17.21
 
   '@neon-rs/load@0.0.4': {}
+
+  '@nichtsam/remix-auth-discord@3.0.0(remix-auth@4.1.0)':
+    dependencies:
+      '@mjackson/headers': 0.9.0
+      arctic: 3.1.2
+      debug: 4.3.7
+      remix-auth: 4.1.0
+    transitivePeerDependencies:
+      - supports-color
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
