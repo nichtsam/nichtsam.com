@@ -76,7 +76,7 @@ export class GitHubProvider implements AuthProvider {
 				clientId: env.GITHUB_CLIENT_ID,
 				clientSecret: env.GITHUB_CLIENT_SECRET,
 				redirectURI: new URL('/auth/github/callback', getDomainUrl(request)),
-				scopes: ['user'],
+				scopes: ['user:email'],
 			},
 			async ({ tokens }) => {
 				const accessToken = tokens.accessToken()
