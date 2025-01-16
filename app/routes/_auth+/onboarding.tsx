@@ -7,13 +7,12 @@ import {
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
-	type ActionFunctionArgs,
-	type LoaderFunctionArgs,
-	type MetaFunction,
 	data,
 	redirect,
-} from '@remix-run/node'
-import { Form, useActionData, useLoaderData } from '@remix-run/react'
+	Form,
+	useActionData,
+	useLoaderData,
+} from 'react-router'
 import { ErrorList, Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
 import {
@@ -35,12 +34,13 @@ import { onboardingFormSchema } from '#app/utils/auth/onboarding.ts'
 import { db } from '#app/utils/db.server.ts'
 import { destroyCookie } from '#app/utils/request.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
+import { type Route } from './+types/onboarding'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Onboarding | nichtsam' },
 		{
@@ -65,7 +65,7 @@ const requireData = async (request: Request) => {
 	}
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
 	const { profile } = await requireData(request)
 
 	const prefill = profile
@@ -79,7 +79,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	}
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
 	const { providerId, providerName } = await requireData(request)
 	const formData = await request.formData()
 

@@ -6,13 +6,13 @@ import chalk from 'chalk'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import {
-	type LoaderFunctionArgs,
+	ServerRouter,
 	type ActionFunctionArgs,
 	type HandleDocumentRequestFunction,
-	ServerRouter,
+	type LoaderFunctionArgs,
 } from 'react-router'
-import { forceEnvValidation } from './utils/env.server'
-import { NonceProvider } from './utils/nonce-provider'
+import { env, forceEnvValidation } from '#app/utils/env.server.ts'
+import { NonceProvider } from './utils/nonce-provider.tsx'
 
 forceEnvValidation()
 
@@ -24,29 +24,35 @@ export default function handleRequest(
 		request,
 		responseStatusCode,
 		responseHeaders,
-		routerContext,
+		reactRouterContext,
 		loadContext,
 	]: DocRequestArgs
 ) {
+	if (env.NODE_ENV === 'production' && env.SENTRY_DSN) {
+		responseHeaders.append('Document-Policy', 'js-profiling')
+	}
+
+	const nonce = String(loadContext.cspNonce)
+	const callbackName = isbot(request.headers.get('user-agent'))
+		? 'onAllReady'
+		: 'onShellReady'
+
 	return new Promise((resolve, reject) => {
 		let didError = false
-		let shellRendered = false
-
-		const nonce = String(loadContext.cspNonce)
-		const callbackName = isbot(request.headers.get('user-agent'))
-			? 'onAllReady'
-			: 'onShellReady'
 
 		const { pipe, abort } = renderToPipeableStream(
 			<NonceProvider value={nonce}>
-				<ServerRouter context={routerContext} url={request.url} nonce={nonce} />
+				<ServerRouter
+					context={reactRouterContext}
+					url={request.url}
+					nonce={nonce}
+				/>
 			</NonceProvider>,
+
 			{
-				[callbackName]() {
-					shellRendered = true
+				[callbackName]: () => {
 					const body = new PassThrough()
 					const stream = createReadableStreamFromReadable(body)
-
 					responseHeaders.set('Content-Type', 'text/html')
 
 					resolve(
@@ -55,21 +61,15 @@ export default function handleRequest(
 							status: didError ? 500 : responseStatusCode,
 						}),
 					)
-
 					pipe(body)
 				},
-				onShellError(error: unknown) {
-					reject(error)
+				onShellError: (err) => {
+					reject(err)
 				},
-				onError(error: unknown) {
+				onError: () => {
 					didError = true
-					// Log streaming rendering errors from inside the shell.  Don't log
-					// errors encountered during initial shell rendering since they'll
-					// reject and get logged in handleDocumentRequest.
-					if (shellRendered) {
-						console.error(error)
-					}
 				},
+				nonce,
 			},
 		)
 

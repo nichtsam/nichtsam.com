@@ -1,6 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { type LoaderFunctionArgs } from '@remix-run/node'
-import { Form, Outlet } from '@remix-run/react'
+import { type LoaderFunctionArgs, Form, Outlet } from 'react-router'
 import {
 	Avatar,
 	AvatarFallback,

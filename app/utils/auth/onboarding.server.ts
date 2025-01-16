@@ -1,4 +1,4 @@
-import { createCookie } from '@remix-run/node'
+import { createCookie } from 'react-router'
 import { createTypedCookie } from 'remix-utils/typed-cookie'
 import { z } from 'zod'
 import { env } from '#app/utils/env.server.ts'

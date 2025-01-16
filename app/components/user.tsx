@@ -1,5 +1,5 @@
-import { Form, Link, useLocation, useSubmit } from '@remix-run/react'
 import { useRef } from 'react'
+import { Form, Link, useLocation, useSubmit } from 'react-router'
 import { getUserImgSrc } from '#app/routes/resources+/user-images.$imageId.ts'
 import { cn, useIsPending } from '#app/utils/ui.ts'
 import { useOptionalUser, useUser } from '#app/utils/user.tsx'
@@ -77,9 +77,9 @@ export const UserActions = () => {
 
 				<DropdownMenuItem
 					asChild
-					onSelect={(event) => {
+					onSelect={async (event) => {
 						event.preventDefault()
-						submit(formRef.current)
+						await submit(formRef.current)
 					}}
 				>
 					<Form action="/logout" method="POST" ref={formRef}>

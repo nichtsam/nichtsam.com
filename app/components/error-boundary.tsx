@@ -1,3 +1,4 @@
+import { type ReactElement } from 'react'
 import {
 	Link,
 	isRouteErrorResponse,
@@ -6,8 +7,7 @@ import {
 	useRouteError,
 	type ErrorResponse,
 	type Location,
-} from '@remix-run/react'
-import { type ReactElement } from 'react'
+} from 'react-router'
 import { getErrorMessage } from '#app/utils/error.ts'
 import { Icon } from './ui/icon.tsx'
 

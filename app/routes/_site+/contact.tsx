@@ -1,4 +1,4 @@
-import { type HeadersFunction, type MetaFunction } from '@remix-run/node'
+import { type HeadersFunction, type MetaFunction } from 'react-router'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
 import { isUser, useOptionalUser } from '#app/utils/user.tsx'
 

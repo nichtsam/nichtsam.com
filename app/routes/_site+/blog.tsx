@@ -1,5 +1,10 @@
-import { data, type HeadersFunction, type MetaFunction } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
+import {
+	data,
+	type HeadersFunction,
+	type MetaFunction,
+	Link,
+	useLoaderData,
+} from 'react-router'
 import { type PostInfo, getPostInfos } from '#app/utils/mdx/blog.server.ts'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'

@@ -1,6 +1,6 @@
 import 'dotenv/config'
 import crypto from 'crypto'
-import { createRequestHandler } from '@remix-run/express'
+import { createRequestHandler } from '@react-router/express'
 import chalk from 'chalk'
 import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
@@ -150,7 +150,7 @@ app.use(express.static('build/client', { maxAge: '1h' }))
 
 function getBuild() {
 	return viteDevServer
-		? viteDevServer.ssrLoadModule('virtual:remix/server-build')
+		? viteDevServer.ssrLoadModule('virtual:react-router/server-build')
 		: import('./build/server/index.js')
 }
 

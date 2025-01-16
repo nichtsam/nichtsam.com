@@ -1,5 +1,5 @@
-import { type HeadersArgs } from '@remix-run/node'
 import { type CacheControlValue, format, parse } from '@tusbar/cache-control'
+import { type HeadersArgs } from 'react-router'
 
 export function pipeHeaders({
 	parentHeaders,

@@ -1,4 +1,3 @@
-import { type ActionFunctionArgs } from '@remix-run/node'
 import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
@@ -6,8 +5,9 @@ import {
 import { createAuthenticator } from '#app/utils/auth/connections.server.ts'
 import { ProviderNameSchema } from '#app/utils/auth/connections.tsx'
 import { setRedirectCookie } from '#app/utils/redirect.server.ts'
+import { type Route } from './+types/auth.$provider'
 
-export const action = async ({ request, params }: ActionFunctionArgs) => {
+export const action = async ({ request, params }: Route.ActionArgs) => {
 	const authenticator = createAuthenticator(request)
 	const providerName = ProviderNameSchema.parse(params.provider)
 

@@ -1,4 +1,4 @@
-import { type Cookie, type SessionStorage } from '@remix-run/node'
+import { type Cookie, type SessionStorage } from 'react-router'
 
 const mergeHeaders = (
 	main: Headers,

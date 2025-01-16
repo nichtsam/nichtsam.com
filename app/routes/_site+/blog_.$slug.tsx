@@ -4,8 +4,8 @@ import {
 	type HeadersFunction,
 	type LoaderFunctionArgs,
 	type MetaFunction,
-} from '@remix-run/node'
-import { useLoaderData } from '@remix-run/react'
+	useLoaderData,
+} from 'react-router'
 import { serverOnly$ } from 'vite-env-only/macros'
 import {
 	GeneralErrorBoundary,

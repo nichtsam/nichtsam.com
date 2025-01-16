@@ -1,5 +1,5 @@
-import { type HeadersFunction, type MetaFunction } from '@remix-run/node'
 import { Fragment } from 'react/jsx-runtime'
+import { type HeadersFunction, type MetaFunction } from 'react-router'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
 
 export const meta: MetaFunction = () => {

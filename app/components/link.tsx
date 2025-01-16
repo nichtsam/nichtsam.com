@@ -1,9 +1,9 @@
+import clsx from 'clsx'
+import { type AnchorHTMLAttributes, forwardRef } from 'react'
 import {
 	NavLink as RemixNavLink,
 	type NavLinkProps as RemixNavLinkProps,
-} from '@remix-run/react'
-import clsx from 'clsx'
-import { type AnchorHTMLAttributes, forwardRef } from 'react'
+} from 'react-router'
 
 export interface NavLinkProps extends RemixNavLinkProps {}
 

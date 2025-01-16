@@ -1,4 +1,4 @@
-import { redirect, type LoaderFunctionArgs } from '@remix-run/node'
+import { redirect } from 'react-router'
 import { getUserId, login } from '#app/utils/auth/auth.server.ts'
 import {
 	createAuthenticator,
@@ -22,8 +22,9 @@ import {
 	redirectWithToast,
 } from '#app/utils/toast.server.ts'
 import { connectionTable } from '#drizzle/schema.ts'
+import { type Route } from './+types/auth.$provider.callback'
 
-export const loader = async ({ request, params }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params }: Route.LoaderArgs) => {
 	const authenticator = createAuthenticator(request)
 	const providerName = ProviderNameSchema.parse(params.provider)
 	const label = providerConfigs[providerName].label
@@ -34,8 +35,16 @@ export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	const authResult = await authenticator
 		.authenticate(providerName, request)
 		.then(
-			(data) => ({ success: true, data }) as const,
-			(error) => ({ success: false, error }) as const,
+			(data) =>
+				({
+					success: true,
+					data,
+				}) as const,
+			(error) =>
+				({
+					success: false,
+					error,
+				}) as const,
 		)
 	timing.timeEnd('get oauth profile')
 

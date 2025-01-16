@@ -1,6 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { type LoaderFunctionArgs, type MetaFunction } from '@remix-run/node'
-import { useSearchParams } from '@remix-run/react'
+import { useSearchParams } from 'react-router'
 import {
 	Card,
 	CardContent,
@@ -13,12 +12,13 @@ import {
 	ProviderConnectionForm,
 	providerNames,
 } from '#app/utils/auth/connections.tsx'
+import { type Route } from './+types/login'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Login | nichtsam' },
 		{
@@ -28,7 +28,7 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
 	await requireAnonymous(request)
 
 	return null

@@ -1,3 +1,5 @@
+import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix'
+import clsx from 'clsx'
 import {
 	data,
 	type MetaFunction,
@@ -5,8 +7,6 @@ import {
 	type LoaderFunctionArgs,
 	type ActionFunctionArgs,
 	type HeadersFunction,
-} from '@remix-run/node'
-import {
 	Links,
 	Meta,
 	Outlet,
@@ -15,9 +15,7 @@ import {
 	useLoaderData,
 	useRouteError,
 	useRouteLoaderData,
-} from '@remix-run/react'
-import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix'
-import clsx from 'clsx'
+} from 'react-router'
 import { AuthenticityTokenProvider } from 'remix-utils/csrf/react'
 import appStylesheet from '#app/styles/app.css?url'
 import {

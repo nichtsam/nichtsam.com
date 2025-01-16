@@ -4,12 +4,12 @@
 
 import { resolve } from 'path'
 import { faker } from '@faker-js/faker'
-import { useMatches, type UIMatch } from '@remix-run/react'
 import { render, screen } from '@testing-library/react'
+import { useMatches, type UIMatch } from 'react-router'
 import { describe, expect, test, vi } from 'vitest'
 import { useBreadcrumbs } from './breadcrumb.tsx'
 
-vi.mock('@remix-run/react', () => {
+vi.mock('react-router', () => {
 	return {
 		useMatches: vi.fn(),
 		Link: 'a',

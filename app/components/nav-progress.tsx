@@ -1,6 +1,6 @@
 import * as ProgressPrimitive from '@radix-ui/react-progress'
-import { useNavigation } from '@remix-run/react'
 import { useEffect, useRef, useState } from 'react'
+import { useNavigation } from 'react-router'
 import { useSpinDelay } from 'spin-delay'
 import { cn } from '#app/utils/ui.ts'
 import { Icon } from './ui/icon.tsx'

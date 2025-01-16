@@ -1,13 +1,7 @@
-import { vitePlugin as remix } from '@remix-run/dev'
+import { reactRouter } from '@react-router/dev/vite'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { defineConfig } from 'vite'
 import { envOnlyMacros } from 'vite-env-only'
-
-declare module '@remix-run/node' {
-	interface Future {
-		v3_singleFetch: true
-	}
-}
 
 export default defineConfig({
 	build: {
@@ -18,18 +12,7 @@ export default defineConfig({
 
 	plugins: [
 		envOnlyMacros(),
-		remix({
-			future: {
-				unstable_optimizeDeps: true,
-				v3_routeConfig: true,
-				v3_fetcherPersist: true,
-				v3_relativeSplatPath: true,
-				v3_lazyRouteDiscovery: true,
-				v3_throwAbortReason: true,
-				v3_singleFetch: true,
-			},
-			serverModuleFormat: 'esm',
-		}),
+		reactRouter(),
 
 		process.env.SENTRY_AUTH_TOKEN
 			? sentryVitePlugin({

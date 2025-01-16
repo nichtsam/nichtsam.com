@@ -1,5 +1,5 @@
-import { Link, useLocation } from '@remix-run/react'
 import { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router'
 import { coreNav } from '#app/config/nav.tsx'
 import { ThemeSwitcher } from '#app/utils/theme.tsx'
 import { NavLink } from './link'

@@ -1,4 +1,4 @@
-import { type LoaderFunctionArgs } from '@remix-run/node'
+import { type LoaderFunctionArgs } from 'react-router'
 import { db } from '#app/utils/db.server.ts'
 import { unvariant } from '#app/utils/misc.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'

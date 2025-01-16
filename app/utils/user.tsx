@@ -1,4 +1,4 @@
-import { type useLoaderData, useRouteLoaderData } from '@remix-run/react'
+import { type useLoaderData, useRouteLoaderData } from 'react-router'
 import { type loader as rootLoader } from '#app/root.tsx'
 
 export const isUser = (

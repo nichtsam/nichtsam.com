@@ -1,6 +1,6 @@
-import { useRevalidator } from '@remix-run/react'
 import { parse as parseCookie } from 'cookie'
 import { useEffect } from 'react'
+import { useRevalidator } from 'react-router'
 import { type Theme } from './theme.server.ts'
 
 type ClientHintConfigSchema = {
@@ -75,7 +75,7 @@ export const ClientHintsCheck = ({ nonce }: { nonce: string }) => {
 			document.cookie = `${clientHintConfigs.theme.cookieName}=${
 				themeQuery.matches ? 'dark' : 'light'
 			}`
-			revalidate()
+			void revalidate()
 		}
 
 		themeQuery.addEventListener('change', handleThemeChange)
