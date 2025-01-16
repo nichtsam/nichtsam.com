@@ -2,9 +2,9 @@ import { DiscordStrategy } from '@nichtsam/remix-auth-discord'
 import { z } from 'zod'
 import { cachified, longLivedCache } from '#app/utils/cache.server.ts'
 import { env } from '#app/utils/env.server.ts'
+import { getDomainUrl } from '#app/utils/request.server.ts'
 import { type ServerTiming } from '#app/utils/timings.server.ts'
 import { type AuthProvider } from './model.ts'
-import { getDomainUrl } from '#app/utils/request.server.ts'
 
 const getEmail = (profile: Profile) =>
 	profile.verified && profile.email ? profile.email : undefined
