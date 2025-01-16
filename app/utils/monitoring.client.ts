@@ -1,14 +1,14 @@
-import {
-	init as sentryInit,
-	browserTracingIntegration,
-	replayIntegration,
-	browserProfilingIntegration,
-} from '@sentry/remix'
+import * as Sentry from '@sentry/react'
 import { useEffect } from 'react'
-import { useLocation, useMatches } from 'react-router'
+import {
+	useLocation,
+	useNavigationType,
+	createRoutesFromChildren,
+	matchRoutes,
+} from 'react-router'
 
 export function init() {
-	sentryInit({
+	Sentry.init({
 		dsn: window.ENV.SENTRY_DSN,
 		tracesSampleRate: 1,
 		profilesSampleRate: 1,
@@ -16,13 +16,15 @@ export function init() {
 		replaysOnErrorSampleRate: 1,
 
 		integrations: [
-			browserTracingIntegration({
+			Sentry.replayIntegration(),
+			Sentry.browserProfilingIntegration(),
+			Sentry.reactRouterV7BrowserTracingIntegration({
 				useEffect,
 				useLocation,
-				useMatches,
+				useNavigationType,
+				createRoutesFromChildren,
+				matchRoutes,
 			}),
-			replayIntegration(),
-			browserProfilingIntegration(),
 		],
 	})
 }

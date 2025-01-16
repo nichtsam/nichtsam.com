@@ -1,4 +1,3 @@
-import { captureRemixErrorBoundaryError, withSentry } from '@sentry/remix'
 import clsx from 'clsx'
 import {
 	data,
@@ -13,7 +12,6 @@ import {
 	Scripts,
 	ScrollRestoration,
 	useLoaderData,
-	useRouteError,
 	useRouteLoaderData,
 } from 'react-router'
 import { AuthenticityTokenProvider } from 'remix-utils/csrf/react'
@@ -212,7 +210,7 @@ function AppWithProviders() {
 	)
 }
 
-export default withSentry(AppWithProviders)
+export default AppWithProviders
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const data = useRouteLoaderData<typeof loader>('root')
@@ -226,9 +224,4 @@ export function Layout({ children }: { children: React.ReactNode }) {
 	)
 }
 
-export function ErrorBoundary() {
-	const error = useRouteError()
-	captureRemixErrorBoundaryError(error)
-
-	return <GeneralErrorBoundary />
-}
+export const ErrorBoundary = GeneralErrorBoundary
