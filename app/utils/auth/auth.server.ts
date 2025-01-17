@@ -157,7 +157,7 @@ export const logout = async (
 	if (redirectTo) {
 		throw redirect(safeRedirect(redirectTo), responseInit)
 	} else {
-		throw redirectBack(request, {
+		return redirectBack(request, {
 			fallback: '/',
 			...responseInit,
 		})
