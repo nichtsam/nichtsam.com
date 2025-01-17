@@ -28,14 +28,14 @@ export default function handleRequest(
 		loadContext,
 	]: DocRequestArgs
 ) {
+	const nonce = String(loadContext.cspNonce)
+	const callbackName = isbot(request.headers.get('user-agent'))
+		? 'onAllReady'
+		: 'onShellReady'
+
 	return new Promise((resolve, reject) => {
 		let didError = false
 		let shellRendered = false
-
-		const nonce = String(loadContext.cspNonce)
-		const callbackName = isbot(request.headers.get('user-agent'))
-			? 'onAllReady'
-			: 'onShellReady'
 
 		const { pipe, abort } = renderToPipeableStream(
 			<NonceProvider value={nonce}>
@@ -70,6 +70,7 @@ export default function handleRequest(
 						console.error(error)
 					}
 				},
+				nonce,
 			},
 		)
 
