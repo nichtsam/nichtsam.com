@@ -7,11 +7,11 @@ import {
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import {
-	data,
 	redirect,
 	Form,
 	useActionData,
 	useLoaderData,
+	data,
 } from 'react-router'
 import { ErrorList, Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
@@ -27,6 +27,7 @@ import {
 	authSessionStorage,
 	getAuthSession,
 	requireAnonymous,
+	signUp,
 	signUpWithConnection,
 } from '#app/utils/auth/auth.server.ts'
 import { onboardingCookie } from '#app/utils/auth/onboarding.server.ts'
@@ -35,6 +36,7 @@ import { db } from '#app/utils/db.server.ts'
 import { destroyCookie } from '#app/utils/request.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
 import { type Route } from './+types/onboarding'
+import { sign } from 'node:crypto'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
@@ -66,21 +68,36 @@ const requireData = async (request: Request) => {
 }
 
 export const loader = async ({ request }: Route.LoaderArgs) => {
-	const { profile } = await requireData(request)
+	const data = await requireData(request)
 
-	const prefill = profile
-
-	return {
-		email: profile.email,
-		prefillResult: {
-			initialValue: prefill,
-			error: {},
-		} satisfies SubmissionResult,
+	switch (data.type) {
+		case 'oauth': {
+			return {
+				email: data.profile.email,
+				prefillResult: {
+					initialValue: data.profile,
+					error: {},
+				} satisfies SubmissionResult,
+			}
+		}
+		case 'magic-link': {
+			return {
+				email: data.email,
+				prefillResult: {
+					initialValue: {
+						email: data.email,
+					},
+					error: {},
+				} satisfies SubmissionResult,
+			}
+		}
+		default:
+			throw new Error('Unknown Onboarding Type')
 	}
 }
 
 export const action = async ({ request }: Route.ActionArgs) => {
-	const { providerId, providerName } = await requireData(request)
+	const onboardingData = await requireData(request)
 	const formData = await request.formData()
 
 	const submission = await parseWithZod(formData, {
@@ -100,19 +117,35 @@ export const action = async ({ request }: Route.ActionArgs) => {
 			)
 			.transform(
 				async ({ email, displayName, username, imageUrl, rememberMe }) => {
-					const session = await signUpWithConnection({
-						connection: {
-							provider_id: providerId,
-							provider_name: providerName,
-						},
-						user: {
-							email,
-							username,
-							display_name: displayName,
-							imageUrl,
-						},
-					})
-					return { session, rememberMe }
+					switch (onboardingData.type) {
+						case 'oauth': {
+							const session = await signUpWithConnection({
+								connection: {
+									provider_id: onboardingData.providerId,
+									provider_name: onboardingData.providerName,
+								},
+								user: {
+									email,
+									username,
+									display_name: displayName,
+									imageUrl,
+								},
+							})
+							return { session, rememberMe }
+						}
+						case 'magic-link': {
+							const { session } = await signUp({
+								user: {
+									email,
+									username,
+									display_name: displayName,
+									imageUrl,
+								},
+							})
+
+							return { session, rememberMe }
+						}
+					}
 				},
 			),
 		async: true,

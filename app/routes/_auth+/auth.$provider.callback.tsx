@@ -182,6 +182,7 @@ export const loader = async ({ request, params }: Route.LoaderArgs) => {
 	headers.append(
 		'set-cookie',
 		await onboardingCookie.serialize({
+			type: 'oauth',
 			providerId: profile.id,
 			providerName,
 			profile: {

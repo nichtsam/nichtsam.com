@@ -207,11 +207,30 @@ export const login = async (
 
 export const signUpWithConnection = async ({
 	connection: connectionInsert,
-	user: { imageUrl: userImageUrl, ...userInsert },
+	user,
 }: {
 	connection: Prettify<
 		Pick<z.infer<typeof connectionSchema>, 'provider_name' | 'provider_id'>
 	>
+	user: Prettify<
+		Pick<z.infer<typeof userSchema>, 'email' | 'username' | 'display_name'> & {
+			imageUrl?: string
+		}
+	>
+}) => {
+	const data = await signUp({ user })
+
+	await db.insert(connectionTable).values({
+		...connectionInsert,
+		user_id: data.user.id,
+	})
+
+	return data.session
+}
+
+export const signUp = async ({
+	user: { imageUrl: userImageUrl, ...userInsert },
+}: {
 	user: Prettify<
 		Pick<z.infer<typeof userSchema>, 'email' | 'username' | 'display_name'> & {
 			imageUrl?: string
@@ -229,11 +248,6 @@ export const signUpWithConnection = async ({
 			.returning()
 	)[0]!
 	const user_id = user.id
-
-	await db.insert(connectionTable).values({
-		...connectionInsert,
-		user_id,
-	})
 
 	if (userImageUrl) {
 		await downloadFile(userImageUrl)
@@ -257,5 +271,8 @@ export const signUpWithConnection = async ({
 			})
 	)[0]!
 
-	return session
+	return {
+		user,
+		session,
+	}
 }
