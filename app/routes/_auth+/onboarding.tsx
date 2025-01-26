@@ -36,7 +36,6 @@ import { db } from '#app/utils/db.server.ts'
 import { destroyCookie } from '#app/utils/request.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
 import { type Route } from './+types/onboarding'
-import { sign } from 'node:crypto'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
