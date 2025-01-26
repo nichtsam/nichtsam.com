@@ -1,14 +1,7 @@
 import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import {
-	data,
-	Form,
-	redirect,
-	useActionData,
-	useLoaderData,
-	useSearchParams,
-} from 'react-router'
+import { data, Form, useActionData, useSearchParams } from 'react-router'
 import { z } from 'zod'
 import { Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
@@ -19,18 +12,17 @@ import {
 	CardHeader,
 	CardTitle,
 } from '#app/components/ui/card.tsx'
+import { Separator } from '#app/components/ui/separator.tsx'
 import { requireAnonymous } from '#app/utils/auth/auth.server.ts'
 import {
 	ProviderConnectionForm,
 	providerNames,
 } from '#app/utils/auth/connections.tsx'
 import { createAuthenticator } from '#app/utils/auth/magic-link.server.ts'
+import { combineHeaders } from '#app/utils/request.server.ts'
+import { createToastHeaders } from '#app/utils/toast.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
 import { type Route } from './+types/login'
-import { parse } from 'cookie'
-import { Separator } from '#app/components/ui/separator.tsx'
-import { createToastHeaders, getToast } from '#app/utils/toast.server.ts'
-import { combineHeaders } from '#app/utils/request.server.ts'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
