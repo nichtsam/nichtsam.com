@@ -9,7 +9,7 @@ export interface StatusButtonProps extends ButtonProps {
 export const StatusButton = forwardRef<HTMLButtonElement, StatusButtonProps>(
 	({ status, className, children, ...props }, ref) => {
 		const statusIcon = {
-			success: <Icon name="check-circled" />,
+			success: <Icon name="check-circled" className="text-green-600" />,
 			pending: <Icon name="update" className="animate-spin" />,
 			error: (
 				<Icon

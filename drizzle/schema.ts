@@ -10,6 +10,7 @@ import {
 import { createInsertSchema } from 'drizzle-zod'
 import { nanoid as createId } from 'nanoid'
 
+export type User = typeof userTable.$inferSelect
 export const userTable = sqliteTable('user', {
 	id: text('id').primaryKey().$default(createId).notNull(),
 
