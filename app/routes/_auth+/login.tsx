@@ -3,7 +3,7 @@ import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { data, Form, useActionData, useSearchParams } from 'react-router'
 import { HoneypotInputs } from 'remix-utils/honeypot/react'
-import { z } from 'zod'
+import { unknown, z } from 'zod'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 import { Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
@@ -65,7 +65,12 @@ export async function action({ request }: Route.ActionArgs) {
 	const authenticator = createAuthenticator(request)
 	const authHeaders = (await authenticator
 		.authenticate('email-link', request)
-		.catch((headers) => headers)) as Headers
+		.catch((unknown) => {
+			if (unknown instanceof Headers) {
+				return unknown
+			}
+			throw unknown
+		})) as Headers
 
 	const toastHeaders = await createToastHeaders({
 		title: '✨ Magic Link has been sent',
