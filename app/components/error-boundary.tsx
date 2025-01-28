@@ -67,13 +67,27 @@ export const GeneralErrorBoundary = ({
 }
 
 const fallbackStatusHandler: StatusHandler = ({ error }) => (
-	<p>
-		{error.status} {error.data}
-	</p>
+	<div className="flex flex-col gap-6">
+		<div className="flex flex-col gap-3">
+			<code>
+				{error.status} {error.data}
+			</code>
+		</div>
+		<Link to="/" className="flex items-center gap-2 self-start text-lg">
+			<Icon name="arrow-left">Back to home</Icon>
+		</Link>
+	</div>
 )
 
 const fallbackUnexpectedErrorHandler: UnexpectedErrorHandler = ({ error }) => (
-	<p>{getErrorMessage(error)}</p>
+	<div className="flex flex-col gap-6">
+		<div className="flex flex-col gap-3">
+			<code>{getErrorMessage(error)}</code>
+		</div>
+		<Link to="/" className="flex items-center gap-2 self-start text-lg">
+			<Icon name="arrow-left">Back to home</Icon>
+		</Link>
+	</div>
 )
 
 export const generalNotFoundHandler: StatusHandler & UnexpectedErrorHandler = ({
