@@ -15,6 +15,7 @@ import {
 	useRouteLoaderData,
 } from 'react-router'
 import { AuthenticityTokenProvider } from 'remix-utils/csrf/react'
+import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import appStylesheet from '#app/styles/app.css?url'
 import {
 	publicEnv,
@@ -31,9 +32,10 @@ import { TooltipProvider } from './components/ui/tooltip.tsx'
 import { getUser, getUserId, logout } from './utils/auth/auth.server.ts'
 import { ClientHintsCheck, getHints } from './utils/client-hints.tsx'
 import { csrf } from './utils/csrf.server.ts'
+import { honeypot } from './utils/honeypot.server.tsx'
 import { useNonce } from './utils/nonce-provider.tsx'
 import { pipeHeaders } from './utils/remix.server.ts'
-import { combineHeaders } from './utils/request.server.ts'
+import { mergeHeaders } from './utils/request.server.ts'
 import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
 import { SET_THEME_INTENT, useOptionalTheme } from './utils/theme.tsx'
 import { ServerTiming } from './utils/timings.server.ts'
@@ -94,16 +96,17 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 		await logout({ request })
 	}
 
-	const [csrfToken, csrfCookieHeader] = await csrf.commitToken()
+	const [[csrfToken, csrfCookieHeader], toast, honeyProps] = await Promise.all([
+		csrf.commitToken(),
+		getToast(request),
+		honeypot.getInputProps(),
+	])
 
 	const headers = new Headers()
+	mergeHeaders(headers, toast?.discardHeaders)
+	csrfCookieHeader && headers.append('set-cookie', csrfCookieHeader)
 
-	if (csrfCookieHeader) {
-		headers.append('set-cookie', csrfCookieHeader)
-	}
-
-	const toast = await getToast(request)
-
+	headers.append('Server-Timing', timing.toString())
 	return data(
 		{
 			user,
@@ -116,11 +119,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 			},
 			toast: toast?.toast,
 			csrfToken,
+			honeyProps,
 		},
 		{
-			headers: combineHeaders(headers, toast?.discardHeaders, {
-				'Server-Timing': timing.toString(),
-			}),
+			headers,
 		},
 	)
 }
@@ -199,14 +201,16 @@ function App() {
 }
 
 function AppWithProviders() {
-	const { csrfToken } = useLoaderData<typeof loader>()
+	const { csrfToken, honeyProps } = useLoaderData<typeof loader>()
 
 	return (
-		<AuthenticityTokenProvider token={csrfToken}>
-			<TooltipProvider>
-				<App />
-			</TooltipProvider>
-		</AuthenticityTokenProvider>
+		<HoneypotProvider {...honeyProps}>
+			<AuthenticityTokenProvider token={csrfToken}>
+				<TooltipProvider>
+					<App />
+				</TooltipProvider>
+			</AuthenticityTokenProvider>
+		</HoneypotProvider>
 	)
 }
 

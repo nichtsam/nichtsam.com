@@ -2,6 +2,7 @@ import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { data, Form, useActionData, useSearchParams } from 'react-router'
+import { HoneypotInputs } from 'remix-utils/honeypot/react'
 import { z } from 'zod'
 import { Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
@@ -19,6 +20,7 @@ import {
 	providerNames,
 } from '#app/utils/auth/connections.tsx'
 import { createAuthenticator } from '#app/utils/auth/magic-link.server.ts'
+import { checkHoneypot } from '#app/utils/honeypot.server.tsx'
 import { combineHeaders } from '#app/utils/request.server.ts'
 import { createToastHeaders } from '#app/utils/toast.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
@@ -46,6 +48,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export async function action({ request }: Route.ActionArgs) {
 	const formData = await request.clone().formData()
+	await checkHoneypot(formData)
+
 	const submission = parseWithZod(formData, {
 		schema: MagicLinkLoginSchema,
 	})
@@ -123,6 +127,8 @@ function MagicLinkLogin() {
 
 	return (
 		<Form method="post" {...getFormProps(form)}>
+			<HoneypotInputs />
+
 			<Field
 				labelProps={{ children: 'Email' }}
 				inputProps={{
