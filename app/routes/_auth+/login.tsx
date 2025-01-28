@@ -4,6 +4,7 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { data, Form, useActionData, useSearchParams } from 'react-router'
 import { HoneypotInputs } from 'remix-utils/honeypot/react'
 import { z } from 'zod'
+import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
 import { Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
 import {
@@ -148,3 +149,5 @@ function MagicLinkLogin() {
 		</Form>
 	)
 }
+
+export const ErrorBoundary = GeneralErrorBoundary
