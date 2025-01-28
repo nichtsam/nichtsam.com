@@ -91,7 +91,7 @@
     "remix-auth": "4.1.0",
     "remix-auth-discord": "1.4.1",
     "remix-auth-github": "3.0.2",
-    "remix-utils": "8.0.0",
+    "remix-utils": "8.1.0",
     "resend": "4.1.1",
     "sonner": "1.7.1",
     "source-map-support": "0.5.21",
@@ -138,10 +138,5 @@
   "engines": {
     "node": "20",
     "pnpm": "9"
-  },
-  "pnpm": {
-    "patchedDependencies": {
-      "remix-utils": "patches/remix-utils.patch"
-    }
   }
 }

@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  remix-utils:
-    hash: zhxot5zfmdpaee33ixedpoengi
-    path: patches/remix-utils.patch
-
 importers:
 
   .:
@@ -224,8 +219,8 @@ importers:
         specifier: 3.0.2
         version: 3.0.2(remix-auth@4.1.0)
       remix-utils:
-        specifier: 8.0.0
-        version: 8.0.0(patch_hash=zhxot5zfmdpaee33ixedpoengi)(@oslojs/crypto@1.0.1)(@oslojs/encoding@1.1.0)(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(zod@3.24.1)
+        specifier: 8.1.0
+        version: 8.1.0(@oslojs/crypto@1.0.1)(@oslojs/encoding@1.1.0)(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(zod@3.24.1)
       resend:
         specifier: 4.1.1
         version: 4.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
@@ -6602,8 +6597,8 @@ packages:
     peerDependencies:
       '@remix-run/dev': ^1.15.0 || ^2
 
-  remix-utils@8.0.0:
-    resolution: {integrity: sha512-vrs8Iytnuwi+KF+VYOPT3vzDX7cLbys897pwzLpMzLjOXJQ/S60dApHCmQ9cPWH3XHRgvaoJjZ6+sMGaax4fbg==}
+  remix-utils@8.1.0:
+    resolution: {integrity: sha512-k44K4FOPyMv6QQ+yaQrCrXdnzkKE1b86ZUODAK5fvmWsmi7ntZAAA+Ods+nzNAxFEAPDTreCzl7cGWnxWd6ibw==}
     engines: {node: '>=20.0.0'}
     peerDependencies:
       '@oslojs/crypto': ^1.0.1
@@ -7177,8 +7172,8 @@ packages:
     resolution: {integrity: sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==}
     engines: {node: '>=8'}
 
-  type-fest@4.31.0:
-    resolution: {integrity: sha512-yCxltHW07Nkhv/1F6wWBr8kz+5BGMfP+RbRSYFnegVb0qV/UMT0G0ElBloPVerqn4M2ZV80Ir1FtCcYv1cT6vQ==}
+  type-fest@4.33.0:
+    resolution: {integrity: sha512-s6zVrxuyKbbAsSAD5ZPTB77q4YIdRctkTbJ2/Dqlinwz+8ooH2gd+YA7VA6Pa93KML9GockVvoxjZ2vHP+mu8g==}
     engines: {node: '>=16'}
 
   type-is@1.6.18:
@@ -14738,9 +14733,9 @@ snapshots:
       fs-extra: 11.2.0
       minimatch: 5.1.6
 
-  remix-utils@8.0.0(patch_hash=zhxot5zfmdpaee33ixedpoengi)(@oslojs/crypto@1.0.1)(@oslojs/encoding@1.1.0)(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(zod@3.24.1):
+  remix-utils@8.1.0(@oslojs/crypto@1.0.1)(@oslojs/encoding@1.1.0)(react-router@7.1.1(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(react@19.0.0)(zod@3.24.1):
     dependencies:
-      type-fest: 4.31.0
+      type-fest: 4.33.0
     optionalDependencies:
       '@oslojs/crypto': 1.0.1
       '@oslojs/encoding': 1.1.0
@@ -15389,7 +15384,7 @@ snapshots:
 
   type-fest@0.8.1: {}
 
-  type-fest@4.31.0: {}
+  type-fest@4.33.0: {}
 
   type-is@1.6.18:
     dependencies:

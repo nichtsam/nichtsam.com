@@ -10,7 +10,7 @@ FROM base as deps
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
-COPY patches /app/patches
+# COPY patches /app/patches
 RUN pnpm install
 
 FROM deps as prod-deps
