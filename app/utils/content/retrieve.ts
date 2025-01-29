@@ -113,7 +113,7 @@ function cachedRetrieve<
 	return cachified({
 		key,
 		cache: shortLivedCache,
-		swr: Infinity,
+		ttl: Infinity,
 		timing,
 		getFreshValue: () => retrieve(collection, name),
 	})
@@ -131,7 +131,7 @@ function cachedRetrieveAll<
 	return cachified({
 		key,
 		cache: shortLivedCache,
-		swr: Infinity,
+		ttl: Infinity,
 		timing,
 		getFreshValue: () => retrieveAll(collection),
 	})
