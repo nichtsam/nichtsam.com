@@ -63,7 +63,7 @@ function PostItem({
 		<li>
 			<Link
 				to={post.meta.slug}
-				className="inline-block w-full rounded-md p-4 hover:bg-accent hover:text-accent-foreground"
+				className="inline-block w-full rounded-md p-4 transition ease-out hover:scale-105 hover:bg-accent hover:text-accent-foreground"
 			>
 				<div className="flex items-baseline justify-between gap-x-2">
 					<div>
