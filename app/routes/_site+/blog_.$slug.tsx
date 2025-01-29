@@ -11,17 +11,18 @@ import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
 } from '#app/components/error-boundary.tsx'
-import { getPostInfos, getPostMeta } from '#app/utils/mdx/blog.server'
-import { bundleMDX } from '#app/utils/mdx/compile-mdx.server'
-import { useMdxComponent } from '#app/utils/mdx/mdx'
-import { getMdxBundleSource, getMdxEntry } from '#app/utils/mdx/mdx.server'
+import { posts as config } from '#app/utils/content/config.ts'
+import { bundleMDX } from '#app/utils/content/mdx/bundler.server.ts'
+import { getMdxSource } from '#app/utils/content/mdx/mdx.server.ts'
+import { useMdxComponent } from '#app/utils/content/mdx/mdx.tsx'
+import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/remix.server'
 import { ServerTiming } from '#app/utils/timings.server'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {
-		const posts = await getPostInfos()
-		return posts.map((post) => ({ route: `/blog/${post.slug}` }))
+		const posts = await retrieveAll(config)
+		return posts.map((post) => ({ route: `/blog/${post.meta.name}` }))
 	}),
 }
 
@@ -35,8 +36,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 		]
 	}
 	return [
-		{ title: `${data.meta.matter.title} | nichtsam` },
-		{ name: 'description', content: data.meta.matter.description },
+		{ title: `${data.matter.title} | nichtsam` },
+		{ name: 'description', content: data.matter.description },
 	]
 }
 
@@ -48,10 +49,11 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 	const slug = params.slug
 	const timing = new ServerTiming()
 
-	timing.time('get post mdx entry', 'Get post mdx entry')
-	const mdxEntry = getMdxEntry('blog', slug)
-	if (!mdxEntry) {
-		timing.timeEnd('get post mdx entry')
+	timing.time('get post', 'Get post')
+	const post = await retrieve(config, slug, timing)
+	timing.timeEnd('get post')
+
+	if (!post) {
 		throw new Response('Not found', {
 			status: 404,
 			headers: {
@@ -59,24 +61,18 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 			},
 		})
 	}
-	timing.timeEnd('get post mdx entry')
 
-	timing.time('get post mdx bundle', 'Get post mdx bundle')
-	const mdxBundle = await getMdxBundleSource(mdxEntry)
-	timing.timeEnd('get post mdx bundle')
-
-	timing.time('bundle post mdx', 'Bundle post mdx')
-	const { code } = await bundleMDX({ slug, bundle: mdxBundle, timing })
-	timing.timeEnd('bundle post mdx')
-
-	timing.time('get post meta', 'Get post meta')
-	const meta = getPostMeta(mdxBundle.source)
-	timing.timeEnd('get post meta')
+	const bundleSource = await getMdxSource(post.meta)
+	const { code } = await bundleMDX({
+		slug,
+		bundleSource,
+		timing,
+	})
 
 	return data(
 		{
 			code,
-			meta,
+			matter: post.matter,
 		},
 		{
 			headers: {
@@ -89,6 +85,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function BlogPost() {
 	const data = useLoaderData<typeof loader>()
+	console.log({ name: data.matter.title, code: data.code })
 	const Component = useMdxComponent(data.code)
 
 	return (

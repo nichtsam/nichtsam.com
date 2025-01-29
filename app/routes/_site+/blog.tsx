@@ -5,7 +5,8 @@ import {
 	Link,
 	useLoaderData,
 } from 'react-router'
-import { type PostInfo, getPostInfos } from '#app/utils/mdx/blog.server.ts'
+import { posts as config } from '#app/utils/content/config.ts'
+import { retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 
@@ -26,7 +27,7 @@ export const loader = async () => {
 	const timing = new ServerTiming()
 
 	timing.time('get posts', 'Get posts')
-	const posts = await getPostInfos()
+	const posts = await retrieveAll(config, timing)
 	timing.timeEnd('get posts')
 
 	return data(
@@ -46,35 +47,39 @@ export default function Blog() {
 		<div className="container max-w-[80ch]">
 			<ul className="flex flex-col gap-y-2">
 				{data.posts.map((post) => (
-					<PostItem key={post.slug} post={post} />
+					<PostItem key={post.meta.name} post={post} />
 				))}
 			</ul>
 		</div>
 	)
 }
 
-function PostItem({ post }: { post: PostInfo }) {
+function PostItem({
+	post,
+}: {
+	post: ReturnType<typeof useLoaderData<typeof loader>>['posts'][number]
+}) {
 	return (
 		<li>
 			<Link
-				to={post.slug}
+				to={post.meta.slug}
 				className="inline-block w-full rounded-md p-4 hover:bg-accent hover:text-accent-foreground"
 			>
 				<div className="flex items-baseline justify-between gap-x-2">
 					<div>
-						<h3 className="mr-2 inline text-lg">{post.meta.matter.title}</h3>
+						<h3 className="mr-2 inline text-lg">{post.matter.title}</h3>
 
 						<span className="whitespace-pre text-sm text-muted-foreground">
-							{post.meta.readingTime.text}
+							{post.readingTime}
 						</span>
 					</div>
 
-					<time dateTime={post.meta.matter.publishedDate} className="shrink-0">
-						{post.meta.matter.publishedDate}
+					<time dateTime={post.matter.publishedDate} className="shrink-0">
+						{post.matter.publishedDate}
 					</time>
 				</div>
 
-				<p className="text-muted-foreground">{post.meta.matter.description}</p>
+				<p className="text-muted-foreground">{post.matter.description}</p>
 			</Link>
 		</li>
 	)
