@@ -11,6 +11,7 @@ import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
 } from '#app/components/error-boundary.tsx'
+import shikiStylesheet from '#app/styles/shiki.css?url'
 import { posts as config } from '#app/utils/content/config.ts'
 import { bundleMDX } from '#app/utils/content/mdx/bundler.server.ts'
 import { getMdxSource } from '#app/utils/content/mdx/mdx.server.ts'
@@ -18,6 +19,11 @@ import { useMdxComponent } from '#app/utils/content/mdx/mdx.tsx'
 import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/remix.server'
 import { ServerTiming } from '#app/utils/timings.server'
+import { type Route } from './+types/blog_.$slug'
+
+export const links: Route.LinksFunction = () => [
+	{ rel: 'stylesheet', href: shikiStylesheet },
+]
 
 export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {

@@ -1,7 +1,10 @@
 import { remember } from '@epic-web/remember'
+import rehypeShiki from '@shikijs/rehype'
 import { bundleMDX as _bundleMDX } from 'mdx-bundler'
 import { type BundleMDX } from 'mdx-bundler/dist/types'
 import PQueue from 'p-queue'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
 import { cachified, longLivedCache } from '#app/utils/cache.server.ts'
 import { type ServerTiming } from '#app/utils/timings.server.ts'
 
@@ -16,7 +19,20 @@ async function bundleMDX({ source, files }: MdxSource) {
 		files,
 		mdxOptions(options) {
 			options.remarkPlugins = [...(options.remarkPlugins ?? [])]
-			options.rehypePlugins = [...(options.rehypePlugins ?? [])]
+			options.rehypePlugins = [
+				...(options.rehypePlugins ?? []),
+				[
+					rehypeShiki,
+					{
+						themes: {
+							light: 'catppuccin-latte',
+							dark: 'tokyo-night',
+						},
+					},
+				],
+				rehypeSlug,
+				[rehypeAutolinkHeadings, { behavior: 'wrap' }],
+			]
 			return options
 		},
 	})
