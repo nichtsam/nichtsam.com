@@ -13,12 +13,15 @@
     "build:icons": "tsx ./other/build-icons.ts",
     "build:router": "react-router build",
     "start": "cross-env NODE_ENV=production node ./server.js",
-    "typecheck": "react-router typegen && tsc",
-    "lint": "eslint .",
-    "format": "prettier --write .",
     "db:migrate": "tsx ./drizzle/migrate.ts",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "quality": "pnpm lint:fix && pnpm format",
+    "typecheck": "react-router typegen && tsc",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "validate": "pnpm quality && pnpm typecheck && pnpm coverage"
   },
   "dependencies": {
     "@conform-to/react": "1.2.2",
