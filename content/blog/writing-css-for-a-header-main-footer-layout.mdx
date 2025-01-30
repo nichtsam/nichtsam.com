@@ -22,16 +22,16 @@ To start, we need a root container for the header, main, and footer. While we co
 
 ```html
 <html>
-  <head>
-   ...
-  </head>
-  <body>
-    <div>
-      <header>...</header>
-      <main>...</main>
-      <footer>...</footer>
-    </div>
-  </body>
+	<head>
+		...
+	</head>
+	<body>
+		<div>
+			<header>...</header>
+			<main>...</main>
+			<footer>...</footer>
+		</div>
+	</body>
 </html>
 ```
 
@@ -44,9 +44,9 @@ In addition to `"min-h-screen"`, you can also use other CSS height units like `s
 
 ```html
 <div class="min-h-screen">
-  <header>...</header>
-  <main>...</main>
-  <footer>...</footer>
+	<header>...</header>
+	<main>...</main>
+	<footer>...</footer>
 </div>
 ```
 
@@ -56,9 +56,9 @@ To ensure that the main content fills the remaining space, we can apply the `"fl
 
 ```html
 <div class="min-h-screen">
-  <header>...</header>
-  <main class="flex-grow">...</main>
-  <footer>...</footer>
+	<header>...</header>
+	<main class="flex-grow">...</main>
+	<footer>...</footer>
 </div>
 ```
 
@@ -71,13 +71,13 @@ What if you have another element inside `<main>` that you want to stretch and fi
 
 ```html
 <div class="min-h-screen">
-  <header>...</header>
-  <main class="flex-grow flex flex-col">
-    <div>stuff</div>
-    <div class="flex-grow">filler</div>
-    <div>other stuff</div>
-  </main>
-  <footer>...</footer>
+	<header>...</header>
+	<main class="flex flex-grow flex-col">
+		<div>stuff</div>
+		<div class="flex-grow">filler</div>
+		<div>other stuff</div>
+	</main>
+	<footer>...</footer>
 </div>
 ```
 
@@ -85,18 +85,16 @@ and so on.
 
 ## Fixed Main Height with Scrollable Content
 
-What if you want the main content to have a fixed height but still be scrollable while taking up the remaining space? 
+What if you want the main content to have a fixed height but still be scrollable while taking up the remaining space?
 Due to the nature of flexbox, it will overflow, and we need to adjust to that.
 The default min-width value for an element is 0 (zero), and for flex items it is auto. This can make elements take up much more space than desired, resulting in overflow.
 So the solution here is to set `min-width` back to 0.
 
 ```html
 <div class="min-h-screen">
-  <header>...</header>
-  <main class="flex-grow flex flex-col min-h-0">
-    ...
-  </main>
-  <footer>...</footer>
+	<header>...</header>
+	<main class="flex min-h-0 flex-grow flex-col">...</main>
+	<footer>...</footer>
 </div>
 ```
 
