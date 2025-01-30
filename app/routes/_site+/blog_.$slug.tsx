@@ -85,7 +85,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 
 export default function BlogPost() {
 	const data = useLoaderData<typeof loader>()
-	console.log({ name: data.matter.title, code: data.code })
 	const Component = useMdxComponent(data.code)
 
 	return (
