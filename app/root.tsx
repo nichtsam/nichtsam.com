@@ -190,9 +190,9 @@ function App() {
 	useToast(data.toast)
 
 	return (
-		<div className="flex h-full min-h-screen flex-col">
+		<div className="flex min-h-screen flex-col">
 			<SiteHeader />
-			<main className="flex-1">
+			<main className="flex-grow">
 				<Outlet />
 			</main>
 			<SiteFooter />
