@@ -1,0 +1,103 @@
+---
+title: Writing CSS for a “Header + Main + Footer” Layout
+description: Sharing my experiences and insights on implementing a "Header + Main + Footer" layout
+publishedDate: 2025-01-30
+keywords:
+  - css
+  - tailwind
+  - layout
+---
+
+# {frontmatter.title}
+
+This is the layout I start with for almost every new project I begin. The concept is simple: a header, a main content container, and a footer, while ensuring a minimum height that fills the screen, with the main content filling the remaining space.
+
+I don’t enjoy writing vanilla CSS, so I will use [Tailwind CSS](https://tailwindcss.com/) in this article, though the general concepts apply to all CSS frameworks.
+
+It’s relatively simple; I’m just writing this post to keep a record of it.
+
+## The Basics
+
+To start, we need a root container for the header, main, and footer. While we could use the body tag, I prefer using a dedicated element (like a div) instead, as body is a single, global element.
+
+```html
+<html>
+  <head>
+   ...
+  </head>
+  <body>
+    <div>
+      <header>...</header>
+      <main>...</main>
+      <footer>...</footer>
+    </div>
+  </body>
+</html>
+```
+
+Now, we have the basic structure in place. Let’s move on to writing the styles.
+
+### Step 1: Full-Screen Height
+
+We want the root container to take up the full screen height. In Tailwind, we can achieve this by applying the `"min-h-screen"` class.
+In addition to `"min-h-screen"`, you can also use other CSS height units like `svh`, `lvh`, or `dvh` for more precise control over screen height.
+
+```html
+<div class="min-h-screen">
+  <header>...</header>
+  <main>...</main>
+  <footer>...</footer>
+</div>
+```
+
+### Step 2: Main Content Growing
+
+To ensure that the main content fills the remaining space, we can apply the `"flex-grow"` class to the main element.
+
+```html
+<div class="min-h-screen">
+  <header>...</header>
+  <main class="flex-grow">...</main>
+  <footer>...</footer>
+</div>
+```
+
+And that's it, you have a layout.
+Ok I know this is simple.
+
+## Handling Nested Elements
+
+What if you have another element inside `<main>` that you want to stretch and fill the available space? Simply using `"h-full"` wouldn’t work, so we need to apply flexbox principles deeper into the layout.
+
+```html
+<div class="min-h-screen">
+  <header>...</header>
+  <main class="flex-grow flex flex-col">
+    <div>stuff</div>
+    <div class="flex-grow">filler</div>
+    <div>other stuff</div>
+  </main>
+  <footer>...</footer>
+</div>
+```
+
+and so on.
+
+## Fixed Main Height with Scrollable Content
+
+What if you want the main content to have a fixed height but still be scrollable while taking up the remaining space? 
+Due to the nature of flexbox, it will overflow, and we need to adjust to that.
+The default min-width value for an element is 0 (zero), and for flex items it is auto. This can make elements take up much more space than desired, resulting in overflow.
+So the solution here is to set `min-width` back to 0.
+
+```html
+<div class="min-h-screen">
+  <header>...</header>
+  <main class="flex-grow flex flex-col min-h-0">
+    ...
+  </main>
+  <footer>...</footer>
+</div>
+```
+
+and that's it.
