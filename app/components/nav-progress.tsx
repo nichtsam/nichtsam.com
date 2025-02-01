@@ -37,34 +37,29 @@ function NavProgress() {
 	}, [busy])
 
 	return (
-		<div
-			role="progressbar"
+		<ProgressPrimitive.Root
 			aria-label="Page Navigation Progress"
 			aria-hidden={busy ? undefined : true}
 			aria-valuetext={busy ? 'Loading' : 'Idle'}
-			aria-valuenow={progressRate}
-			aria-valuemax={100}
-			aria-valuemin={0}
 			className={cn(
 				'pointer-events-none fixed inset-x-0 top-0 z-[60] flex flex-col items-end transition-all duration-500',
 				!busy && 'opacity-0',
 			)}
 		>
-			<ProgressPrimitive.Root
-				className={cn('relative h-1 w-full overflow-hidden bg-primary/20')}
-			>
+			<div className={cn('relative h-1 w-full overflow-hidden bg-primary/20')}>
 				<ProgressPrimitive.Indicator
 					ref={indicatorRef}
 					className="h-full w-full flex-1 bg-primary transition-all duration-500"
 					style={{ transform: `translateX(-${100 - progressRate}%)` }}
 				/>
-			</ProgressPrimitive.Root>
+			</div>
+
 			<Icon
 				name="loader-circle"
 				className={cn('m-1', { 'animate-spin': !animationComplete })}
 				aria-hidden
 			/>
-		</div>
+		</ProgressPrimitive.Root>
 	)
 }
 
