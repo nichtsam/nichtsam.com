@@ -1,11 +1,6 @@
 import clsx from 'clsx'
 import {
 	data,
-	type MetaFunction,
-	type LinksFunction,
-	type LoaderFunctionArgs,
-	type ActionFunctionArgs,
-	type HeadersFunction,
 	Links,
 	Meta,
 	Outlet,
@@ -23,6 +18,7 @@ import {
 	type PublicEnv,
 } from '#app/utils/env.server.ts'
 import { FaviconMeta, faviconLinks } from '#app/utils/favicon.tsx'
+import { type Route } from './+types/root.ts'
 import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { NavProgress } from './components/nav-progress.tsx'
 import { SiteFooter } from './components/site-footer.tsx'
@@ -35,20 +31,20 @@ import { csrf } from './utils/csrf.server.ts'
 import { honeypot } from './utils/honeypot.server.tsx'
 import { useNonce } from './utils/nonce-provider.tsx'
 import { pipeHeaders } from './utils/remix.server.ts'
-import { mergeHeaders } from './utils/request.server.ts'
+import { getFormData, mergeHeaders } from './utils/request.server.ts'
 import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
 import { SET_THEME_INTENT, useOptionalTheme } from './utils/theme.tsx'
 import { ServerTiming } from './utils/timings.server.ts'
 import { getToast } from './utils/toast.server.ts'
 import { useToast } from './utils/toast.ts'
 
-export const links: LinksFunction = () => [
+export const links: Route.LinksFunction = () => [
 	{ rel: 'stylesheet', href: appStylesheet },
 	{ rel: 'manifest', href: '/site.webmanifest' },
 	...faviconLinks,
 ]
 
-export const meta: MetaFunction = ({ data }) => {
+export const meta: Route.MetaFunction = ({ data }) => {
 	if (!data) {
 		return [
 			{ title: 'Error | nichtsam' },
@@ -70,7 +66,7 @@ export const meta: MetaFunction = ({ data }) => {
 	]
 }
 
-export const headers: HeadersFunction = (args) => {
+export const headers: Route.HeadersFunction = (args) => {
 	// document has authed personalized content
 	args.loaderHeaders.append('Cache-Control', 'private')
 	args.loaderHeaders.append('Vary', 'Cookie')
@@ -78,7 +74,7 @@ export const headers: HeadersFunction = (args) => {
 	return pipeHeaders(args)
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
 	forceEnvValidation()
 
 	const timing = new ServerTiming()
@@ -127,8 +123,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
 	)
 }
 
-export const action = async (args: ActionFunctionArgs) => {
-	const formData = await args.request.formData()
+export const action = async ({ request }: Route.ActionArgs) => {
+	const formData = await getFormData(request)
 	const intent = formData.get('intent')
 
 	switch (intent) {

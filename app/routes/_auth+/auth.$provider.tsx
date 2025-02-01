@@ -5,6 +5,7 @@ import {
 import { createAuthenticator } from '#app/utils/auth/connections.server.ts'
 import { ProviderNameSchema } from '#app/utils/auth/connections.tsx'
 import { setRedirectCookie } from '#app/utils/redirect.server.ts'
+import { getFormData } from '#app/utils/request.server.ts'
 import { type Route } from './+types/auth.$provider'
 
 export const action = async ({ request, params }: Route.ActionArgs) => {
@@ -15,7 +16,7 @@ export const action = async ({ request, params }: Route.ActionArgs) => {
 		return await authenticator.authenticate(providerName, request)
 	} catch (errorOrResponse: unknown) {
 		if (errorOrResponse instanceof Response) {
-			const formData = await request.formData()
+			const formData = await getFormData(request)
 			const redirectTo = formData.get('redirectTo')
 			if (typeof redirectTo === 'string') {
 				errorOrResponse.headers.append(

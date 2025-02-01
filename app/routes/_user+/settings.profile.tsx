@@ -1,5 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { type LoaderFunctionArgs, Form, Outlet } from 'react-router'
+import { Form, Outlet } from 'react-router'
 import {
 	Avatar,
 	AvatarFallback,
@@ -16,13 +16,14 @@ import { unvariant } from '#app/utils/misc.ts'
 import { cn, useIsPending } from '#app/utils/ui.ts'
 import { useUser } from '#app/utils/user.tsx'
 import { getUserImgSrc } from '../resources+/user-images.$imageId.ts'
+import { type Route } from './+types/settings.profile.ts'
 
 export const handle: SEOHandle & BreadcrumbHandle = {
 	getSitemapEntries: () => null,
 	breadcrumb: <Icon name="user">Profile</Icon>,
 }
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request }: Route.LoaderArgs) => {
 	await requireUserId(request)
 
 	return null

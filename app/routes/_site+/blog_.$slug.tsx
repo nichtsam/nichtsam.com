@@ -1,11 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import {
-	data,
-	type HeadersFunction,
-	type LoaderFunctionArgs,
-	type MetaFunction,
-	useLoaderData,
-} from 'react-router'
+import { data, useLoaderData } from 'react-router'
 import { serverOnly$ } from 'vite-env-only/macros'
 import {
 	GeneralErrorBoundary,
@@ -32,9 +26,9 @@ export const handle: SEOHandle = {
 	}),
 }
 
-export const headers: HeadersFunction = pipeHeaders
+export const headers: Route.HeadersFunction = pipeHeaders
 
-export const meta: MetaFunction<typeof loader> = ({ data }) => {
+export const meta: Route.MetaFunction = ({ data }) => {
 	if (!data) {
 		return [
 			{ title: 'Error | nichtsam' },
@@ -47,7 +41,7 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 	]
 }
 
-export const loader = async ({ params }: LoaderFunctionArgs) => {
+export const loader = async ({ params }: Route.LoaderArgs) => {
 	if (!params.slug) {
 		throw new Error('params.slug is not defined')
 	}

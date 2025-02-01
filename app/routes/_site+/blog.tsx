@@ -1,7 +1,5 @@
 import {
 	data,
-	type HeadersFunction,
-	type MetaFunction,
 	Link,
 	useLoaderData,
 } from 'react-router'
@@ -9,8 +7,9 @@ import { posts as config } from '#app/utils/content/config.ts'
 import { retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
+import { type Route } from './+types/blog'
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction= () => {
 	return [
 		{ title: 'Blog | nichtsam' },
 		{
@@ -21,7 +20,7 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const headers: HeadersFunction = pipeHeaders
+export const headers: Route.HeadersFunction = pipeHeaders
 
 export const loader = async () => {
 	const timing = new ServerTiming()

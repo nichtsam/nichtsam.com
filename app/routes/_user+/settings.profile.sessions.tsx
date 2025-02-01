@@ -1,12 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { and, count, eq, not } from 'drizzle-orm'
-import {
-	type MetaFunction,
-	type ActionFunctionArgs,
-	type LoaderFunctionArgs,
-	useFetcher,
-	useLoaderData,
-} from 'react-router'
+import { useFetcher, useLoaderData } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'
 import {
@@ -22,6 +16,8 @@ import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
 import { sessionTable } from '#drizzle/schema.ts'
+import { type Route } from './+types/settings.profile.sessions'
+import { getFormData } from '#app/utils/request.server.ts'
 
 export const handle: SEOHandle & BreadcrumbHandle = {
 	getSitemapEntries: () => null,
@@ -32,7 +28,7 @@ export const handle: SEOHandle & BreadcrumbHandle = {
 	),
 }
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Sessions | nichtsam' },
 		{
@@ -42,7 +38,7 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
 	const userId = await requireUserId(request)
 	const { sessionId } = await getAuthSession(request)
 
@@ -59,8 +55,8 @@ type ActionArgs = {
 	formData: FormData
 }
 
-export async function action({ request }: ActionFunctionArgs) {
-	const formData = await request.formData()
+export async function action({ request }: Route.ActionArgs) {
+	const formData = await getFormData(request)
 	await validateCSRF(formData, request.headers)
 	const intent = formData.get('intent')
 

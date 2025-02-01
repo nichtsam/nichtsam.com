@@ -1,7 +1,7 @@
-import { type HeadersFunction, type MetaFunction } from 'react-router'
 import { pipeHeaders } from '#app/utils/remix.server.ts'
+import { type Route } from './+types/_index'
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Home | nichtsam' },
 		{
@@ -12,7 +12,7 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const headers: HeadersFunction = (args) => {
+export const headers: Route.HeadersFunction = (args) => {
 	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
 	return pipeHeaders(args)
 }

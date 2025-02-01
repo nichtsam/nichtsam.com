@@ -2,15 +2,7 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import dayjs from 'dayjs'
 import { eq } from 'drizzle-orm'
 import { without } from 'ramda'
-import {
-	useFetcher,
-	useLoaderData,
-	data,
-	type MetaFunction,
-	type LoaderFunctionArgs,
-	type ActionFunctionArgs,
-	type HeadersFunction,
-} from 'react-router'
+import { useFetcher, useLoaderData, data } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'
 import {
@@ -50,6 +42,8 @@ import { pipeHeaders } from '#app/utils/remix.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
 import { connectionTable } from '#drizzle/schema.ts'
+import { type Route } from './+types/settings.profile.connections'
+import { getFormData } from '#app/utils/request.server.ts'
 
 export const handle: SEOHandle & BreadcrumbHandle = {
 	getSitemapEntries: () => null,
@@ -60,7 +54,7 @@ export const handle: SEOHandle & BreadcrumbHandle = {
 	),
 }
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Connections | nichtsam' },
 		{
@@ -70,9 +64,9 @@ export const meta: MetaFunction = () => {
 	]
 }
 
-export const headers: HeadersFunction = pipeHeaders
+export const headers: Route.HeadersFunction = pipeHeaders
 
-export async function loader({ request }: LoaderFunctionArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
 	const userId = await requireUserId(request)
 	const timing = new ServerTiming()
 	const connections = await getConnections(userId, timing)
@@ -88,8 +82,8 @@ type ActionArgs = {
 	formData: FormData
 }
 
-export async function action({ request }: ActionFunctionArgs) {
-	const formData = await request.formData()
+export async function action({ request }: Route.ActionArgs) {
+	const formData = await getFormData(request)
 	await validateCSRF(formData, request.headers)
 	const intent = formData.get('intent')
 

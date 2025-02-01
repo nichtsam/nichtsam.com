@@ -2,8 +2,6 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { eq } from 'drizzle-orm'
 import {
 	redirect,
-	type MetaFunction,
-	type LoaderFunctionArgs,
 	Form,
 	Link,
 } from 'react-router'
@@ -26,12 +24,14 @@ import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
 import { useDoubleCheck, useIsPending } from '#app/utils/ui.ts'
 import { userTable } from '#drizzle/schema.ts'
+import { type Route } from './+types/settings.profile._index'
+import { getFormData } from '#app/utils/request.server.ts'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export const meta: MetaFunction = () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Profile | nichtsam' },
 		{
@@ -43,9 +43,9 @@ export const meta: MetaFunction = () => {
 
 const INTENT_DELETE_ACCOUNT = 'INTENT_DELETE_ACCOUNT'
 
-export const action = async ({ request }: LoaderFunctionArgs) => {
+export const action = async ({ request }: Route.ActionArgs) => {
 	const userId = await requireUserId(request)
-	const formData = await request.formData()
+	const formData = await getFormData(request)
 	await validateCSRF(formData, request.headers)
 	const intent = formData.get('intent')
 

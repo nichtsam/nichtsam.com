@@ -1,5 +1,14 @@
 import { type Cookie, type SessionStorage } from 'react-router'
 
+const getFormData = async (request: Request) => {
+	try {
+		return await request.clone().formData()
+	} catch (err: unknown) {
+		console.error(err)
+		throw new Response('Invalid form', { status: 400 })
+	}
+}
+
 const mergeHeaders = (
 	main: Headers,
 	...headers: Array<ResponseInit['headers'] | null | undefined>
@@ -50,6 +59,7 @@ const getDomainUrl = (request: Request) => {
 }
 
 export {
+	getFormData,
 	mergeHeaders,
 	combineHeaders,
 	getCookieHeader,

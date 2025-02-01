@@ -22,7 +22,7 @@ import {
 } from '#app/utils/auth/connections.tsx'
 import { createAuthenticator } from '#app/utils/auth/magic-link.server.ts'
 import { checkHoneypot } from '#app/utils/honeypot.server.tsx'
-import { combineHeaders } from '#app/utils/request.server.ts'
+import { combineHeaders, getFormData } from '#app/utils/request.server.ts'
 import { createToastHeaders } from '#app/utils/toast.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
 import { type Route } from './+types/login'
@@ -48,7 +48,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export async function action({ request }: Route.ActionArgs) {
-	const formData = await request.clone().formData()
+	const formData = await getFormData(request)
 	await checkHoneypot(formData)
 
 	const submission = parseWithZod(formData, {

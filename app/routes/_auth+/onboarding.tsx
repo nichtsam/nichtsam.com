@@ -33,7 +33,7 @@ import {
 import { onboardingCookie } from '#app/utils/auth/onboarding.server.ts'
 import { onboardingFormSchema } from '#app/utils/auth/onboarding.ts'
 import { db } from '#app/utils/db.server.ts'
-import { destroyCookie } from '#app/utils/request.server.ts'
+import { destroyCookie, getFormData } from '#app/utils/request.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
 import { type Route } from './+types/onboarding'
 
@@ -97,7 +97,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 export const action = async ({ request }: Route.ActionArgs) => {
 	const onboardingData = await requireData(request)
-	const formData = await request.formData()
+	const formData = await getFormData(request)
 
 	const submission = await parseWithZod(formData, {
 		schema: onboardingFormSchema
