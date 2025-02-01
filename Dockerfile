@@ -22,15 +22,15 @@ RUN pnpm prune --prod
 FROM deps AS build
 
 ARG COMMIT_SHA
-ENV COMMIT_SHA $COMMIT_SHA
+ENV COMMIT_SHA=$COMMIT_SHA
 
 COPY . .
 
 # Sentry monitoring
 ARG SENTRY_ORG 
 ARG SENTRY_PROJECT 
-ENV SENTRY_ORG $SENTRY_ORG
-ENV SENTRY_PROJECT $SENTRY_PROJECT
+ENV SENTRY_ORG=$SENTRY_ORG
+ENV SENTRY_PROJECT=$SENTRY_PROJECT
 # Secured way to expose secret to the build 
 # https://docs.docker.com/build/building/secrets/
 RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
@@ -39,8 +39,8 @@ RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
 
 FROM base
 
-ENV NODE_ENV production
-ENV PORT 3000
+ENV NODE_ENV=production
+ENV PORT=3000
 EXPOSE 3000
 
 WORKDIR /app
