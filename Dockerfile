@@ -1,11 +1,13 @@
-FROM node:20-slim as base
+FROM node:20-slim AS base
 
-RUN apt-get update
-RUN apt-get -y install ca-certificates
-RUN corepack use pnpm@9
-RUN corepack enable pnpm
+RUN <<EOF
+apt-get update
+apt-get install -y --no-install-recommends ca-certificates
+corepack use pnpm@9
+corepack enable pnpm
+EOF
 
-FROM base as deps
+FROM base AS deps
 
 WORKDIR /app
 
@@ -13,11 +15,11 @@ COPY package.json pnpm-lock.yaml ./
 # COPY patches /app/patches
 RUN pnpm install
 
-FROM deps as prod-deps
+FROM deps AS prod-deps
 
 RUN pnpm prune --prod
 
-FROM deps as build
+FROM deps AS build
 
 ARG COMMIT_SHA
 ENV COMMIT_SHA $COMMIT_SHA
