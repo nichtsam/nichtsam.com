@@ -14,10 +14,10 @@ import { getAuthSession, requireUserId } from '#app/utils/auth/auth.server.ts'
 import { type BreadcrumbHandle } from '#app/utils/breadcrumb.tsx'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
+import { getFormData } from '#app/utils/request.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
 import { sessionTable } from '#drizzle/schema.ts'
 import { type Route } from './+types/settings.profile.sessions'
-import { getFormData } from '#app/utils/request.server.ts'
 
 export const handle: SEOHandle & BreadcrumbHandle = {
 	getSitemapEntries: () => null,

@@ -1,4 +1,4 @@
-import { pipeHeaders } from '#app/utils/remix.server.ts'
+import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { type Route } from './+types/_index'
 
 export const meta: Route.MetaFunction = () => {

@@ -38,12 +38,12 @@ import {
 import { type BreadcrumbHandle } from '#app/utils/breadcrumb.tsx'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
-import { pipeHeaders } from '#app/utils/remix.server.ts'
+import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { getFormData } from '#app/utils/request.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
 import { connectionTable } from '#drizzle/schema.ts'
 import { type Route } from './+types/settings.profile.connections'
-import { getFormData } from '#app/utils/request.server.ts'
 
 export const handle: SEOHandle & BreadcrumbHandle = {
 	getSitemapEntries: () => null,

@@ -1,6 +1,6 @@
 import { format, parse } from '@tusbar/cache-control'
 import { describe, expect, test } from 'vitest'
-import { getConservativeCacheControl } from './remix.server.ts'
+import { getConservativeCacheControl } from './headers.server.ts'
 
 describe('getConservativeCacheControl', () => {
 	test('works for basic usecase', () => {

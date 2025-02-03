@@ -1,8 +1,8 @@
-import { pipeHeaders } from '#app/utils/remix.server.ts'
+import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { isUser, useOptionalUser } from '#app/utils/user.tsx'
 import { type Route } from './+types/contact'
 
-export const meta: Route.MetaFunction= () => {
+export const meta: Route.MetaFunction = () => {
 	return [
 		{ title: 'Contact | nichtsam' },
 		{
@@ -13,7 +13,7 @@ export const meta: Route.MetaFunction= () => {
 	]
 }
 
-export const headers: Route.HeadersFunction= (args) => {
+export const headers: Route.HeadersFunction = (args) => {
 	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
 	return pipeHeaders(args)
 }

@@ -11,7 +11,7 @@ import { bundleMDX } from '#app/utils/content/mdx/bundler.server.ts'
 import { getMdxSource } from '#app/utils/content/mdx/mdx.server.ts'
 import { useMdxComponent } from '#app/utils/content/mdx/mdx.tsx'
 import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
-import { pipeHeaders } from '#app/utils/remix.server'
+import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { ServerTiming } from '#app/utils/timings.server'
 import { type Route } from './+types/blog_.$slug'
 
