@@ -36,18 +36,23 @@ export const GeneralErrorBoundary = ({
 	const error = useRouteError()
 	const params = useParams()
 	const location = useLocation()
+  const isResponse = isRouteErrorResponse(error)
 
 	if (typeof document !== 'undefined') {
 		console.error(error)
 	}
 
 	useEffect(() => {
+		if (isResponse) {
+			return
+		}
+
 		Sentry.captureException(error)
-	}, [error])
+	}, [error, isResponse])
 
 	return (
 		<div className="container flex items-center justify-center py-20">
-			{isRouteErrorResponse(error)
+			{isResponse
 				? (
 						statusHandlers?.[error.status] ??
 						defaultStatusHandler ??
