@@ -2,7 +2,6 @@ import { createCookie } from 'react-router'
 import { createTypedCookie } from 'remix-utils/typed-cookie'
 import { z } from 'zod'
 import { env } from '#app/utils/env.server.ts'
-import { unvariant } from '../misc.ts'
 import { onboardingFormSchema } from './onboarding.ts'
 
 const oauthSchema = z.object({
@@ -24,7 +23,7 @@ export const onboardingCookie = createTypedCookie({
 		path: '/',
 		sameSite: 'lax',
 		httpOnly: true,
-		maxAge: unvariant(env.NODE_ENV === 'production', 60 * 10),
+		maxAge: env.NODE_ENV === 'production' ? 60 * 10 : undefined,
 		secrets: env.SESSION_SECRET.split(','),
 		secure: env.NODE_ENV === 'production',
 	}),

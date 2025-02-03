@@ -7,19 +7,7 @@ import {
 	type Assertion,
 	type ExpectStatic,
 } from 'vitest'
-import { generateCallAll, unvariant } from './misc.ts'
-
-describe('fn unvariant', () => {
-	test('returns value if condition is true', () => {
-		const value = faker.lorem.text()
-		expect(unvariant(true, value)).toBe(value)
-	})
-
-	test('returns undefined if condition is false', () => {
-		const value = faker.lorem.text()
-		expect(unvariant(false, value)).toBe(undefined)
-	})
-})
+import { generateCallAll } from './misc.ts'
 
 describe('fn generateCallAll', () => {
 	test('generates a function that calls everyone', () => {

@@ -36,7 +36,7 @@ export const GeneralErrorBoundary = ({
 	const error = useRouteError()
 	const params = useParams()
 	const location = useLocation()
-  const isResponse = isRouteErrorResponse(error)
+	const isResponse = isRouteErrorResponse(error)
 
 	if (typeof document !== 'undefined') {
 		console.error(error)

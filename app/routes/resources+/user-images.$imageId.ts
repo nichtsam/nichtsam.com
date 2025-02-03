@@ -1,10 +1,9 @@
 import { db } from '#app/utils/db.server.ts'
-import { unvariant } from '#app/utils/misc.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/user-images.$imageId'
 
-export const getUserImgSrc = (imageId?: string | null) =>
-	unvariant(!!imageId, `/resources/user-images/${imageId}`)
+export const getUserImgSrc = (imageId: string) =>
+	`/resources/user-images/${imageId}`
 
 export async function loader({ params: { imageId } }: Route.LoaderArgs) {
 	if (!imageId) {

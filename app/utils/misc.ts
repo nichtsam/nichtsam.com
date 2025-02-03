@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 
-const sleep = (ms: number) =>
-	new Promise<void>((res) => setTimeout(() => res(), ms))
+export function sleep(ms: number) {
+	return new Promise<void>((res) => setTimeout(() => res(), ms))
+}
 
-const generateCallAll = <Args extends Array<unknown>>(
+export function generateCallAll<Args extends Array<unknown>>(
 	...fns: Array<((...arg: Args) => unknown) | null | undefined>
-) => {
+) {
 	return (...arg: Args) => fns.forEach((fn) => fn?.(...arg))
 }
 
-const unvariant = <T>(bool: boolean, value: T) => (bool ? value : undefined)
-
-async function downloadFile(
+export async function downloadFile(
 	url: string,
 	retries: number = 0,
 	max_retries: number = 3,
@@ -45,10 +44,6 @@ export function useClientJavascriptEnable() {
 	return clientJavascriptEnable
 }
 
-export { sleep, generateCallAll, unvariant, downloadFile }
-
-type Prettify<T> = {
+export type Prettify<T> = {
 	[K in keyof T]: T[K]
 } & {}
-
-export type { Prettify }

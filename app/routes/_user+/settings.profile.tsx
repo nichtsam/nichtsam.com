@@ -12,7 +12,6 @@ import {
 	type BreadcrumbHandle,
 	useBreadcrumbs,
 } from '#app/utils/breadcrumb.tsx'
-import { unvariant } from '#app/utils/misc.ts'
 import { cn, useIsPending } from '#app/utils/ui.ts'
 import { useUser } from '#app/utils/user.tsx'
 import { getUserImgSrc } from '../resources+/user-images.$imageId.ts'
@@ -48,7 +47,9 @@ const UserHeader = () => {
 	return (
 		<div className="flex flex-col items-center gap-4">
 			<Avatar className="h-40 w-40">
-				<AvatarImage src={getUserImgSrc(user.image?.id)} />
+				<AvatarImage
+					src={user.image ? getUserImgSrc(user.image.id) : undefined}
+				/>
 				<AvatarFallback>me</AvatarFallback>
 			</Avatar>
 			<div className="text-center">
@@ -90,7 +91,7 @@ const Breadcrumbs = () => {
 						'text-muted-foreground': i < arr.length - 1,
 					})}
 				>
-					{unvariant(i !== 0, <Icon name="chevron-right" />)}
+					{i !== 0 ? <Icon name="chevron-right" /> : null}
 					{element}
 				</li>
 			))}

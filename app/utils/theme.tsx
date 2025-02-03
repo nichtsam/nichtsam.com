@@ -4,7 +4,7 @@ import { useFetcher, useFetchers } from 'react-router'
 import { z } from 'zod'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
-import { unvariant, useClientJavascriptEnable } from './misc.ts'
+import { useClientJavascriptEnable } from './misc.ts'
 import {
 	useRequestInfo,
 	useHints,
@@ -89,14 +89,14 @@ export const ThemeSwitcher = () => {
 				variant="ghost"
 				aria-label="Dark Mode Toggler"
 				disabled={!clientJavascriptEnable}
-				className={unvariant(
-					!clientJavascriptEnable,
-					'disabled:pointer-events-auto',
-				)}
-				title={unvariant(
-					!clientJavascriptEnable,
-					'Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.',
-				)}
+				className={
+					!clientJavascriptEnable ? 'disabled:pointer-events-auto' : undefined
+				}
+				title={
+					!clientJavascriptEnable
+						? 'Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.'
+						: undefined
+				}
 			>
 				{modeLabel[nextMode]}
 			</Button>

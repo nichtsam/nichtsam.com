@@ -55,7 +55,7 @@ export const UserActions = () => {
 					>
 						<Avatar className="h-6 w-6">
 							<AvatarImage
-								src={getUserImgSrc(user.image?.id)}
+								src={user.image ? getUserImgSrc(user.image.id) : undefined}
 								alt={`The image of ${user.display_name}`}
 							/>
 							<AvatarFallback>me</AvatarFallback>
