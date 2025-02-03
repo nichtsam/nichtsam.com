@@ -1,6 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { and, count, eq, not } from 'drizzle-orm'
-import { useFetcher, useLoaderData } from 'react-router'
+import { type MetaArgs, useFetcher, useLoaderData } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'
 import {
@@ -14,6 +14,7 @@ import { getAuthSession, requireUserId } from '#app/utils/auth/auth.server.ts'
 import { type BreadcrumbHandle } from '#app/utils/breadcrumb.tsx'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { getFormData } from '#app/utils/request.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
 import { sessionTable } from '#drizzle/schema.ts'
@@ -28,15 +29,11 @@ export const handle: SEOHandle & BreadcrumbHandle = {
 	),
 }
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Sessions | nichtsam' },
-		{
-			name: 'description',
-			content: 'Manage your sessions of your account on nichtsam.com',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Sessions | nichtsam',
+		description: 'Manage your sessions of your account on nichtsam.com',
+	})
 
 export async function loader({ request }: Route.LoaderArgs) {
 	const userId = await requireUserId(request)

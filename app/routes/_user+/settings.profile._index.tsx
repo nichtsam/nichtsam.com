@@ -1,6 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { eq } from 'drizzle-orm'
-import { redirect, Form, Link } from 'react-router'
+import { redirect, Form, Link, type MetaArgs } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
@@ -18,6 +18,7 @@ import {
 } from '#app/utils/auth/auth.server.ts'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { getFormData } from '#app/utils/request.server.ts'
 import { useDoubleCheck, useIsPending } from '#app/utils/ui.ts'
 import { userTable } from '#drizzle/schema.ts'
@@ -27,15 +28,11 @@ export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Profile | nichtsam' },
-		{
-			name: 'description',
-			content: 'Your profile setting page on nichtsam.com',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Profile | nichtsam',
+		description: 'Your profile setting page on nichtsam.com',
+	})
 
 const INTENT_DELETE_ACCOUNT = 'INTENT_DELETE_ACCOUNT'
 

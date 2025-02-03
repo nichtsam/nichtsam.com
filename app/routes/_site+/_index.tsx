@@ -1,16 +1,12 @@
+import { type MetaArgs } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/_index'
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Home | nichtsam' },
-		{
-			name: 'description',
-			content:
-				'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Home | nichtsam',
+	})
 
 export const headers: Route.HeadersFunction = (args) => {
 	args.loaderHeaders.set('Cache-Control', 'max-age=86400')

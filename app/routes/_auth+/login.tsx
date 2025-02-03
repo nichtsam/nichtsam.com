@@ -1,7 +1,13 @@
 import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { data, Form, useActionData, useSearchParams } from 'react-router'
+import {
+	data,
+	Form,
+	type MetaArgs,
+	useActionData,
+	useSearchParams,
+} from 'react-router'
 import { HoneypotInputs } from 'remix-utils/honeypot/react'
 import { z } from 'zod'
 import { GeneralErrorBoundary } from '#app/components/error-boundary.tsx'
@@ -22,6 +28,7 @@ import {
 } from '#app/utils/auth/connections.tsx'
 import { createAuthenticator } from '#app/utils/auth/magic-link.server.ts'
 import { checkHoneypot } from '#app/utils/honeypot.server.tsx'
+import { buildMeta } from '#app/utils/meta.ts'
 import { combineHeaders, getFormData } from '#app/utils/request.server.ts'
 import { createToastHeaders } from '#app/utils/toast.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
@@ -31,15 +38,11 @@ export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Login | nichtsam' },
-		{
-			name: 'description',
-			content: 'Login to nichtsam.com',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Login | nichtsam',
+		description: 'Login to nichtsam.com',
+	})
 
 export async function loader({ request }: Route.LoaderArgs) {
 	await requireAnonymous(request)

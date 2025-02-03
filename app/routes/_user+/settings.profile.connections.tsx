@@ -2,7 +2,7 @@ import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import dayjs from 'dayjs'
 import { eq } from 'drizzle-orm'
 import { without } from 'ramda'
-import { useFetcher, useLoaderData, data } from 'react-router'
+import { useFetcher, useLoaderData, data, type MetaArgs } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'
 import {
@@ -39,6 +39,7 @@ import { type BreadcrumbHandle } from '#app/utils/breadcrumb.tsx'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { getFormData } from '#app/utils/request.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { useDoubleCheck } from '#app/utils/ui.ts'
@@ -54,15 +55,11 @@ export const handle: SEOHandle & BreadcrumbHandle = {
 	),
 }
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Connections | nichtsam' },
-		{
-			name: 'description',
-			content: 'Manage your connections of your account on nichtsam.com',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Connections | nichtsam',
+		description: 'Manage your connections of your account on nichtsam.com',
+	})
 
 export const headers: Route.HeadersFunction = pipeHeaders
 

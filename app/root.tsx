@@ -3,6 +3,7 @@ import {
 	data,
 	Links,
 	Meta,
+	type MetaArgs,
 	Outlet,
 	Scripts,
 	ScrollRestoration,
@@ -30,6 +31,7 @@ import { ClientHintsCheck, getHints } from './utils/client-hints.tsx'
 import { csrf } from './utils/csrf.server.ts'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { honeypot } from './utils/honeypot.server.tsx'
+import { buildMeta } from './utils/meta.ts'
 import { useNonce } from './utils/nonce-provider.tsx'
 import { getFormData, mergeHeaders } from './utils/request.server.ts'
 import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
@@ -44,27 +46,8 @@ export const links: Route.LinksFunction = () => [
 	...faviconLinks,
 ]
 
-export const meta: Route.MetaFunction = ({ data }) => {
-	if (!data) {
-		return [
-			{ title: 'Error | nichtsam' },
-			{
-				name: 'description',
-				content:
-					"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-			},
-		]
-	}
-
-	return [
-		{ title: 'nichtsam.com' },
-		{
-			name: 'description',
-			content:
-				'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs)
 
 export const headers: Route.HeadersFunction = (args) => {
 	// document has authed personalized content

@@ -1,17 +1,15 @@
+import { type MetaArgs } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { isUser, useOptionalUser } from '#app/utils/user.tsx'
 import { type Route } from './+types/contact'
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Contact | nichtsam' },
-		{
-			name: 'description',
-			content:
-				'Get in touch with Samuel through various channels. Whether it’s via email, social media, or another method, feel free to reach out, and Samuel will respond as soon as possible.',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Contact | nichtsam',
+		description:
+			'Get in touch with Samuel through various channels. Whether it’s via email, social media, or another method, feel free to reach out, and Samuel will respond as soon as possible.',
+	})
 
 export const headers: Route.HeadersFunction = (args) => {
 	args.loaderHeaders.set('Cache-Control', 'max-age=86400')

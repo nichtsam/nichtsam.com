@@ -1,20 +1,17 @@
-import { data, Link, useLoaderData } from 'react-router'
+import { data, Link, type MetaArgs, useLoaderData } from 'react-router'
 import { posts as config } from '#app/utils/content/config.ts'
 import { retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/blog'
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Blog | nichtsam' },
-		{
-			name: 'description',
-			content:
-				'Blog posts written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Blog | nichtsam',
+		description:
+			'Blog posts written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
+	})
 
 export const headers: Route.HeadersFunction = pipeHeaders
 

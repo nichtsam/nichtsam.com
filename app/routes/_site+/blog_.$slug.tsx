@@ -1,5 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { data, useLoaderData } from 'react-router'
+import { data, type MetaArgs, useLoaderData } from 'react-router'
 import { serverOnly$ } from 'vite-env-only/macros'
 import {
 	GeneralErrorBoundary,
@@ -12,6 +12,7 @@ import { getMdxSource } from '#app/utils/content/mdx/mdx.server.ts'
 import { useMdxComponent } from '#app/utils/content/mdx/mdx.tsx'
 import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { ServerTiming } from '#app/utils/timings.server'
 import { type Route } from './+types/blog_.$slug'
 
@@ -28,18 +29,11 @@ export const handle: SEOHandle = {
 
 export const headers: Route.HeadersFunction = pipeHeaders
 
-export const meta: Route.MetaFunction = ({ data }) => {
-	if (!data) {
-		return [
-			{ title: 'Error | nichtsam' },
-			{ name: 'description', content: 'Some error occured' },
-		]
-	}
-	return [
-		{ title: `${data.matter.title} | nichtsam` },
-		{ name: 'description', content: data.matter.description },
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: `${args.data.matter.title} | nichtsam`,
+		description: args.data.matter.description,
+	})
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
 	if (!params.slug) {

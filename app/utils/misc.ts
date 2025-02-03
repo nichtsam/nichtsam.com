@@ -4,6 +4,10 @@ export function sleep(ms: number) {
 	return new Promise<void>((res) => setTimeout(() => res(), ms))
 }
 
+export function removeTrailingSlash(s: string) {
+	return s.endsWith('/') ? s.slice(0, -1) : s
+}
+
 export function generateCallAll<Args extends Array<unknown>>(
 	...fns: Array<((...arg: Args) => unknown) | null | undefined>
 ) {

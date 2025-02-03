@@ -12,6 +12,7 @@ import {
 	useActionData,
 	useLoaderData,
 	data,
+	type MetaArgs,
 } from 'react-router'
 import { ErrorList, Field } from '#app/components/forms.tsx'
 import { StatusButton } from '#app/components/status-button.tsx'
@@ -33,6 +34,7 @@ import {
 import { onboardingCookie } from '#app/utils/auth/onboarding.server.ts'
 import { onboardingFormSchema } from '#app/utils/auth/onboarding.ts'
 import { db } from '#app/utils/db.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { destroyCookie, getFormData } from '#app/utils/request.server.ts'
 import { useIsPending } from '#app/utils/ui.ts'
 import { type Route } from './+types/onboarding'
@@ -41,16 +43,12 @@ export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'Onboarding | nichtsam' },
-		{
-			name: 'description',
-			content:
-				'Welcome to the onboarding process! Fill in the necessary information and get started with your experience on nichtsam.com!',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'Onboarding | nichtsam',
+		description:
+			'Welcome to the onboarding process! Fill in the necessary information and get started with your experience on nichtsam.com!',
+	})
 
 const requireData = async (request: Request) => {
 	await requireAnonymous(request)

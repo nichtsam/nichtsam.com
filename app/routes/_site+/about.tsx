@@ -1,17 +1,15 @@
 import { Fragment } from 'react/jsx-runtime'
+import { type MetaArgs } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
+import { buildMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/about'
 
-export const meta: Route.MetaFunction = () => {
-	return [
-		{ title: 'About | nichtsam' },
-		{
-			name: 'description',
-			content:
-				'Here are some questions and answers about Samuel. Read through to get to know him a bit better.',
-		},
-	]
-}
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta(args as unknown as MetaArgs, {
+		title: 'About | nichtsam',
+		description:
+			'Here are some questions and answers about Samuel. Read through to get to know him a bit better.',
+	})
 
 export const headers: Route.HeadersFunction = (args) => {
 	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
