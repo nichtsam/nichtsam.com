@@ -29,9 +29,12 @@ export const handle: SEOHandle = {
 }
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Profile | nichtsam',
-		description: 'Your profile setting page on nichtsam.com',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Profile | nichtsam',
+			description: 'Your profile setting page on nichtsam.com',
+		},
 	})
 
 const INTENT_DELETE_ACCOUNT = 'INTENT_DELETE_ACCOUNT'

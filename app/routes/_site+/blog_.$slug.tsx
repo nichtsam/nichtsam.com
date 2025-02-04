@@ -30,9 +30,12 @@ export const handle: SEOHandle = {
 export const headers: Route.HeadersFunction = pipeHeaders
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: `${args.data.matter.title} | nichtsam`,
-		description: args.data.matter.description,
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: `${args.data.matter.title} | nichtsam`,
+			description: args.data.matter.description,
+		},
 	})
 
 export const loader = async ({ params }: Route.LoaderArgs) => {

@@ -44,10 +44,13 @@ export const handle: SEOHandle = {
 }
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Onboarding | nichtsam',
-		description:
-			'Welcome to the onboarding process! Fill in the necessary information and get started with your experience on nichtsam.com!',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Onboarding | nichtsam',
+			description:
+				'Welcome to the onboarding process! Fill in the necessary information and get started with your experience on nichtsam.com!',
+		},
 	})
 
 const requireData = async (request: Request) => {

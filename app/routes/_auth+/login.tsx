@@ -39,9 +39,12 @@ export const handle: SEOHandle = {
 }
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Login | nichtsam',
-		description: 'Login to nichtsam.com',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Login | nichtsam',
+			description: 'Login to nichtsam.com',
+		},
 	})
 
 export async function loader({ request }: Route.LoaderArgs) {

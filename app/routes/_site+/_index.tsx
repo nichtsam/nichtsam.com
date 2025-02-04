@@ -4,8 +4,11 @@ import { buildMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/_index'
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Home | nichtsam',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Home | nichtsam',
+		},
 	})
 
 export const headers: Route.HeadersFunction = (args) => {

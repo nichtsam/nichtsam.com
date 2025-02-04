@@ -56,9 +56,12 @@ export const handle: SEOHandle & BreadcrumbHandle = {
 }
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Connections | nichtsam',
-		description: 'Manage your connections of your account on nichtsam.com',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Connections | nichtsam',
+			description: 'Manage your connections of your account on nichtsam.com',
+		},
 	})
 
 export const headers: Route.HeadersFunction = pipeHeaders

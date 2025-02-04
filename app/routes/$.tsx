@@ -6,14 +6,25 @@
 // message for them than the Remix and/or browser default.
 
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
+import { type MetaArgs } from 'react-router'
 import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
 } from '#app/components/error-boundary.tsx'
+import { buildMeta, notFoundMeta } from '#app/utils/meta.ts'
+import { type Route } from './+types/$'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
 }
+
+export const meta: Route.MetaFunction = (args) =>
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		statusMetas: {
+			404: notFoundMeta,
+		},
+	})
 
 export function loader() {
 	throw new Response('Not found', { status: 404 })

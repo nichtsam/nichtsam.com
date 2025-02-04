@@ -5,10 +5,13 @@ import { buildMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/about'
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'About | nichtsam',
-		description:
-			'Here are some questions and answers about Samuel. Read through to get to know him a bit better.',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'About | nichtsam',
+			description:
+				'Here are some questions and answers about Samuel. Read through to get to know him a bit better.',
+		},
 	})
 
 export const headers: Route.HeadersFunction = (args) => {

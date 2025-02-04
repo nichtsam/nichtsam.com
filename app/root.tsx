@@ -47,7 +47,9 @@ export const links: Route.LinksFunction = () => [
 ]
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs)
+	buildMeta({
+		args: args as unknown as MetaArgs,
+	})
 
 export const headers: Route.HeadersFunction = (args) => {
 	// document has authed personalized content

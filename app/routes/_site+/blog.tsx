@@ -7,10 +7,13 @@ import { ServerTiming } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/blog'
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Blog | nichtsam',
-		description:
-			'Blog posts written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Blog | nichtsam',
+			description:
+				'Blog posts written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
+		},
 	})
 
 export const headers: Route.HeadersFunction = pipeHeaders

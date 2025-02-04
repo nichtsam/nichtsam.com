@@ -30,9 +30,12 @@ export const handle: SEOHandle & BreadcrumbHandle = {
 }
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Sessions | nichtsam',
-		description: 'Manage your sessions of your account on nichtsam.com',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Sessions | nichtsam',
+			description: 'Manage your sessions of your account on nichtsam.com',
+		},
 	})
 
 export async function loader({ request }: Route.LoaderArgs) {

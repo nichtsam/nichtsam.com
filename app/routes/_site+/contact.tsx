@@ -5,10 +5,13 @@ import { isUser, useOptionalUser } from '#app/utils/user.tsx'
 import { type Route } from './+types/contact'
 
 export const meta: Route.MetaFunction = (args) =>
-	buildMeta(args as unknown as MetaArgs, {
-		title: 'Contact | nichtsam',
-		description:
-			'Get in touch with Samuel through various channels. Whether it’s via email, social media, or another method, feel free to reach out, and Samuel will respond as soon as possible.',
+	buildMeta({
+		args: args as unknown as MetaArgs,
+		meta: {
+			title: 'Contact | nichtsam',
+			description:
+				'Get in touch with Samuel through various channels. Whether it’s via email, social media, or another method, feel free to reach out, and Samuel will respond as soon as possible.',
+		},
 	})
 
 export const headers: Route.HeadersFunction = (args) => {
