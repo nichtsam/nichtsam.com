@@ -25,12 +25,12 @@ type UnexpectedErrorHandler = (info: {
 }) => ReactElement | null
 
 export const GeneralErrorBoundary = ({
-	defaultStatusHandler,
 	statusHandlers,
-	unexpectedErrorHandler,
+	defaultStatusHandler = fallbackStatusHandler,
+	unexpectedErrorHandler = fallbackUnexpectedErrorHandler,
 }: {
-	defaultStatusHandler?: StatusHandler
 	statusHandlers?: Record<number, StatusHandler>
+	defaultStatusHandler?: StatusHandler
 	unexpectedErrorHandler?: UnexpectedErrorHandler
 }) => {
 	const error = useRouteError()
@@ -53,16 +53,12 @@ export const GeneralErrorBoundary = ({
 	return (
 		<div className="container flex items-center justify-center py-20">
 			{isResponse
-				? (
-						statusHandlers?.[error.status] ??
-						defaultStatusHandler ??
-						fallbackStatusHandler
-					)({
+				? (statusHandlers?.[error.status] ?? defaultStatusHandler)({
 						error,
 						params,
 						location,
 					})
-				: (unexpectedErrorHandler ?? fallbackUnexpectedErrorHandler)({
+				: unexpectedErrorHandler({
 						error,
 						params,
 						location,
