@@ -32,6 +32,7 @@ import { csrf } from './utils/csrf.server.ts'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { honeypot } from './utils/honeypot.server.tsx'
 import { buildMeta } from './utils/meta.ts'
+import { getOrigin } from './utils/misc.ts'
 import { useNonce } from './utils/nonce-provider.tsx'
 import { getFormData, mergeHeaders } from './utils/request.server.ts'
 import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
@@ -93,6 +94,7 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 			user,
 			env: publicEnv,
 			requestInfo: {
+				origin: getOrigin(request),
 				hints: getHints(request),
 				userPreferences: {
 					theme: getTheme(request),

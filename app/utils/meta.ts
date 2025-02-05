@@ -3,21 +3,23 @@ import {
 	isRouteErrorResponse,
 	type Location,
 	type MetaArgs,
+	type useRouteLoaderData,
 } from 'react-router'
 import { type MetaDescriptors } from 'react-router/route-module'
+import { type loader } from '#app/root.tsx'
 import { removeTrailingSlash } from './misc'
+
+type RootData = ReturnType<typeof useRouteLoaderData<typeof loader>>
 
 interface Meta {
 	title?: string
 	description?: string
-	image?: string
+	image?: string | null
 	keywords?: string[]
 }
 
-const domain = 'nichtsam.com'
-
 export function buildMeta({
-	args: { error, params, location },
+	args: { error, params, location, matches },
 	meta,
 
 	statusMetas,
@@ -31,7 +33,9 @@ export function buildMeta({
 	defaultStatusMeta?: StatusMeta
 	unexpectedErrorMeta?: UnexpectedErrorMeta
 }): MetaDescriptors {
-	const url = `https://${domain}${removeTrailingSlash(location.pathname)}${location.search}`
+	const rootData = matches.find((m) => m.id === 'root')?.data as RootData
+	const origin = rootData ? rootData.requestInfo.origin : 'https://nichtsam.com'
+	const url = `${origin}${removeTrailingSlash(location.pathname)}${location.search}`
 
 	if (error) {
 		if (isRouteErrorResponse(error)) {
@@ -39,12 +43,14 @@ export function buildMeta({
 				error,
 				params,
 				location,
+				origin,
 			})
 		} else {
 			meta = unexpectedErrorMeta({
 				error,
 				params,
 				location,
+				origin,
 			})
 		}
 	}
@@ -53,7 +59,7 @@ export function buildMeta({
 		title: 'nichtsam.com',
 		description:
 			'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
-		image: `https://${domain}/resources/og/image.png`,
+		image: `${origin}/resources/og/image.png`,
 		...meta,
 	}
 
@@ -86,30 +92,32 @@ type StatusMeta = (info: {
 	error: ErrorResponse
 	params: Record<string, string | undefined>
 	location: Location
+	origin: string
 }) => Meta
 
 type UnexpectedErrorMeta = (info: {
 	error: unknown
 	params: Record<string, string | undefined>
 	location: Location
+	origin: string
 }) => Meta
 
-const fallbackUnexpectedErrorMeta: UnexpectedErrorMeta = () => ({
+const fallbackUnexpectedErrorMeta: UnexpectedErrorMeta = ({ origin }) => ({
 	title: `Error | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-	image: `https://${domain}/resources/og/error.png`,
+	image: `${origin}/resources/og/error.png`,
 })
 
 const fallbackStatusMeta: StatusMeta = ({ error }) => ({
 	title: `${error.status} | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-	image: `https://${domain}/resources/og/error.png`,
+	image: `${origin}/resources/og/error.png`,
 })
 
 export const notFoundMeta: StatusMeta & UnexpectedErrorMeta = () => ({
 	title: 'Not Found | nichtsam.com',
 	description: "Sorry, I couldn't find this page for you 😭",
-	image: `https://${domain}/resources/og/not-found.png`,
+	image: `${origin}/resources/og/not-found.png`,
 })
