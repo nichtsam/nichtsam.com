@@ -109,14 +109,14 @@ const fallbackUnexpectedErrorMeta: UnexpectedErrorMeta = ({ origin }) => ({
 	image: `${origin}/resources/og/error.png`,
 })
 
-const fallbackStatusMeta: StatusMeta = ({ error }) => ({
+const fallbackStatusMeta: StatusMeta = ({ error, origin }) => ({
 	title: `${error.status} | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
 	image: `${origin}/resources/og/error.png`,
 })
 
-export const notFoundMeta: StatusMeta & UnexpectedErrorMeta = () => ({
+export const notFoundMeta: StatusMeta & UnexpectedErrorMeta = ({ origin }) => ({
 	title: 'Not Found | nichtsam.com',
 	description: "Sorry, I couldn't find this page for you 😭",
 	image: `${origin}/resources/og/not-found.png`,
