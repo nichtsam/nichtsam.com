@@ -53,7 +53,7 @@ export function buildMeta({
 		title: 'nichtsam.com',
 		description:
 			'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
-		image: 'default image url',
+		image: `https://${domain}/resources/og/image.png`,
 		...meta,
 	}
 
@@ -98,18 +98,18 @@ const fallbackUnexpectedErrorMeta: UnexpectedErrorMeta = () => ({
 	title: `Error | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-	image: 'error image url',
+	image: `https://${domain}/resources/og/error.png`,
 })
 
 const fallbackStatusMeta: StatusMeta = ({ error }) => ({
 	title: `${error.status} | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-	image: 'error image url',
+	image: `https://${domain}/resources/og/error.png`,
 })
 
 export const notFoundMeta: StatusMeta & UnexpectedErrorMeta = () => ({
 	title: 'Not Found | nichtsam.com',
 	description: "Sorry, I couldn't find this page for you 😭",
-	image: 'not found error image url',
+	image: `https://${domain}/resources/og/not-found.png`,
 })
