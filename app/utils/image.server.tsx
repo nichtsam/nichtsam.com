@@ -28,9 +28,9 @@ export async function generateImage({
 }
 
 async function getFonts(...fontOptions: Parameters<typeof getFont>[]) {
-	return Promise.all(fontOptions.map((fontOption) => getFont(...fontOption))).then(
-		(fonts) => fonts.flat(),
-	)
+	return Promise.all(
+		fontOptions.map((fontOption) => getFont(...fontOption)),
+	).then((fonts) => fonts.flat())
 }
 
 async function getFont(
