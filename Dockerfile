@@ -3,6 +3,7 @@ FROM node:22-alpine AS base
 RUN <<EOF
 apt-get update
 apt-get install -y --no-install-recommends ca-certificates
+npm i -g corepack@latest
 corepack enable pnpm
 corepack use pnpm@9
 EOF
