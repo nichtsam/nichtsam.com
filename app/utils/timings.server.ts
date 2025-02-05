@@ -8,7 +8,7 @@ type Metric = {
 }
 
 export class ServerTiming {
-	metrics: Map<string, Metric> = new Map()
+	protected metrics: Map<string, Metric> = new Map()
 
 	time(name: string, desc?: string) {
 		if (this.metrics.has(name)) {
