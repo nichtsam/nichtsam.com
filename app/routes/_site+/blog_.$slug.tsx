@@ -33,8 +33,8 @@ export const meta: Route.MetaFunction = (args) =>
 	buildMeta({
 		args: args as unknown as MetaArgs,
 		meta: {
-			title: `${args.data.matter.title} | nichtsam`,
-			description: args.data.matter.description,
+			title: `${args.data?.matter.title} | nichtsam`,
+			description: args.data?.matter.description,
 		},
 	})
 
