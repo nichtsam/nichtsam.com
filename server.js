@@ -4,6 +4,7 @@ import { createRequestHandler } from '@react-router/express'
 import chalk from 'chalk'
 import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
+import _cors from 'cors'
 import express from 'express'
 import { rateLimit } from 'express-rate-limit'
 import getPort, { portNumbers } from 'get-port'
@@ -91,42 +92,6 @@ app.use((_, res, next) => {
 	next()
 })
 
-app.use(
-	helmet({
-		referrerPolicy: { policy: 'same-origin' },
-		crossOriginEmbedderPolicy: false,
-		contentSecurityPolicy: {
-			directives: {
-				'connect-src': [
-					MODE === 'development' ? 'ws:' : null,
-					process.env.SENTRY_DSN ? '*.sentry.io' : null,
-					"'self'",
-				].filter(Boolean),
-				'font-src': ["'self'"],
-				'frame-src': ["'self'"],
-				'img-src': [
-					"'self'",
-					'data:',
-					'avatars.githubusercontent.com',
-					'cdn.discordapp.com',
-					'res.cloudinary.com',
-				],
-				'form-action': ["'self'", 'github.com/login/oauth/authorize'],
-				'script-src': [
-					"'strict-dynamic'",
-					"'self'",
-					(_, res) => `'nonce-${res.locals.cspNonce}'`,
-					"'unsafe-inline'", // backward compatibility for 'nonces'
-					'https:', // backward compatibility for 'strict-dynamic'
-					"'unsafe-eval'", // mdx-bundler needs this
-				],
-				'script-src-attr': [(_, res) => `'nonce-${res.locals.cspNonce}'`],
-				'upgrade-insecure-requests': null,
-			},
-		},
-	}),
-)
-
 if (DISALLOW_INDEXING) {
 	app.use((_, res, next) => {
 		res.set('X-Robots-Tag', 'noindex, nofollow')
@@ -153,6 +118,34 @@ function getBuild() {
 		? viteDevServer.ssrLoadModule('virtual:react-router/server-build')
 		: import('./build/server/index.js')
 }
+
+const wantCors = ['/resources/og']
+const cors = _cors()
+app.options(wantCors, cors)
+app.use((req, res, next) => {
+	const writeHead = res.writeHead
+
+	res.writeHead = function () {
+		const contentType = res.getHeader('Content-Type')
+
+		if (
+			typeof contentType === 'string' &&
+			contentType.startsWith('text/html')
+		) {
+			helmet(helmetHtml)(req, res, next)
+		} else {
+			if (wantCors.some((p) => req.path.startsWith(p))) {
+				cors(req, res, next)
+				helmet(helmetNonHtmlWithCors)(req, res, next)
+			} else {
+				helmet(helmetNonHtml)(req, res, next)
+			}
+		}
+
+		return writeHead.apply(res, arguments)
+	}
+	next()
+})
 
 // handle SSR requests
 app.all(
@@ -201,3 +194,65 @@ closeWithGrace(async ({ err }) => {
 		server.close((e) => (e ? reject(e) : resolve('ok')))
 	})
 })
+
+/** @type {import("helmet").HelmetOptions} */
+const helmetHtml = {
+	crossOriginEmbedderPolicy: false,
+	crossOriginOpenerPolicy: true,
+	crossOriginResourcePolicy: { policy: 'same-origin' },
+	originAgentCluster: true,
+	referrerPolicy: { policy: 'same-origin' },
+	strictTransportSecurity: true,
+	xContentTypeOptions: true,
+	xDnsPrefetchControl: true,
+	xDownloadOptions: true,
+	xFrameOptions: true,
+	xPermittedCrossDomainPolicies: true,
+	xPoweredBy: true,
+	xXssProtection: true,
+
+	contentSecurityPolicy: {
+		directives: {
+			'connect-src': [
+				MODE === 'development' ? 'ws:' : null,
+				process.env.SENTRY_DSN ? '*.sentry.io' : null,
+				"'self'",
+			].filter(Boolean),
+			'font-src': ["'self'"],
+			'frame-src': ["'self'"],
+			'img-src': [
+				"'self'",
+				'data:',
+				'avatars.githubusercontent.com',
+				'cdn.discordapp.com',
+				'res.cloudinary.com',
+			],
+			'form-action': ["'self'", 'github.com/login/oauth/authorize'],
+			'script-src': [
+				"'strict-dynamic'",
+				"'self'",
+				(_, res) => `'nonce-${res.locals.cspNonce}'`,
+				"'unsafe-inline'", // backward compatibility for 'nonces'
+				'https:', // backward compatibility for 'strict-dynamic'
+				"'unsafe-eval'", // mdx-bundler needs this
+			],
+			'script-src-attr': [(_, res) => `'nonce-${res.locals.cspNonce}'`],
+			'upgrade-insecure-requests': null,
+		},
+	},
+}
+
+/** @type {import("helmet").HelmetOptions} */
+const helmetNonHtml = {
+	...helmetHtml,
+	contentSecurityPolicy: false,
+	crossOriginOpenerPolicy: false,
+	xDownloadOptions: false,
+	xFrameOptions: false,
+}
+
+/** @type {import("helmet").HelmetOptions} */
+const helmetNonHtmlWithCors = {
+	...helmetNonHtml,
+	crossOriginResourcePolicy: { policy: 'cross-origin' },
+}
