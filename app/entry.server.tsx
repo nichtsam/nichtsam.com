@@ -1,5 +1,5 @@
 import { PassThrough } from 'node:stream'
-
+import { contentSecurity } from '@nichtsam/helmet/content'
 import { createReadableStreamFromReadable } from '@react-router/node'
 import * as Sentry from '@sentry/node'
 import chalk from 'chalk'
@@ -11,10 +11,12 @@ import {
 	type HandleDocumentRequestFunction,
 	ServerRouter,
 } from 'react-router'
-import { forceEnvValidation } from './utils/env.server'
+import { env, forceEnvValidation } from './utils/env.server'
 import { NonceProvider } from './utils/nonce-provider'
 
 forceEnvValidation()
+
+const MODE = env.NODE_ENV ?? 'development'
 
 const streamTimeout = 5_000
 
@@ -48,6 +50,40 @@ export default function handleRequest(
 					const stream = createReadableStreamFromReadable(body)
 
 					responseHeaders.set('Content-Type', 'text/html')
+					contentSecurity(responseHeaders, {
+						contentSecurityPolicy: {
+							directives: {
+								fetch: {
+									'connect-src': [
+										MODE === 'development' ? 'ws:' : undefined,
+										process.env.SENTRY_DSN ? '*.sentry.io' : undefined,
+										"'self'",
+									],
+									'font-src': ["'self'"],
+									'frame-src': ["'self'"],
+									'img-src': [
+										"'self'",
+										'data:',
+										'avatars.githubusercontent.com',
+										'cdn.discordapp.com',
+										'res.cloudinary.com',
+									],
+									'script-src': [
+										"'strict-dynamic'",
+										"'self'",
+										`'nonce-${nonce}'`,
+										"'unsafe-inline'", // backward compatibility for 'nonces'
+										'https:', // backward compatibility for 'strict-dynamic'
+										"'unsafe-eval'", // mdx-bundler needs this
+									],
+									'script-src-attr': [`'nonce-${nonce}'`],
+								},
+								navigation: {
+									'form-action': ["'self'", 'github.com/login/oauth/authorize'],
+								},
+							},
+						},
+					})
 
 					resolve(
 						new Response(stream, {

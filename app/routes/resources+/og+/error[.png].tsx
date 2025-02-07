@@ -1,4 +1,6 @@
+import { resourceSharingSecurity } from '@nichtsam/helmet/resourceSharing'
 import { generateImage } from '#app/utils/image.server.tsx'
+import { combineHeaders } from '#app/utils/request.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 
 export async function loader() {
@@ -20,12 +22,19 @@ export async function loader() {
 
 	const data = await generateImage({ jsx, timing })
 
+	const cors = new Headers({
+		'Access-Control-Allow-Origin': '*',
+	})
+	resourceSharingSecurity(cors, { strategy: 'cross-origin' })
 	return new Response(data, {
-		headers: {
-			'Content-Type': 'image/png',
-			'Content-Length': Buffer.byteLength(data).toString(),
-			'Cache-Control': 'public, max-age=86400, immutable',
-			'Server-Timing': timing.toString(),
-		},
+		headers: combineHeaders(
+			{
+				'Content-Type': 'image/png',
+				'Content-Length': Buffer.byteLength(data).toString(),
+				'Cache-Control': 'public, max-age=86400, immutable',
+				'Server-Timing': timing.toString(),
+			},
+			cors,
+		),
 	})
 }

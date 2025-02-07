@@ -1,13 +1,14 @@
 import 'dotenv/config'
 import crypto from 'crypto'
+import { helmet } from '@nichtsam/helmet/node-http'
 import { createRequestHandler } from '@react-router/express'
 import chalk from 'chalk'
 import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
+import cors from 'cors'
 import express from 'express'
 import { rateLimit } from 'express-rate-limit'
 import getPort, { portNumbers } from 'get-port'
-import helmet from 'helmet'
 import morgan from 'morgan'
 import sourceMapSupport from 'source-map-support'
 import { printUrls } from './server-utils.js'
@@ -91,48 +92,17 @@ app.use((_, res, next) => {
 	next()
 })
 
-app.use(
-	helmet({
-		referrerPolicy: { policy: 'same-origin' },
-		crossOriginEmbedderPolicy: false,
-		contentSecurityPolicy: {
-			directives: {
-				'connect-src': [
-					MODE === 'development' ? 'ws:' : null,
-					process.env.SENTRY_DSN ? '*.sentry.io' : null,
-					"'self'",
-				].filter(Boolean),
-				'font-src': ["'self'"],
-				'frame-src': ["'self'"],
-				'img-src': [
-					"'self'",
-					'data:',
-					'avatars.githubusercontent.com',
-					'cdn.discordapp.com',
-					'res.cloudinary.com',
-				],
-				'form-action': ["'self'", 'github.com/login/oauth/authorize'],
-				'script-src': [
-					"'strict-dynamic'",
-					"'self'",
-					(_, res) => `'nonce-${res.locals.cspNonce}'`,
-					"'unsafe-inline'", // backward compatibility for 'nonces'
-					'https:', // backward compatibility for 'strict-dynamic'
-					"'unsafe-eval'", // mdx-bundler needs this
-				],
-				'script-src-attr': [(_, res) => `'nonce-${res.locals.cspNonce}'`],
-				'upgrade-insecure-requests': null,
-			},
-		},
-	}),
-)
-
 if (DISALLOW_INDEXING) {
 	app.use((_, res, next) => {
 		res.set('X-Robots-Tag', 'noindex, nofollow')
 		next()
 	})
 }
+
+app.use((_, res, next) => {
+	helmet(res)
+	next()
+})
 
 // handle asset requests
 if (viteDevServer) {
@@ -153,6 +123,10 @@ function getBuild() {
 		? viteDevServer.ssrLoadModule('virtual:react-router/server-build')
 		: import('./build/server/index.js')
 }
+
+const wantCors = ['/resources/og']
+app.options(wantCors, cors())
+app.get(wantCors, cors())
 
 // handle SSR requests
 app.all(
