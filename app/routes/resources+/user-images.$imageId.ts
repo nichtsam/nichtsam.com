@@ -1,4 +1,6 @@
 import { db } from '#app/utils/db.server.ts'
+import { helmet } from '#app/utils/helmet.server.ts'
+import { combineHeaders } from '#app/utils/request.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/user-images.$imageId'
 
@@ -28,12 +30,15 @@ export async function loader({ params: { imageId } }: Route.LoaderArgs) {
 	}
 
 	return new Response(image.blob, {
-		headers: {
-			'Content-Type': image.content_type,
-			'Content-Length': Buffer.byteLength(image.blob).toString(),
-			'Content-Disposition': `inline; filename="${imageId}"`,
-			'Cache-Control': 'public, max-age=31536000, immutable',
-			'Server-Timing': timing.toString(),
-		},
+		headers: combineHeaders(
+			{
+				'Content-Type': image.content_type,
+				'Content-Length': Buffer.byteLength(image.blob).toString(),
+				'Content-Disposition': `inline; filename="${imageId}"`,
+				'Cache-Control': 'public, max-age=31536000, immutable',
+				'Server-Timing': timing.toString(),
+			},
+			helmet('nonHtml'),
+		),
 	})
 }

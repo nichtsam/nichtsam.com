@@ -12,7 +12,9 @@ import {
 	ServerRouter,
 } from 'react-router'
 import { forceEnvValidation } from './utils/env.server'
+import { helmet } from './utils/helmet.server'
 import { NonceProvider } from './utils/nonce-provider'
+import { mergeHeaders } from './utils/request.server'
 
 forceEnvValidation()
 
@@ -48,6 +50,7 @@ export default function handleRequest(
 					const stream = createReadableStreamFromReadable(body)
 
 					responseHeaders.set('Content-Type', 'text/html')
+					mergeHeaders(responseHeaders, helmet('html', nonce))
 
 					resolve(
 						new Response(stream, {
