@@ -26,6 +26,9 @@ importers:
       '@libsql/client':
         specifier: 0.14.0
         version: 0.14.0
+      '@mcansh/http-helmet':
+        specifier: 0.13.0
+        version: 0.13.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
       '@nasa-gcn/remix-seo':
         specifier: 2.0.1
         version: 2.0.1(@remix-run/react@2.15.2(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(typescript@5.7.3))(@remix-run/server-runtime@2.15.2(typescript@5.7.3))
@@ -1433,6 +1436,17 @@ packages:
     resolution: {integrity: sha512-7pJzOWzPm6oJUxml+PCDRzYQ4A1hTMHAciTAHfFK4fkbDZX33nWPVG7Y3vqdKtslcwAzwmrNDc6sXy2nwWnbiw==}
     cpu: [x64]
     os: [win32]
+
+  '@mcansh/http-helmet@0.13.0':
+    resolution: {integrity: sha512-+/Wl+NmRgQotkFlVrsIxcwMHjum1qGXJKvJw26g721TVCU0eZv1hfqh48diS6DzkG92MxVYBMzWSatEVn/91Bg==}
+    peerDependencies:
+      react: '>=18.0.0 || >=19.0.0'
+      react-dom: '>=18.0.0 || >=19.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   '@mdx-js/esbuild@3.0.0':
     resolution: {integrity: sha512-hQaYb1jI0tojPlvHi+dwOKLHQxl9oczY8zZfat8ANfYZ9zgPGJXUU+SMBruZnd4ij34/l9BQPHEwTxTUQ7s9hw==}
@@ -3391,6 +3405,9 @@ packages:
   chalk@5.4.1:
     resolution: {integrity: sha512-zgVZuo2WcZgfUEmsn6eO3kINexW8RAE4maiQ8QNs8CtpPCSyMiYsULR3HQYkm3w8FIA3SberyMJMSldGsW+U3w==}
     engines: {node: ^12.17.0 || ^14.13 || >=16.0.0}
+
+  change-case@5.4.4:
+    resolution: {integrity: sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==}
 
   character-entities-html4@2.1.0:
     resolution: {integrity: sha512-1v7fgQRj6hnSwFpq1Eu0ynr/CDEw0rXo2B61qXrLNdHZmPKgb7fqS1a2JwF0rISo9q77jDI8VMEHoApn8qDoZA==}
@@ -7905,6 +7922,14 @@ snapshots:
   '@libsql/win32-x64-msvc@0.4.7':
     optional: true
 
+  '@mcansh/http-helmet@0.13.0(react-dom@19.0.0(react@19.0.0))(react@19.0.0)':
+    dependencies:
+      change-case: 5.4.4
+      type-fest: 4.33.0
+    optionalDependencies:
+      react: 19.0.0
+      react-dom: 19.0.0(react@19.0.0)
+
   '@mdx-js/esbuild@3.0.0(esbuild@0.19.11)':
     dependencies:
       '@mdx-js/mdx': 3.0.0
@@ -10085,6 +10110,8 @@ snapshots:
       supports-color: 7.2.0
 
   chalk@5.4.1: {}
+
+  change-case@5.4.4: {}
 
   character-entities-html4@2.1.0: {}
 
