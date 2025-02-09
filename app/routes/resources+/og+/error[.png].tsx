@@ -30,7 +30,7 @@ export async function loader() {
 				'Cache-Control': 'public, max-age=86400, immutable',
 				'Server-Timing': timing.toString(),
 			},
-			helmet('nonHtmlWithCors'),
+			helmet({ cors: true }),
 			{
 				'Access-Control-Allow-Origin': '*',
 			},

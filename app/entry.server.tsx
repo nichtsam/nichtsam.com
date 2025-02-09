@@ -50,7 +50,13 @@ export default function handleRequest(
 					const stream = createReadableStreamFromReadable(body)
 
 					responseHeaders.set('Content-Type', 'text/html')
-					mergeHeaders(responseHeaders, helmet('html', nonce))
+					mergeHeaders(
+						responseHeaders,
+						helmet({
+							html: true,
+							nonce,
+						}),
+					)
 
 					resolve(
 						new Response(stream, {

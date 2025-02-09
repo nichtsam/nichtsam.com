@@ -57,6 +57,7 @@ export function useClientJavascriptEnable() {
 	return clientJavascriptEnable
 }
 
+export type SmartString = string & Record<never, never>
 export type Prettify<T> = {
 	[K in keyof T]: T[K]
 } & {}

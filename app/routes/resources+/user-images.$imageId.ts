@@ -38,7 +38,7 @@ export async function loader({ params: { imageId } }: Route.LoaderArgs) {
 				'Cache-Control': 'public, max-age=31536000, immutable',
 				'Server-Timing': timing.toString(),
 			},
-			helmet('nonHtml'),
+			helmet(),
 		),
 	})
 }

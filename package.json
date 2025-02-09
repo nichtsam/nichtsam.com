@@ -30,7 +30,6 @@
     "@epic-web/config": "1.16.5",
     "@epic-web/remember": "1.1.0",
     "@libsql/client": "0.14.0",
-    "@mcansh/http-helmet": "0.13.0",
     "@nasa-gcn/remix-seo": "2.0.1",
     "@nichtsam/remix-auth-discord": "3.0.0",
     "@nichtsam/remix-auth-email-link": "3.0.0",
