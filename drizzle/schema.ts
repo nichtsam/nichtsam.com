@@ -1,4 +1,5 @@
-import { relations, sql } from 'drizzle-orm'
+import { relations } from 'drizzle-orm/relations'
+import { sql } from 'drizzle-orm/sql'
 import {
 	blob,
 	index,

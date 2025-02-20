@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import { and, eq, lt } from 'drizzle-orm'
+import { and, eq, lt } from 'drizzle-orm/sql'
 import { createCookieSessionStorage, redirect } from 'react-router'
 import { redirectBack } from 'remix-utils/redirect-back'
 import { safeRedirect } from 'remix-utils/safe-redirect'

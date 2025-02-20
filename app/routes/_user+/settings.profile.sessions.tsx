@@ -1,5 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { and, count, eq, not } from 'drizzle-orm'
+import { and, count, eq, not } from 'drizzle-orm/sql'
 import { type MetaArgs, useFetcher, useLoaderData } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'

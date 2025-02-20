@@ -1,5 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm/sql'
 import { redirect, Form, Link, type MetaArgs } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'

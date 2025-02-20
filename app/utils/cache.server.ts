@@ -9,8 +9,8 @@ import {
 	verboseReporter,
 } from '@epic-web/cachified'
 import { remember } from '@epic-web/remember'
-import { eq } from 'drizzle-orm'
 import { drizzle } from 'drizzle-orm/libsql'
+import { eq } from 'drizzle-orm/sql'
 import { LRUCache } from 'lru-cache'
 import { z } from 'zod'
 import * as cacheDbSchema from '#drizzle/cache.ts'

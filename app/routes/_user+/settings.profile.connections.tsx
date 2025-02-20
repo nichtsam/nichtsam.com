@@ -1,6 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import dayjs from 'dayjs'
-import { eq } from 'drizzle-orm'
+import { eq } from 'drizzle-orm/sql'
 import { without } from 'ramda'
 import { useFetcher, useLoaderData, data, type MetaArgs } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
