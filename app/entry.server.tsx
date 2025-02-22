@@ -30,6 +30,10 @@ export default function handleRequest(
 		loadContext,
 	]: DocRequestArgs
 ) {
+	if (env.NODE_ENV === 'production' && env.SENTRY_DSN) {
+		responseHeaders.append('Document-Policy', 'js-profiling')
+	}
+
 	const nonce = String(loadContext.cspNonce)
 	const callbackName = isbot(request.headers.get('user-agent'))
 		? 'onAllReady'
