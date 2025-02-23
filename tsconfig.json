@@ -1,7 +1,6 @@
 {
 	"include": ["**/*.ts", "**/*.tsx", ".react-router/types/**/*", "server.js"],
 	"compilerOptions": {
-		"types": ["@react-router/node", "vite/client"],
 		"isolatedModules": true,
 
 		"jsx": "react-jsx",
