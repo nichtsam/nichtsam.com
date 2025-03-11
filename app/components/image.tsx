@@ -1,4 +1,6 @@
-import { getImageUrlBuilder } from '#app/utils/image.ts'
+import { Resize } from '@cloudinary/url-gen/actions/resize'
+import { useMemo } from 'react'
+import { cloudinary } from '#app/utils/image.ts'
 
 interface CloudinaryImageProps
 	extends Omit<
@@ -20,31 +22,25 @@ export function CloudinaryImage({
 	loading = 'lazy',
 	...imgProps
 }: CloudinaryImageProps) {
-	const buildImageUrl = getImageUrlBuilder(id)
-	const averageWidth = Math.ceil(widths.reduce((a, s) => a + s) / widths.length)
-
-	const src = buildImageUrl({
-		transformations: {
-			resize: {
-				width: averageWidth,
-			},
-		},
-	})
-
-	const srcSet = widths
-		.map((width) =>
-			[
-				buildImageUrl({
-					transformations: {
-						resize: {
-							width: width,
-						},
-					},
-				}),
-				`${width}w`,
-			].join(' '),
+	const { src, srcSet } = useMemo(() => {
+		const averageWidth = Math.ceil(
+			widths.reduce((a, s) => a + s) / widths.length,
 		)
-		.join(', ')
+
+		const src = cloudinary
+			.image(id)
+			.resize(Resize.scale().width(averageWidth))
+			.toURL()
+
+		const srcSet = widths
+			.map(
+				(width) =>
+					`${cloudinary.image(id).resize(Resize.scale().width(width)).toURL()} ${width}w`,
+			)
+			.join(', ')
+
+		return { src, srcSet }
+	}, [id, widths])
 
 	return (
 		<img

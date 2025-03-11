@@ -55,6 +55,7 @@ export default function handleRequest(
 
 					responseHeaders.set('Content-Type', 'text/html')
 					contentSecurity(responseHeaders, {
+						crossOriginEmbedderPolicy: false,
 						contentSecurityPolicy: {
 							directives: {
 								fetch: {

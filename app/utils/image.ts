@@ -1,13 +1,10 @@
-import { type CldOptions } from '@cld-apis/types'
-import {
-	buildImageUrl as _buildImageUrl,
-	setConfig,
-} from 'cloudinary-build-url'
+import { Cloudinary as _Cloudinary } from '@cloudinary/url-gen'
 
-setConfig({
-	cloudName: 'nichtsam',
+export const cloudinary = new _Cloudinary({
+	cloud: {
+		cloudName: 'nichtsam',
+	},
+	url: {
+		secure: true,
+	},
 })
-
-export function getImageUrlBuilder(id: string) {
-	return (cldOptions: CldOptions = {}) => _buildImageUrl(id, cldOptions)
-}

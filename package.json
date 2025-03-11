@@ -24,6 +24,7 @@
     "validate": "pnpm quality && pnpm typecheck && pnpm coverage"
   },
   "dependencies": {
+    "@cloudinary/url-gen": "1.21.0",
     "@conform-to/react": "1.2.2",
     "@conform-to/zod": "1.2.2",
     "@epic-web/cachified": "5.2.0",
@@ -63,7 +64,6 @@
     "chalk": "5.4.1",
     "class-variance-authority": "0.7.1",
     "close-with-grace": "2.2.0",
-    "cloudinary-build-url": "0.2.4",
     "clsx": "2.1.1",
     "compression": "1.7.5",
     "cookie": "1.0.2",
@@ -105,7 +105,6 @@
     "zod": "3.24.1"
   },
   "devDependencies": {
-    "@cld-apis/types": "0.1.6",
     "@faker-js/faker": "9.4.0",
     "@react-router/dev": "7.1.5",
     "@sly-cli/sly": "1.14.0",
