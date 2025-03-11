@@ -29,7 +29,7 @@ jobs:
       - name: 📥 Download deps
         uses: pnpm/action-setup@v3
         with:
-          version: 9
+          version: 10
           run_install: true
 
       - name: 🧶 Lint
@@ -50,7 +50,7 @@ jobs:
       - name: 📥 Download deps
         uses: pnpm/action-setup@v3
         with:
-          version: 9
+          version: 10
           run_install: true
 
       - name: 🔬 Type check
@@ -71,7 +71,7 @@ jobs:
       - name: 📥 Download deps
         uses: pnpm/action-setup@v3
         with:
-          version: 9
+          version: 10
           run_install: true
 
       - name: ⚡ Run vitest
@@ -95,7 +95,7 @@ jobs:
       - name: 📥 Download deps
         uses: pnpm/action-setup@v3
         with:
-          version: 9
+          version: 10
           run_install: true
 
       - name: 🧬 Staging Migration

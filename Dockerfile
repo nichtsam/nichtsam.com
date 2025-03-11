@@ -5,7 +5,7 @@ apt-get update
 apt-get install -y --no-install-recommends ca-certificates
 npm i -g corepack@latest
 corepack enable pnpm
-corepack use pnpm@9
+corepack use pnpm@10
 EOF
 
 FROM base AS deps
