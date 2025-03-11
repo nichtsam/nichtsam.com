@@ -1,8 +1,8 @@
 import { PassThrough } from 'node:stream'
+import { styleText } from 'node:util'
 import { contentSecurity } from '@nichtsam/helmet/content'
 import { createReadableStreamFromReadable } from '@react-router/node'
 import * as Sentry from '@sentry/node'
-import chalk from 'chalk'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import {
@@ -128,10 +128,10 @@ export function handleError(
 	}
 
 	if (error instanceof Error) {
-		console.error(chalk.red(error.stack))
 		Sentry.captureException(error)
+		console.error(styleText('red', error.stack ?? error.message))
 	} else {
-		console.error(chalk.red(error))
 		Sentry.captureException(error)
+		console.error(styleText('red', String(error)))
 	}
 }

@@ -1,8 +1,8 @@
 import 'dotenv/config'
 import crypto from 'crypto'
+import { styleText } from 'node:util'
 import { helmet } from '@nichtsam/helmet/node-http'
 import { createRequestHandler } from '@react-router/express'
-import chalk from 'chalk'
 import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
 import cors from 'cors'
@@ -151,7 +151,8 @@ const server = app.listen(portToUse, async () => {
 
 	if (portUsed !== desiredPort) {
 		console.warn(
-			chalk.yellow(
+			styleText(
+				'yellow',
 				`⚠️  Port ${desiredPort} is not available, using ${portUsed} instead.`,
 			),
 		)
@@ -161,13 +162,13 @@ const server = app.listen(portToUse, async () => {
 
 	printUrls(portUsed)
 
-	console.log(chalk.bold('Press Ctrl+C to stop'))
+	console.log(styleText('bold', 'Press Ctrl+C to stop'))
 })
 
 closeWithGrace(async ({ err }) => {
 	if (err) {
-		console.error(chalk.red(err))
-		console.error(chalk.red(err.stack))
+		console.error(styleText('red', err))
+		console.error(styleText('red', err.stack))
 		process.exit(1)
 	}
 

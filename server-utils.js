@@ -1,14 +1,16 @@
 import { format } from 'node:url'
+import { styleText } from 'node:util'
 import * as address from 'address'
-import chalk from 'chalk'
 
 const printUrls = (port) => {
 	const { localUrl, lanUrl } = getUrls(port)
 
-	console.log(`${chalk.bold('Local:'.padEnd(18))}${chalk.cyan(localUrl)}`)
+	console.log(
+		`${styleText('bold', 'Local:'.padEnd(18))}${styleText('cyan', localUrl)}`,
+	)
 	if (lanUrl) {
 		console.log(
-			`${chalk.bold('On Your Network:'.padEnd(18))}${chalk.cyan(lanUrl)}`,
+			`${styleText('bold', 'On Your Network:'.padEnd(18))}${styleText('cyan', lanUrl)}`,
 		)
 	}
 }

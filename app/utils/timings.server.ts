@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+import { styleText } from 'node:util'
 
 type Metric = {
 	name: string
@@ -13,7 +13,7 @@ export class ServerTiming {
 	time(name: string, desc?: string) {
 		if (this.metrics.has(name)) {
 			console.warn(
-				chalk.hex('#FFA500')(`Server Timing Timer '${name}' already exists`),
+				styleText('yellow', `Server Timing Timer '${name}' already exists`),
 			)
 			return
 		}
@@ -29,7 +29,7 @@ export class ServerTiming {
 		const metric = this.metrics.get(name)
 		if (!metric) {
 			console.warn(
-				chalk.hex('#FFA500')(`Server Timing Timer '${name}' does not exist`),
+				styleText('yellow', `Server Timing Timer '${name}' does not exist`),
 			)
 			return
 		}
@@ -42,7 +42,8 @@ export class ServerTiming {
 			.filter((m) => {
 				if (m.dur === undefined) {
 					console.warn(
-						chalk.hex('#FFA500')(
+						styleText(
+							'yellow',
 							`Server Timing Timer '${m.name}' is not finish`,
 						),
 					)

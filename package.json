@@ -61,7 +61,6 @@
     "@testing-library/dom": "10.4.0",
     "@tusbar/cache-control": "1.0.2",
     "address": "2.0.3",
-    "chalk": "5.4.1",
     "class-variance-authority": "0.7.1",
     "close-with-grace": "2.2.0",
     "clsx": "2.1.1",
