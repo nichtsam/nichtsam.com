@@ -2,7 +2,7 @@ import { PassThrough } from 'node:stream'
 import { styleText } from 'node:util'
 import { contentSecurity } from '@nichtsam/helmet/content'
 import { createReadableStreamFromReadable } from '@react-router/node'
-import * as Sentry from '@sentry/node'
+import * as Sentry from '@sentry/react-router'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import {
@@ -128,10 +128,10 @@ export function handleError(
 	}
 
 	if (error instanceof Error) {
-		Sentry.captureException(error)
 		console.error(styleText('red', error.stack ?? error.message))
 	} else {
-		Sentry.captureException(error)
 		console.error(styleText('red', String(error)))
 	}
+
+	Sentry.captureException(error)
 }

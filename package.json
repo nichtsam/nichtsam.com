@@ -53,10 +53,8 @@
     "@react-router/remix-routes-option-adapter": "7.1.5",
     "@react-router/serve": "7.1.5",
     "@resvg/resvg-js": "2.6.2",
-    "@sentry/node": "8.54.0",
-    "@sentry/profiling-node": "8.54.0",
-    "@sentry/react": "8.54.0",
-    "@sentry/vite-plugin": "3.1.2",
+    "@sentry/profiling-node": "9.5.0",
+    "@sentry/react-router": "9.5.0",
     "@shikijs/rehype": "2.3.1",
     "@testing-library/dom": "10.4.0",
     "@tusbar/cache-control": "1.0.2",
@@ -141,5 +139,11 @@
     "node": "22",
     "pnpm": "10"
   },
-  "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b"
+  "packageManager": "pnpm@10.6.2+sha512.47870716bea1572b53df34ad8647b42962bc790ce2bf4562ba0f643237d7302a3d6a8ecef9e4bdfc01d23af1969aa90485d4cebb0b9638fa5ef1daef656f6c1b",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@sentry-internal/node-cpu-profiler",
+      "@sentry/cli"
+    ]
+  }
 }

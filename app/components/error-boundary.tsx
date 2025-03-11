@@ -1,4 +1,4 @@
-import * as Sentry from '@sentry/react'
+import * as Sentry from '@sentry/react-router'
 import { useEffect, type ReactElement } from 'react'
 import {
 	Link,

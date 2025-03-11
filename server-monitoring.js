@@ -1,5 +1,5 @@
-import * as Sentry from '@sentry/node'
 import { nodeProfilingIntegration } from '@sentry/profiling-node'
+import * as Sentry from '@sentry/react-router'
 
 export function init() {
 	Sentry.init({

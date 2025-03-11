@@ -1,33 +1,41 @@
 import { reactRouter } from '@react-router/dev/vite'
-import { sentryVitePlugin } from '@sentry/vite-plugin'
+import {
+	sentryReactRouter,
+	type SentryReactRouterBuildOptions,
+} from '@sentry/react-router'
 import { defineConfig } from 'vite'
 import { envOnlyMacros } from 'vite-env-only'
 
-export default defineConfig({
+export default defineConfig((config) => ({
 	build: {
 		cssMinify: process.env.NODE_ENV === 'production',
 
 		sourcemap: true,
 	},
 
+	sentryConfig,
 	plugins: [
 		envOnlyMacros(),
 		reactRouter(),
 
-		process.env.SENTRY_AUTH_TOKEN
-			? sentryVitePlugin({
-					disable: process.env.NODE_ENV !== 'production',
-					authToken: process.env.SENTRY_AUTH_TOKEN,
-					org: process.env.SENTRY_ORG,
-					project: process.env.SENTRY_PROJECT,
-
-					release: {
-						name: process.env.COMMIT_SHA,
-					},
-					sourcemaps: {
-						filesToDeleteAfterUpload: ['./build/**/*.map'],
-					},
-				})
+		process.env.SENTRY_AUTH_TOKEN && process.env.NODE_ENV === 'production'
+			? sentryReactRouter(sentryConfig, config)
 			: null,
 	],
-})
+}))
+
+const sentryConfig: SentryReactRouterBuildOptions = {
+	authToken: process.env.SENTRY_AUTH_TOKEN,
+	org: process.env.SENTRY_ORG,
+	project: process.env.SENTRY_PROJECT,
+
+	release: {
+		name: process.env.COMMIT_SHA,
+	},
+
+	unstable_sentryVitePluginOptions: {
+		sourcemaps: {
+			filesToDeleteAfterUpload: ['./build/**/*.map'],
+		},
+	},
+}
