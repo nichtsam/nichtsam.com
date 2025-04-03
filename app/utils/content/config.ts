@@ -18,6 +18,12 @@ export const posts = defineCollection({
 		...doc,
 		readingTime: readingTime(doc.meta.content).text,
 	}),
+	sort: (a, b) => {
+		return (
+			new Date(b.matter.publishedDate).getTime() -
+			new Date(a.matter.publishedDate).getTime()
+		)
+	},
 })
 
 export default {

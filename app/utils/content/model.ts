@@ -36,4 +36,5 @@ export type Collection<
 	excludes?: string | string[]
 	schema: TSchema
 	transform: (data: { matter: z.infer<TSchema>; meta: Meta }) => TResult
+	sort?: Parameters<Array<TResult>['sort']>[0]
 }

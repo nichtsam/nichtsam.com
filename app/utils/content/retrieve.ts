@@ -66,6 +66,9 @@ async function retrieveAll<
 		}),
 	)
 
+	if (collection.sort) {
+		all.sort(collection.sort)
+	}
 	return all
 }
 
