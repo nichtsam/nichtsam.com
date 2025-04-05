@@ -77,6 +77,7 @@
     "isbot": "5.1.25",
     "lru-cache": "11.1.0",
     "mdx-bundler": "10.1.1",
+    "mime": "4.0.7",
     "morgan": "1.10.0",
     "nanoid": "5.1.5",
     "p-queue": "8.1.0",

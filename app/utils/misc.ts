@@ -1,3 +1,4 @@
+import mime from 'mime'
 import { useEffect, useState } from 'react'
 
 export function sleep(ms: number) {
@@ -38,9 +39,16 @@ export async function downloadFile(
 		// contentType fallback : https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3-5
 		const contentType =
 			response.headers.get('content-type') ?? 'application/octet-stream'
-		const blob = Buffer.from(await response.arrayBuffer())
 
-		return { contentType, blob }
+		const extension = mime.getExtension(contentType)
+		const filename = extension
+			? `downloaded-file.${extension}`
+			: `downloaded-file`
+
+		const file = new File([await response.arrayBuffer()], filename, {
+			type: contentType,
+		})
+		return file
 	} catch (e) {
 		if (retries > max_retries) throw e
 		return downloadFile(url, retries + 1, max_retries)

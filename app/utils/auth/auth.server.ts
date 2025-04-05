@@ -207,7 +207,7 @@ export const login = async (
 
 export const signUpWithConnection = async ({
 	connection: connectionInsert,
-	user,
+	user: userInsert,
 }: {
 	connection: Prettify<
 		Pick<z.infer<typeof connectionSchema>, 'provider_name' | 'provider_id'>
@@ -218,14 +218,14 @@ export const signUpWithConnection = async ({
 		}
 	>
 }) => {
-	const data = await signUp({ user })
+	const { user, session } = await signUp({ user: userInsert })
 
 	await db.insert(connectionTable).values({
 		...connectionInsert,
-		user_id: data.user.id,
+		user_id: user.id,
 	})
 
-	return data.session
+	return session
 }
 
 export const signUp = async ({
@@ -249,16 +249,23 @@ export const signUp = async ({
 	)[0]!
 	const user_id = user.id
 
+	let maybeImagePromise
 	if (userImageUrl) {
-		await downloadFile(userImageUrl)
-			.then((imageFile) =>
-				db.insert(userImageTable).values({
-					user_id,
-					content_type: imageFile.contentType,
-					blob: imageFile.blob,
-				}),
-			)
-			.catch((e) => console.error(e))
+		maybeImagePromise = downloadFile(userImageUrl)
+			.then(async (imageFile) => {
+				if (imageFile) {
+
+					void db
+						.insert(userImageTable)
+						.values({
+							user_id,
+							content_type: imageFile.type,
+							blob: Buffer.from(await imageFile.arrayBuffer()),
+						})
+						.then()
+				}
+			})
+			.catch(console.error)
 	}
 
 	const session = (
@@ -271,6 +278,7 @@ export const signUp = async ({
 			})
 	)[0]!
 
+	await maybeImagePromise
 	return {
 		user,
 		session,
