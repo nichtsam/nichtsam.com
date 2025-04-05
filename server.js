@@ -167,8 +167,8 @@ const server = app.listen(portToUse, async () => {
 
 closeWithGrace(async ({ err }) => {
 	if (err) {
-		console.error(styleText('red', err))
-		console.error(styleText('red', err.stack))
+		console.error(styleText('red', String(err)))
+		console.error(styleText('red', String(err.stack)))
 		process.exit(1)
 	}
 
