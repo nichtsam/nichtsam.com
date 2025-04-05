@@ -1,7 +1,6 @@
 import { relations } from 'drizzle-orm/relations'
 import { sql } from 'drizzle-orm/sql'
 import {
-	blob,
 	index,
 	integer,
 	sqliteTable,
@@ -31,8 +30,6 @@ export const userImageTable = sqliteTable('user_image', {
 		.references(() => userTable.id, { onDelete: 'cascade' })
 		.notNull(),
 	object_key: text('object_key').notNull().default('migration_needed'),
-	content_type: text('content_type').notNull(),
-	blob: blob('blob', { mode: 'buffer' }).notNull(),
 
 	created_at: integer('created_at', { mode: 'timestamp_ms' })
 		.default(sql`(unixepoch('subsec') * 1000)`)

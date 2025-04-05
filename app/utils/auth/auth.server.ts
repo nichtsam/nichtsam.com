@@ -261,8 +261,6 @@ export const signUp = async ({
 						.insert(userImageTable)
 						.values({
 							user_id,
-							content_type: imageFile.type,
-							blob: Buffer.from(await imageFile.arrayBuffer()),
 							object_key: objectKey,
 						})
 						.then()
