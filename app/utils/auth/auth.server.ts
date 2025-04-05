@@ -16,6 +16,7 @@ import { db } from '../db.server.ts'
 import { env } from '../env.server.ts'
 import { type Prettify, downloadFile } from '../misc.ts'
 import { combineHeaders } from '../request.server.ts'
+import { uploadUserImage } from '../storage.server.ts'
 
 export const SESSION_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30
 export const getSessionExpirationDate = () =>
@@ -254,6 +255,7 @@ export const signUp = async ({
 		maybeImagePromise = downloadFile(userImageUrl)
 			.then(async (imageFile) => {
 				if (imageFile) {
+					const objectKey = await uploadUserImage(user_id, imageFile)
 
 					void db
 						.insert(userImageTable)
@@ -261,6 +263,7 @@ export const signUp = async ({
 							user_id,
 							content_type: imageFile.type,
 							blob: Buffer.from(await imageFile.arrayBuffer()),
+							object_key: objectKey,
 						})
 						.then()
 				}

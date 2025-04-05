@@ -15,6 +15,13 @@
       "when": 1733131535859,
       "tag": "0001_fat_monster_badoon",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1743894252341,
+      "tag": "0002_dear_chat",
+      "breakpoints": true
     }
   ]
 }

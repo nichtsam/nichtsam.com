@@ -1,4 +1,6 @@
 import { createHash, createHmac } from 'node:crypto'
+import path from 'node:path'
+import { nanoid as createId } from 'nanoid'
 import { env } from './env.server'
 
 const STORAGE_REGION = env.AWS_REGION
@@ -31,6 +33,25 @@ export async function uploadToStorage(file: File, key: string) {
 		headers,
 		body: file,
 	})
+}
+
+export async function uploadUserImage(userId: string, image: File) {
+	const fileId = createId()
+	const fileExtension = path.extname(image.name)
+	const timestamp = Date.now()
+	const key = `users/${userId}/user-images/${timestamp}-${fileId}${fileExtension}`
+
+	const response = await uploadToStorage(image, key)
+
+	if (!response.ok) {
+		console.error(await response.text())
+		console.error(
+			`Failed to upload file to storage. Server responded with ${response.status}: ${response.statusText}`,
+		)
+		throw new Error(`Failed to upload object: ${key}`)
+	}
+
+	return key
 }
 
 function getBaseSignedRequestInfo({

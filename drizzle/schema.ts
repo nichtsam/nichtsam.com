@@ -30,6 +30,7 @@ export const userImageTable = sqliteTable('user_image', {
 	user_id: text('user_id')
 		.references(() => userTable.id, { onDelete: 'cascade' })
 		.notNull(),
+	object_key: text('object_key').notNull().default('migration_needed'),
 	content_type: text('content_type').notNull(),
 	blob: blob('blob', { mode: 'buffer' }).notNull(),
 
