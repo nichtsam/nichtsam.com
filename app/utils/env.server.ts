@@ -28,6 +28,12 @@ const envSchema = z
 		RESEND_API_KEY: z.string(),
 
 		SENTRY_DSN: z.string().url().optional(),
+
+		AWS_REGION: z.string(),
+		BUCKET_NAME: z.string(),
+		AWS_ENDPOINT_URL_S3: z.string().url(),
+		AWS_ACCESS_KEY_ID: z.string(),
+		AWS_SECRET_ACCESS_KEY: z.string(),
 	})
 	.readonly()
 
