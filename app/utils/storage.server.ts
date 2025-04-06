@@ -16,6 +16,15 @@ function virtualHostedUri(uri: string, bucket: string) {
 	return uri.replace('://', `://${bucket}.`)
 }
 
+export async function deleteFromStorage(key: string) {
+	const { url, headers } = getSignedDeleteRequestInfo(key)
+
+	return fetch(url, {
+		method: 'DELETE',
+		headers,
+	})
+}
+
 export async function getFromStorage(key: string) {
 	const { url, headers } = getSignedGetRequestInfo(key)
 
@@ -59,7 +68,7 @@ function getBaseSignedRequestInfo({
 	key,
 	contentType,
 }: {
-	method: 'GET' | 'PUT'
+	method: 'GET' | 'PUT' | 'DELETE'
 	key: string
 	contentType?: string
 }) {
@@ -168,6 +177,14 @@ function getSignedPutRequestInfo(file: File, key: string) {
 		contentType: file.type,
 	})
 }
+
+function getSignedDeleteRequestInfo(key: string) {
+	return getBaseSignedRequestInfo({
+		method: 'DELETE',
+		key,
+	})
+}
+
 function getSignedGetRequestInfo(key: string) {
 	return getBaseSignedRequestInfo({
 		method: 'GET',

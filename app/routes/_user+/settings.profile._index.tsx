@@ -20,6 +20,7 @@ import { validateCSRF } from '#app/utils/csrf.server.ts'
 import { db } from '#app/utils/db.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { getFormData } from '#app/utils/request.server.ts'
+import { deleteFromStorage } from '#app/utils/storage.server.ts'
 import { useDoubleCheck, useIsPending } from '#app/utils/ui.ts'
 import { userTable } from '#drizzle/schema.ts'
 import { type Route } from './+types/settings.profile._index'
@@ -40,14 +41,13 @@ export const meta: Route.MetaFunction = (args) =>
 const INTENT_DELETE_ACCOUNT = 'INTENT_DELETE_ACCOUNT'
 
 export const action = async ({ request }: Route.ActionArgs) => {
-	const userId = await requireUserId(request)
 	const formData = await getFormData(request)
 	await validateCSRF(formData, request.headers)
 	const intent = formData.get('intent')
 
 	switch (intent) {
 		case INTENT_DELETE_ACCOUNT: {
-			return deleteAccount({ userId, request })
+			return deleteAccount({ request })
 		}
 		default: {
 			throw new Response(`Invalid intent "${intent}"`, { status: 400 })
@@ -115,13 +115,22 @@ const DeleteAccount = () => {
 	)
 }
 
-const deleteAccount = async ({
-	userId,
-	request,
-}: {
-	userId: string
-	request: Request
-}) => {
+const deleteAccount = async ({ request }: { request: Request }) => {
+	const userId = await requireUserId(request)
+	const image = await db.query.userImageTable.findFirst({
+		where: (image, { eq }) => eq(image.user_id, userId),
+	})
+	if (image) {
+		const response = await deleteFromStorage(image.object_key)
+
+		if (!response.ok) {
+			console.error(await response.text())
+			console.error(
+				`Failed to delete file from storage. Server responded with ${response.status}: ${response.statusText}`,
+			)
+		}
+	}
+
 	await db.delete(userTable).where(eq(userTable.id, userId))
 	const { authSession } = await getAuthSession(request)
 
