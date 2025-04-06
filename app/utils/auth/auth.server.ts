@@ -16,7 +16,7 @@ import { db } from '../db.server.ts'
 import { env } from '../env.server.ts'
 import { type Prettify, downloadFile } from '../misc.ts'
 import { combineHeaders } from '../request.server.ts'
-import { uploadUserImage } from '../storage.server.ts'
+import { deleteFromStorage, uploadUserImage } from '../storage.server.ts'
 
 export const SESSION_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30
 export const getSessionExpirationDate = () =>
@@ -128,43 +128,6 @@ export const requireUserId = async (request: Request) => {
 	return userId
 }
 
-export const logout = async (
-	{
-		request,
-		redirectTo,
-	}: {
-		request: Request
-		redirectTo?: string
-	},
-
-	init?: ResponseInit,
-) => {
-	const { authSession, sessionId } = await getAuthSession(request)
-
-	if (sessionId) {
-		void db.delete(sessionTable).where(eq(sessionTable.id, sessionId)).then()
-	}
-
-	const responseInit = {
-		...init,
-		headers: combineHeaders(
-			{
-				'set-cookie': await authSessionStorage.destroySession(authSession),
-			},
-			init?.headers,
-		),
-	}
-
-	if (redirectTo) {
-		throw redirect(safeRedirect(redirectTo), responseInit)
-	} else {
-		return redirectBack(request, {
-			fallback: '/',
-			...responseInit,
-		})
-	}
-}
-
 export const login = async (
 	{
 		request,
@@ -203,6 +166,69 @@ export const login = async (
 		headers: combineHeaders(init?.headers, {
 			'set-cookie': await authSessionStorage.commitSession(authSession),
 		}),
+	})
+}
+
+export const logout = async (
+	{
+		request,
+		redirectTo,
+	}: {
+		request: Request
+		redirectTo?: string
+	},
+
+	init?: ResponseInit,
+) => {
+	const { authSession, sessionId } = await getAuthSession(request)
+
+	if (sessionId) {
+		void db.delete(sessionTable).where(eq(sessionTable.id, sessionId)).then()
+	}
+
+	const responseInit = {
+		...init,
+		headers: combineHeaders(
+			{
+				'set-cookie': await authSessionStorage.destroySession(authSession),
+			},
+			init?.headers,
+		),
+	}
+
+	if (redirectTo) {
+		throw redirect(safeRedirect(redirectTo), responseInit)
+	} else {
+		return redirectBack(request, {
+			fallback: '/',
+			...responseInit,
+		})
+	}
+}
+
+export const deleteAccount = async ({ request }: { request: Request }) => {
+	const userId = await requireUserId(request)
+	const image = await db.query.userImageTable.findFirst({
+		where: (image, { eq }) => eq(image.user_id, userId),
+	})
+	if (image) {
+		const response = await deleteFromStorage(image.object_key)
+
+		if (!response.ok) {
+			console.error(await response.text())
+			console.error(
+				`Failed to delete file from storage. Server responded with ${response.status}: ${response.statusText}`,
+			)
+		}
+	}
+
+	await db.delete(userTable).where(eq(userTable.id, userId))
+	const { authSession } = await getAuthSession(request)
+
+	return redirect('/', {
+		headers: {
+			'set-cookie': await authSessionStorage.destroySession(authSession),
+		},
 	})
 }
 

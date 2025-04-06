@@ -1,6 +1,5 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { eq } from 'drizzle-orm/sql'
-import { redirect, Form, Link, type MetaArgs } from 'react-router'
+import { Form, Link, type MetaArgs } from 'react-router'
 import { AuthenticityTokenInput } from 'remix-utils/csrf/react'
 import { StatusButton } from '#app/components/status-button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
@@ -11,18 +10,11 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from '#app/components/ui/navigation-menu.tsx'
-import {
-	authSessionStorage,
-	getAuthSession,
-	requireUserId,
-} from '#app/utils/auth/auth.server.ts'
+import { deleteAccount } from '#app/utils/auth/auth.server.ts'
 import { validateCSRF } from '#app/utils/csrf.server.ts'
-import { db } from '#app/utils/db.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { getFormData } from '#app/utils/request.server.ts'
-import { deleteFromStorage } from '#app/utils/storage.server.ts'
 import { useDoubleCheck, useIsPending } from '#app/utils/ui.ts'
-import { userTable } from '#drizzle/schema.ts'
 import { type Route } from './+types/settings.profile._index'
 
 export const handle: SEOHandle = {
@@ -113,30 +105,4 @@ const DeleteAccount = () => {
 			</StatusButton>
 		</Form>
 	)
-}
-
-const deleteAccount = async ({ request }: { request: Request }) => {
-	const userId = await requireUserId(request)
-	const image = await db.query.userImageTable.findFirst({
-		where: (image, { eq }) => eq(image.user_id, userId),
-	})
-	if (image) {
-		const response = await deleteFromStorage(image.object_key)
-
-		if (!response.ok) {
-			console.error(await response.text())
-			console.error(
-				`Failed to delete file from storage. Server responded with ${response.status}: ${response.statusText}`,
-			)
-		}
-	}
-
-	await db.delete(userTable).where(eq(userTable.id, userId))
-	const { authSession } = await getAuthSession(request)
-
-	return redirect('/', {
-		headers: {
-			'set-cookie': await authSessionStorage.destroySession(authSession),
-		},
-	})
 }
