@@ -1,5 +1,5 @@
 import { db } from '#app/utils/db.server.ts'
-import { getFromStorage } from '#app/utils/storage.server.ts'
+import { getFromStorage } from '#app/utils/storage/storage.server.ts'
 import { ServerTiming } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/user-images.$imageId'
 

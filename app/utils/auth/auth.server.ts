@@ -16,7 +16,10 @@ import { db } from '../db.server.ts'
 import { env } from '../env.server.ts'
 import { type Prettify, downloadFile } from '../misc.ts'
 import { combineHeaders } from '../request.server.ts'
-import { deleteFromStorage, uploadUserImage } from '../storage.server.ts'
+import {
+	deleteFromStorage,
+	uploadUserImage,
+} from '../storage/storage.server.ts'
 
 export const SESSION_EXPIRATION_TIME = 1000 * 60 * 60 * 24 * 30
 export const getSessionExpirationDate = () =>
