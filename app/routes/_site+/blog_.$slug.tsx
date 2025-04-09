@@ -13,7 +13,7 @@ import { useMdxComponent } from '#app/utils/content/mdx/mdx.tsx'
 import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
-import { ServerTiming } from '#app/utils/timings.server'
+import { ServerTiming, time } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/blog_.$slug'
 
 export const links: Route.LinksFunction = () => [
@@ -46,9 +46,9 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 	const slug = params.slug
 	const timing = new ServerTiming()
 
-	timing.time('get post', 'Get post')
-	const post = await retrieve(config, slug, timing)
-	timing.timeEnd('get post')
+	const post = await time(timing, 'get post', () =>
+		retrieve(config, slug, timing),
+	)
 
 	if (!post) {
 		throw new Response('Not found', {

@@ -3,7 +3,7 @@ import { posts as config } from '#app/utils/content/config.ts'
 import { retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
-import { ServerTiming } from '#app/utils/timings.server.ts'
+import { ServerTiming, time } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/blog'
 
 export const meta: Route.MetaFunction = (args) =>
@@ -21,9 +21,9 @@ export const headers: Route.HeadersFunction = pipeHeaders
 export const loader = async () => {
 	const timing = new ServerTiming()
 
-	timing.time('get posts', 'Get posts')
-	const posts = await retrieveAll(config, timing)
-	timing.timeEnd('get posts')
+	const posts = await time(timing, 'get posts', () =>
+		retrieveAll(config, timing),
+	)
 
 	return data(
 		{ posts },

@@ -2,7 +2,7 @@ import { getImgResponse, type ImgSource } from 'openimg/node'
 import { env } from '#app/utils/env.server.ts'
 import { mergeHeaders } from '#app/utils/request.server.ts'
 import { getSignedUrl } from '#app/utils/storage/presigned.server.ts'
-import { ServerTiming } from '#app/utils/timings.server.ts'
+import { ServerTiming, time } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/images.ts'
 
 const STORAGE_BUCKET = env.BUCKET_NAME
@@ -51,28 +51,19 @@ export async function loader({ request }: Route.LoaderArgs) {
 				)
 			}
 
-			imgSource = {
-				type: 'fetch',
-				url: path,
-			}
+			imgSource = { type: 'fetch', url: path }
 			break
 		}
 		case 'public': {
-			imgSource = {
-				type: 'fs',
-				path,
-			}
+			imgSource = { type: 'fs', path }
 			break
 		}
 		case 'object': {
-			timing.time('get presigned url')
-			const url = getSignedUrl({ method: 'GET', key: path })
-			timing.timeEnd('get presigned url')
+			const url = await time(timing, 'get presigned url', () =>
+				getSignedUrl({ method: 'GET', key: path }),
+			)
 
-			imgSource = {
-				type: 'fetch',
-				url: url.toString(),
-			}
+			imgSource = { type: 'fetch', url: url.toString() }
 			break
 		}
 		default:

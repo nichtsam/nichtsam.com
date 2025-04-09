@@ -1,7 +1,7 @@
 import { Resvg } from '@resvg/resvg-js'
 import { type JSX } from 'react'
 import satori, { type SatoriOptions } from 'satori'
-import { type ServerTiming } from './timings.server'
+import { time, type ServerTiming } from './timings.server.ts'
 
 export async function generateImage({
 	jsx,
@@ -10,21 +10,19 @@ export async function generateImage({
 	jsx: JSX.Element
 	timing?: ServerTiming
 }) {
-	timing.time('jsx to svg')
-	const svg = await satori(jsx, {
-		width: 1200,
-		height: 600,
-		fonts: await getFonts(['Inter']),
+	const svg = await time(timing, 'jsx to svg', async () =>
+		satori(jsx, {
+			width: 1200,
+			height: 600,
+			fonts: await time(timing, 'get fonts', () => getFonts(['Inter'])),
+		}),
+	)
+
+	return time(timing, 'svg to png', () => {
+		const resvg = new Resvg(svg)
+		const pngData = resvg.render()
+		return pngData.asPng()
 	})
-	timing.timeEnd('jsx to svg')
-
-	timing.time('svg to png')
-	const resvg = new Resvg(svg)
-	const pngData = resvg.render()
-	const png = pngData.asPng()
-	timing.timeEnd('svg to png')
-
-	return png
 }
 
 async function getFonts(...fontOptions: Parameters<typeof getFont>[]) {

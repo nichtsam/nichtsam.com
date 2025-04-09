@@ -7,6 +7,18 @@ type Metric = {
 	desc?: string
 }
 
+export async function time<ReturnType>(
+	timing: ServerTiming,
+	name: string,
+	fn: Promise<ReturnType> | (() => ReturnType | Promise<ReturnType>),
+) {
+	timing.time(name)
+	const promise = typeof fn === 'function' ? fn() : fn
+	const result = await promise
+	timing.timeEnd(name)
+	return result
+}
+
 export class ServerTiming {
 	protected metrics: Map<string, Metric> = new Map()
 
