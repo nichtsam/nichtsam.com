@@ -1,9 +1,9 @@
+import { Img } from 'openimg/react'
 import { useRef } from 'react'
 import { Form, Link, useLocation, useSubmit } from 'react-router'
-import { getUserImgSrc } from '#app/routes/resources+/user-images.$imageId.ts'
+import { getImgSrc } from '#app/routes/resources+/images.tsx'
 import { cn, useIsPending } from '#app/utils/ui.ts'
 import { useOptionalUser, useUser } from '#app/utils/user.tsx'
-import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar.tsx'
 import { Button } from './ui/button.tsx'
 import {
 	DropdownMenu,
@@ -53,13 +53,17 @@ export const UserActions = () => {
 						to={`/settings/profile`}
 						onClick={(e) => e.preventDefault()}
 					>
-						<Avatar className="h-6 w-6">
-							<AvatarImage
-								src={user.image ? getUserImgSrc(user.image.id) : undefined}
-								alt={`The image of ${user.display_name}`}
-							/>
-							<AvatarFallback>me</AvatarFallback>
-						</Avatar>
+						<Img
+							className="size-6 rounded-full object-cover"
+							height={24}
+							width={24}
+							src={
+								user.image
+									? getImgSrc('object', user.image.object_key)
+									: undefined
+							}
+							alt={`The image of ${user.display_name}`}
+						/>
 						{user.display_name}
 					</Link>
 				</Button>

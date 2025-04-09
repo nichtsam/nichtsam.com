@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { OpenImgContextProvider } from 'openimg/react'
 import {
 	data,
 	Links,
@@ -189,9 +190,11 @@ function AppWithProviders() {
 	return (
 		<HoneypotProvider {...honeyProps}>
 			<AuthenticityTokenProvider token={csrfToken}>
-				<TooltipProvider>
-					<App />
-				</TooltipProvider>
+				<OpenImgContextProvider optimizerEndpoint="/resources/images">
+					<TooltipProvider>
+						<App />
+					</TooltipProvider>
+				</OpenImgContextProvider>
 			</AuthenticityTokenProvider>
 		</HoneypotProvider>
 	)

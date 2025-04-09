@@ -100,7 +100,7 @@ export const getUser = async (userId: string) => {
 		where: (userTable, { eq }) => eq(userTable.id, userId),
 		with: {
 			image: {
-				columns: { id: true },
+				columns: { object_key: true },
 			},
 		},
 	})

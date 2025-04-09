@@ -15,16 +15,16 @@ const STORAGE_ENDPOINT = env.AWS_ENDPOINT_URL_S3.replace(
 const STORAGE_ACCESS_KEY = env.AWS_ACCESS_KEY_ID
 const STORAGE_SECRET_KEY = env.AWS_SECRET_ACCESS_KEY
 
-export async function getSignedUrl({
+export function getSignedUrl({
 	method,
 	key,
 	contentType,
-	expires,
+	expires = 60,
 }: {
-	method: 'GET' | 'DELETE' | 'PUT'
+	method: 'GET' | 'DELETE' | 'PUT' | 'HEAD'
 	key: string
 	contentType?: string
-	expires: number
+	expires?: number
 }) {
 	const url = new URL(key, STORAGE_ENDPOINT)
 	const algorithm = 'AWS4-HMAC-SHA256'

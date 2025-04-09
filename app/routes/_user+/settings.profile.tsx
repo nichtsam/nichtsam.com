@@ -1,10 +1,6 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
+import { Img } from 'openimg/react'
 import { Form, Outlet } from 'react-router'
-import {
-	Avatar,
-	AvatarFallback,
-	AvatarImage,
-} from '#app/components/ui/avatar.tsx'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
 import { requireUserId } from '#app/utils/auth/auth.server.ts'
@@ -14,7 +10,7 @@ import {
 } from '#app/utils/breadcrumb.tsx'
 import { cn, useIsPending } from '#app/utils/ui.ts'
 import { useUser } from '#app/utils/user.tsx'
-import { getUserImgSrc } from '../resources+/user-images.$imageId.ts'
+import { getImgSrc } from '../resources+/images.tsx'
 import { type Route } from './+types/settings.profile.ts'
 
 export const handle: SEOHandle & BreadcrumbHandle = {
@@ -46,12 +42,15 @@ const UserHeader = () => {
 
 	return (
 		<div className="flex flex-col items-center gap-4">
-			<Avatar className="h-40 w-40">
-				<AvatarImage
-					src={user.image ? getUserImgSrc(user.image.id) : undefined}
-				/>
-				<AvatarFallback>me</AvatarFallback>
-			</Avatar>
+			<Img
+				className="size-40 rounded-full object-cover"
+				height={320}
+				width={320}
+				src={
+					user.image ? getImgSrc('object', user.image.object_key) : undefined
+				}
+				alt={`The image of ${user.display_name}`}
+			/>
 			<div className="text-center">
 				<h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
 					{user.display_name}

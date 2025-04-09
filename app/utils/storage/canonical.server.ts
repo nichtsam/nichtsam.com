@@ -37,7 +37,7 @@ export function getCanonicalRequest({
 	signedHeaders,
 	hashedPayload,
 }: {
-	method: 'GET' | 'PUT' | 'DELETE'
+	method: 'GET' | 'PUT' | 'DELETE' | 'HEAD'
 	canonicalUri: string
 	canonicalQueryString: string
 	canonicalHeaders: string

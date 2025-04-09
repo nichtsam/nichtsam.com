@@ -24,6 +24,22 @@ export function generateCallAll<Args extends Array<unknown>>(
 	return (...arg: Args) => fns.forEach((fn) => fn?.(...arg))
 }
 
+export async function responseToFile(response: Response) {
+	// contentType fallback : https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3-5
+	const contentType =
+		response.headers.get('content-type') ?? 'application/octet-stream'
+
+	const extension = mime.getExtension(contentType)
+	const filename = extension
+		? `downloaded-file.${extension}`
+		: `downloaded-file`
+
+	const file = new File([await response.arrayBuffer()], filename, {
+		type: contentType,
+	})
+	return file
+}
+
 export async function downloadFile(
 	url: string,
 	retries: number = 0,
@@ -36,19 +52,7 @@ export async function downloadFile(
 			throw new Error(`Failed to fetch image with status ${response.status}`)
 		}
 
-		// contentType fallback : https://www.rfc-editor.org/rfc/rfc9110.html#section-8.3-5
-		const contentType =
-			response.headers.get('content-type') ?? 'application/octet-stream'
-
-		const extension = mime.getExtension(contentType)
-		const filename = extension
-			? `downloaded-file.${extension}`
-			: `downloaded-file`
-
-		const file = new File([await response.arrayBuffer()], filename, {
-			type: contentType,
-		})
-		return file
+		return await responseToFile(response)
 	} catch (e) {
 		if (retries > max_retries) throw e
 		return downloadFile(url, retries + 1, max_retries)

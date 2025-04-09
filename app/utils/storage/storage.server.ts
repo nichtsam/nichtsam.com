@@ -2,8 +2,16 @@ import path from 'node:path'
 import { nanoid as createId } from 'nanoid'
 import { getSignedUrl } from './presigned.server.ts'
 
+export async function checkInStorage(key: string) {
+	const url = getSignedUrl({ method: 'HEAD', key })
+
+	return fetch(url, {
+		method: 'HEAD',
+	})
+}
+
 export async function getFromStorage(key: string) {
-	const url = await getSignedUrl({ method: 'GET', key, expires: 60 })
+	const url = getSignedUrl({ method: 'GET', key })
 
 	return fetch(url, {
 		method: 'GET',
@@ -11,7 +19,7 @@ export async function getFromStorage(key: string) {
 }
 
 export async function deleteFromStorage(key: string) {
-	const url = await getSignedUrl({ method: 'DELETE', key, expires: 60 })
+	const url = getSignedUrl({ method: 'DELETE', key })
 
 	return fetch(url, {
 		method: 'DELETE',
@@ -19,11 +27,10 @@ export async function deleteFromStorage(key: string) {
 }
 
 export async function uploadToStorage(file: File, key: string) {
-	const url = await getSignedUrl({
+	const url = getSignedUrl({
 		method: 'PUT',
 		key,
 		contentType: file.type,
-		expires: 60,
 	})
 
 	return fetch(url, {
