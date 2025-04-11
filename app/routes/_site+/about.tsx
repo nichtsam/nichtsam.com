@@ -1,10 +1,12 @@
 import { intersection } from 'ramda'
 import { useMemo, useState } from 'react'
-import { type MetaArgs } from 'react-router'
+import { useLoaderData, type MetaArgs } from 'react-router'
 import { Badge } from '#app/components/ui/badge.tsx'
 import { allQuestionTags, profile } from '#app/config/profile.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
+import { useClientJavascriptEnable } from '#app/utils/misc.ts'
+import { cn } from '#app/utils/ui.ts'
 import { type Route } from './+types/about'
 
 export const meta: Route.MetaFunction = (args) =>
@@ -22,53 +24,24 @@ export const headers: Route.HeadersFunction = (args) => {
 	return pipeHeaders(args)
 }
 
-function useTagSelect() {
-	const [selectedTagSet, setSelectedTagSet] = useState<Set<string> | null>(null)
-	const selectedTags = useMemo(
-		() => Array.from(selectedTagSet?.keys() ?? []),
-		[selectedTagSet],
-	)
-
-	const isTagSelected = (tag: string) => !!selectedTagSet?.has(tag)
-
-	const toggleTag = (tag: string) => {
-		if (selectedTagSet?.has(tag)) {
-			setSelectedTagSet((tagSet) => {
-				const newSet = new Set(tagSet)
-				newSet.delete(tag)
-				return newSet
-			})
-		} else {
-			setSelectedTagSet((tagSet) => {
-				return new Set(tagSet).add(tag)
-			})
-		}
-	}
-
-	const clearTags = () => {
-		setSelectedTagSet(null)
-	}
-
+export const loader = () => {
 	return {
-		selectedTags,
-		isTagSelected,
-		toggleTag,
-		clearTags,
+		questions: profile.questions,
+		allQuestionTags,
 	}
 }
 
 export default function About() {
+	const { questions, allQuestionTags: allTags } = useLoaderData<typeof loader>()
 	const { selectedTags, isTagSelected, toggleTag, clearTags } = useTagSelect()
-	const allTags = allQuestionTags
+	const jsEnabled = useClientJavascriptEnable()
 
 	const filteredQuestions = useMemo(
 		() =>
 			selectedTags.length === 0
-				? profile.questions
-				: profile.questions.filter(
-						(q) => intersection(q.tags, selectedTags).length,
-					),
-		[selectedTags],
+				? questions
+				: questions.filter((q) => intersection(q.tags, selectedTags).length),
+		[questions, selectedTags],
 	)
 
 	return (
@@ -77,8 +50,15 @@ export default function About() {
 				{profile.bio}
 			</p>
 
-			<div className="mb-12 flex flex-col gap-4">
+			<div
+				className={cn('mb-12 flex flex-col gap-4 transition', {
+					'opacity-50': !jsEnabled,
+				})}
+			>
 				<p className="text-2xl font-semibold">Filter by tags</p>
+				<noscript>
+					<p>Only available with javascript enabled.</p>
+				</noscript>
 
 				<ul className="flex flex-wrap gap-2">
 					<Badge
@@ -123,4 +103,39 @@ export default function About() {
 			</ul>
 		</section>
 	)
+}
+
+function useTagSelect() {
+	const [selectedTagSet, setSelectedTagSet] = useState<Set<string> | null>(null)
+	const selectedTags = useMemo(
+		() => Array.from(selectedTagSet?.keys() ?? []),
+		[selectedTagSet],
+	)
+
+	const isTagSelected = (tag: string) => !!selectedTagSet?.has(tag)
+
+	const toggleTag = (tag: string) => {
+		if (selectedTagSet?.has(tag)) {
+			setSelectedTagSet((tagSet) => {
+				const newSet = new Set(tagSet)
+				newSet.delete(tag)
+				return newSet
+			})
+		} else {
+			setSelectedTagSet((tagSet) => {
+				return new Set(tagSet).add(tag)
+			})
+		}
+	}
+
+	const clearTags = () => {
+		setSelectedTagSet(null)
+	}
+
+	return {
+		selectedTags,
+		isTagSelected,
+		toggleTag,
+		clearTags,
+	}
 }
