@@ -31,6 +31,7 @@
     "@epic-web/config": "1.18.3",
     "@epic-web/remember": "1.1.0",
     "@libsql/client": "0.15.2",
+    "@modelcontextprotocol/sdk": "1.9.0",
     "@nasa-gcn/remix-seo": "2.0.1",
     "@nichtsam/helmet": "0.3.0",
     "@nichtsam/remix-auth-discord": "3.0.0",
