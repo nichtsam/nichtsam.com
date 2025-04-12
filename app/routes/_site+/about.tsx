@@ -26,14 +26,18 @@ export const headers: Route.HeadersFunction = (args) => {
 
 export const loader = () => {
 	return {
-    bio: profile.bio,
+		bio: profile.bio,
 		questions: profile.questions,
 		allQuestionTags,
 	}
 }
 
 export default function About() {
-	const { bio, questions, allQuestionTags: allTags } = useLoaderData<typeof loader>()
+	const {
+		bio,
+		questions,
+		allQuestionTags: allTags,
+	} = useLoaderData<typeof loader>()
 	const { selectedTags, isTagSelected, toggleTag, clearTags } = useTagSelect()
 	const jsEnabled = useClientJavascriptEnable()
 
@@ -47,9 +51,7 @@ export default function About() {
 
 	return (
 		<section className="container max-w-[80ch]">
-			<p className="mb-12 whitespace-pre-line text-lg font-semibold">
-				{bio}
-			</p>
+			<p className="mb-12 whitespace-pre-line text-lg font-semibold">{bio}</p>
 
 			<div
 				className={cn('mb-12 flex flex-col gap-4 transition', {
