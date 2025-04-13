@@ -1,3 +1,4 @@
+import { Img } from 'openimg/react'
 import { type MetaArgs } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
@@ -18,8 +19,8 @@ export const headers: Route.HeadersFunction = (args) => {
 
 export default function Index() {
 	return (
-		<section className="container py-9">
-			<article className="prose dark:prose-invert lg:prose-xl">
+		<section className="container flex flex-col-reverse justify-between md:flex-row">
+			<article className="prose py-9 dark:prose-invert lg:prose-xl">
 				<h1>Samuel Jensen</h1>
 				<p>
 					Hi there, I'm Sam.
@@ -29,6 +30,14 @@ export default function Index() {
 					Oh and this is my website by the way.
 				</p>
 			</article>
+			<div className="flex items-center justify-center">
+				<Img
+					isAboveFold
+					height={256}
+					width={256}
+					src="public:/images/samuel-figure.png"
+				/>
+			</div>
 		</section>
 	)
 }
