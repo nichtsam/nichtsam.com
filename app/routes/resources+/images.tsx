@@ -1,4 +1,5 @@
 import { getImgResponse, type ImgSource } from 'openimg/node'
+import { join } from 'node:path'
 import { env } from '#app/utils/env.server.ts'
 import { mergeHeaders } from '#app/utils/request.server.ts'
 import { getSignedUrl } from '#app/utils/storage/presigned.server.ts'
@@ -55,7 +56,7 @@ export async function loader({ request }: Route.LoaderArgs) {
 			break
 		}
 		case 'public': {
-			imgSource = { type: 'fs', path }
+			imgSource = { type: 'fs', path: join('./public', path) }
 			break
 		}
 		case 'object': {
