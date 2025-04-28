@@ -6,10 +6,10 @@ const envSchema = z
 	.object({
 		NODE_ENV: z.enum(['development', 'production', 'test']),
 
-		DISALLOW_INDEXING: z
+		ALLOW_INDEXING: z
 			.enum(['true', 'false'])
-			.default('false')
-			.transform((s) => s === 'true'),
+			.default('true')
+			.transform((s) => s !== 'false'),
 
 		SESSION_SECRET: z.string(),
 		CSRF_SECRET: z.string().optional(),
@@ -53,7 +53,7 @@ export const env = parsedEnv.data
 const PUBLIC_ENV = [
 	'NODE_ENV',
 	'SENTRY_DSN',
-	'DISALLOW_INDEXING',
+	'ALLOW_INDEXING',
 ] as const satisfies (keyof Env)[]
 
 export type PublicEnv = typeof publicEnv

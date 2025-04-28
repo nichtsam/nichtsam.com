@@ -14,7 +14,7 @@ import sourceMapSupport from 'source-map-support'
 import { printUrls } from './server-utils.js'
 
 const MODE = process.env.NODE_ENV ?? 'development'
-const DISALLOW_INDEXING = process.env.DISALLOW_INDEXING === 'true'
+const ALLOW_INDEXING = process.env.ALLOW_INDEXING !== 'false'
 
 sourceMapSupport.install()
 
@@ -92,7 +92,7 @@ app.use((_, res, next) => {
 	next()
 })
 
-if (DISALLOW_INDEXING) {
+if (!ALLOW_INDEXING) {
 	app.use((_, res, next) => {
 		res.set('X-Robots-Tag', 'noindex, nofollow')
 		next()

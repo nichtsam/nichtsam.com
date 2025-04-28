@@ -136,7 +136,7 @@ function Document({
 	theme?: Theme
 	env?: PublicEnv
 }) {
-	const disallowIndexing = !!env?.DISALLOW_INDEXING
+	const allowIndexing = env?.ALLOW_INDEXING
 
 	return (
 		<html lang="en" className={clsx(theme, 'relative')}>
@@ -144,7 +144,7 @@ function Document({
 				<ClientHintsCheck nonce={nonce} />
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
-				{disallowIndexing && <meta name="robots" content="noindex, nofollow" />}
+				{!allowIndexing && <meta name="robots" content="noindex, nofollow" />}
 				<FaviconMeta />
 
 				<Meta />
