@@ -9,6 +9,7 @@ export const posts = defineCollection({
 	includes: '**/*.{md,mdx}',
 	excludes: '_*',
 	schema: z.object({
+		draft: z.boolean().default(false),
 		title: z.string(),
 		description: z.string(),
 		publishedDate: z.date().transform((date) => dayjs(date).format('MMM YYYY')),

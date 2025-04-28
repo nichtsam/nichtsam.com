@@ -87,6 +87,9 @@ export default function BlogPost() {
 	return (
 		<div>
 			<article className="container prose dark:prose-invert xl:prose-lg 2xl:prose-2xl">
+				{data.matter.draft && (
+					<blockquote>Draft! Article Work In Progress!</blockquote>
+				)}
 				<Component />
 			</article>
 		</div>

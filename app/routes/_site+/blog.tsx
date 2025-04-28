@@ -26,7 +26,7 @@ export const loader = async () => {
 	)
 
 	return data(
-		{ posts },
+		{ posts: posts.filter((post) => !post.matter.draft) },
 		{
 			headers: {
 				'Cache-Control': 'max-age=86400',
