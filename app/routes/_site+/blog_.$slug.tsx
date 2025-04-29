@@ -11,6 +11,7 @@ import { bundleMDX } from '#app/utils/content/mdx/bundler.server.ts'
 import { getMdxSource } from '#app/utils/content/mdx/mdx.server.ts'
 import { useMdxComponent } from '#app/utils/content/mdx/mdx.tsx'
 import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
+import { env } from '#app/utils/env.server.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { ServerTiming, time } from '#app/utils/timings.server.ts'
@@ -23,20 +24,27 @@ export const links: Route.LinksFunction = () => [
 export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {
 		const posts = await retrieveAll(config)
-		return posts.map((post) => ({ route: `/blog/${post.meta.name}` }))
+		return posts.map((post) =>
+			post.matter.draft ? null : { route: `/blog/${post.meta.name}` },
+		)
 	}),
 }
 
 export const headers: Route.HeadersFunction = pipeHeaders
 
-export const meta: Route.MetaFunction = (args) =>
-	buildMeta({
+export const meta: Route.MetaFunction = (args) => [
+	...buildMeta({
 		args: args as unknown as MetaArgs,
 		meta: {
 			title: `${args.data?.matter.title} | nichtsam`,
 			description: args.data?.matter.description,
 		},
-	})
+	}),
+
+	...(!args.error && args.matches[0].data.env.ALLOW_INDEXING && args.data.matter.draft
+		? [{ name: 'robots', content: 'noindex, nofollow' }]
+		: []),
+]
 
 export const loader = async ({ params }: Route.LoaderArgs) => {
 	if (!params.slug) {
@@ -75,6 +83,8 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 			headers: {
 				'Cache-Control': 'max-age=86400',
 				'Server-Timing': timing.toString(),
+				...(env.ALLOW_INDEXING &&
+					post.matter.draft && { 'X-Robots-Tag': 'noindex, nofollow' }),
 			},
 		},
 	)

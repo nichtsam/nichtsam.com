@@ -21,7 +21,12 @@ export function pipeHeaders({
 
 	// take in useful headers route loader/action
 	// pass this point currentHeaders can be ignored
-	const forwardHeaders = ['Cache-Control', 'Vary', 'Server-Timing']
+	const forwardHeaders = [
+		'Cache-Control',
+		'Vary',
+		'Server-Timing',
+		'X-Robots-Tag',
+	]
 	for (const headerName of forwardHeaders) {
 		const header = currentHeaders.get(headerName)
 		if (header) {
