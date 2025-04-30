@@ -149,6 +149,13 @@ function Document({
 
 				<Meta />
 				<Links />
+
+				<noscript>
+					<style>
+						{'.js-required { display: none !important; }' +
+							'.hint-js-required { opacity: 50% !important; } '}
+					</style>
+				</noscript>
 			</head>
 			<body
 				className="bg-background text-foreground transition-colors"

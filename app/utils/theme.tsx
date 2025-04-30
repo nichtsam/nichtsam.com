@@ -4,7 +4,6 @@ import { useFetcher, useFetchers } from 'react-router'
 import { z } from 'zod'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
-import { useClientJavascriptEnabled } from './misc.ts'
 import {
 	useRequestInfo,
 	useHints,
@@ -12,6 +11,7 @@ import {
 	useOptionalHints,
 } from './request-info.ts'
 import { type setTheme as setThemeAction } from './theme.server.ts'
+import { cn } from './ui.ts'
 
 export const SET_THEME_INTENT = 'set-theme'
 
@@ -75,11 +75,24 @@ export const ThemeSwitcher = () => {
 	const nextMode =
 		mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system'
 
-	const javascriptEnabled = useClientJavascriptEnabled()
-
 	return (
 		<fetcher.Form method="POST" action="/" {...getFormProps(form)}>
 			<input type="hidden" name="theme" value={nextMode} />
+
+			<noscript>
+				<Button
+					type="button"
+					size="icon"
+					variant="ghost"
+					aria-label="Dark Mode Toggler"
+					className={cn('hint-js-required')}
+					title={
+						'Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.'
+					}
+				>
+					{modeLabel[nextMode]}
+				</Button>
+			</noscript>
 
 			<Button
 				name="intent"
@@ -88,15 +101,7 @@ export const ThemeSwitcher = () => {
 				size="icon"
 				variant="ghost"
 				aria-label="Dark Mode Toggler"
-				disabled={!javascriptEnabled}
-				className={
-					javascriptEnabled ? undefined : 'disabled:pointer-events-none'
-				}
-				title={
-					javascriptEnabled
-						? undefined
-						: 'Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.'
-				}
+				className="js-required"
 			>
 				{modeLabel[nextMode]}
 			</Button>
