@@ -53,6 +53,13 @@ export default function About() {
 		<section className="container max-w-[80ch]">
 			<p className="mb-12 whitespace-pre-line text-lg font-semibold">{bio}</p>
 
+			<p className="mb-12 whitespace-pre-line text-lg font-semibold">
+				This is why I’ve created this section of pre-written answers to
+				interesting questions that I might encounter. It helps me better
+				articulate my ideas and share my thoughts more effectively, without
+				being caught off guard by the abstract nature of my thinking.
+			</p>
+
 			<div
 				className={cn('mb-12 flex flex-col gap-4 transition', {
 					'opacity-50': !jsEnabled,

@@ -3,7 +3,9 @@ export const profile = {
 		"👋 Hi, I'm Samuel\n" +
 		'\n' +
 		"I'm half German, half Polish, and grew up in Taiwan.\n" +
-		"I'm a software developer with a generalist mindset.",
+		"I'm a software developer with a generalist mindset.\n" +
+		'\n' +
+		'One core thing about me: I think in a very abstract, formless way. My thoughts are highly internalized. I’m also very open-minded and rarely take a firm stance on things. I can always agree with logic, regardless of whether the premises are true or not.',
 	questions: [
 		{
 			q: "What's your daily life like?",
