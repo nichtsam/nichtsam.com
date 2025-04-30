@@ -1,6 +1,14 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { Img } from 'openimg/react'
-import { Form, Outlet } from 'react-router'
+import { Form, Link, Outlet } from 'react-router'
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from '#app/components/ui/breadcrumb.tsx'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
 import { requireUserId } from '#app/utils/auth/auth.server.ts'
@@ -77,23 +85,28 @@ const UserHeader = () => {
 const Breadcrumbs = () => {
 	const breadcrumbs = useBreadcrumbs({ minBreadcrumbs: 2 })
 
-	if (!breadcrumbs) {
+	if (breadcrumbs.length === 0) {
 		return null
 	}
 
 	return (
-		<ul className="flex flex-wrap gap-x-3">
-			{breadcrumbs.map(({ id, element }, i, arr) => (
-				<li
-					key={id}
-					className={cn('flex items-center gap-x-3', {
-						'text-muted-foreground': i < arr.length - 1,
-					})}
-				>
-					{i !== 0 ? <Icon name="chevron-right" /> : null}
-					{element}
-				</li>
-			))}
-		</ul>
+		<Breadcrumb>
+			<BreadcrumbList>
+				{breadcrumbs.map(({ id, pathname, breadcrumb }, i, { length }) => (
+					<BreadcrumbItem key={id}>
+						{i !== length - 1 ? (
+							<>
+								<BreadcrumbLink asChild>
+									<Link to={pathname}>{breadcrumb}</Link>
+								</BreadcrumbLink>
+								<BreadcrumbSeparator />
+							</>
+						) : (
+							<BreadcrumbPage>{breadcrumb}</BreadcrumbPage>
+						)}
+					</BreadcrumbItem>
+				))}
+			</BreadcrumbList>
+		</Breadcrumb>
 	)
 }

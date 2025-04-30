@@ -1,5 +1,5 @@
 import { isValidElement, type ReactNode } from 'react'
-import { type UIMatch, Link, useMatches } from 'react-router'
+import { type UIMatch, useMatches } from 'react-router'
 import { z } from 'zod'
 
 const breadcrumbSchema = z.custom<
@@ -17,40 +17,24 @@ interface BreadcrumbsOptions {
 	minBreadcrumbs?: number
 }
 
+type Breadcrumb = {
+	id: string
+	pathname: string
+	breadcrumb: ReactNode
+}
+
 export const useBreadcrumbs = (args?: BreadcrumbsOptions) => {
 	const matches = useMatches()
-
 	return matchesToBreadcrumbs(matches, args)
 }
 
-const matchesToBreadcrumbs = (
+export const matchesToBreadcrumbs = (
 	matches: UIMatch[],
 	{ skip = 0, minBreadcrumbs = 0 }: BreadcrumbsOptions = {},
-) => {
-	const rawBreadcrumbs = matchesToRawBreadcrumbs(matches)
-	rawBreadcrumbs.splice(0, skip)
+): Breadcrumb[] => {
+	const breadcrumbs = []
 
-	const noBreadcrumbs = rawBreadcrumbs.length === 0
-	const notEnoughBreadcrumbs = rawBreadcrumbs.length < minBreadcrumbs
-
-	if (noBreadcrumbs || notEnoughBreadcrumbs) {
-		return null
-	}
-
-	return rawBreadcrumbs.map(({ id, pathname, breadcrumb }, index) => ({
-		id,
-		element:
-			index === rawBreadcrumbs.length - 1 ? (
-				breadcrumb
-			) : (
-				<Link to={pathname}>{breadcrumb}</Link>
-			),
-	}))
-}
-
-const matchesToRawBreadcrumbs = (matches: UIMatch[]) => {
-	const rawBreadcrumbs = []
-
+	let skipped = 0
 	for (let i = 0; i < matches.length; i += 1) {
 		const match = matches[i]!
 
@@ -60,12 +44,21 @@ const matchesToRawBreadcrumbs = (matches: UIMatch[]) => {
 			continue
 		}
 
-		rawBreadcrumbs.push({
+		if (skipped < skip) {
+			skipped += 1
+			continue
+		}
+
+		breadcrumbs.push({
 			id: match.id,
 			pathname: match.pathname,
 			breadcrumb: result.data.handle.breadcrumb,
 		})
 	}
 
-	return rawBreadcrumbs
+	if (breadcrumbs.length < minBreadcrumbs) {
+		return []
+	}
+
+	return breadcrumbs
 }
