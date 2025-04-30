@@ -59,14 +59,14 @@ export async function downloadFile(
 	}
 }
 
-export function useClientJavascriptEnable() {
-	const [clientJavascriptEnable, setClientJavascriptEnable] = useState(false)
+export function useClientJavascriptEnabled() {
+	const [clientJavascriptEnabled, setClientJavascriptEnabled] = useState(false)
 
 	useEffect(() => {
-		setClientJavascriptEnable(true)
+		setClientJavascriptEnabled(true)
 	}, [])
 
-	return clientJavascriptEnable
+	return clientJavascriptEnabled
 }
 
 export type SmartString = string & Record<never, never>

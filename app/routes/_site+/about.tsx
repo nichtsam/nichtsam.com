@@ -5,7 +5,7 @@ import { Badge } from '#app/components/ui/badge.tsx'
 import { allQuestionTags, profile } from '#app/config/profile.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
-import { useClientJavascriptEnable } from '#app/utils/misc.ts'
+import { useClientJavascriptEnabled } from '#app/utils/misc.ts'
 import { cn } from '#app/utils/ui.ts'
 import { type Route } from './+types/about'
 
@@ -39,7 +39,7 @@ export default function About() {
 		allQuestionTags: allTags,
 	} = useLoaderData<typeof loader>()
 	const { selectedTags, isTagSelected, toggleTag, clearTags } = useTagSelect()
-	const jsEnabled = useClientJavascriptEnable()
+	const javascriptEnabled = useClientJavascriptEnabled()
 
 	const filteredQuestions = useMemo(
 		() =>
@@ -62,7 +62,7 @@ export default function About() {
 
 			<div
 				className={cn('mb-12 flex flex-col gap-4 transition', {
-					'opacity-50': !jsEnabled,
+					'opacity-50': !javascriptEnabled,
 				})}
 			>
 				<p className="text-2xl font-semibold">Filter by tags</p>

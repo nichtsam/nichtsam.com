@@ -4,7 +4,7 @@ import { useFetcher, useFetchers } from 'react-router'
 import { z } from 'zod'
 import { Button } from '#app/components/ui/button.tsx'
 import { Icon } from '#app/components/ui/icon.tsx'
-import { useClientJavascriptEnable } from './misc.ts'
+import { useClientJavascriptEnabled } from './misc.ts'
 import {
 	useRequestInfo,
 	useHints,
@@ -75,7 +75,7 @@ export const ThemeSwitcher = () => {
 	const nextMode =
 		mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system'
 
-	const clientJavascriptEnable = useClientJavascriptEnable()
+	const javascriptEnabled = useClientJavascriptEnabled()
 
 	return (
 		<fetcher.Form method="POST" action="/" {...getFormProps(form)}>
@@ -88,14 +88,14 @@ export const ThemeSwitcher = () => {
 				size="icon"
 				variant="ghost"
 				aria-label="Dark Mode Toggler"
-				disabled={!clientJavascriptEnable}
+				disabled={!javascriptEnabled}
 				className={
-					!clientJavascriptEnable ? 'disabled:pointer-events-auto' : undefined
+					javascriptEnabled ? undefined : 'disabled:pointer-events-none'
 				}
 				title={
-					!clientJavascriptEnable
-						? 'Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.'
-						: undefined
+					javascriptEnabled
+						? undefined
+						: 'Theme switching is disabled due to lack of JavaScript support. Please enable JavaScript or use a browser that supports it to enable this feature.'
 				}
 			>
 				{modeLabel[nextMode]}
