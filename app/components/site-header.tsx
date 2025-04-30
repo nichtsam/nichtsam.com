@@ -29,7 +29,7 @@ export function SiteHeader() {
 			<div className="flex items-center p-9 lg:gap-16">
 				<Logo />
 				<MainNav />
-				<div className="-mr-16 flex-grow" /> {/* Spacing adjustment */}
+				<div className="-mr-16 grow" /> {/* Spacing adjustment */}
 				<div className="flex gap-x-1">
 					<MobileNav />
 					<ThemeSwitcher />

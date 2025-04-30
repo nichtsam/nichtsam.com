@@ -42,14 +42,14 @@ function NavProgress() {
 			aria-hidden={busy ? undefined : true}
 			aria-valuetext={busy ? 'Loading' : 'Idle'}
 			className={cn(
-				'pointer-events-none fixed inset-x-0 top-0 z-[60] flex flex-col items-end transition-all duration-500',
+				'pointer-events-none fixed inset-x-0 top-0 z-60 flex flex-col items-end transition-all duration-500',
 				!busy && 'opacity-0',
 			)}
 		>
-			<div className={cn('relative h-1 w-full overflow-hidden bg-primary/20')}>
+			<div className={cn('bg-primary/20 relative h-1 w-full overflow-hidden')}>
 				<ProgressPrimitive.Indicator
 					ref={indicatorRef}
-					className="h-full w-full flex-1 bg-primary transition-all duration-500"
+					className="bg-primary size-full flex-1 transition-all duration-500"
 					style={{ transform: `translateX(-${100 - progressRate}%)` }}
 				/>
 			</div>

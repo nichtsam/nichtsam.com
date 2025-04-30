@@ -41,7 +41,9 @@ export const meta: Route.MetaFunction = (args) => [
 		},
 	}),
 
-	...(!args.error && args.matches[0].data.env.ALLOW_INDEXING && args.data.matter.draft
+	...(!args.error &&
+	args.matches[0].data.env.ALLOW_INDEXING &&
+	args.data.matter.draft
 		? [{ name: 'robots', content: 'noindex, nofollow' }]
 		: []),
 ]
@@ -96,7 +98,7 @@ export default function BlogPost() {
 
 	return (
 		<div>
-			<article className="container prose dark:prose-invert xl:prose-lg 2xl:prose-2xl">
+			<article className="prose dark:prose-invert xl:prose-lg 2xl:prose-2xl container">
 				{data.matter.draft && (
 					<blockquote>Draft! Article Work In Progress!</blockquote>
 				)}

@@ -58,13 +58,13 @@ function PostItem({
 		<li>
 			<Link
 				to={post.meta.slug}
-				className="inline-block w-full rounded-md p-4 transition ease-out hover:scale-105 hover:bg-accent hover:text-accent-foreground"
+				className="hover:bg-accent hover:text-accent-foreground inline-block w-full rounded-md p-4 transition ease-out hover:scale-105"
 			>
 				<div className="flex items-baseline justify-between gap-x-2">
 					<div>
 						<h3 className="mr-2 inline text-lg">{post.matter.title}</h3>
 
-						<span className="whitespace-pre text-sm text-muted-foreground">
+						<span className="text-muted-foreground text-sm whitespace-pre">
 							{post.readingTime}
 						</span>
 					</div>

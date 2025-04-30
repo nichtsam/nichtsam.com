@@ -150,7 +150,10 @@ function Document({
 				<Meta />
 				<Links />
 			</head>
-			<body suppressHydrationWarning>
+			<body
+				className="bg-background text-foreground transition-colors"
+				suppressHydrationWarning
+			>
 				{children}
 
 				<NavProgress />
@@ -176,7 +179,7 @@ function App() {
 	return (
 		<div className="flex min-h-screen flex-col">
 			<SiteHeader />
-			<main className="flex-grow">
+			<main className="grow">
 				<Outlet />
 			</main>
 			<SiteFooter />

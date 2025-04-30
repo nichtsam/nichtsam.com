@@ -37,7 +37,7 @@ export const Field = ({ labelProps, inputProps, errors, help }: FieldProps) => {
 	return (
 		<div className="my-2">
 			<Label htmlFor={id} {...labelProps} />
-			{help && <p className="mb-1 text-xs text-muted-foreground">{help}</p>}
+			{help && <p className="text-muted-foreground mb-1 text-xs">{help}</p>}
 			<Input
 				aria-invalid={!!errorId}
 				aria-describedby={errorId}

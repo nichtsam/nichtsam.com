@@ -20,7 +20,7 @@ export const headers: Route.HeadersFunction = (args) => {
 export default function Index() {
 	return (
 		<section className="container flex flex-col-reverse justify-between md:flex-row">
-			<article className="prose py-9 dark:prose-invert lg:prose-xl">
+			<article className="prose dark:prose-invert lg:prose-xl py-9">
 				<h1>Samuel Jensen</h1>
 				<p>
 					Hi there, I'm Sam.

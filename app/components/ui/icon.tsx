@@ -4,12 +4,12 @@ import href from './icons/sprite.svg?url'
 import { type IconName } from '@/icon-name'
 
 const sizeClassName = {
-	font: 'h-[1em] w-[1em]',
-	xs: 'h-2 w-2',
-	sm: 'h-3 w-3',
-	base: 'h-4 w-4',
-	lg: 'h-5 w-5',
-	xl: 'h-6 w-6',
+	font: 'size-[1em]',
+	xs: 'size-2',
+	sm: 'size-3',
+	base: 'size-4',
+	lg: 'size-5',
+	xl: 'size-6',
 } as const
 
 type Size = keyof typeof sizeClassName

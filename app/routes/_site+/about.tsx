@@ -51,9 +51,9 @@ export default function About() {
 
 	return (
 		<section className="container max-w-[80ch]">
-			<p className="mb-12 whitespace-pre-line text-lg font-semibold">{bio}</p>
+			<p className="mb-12 text-lg font-semibold whitespace-pre-line">{bio}</p>
 
-			<p className="mb-12 whitespace-pre-line text-lg font-semibold">
+			<p className="mb-12 text-lg font-semibold whitespace-pre-line">
 				This is why I’ve created this section of pre-written answers to
 				interesting questions that I might encounter. It helps me better
 				articulate my ideas and share my thoughts more effectively, without

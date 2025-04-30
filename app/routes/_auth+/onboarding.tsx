@@ -210,9 +210,9 @@ export default function OnBoarding() {
 								<img
 									src={fields.imageUrl.initialValue}
 									alt={`avatar of you`}
-									className="h-24 w-24 rounded-full"
+									className="size-24 rounded-full"
 								/>
-								<p className="text-sm text-muted-foreground">
+								<p className="text-muted-foreground text-sm">
 									You can change this later.
 								</p>
 
