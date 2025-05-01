@@ -32,9 +32,10 @@ export default function Index() {
 			</article>
 			<div className="flex items-center justify-center">
 				<Img
+					className="size-64"
 					isAboveFold
-					height={256}
-					width={256}
+					height={384}
+					width={384}
 					src="public:/images/samuel-figure.png"
 				/>
 			</div>
