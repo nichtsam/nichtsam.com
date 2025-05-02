@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import css from 'dedent'
 import { OpenImgContextProvider } from 'openimg/react'
 import {
 	data,
@@ -152,8 +153,14 @@ function Document({
 
 				<noscript>
 					<style>
-						{'.js-required { display: none !important; }' +
-							'.hint-js-required { opacity: 50% !important; } '}
+						{css`
+							.js-required {
+								display: none !important;
+							}
+							.hint-js-required {
+								opacity: 50% !important;
+							}
+						`}
 					</style>
 				</noscript>
 			</head>
