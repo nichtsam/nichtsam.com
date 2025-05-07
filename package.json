@@ -75,7 +75,7 @@
     "dotenv": "16.5.0",
     "drizzle-orm": "0.43.1",
     "drizzle-zod": "0.7.1",
-    "express": "4.21.2",
+    "express": "5.1.0",
     "express-rate-limit": "7.5.0",
     "get-port": "7.1.0",
     "gray-matter": "4.0.3",
@@ -152,7 +152,8 @@
       "@sentry-internal/node-cpu-profiler",
       "@sentry/cli",
       "esbuild",
-      "sharp"
+      "sharp",
+      "unrs-resolver"
     ]
   }
 }

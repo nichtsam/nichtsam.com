@@ -130,7 +130,7 @@ app.get(wantCors, cors())
 
 // handle SSR requests
 app.all(
-	'*',
+	'*splat',
 	createRequestHandler({
 		getLoadContext: (_, res) => ({
 			cspNonce: res.locals.cspNonce,
