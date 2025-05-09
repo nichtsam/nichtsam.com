@@ -21,12 +21,20 @@ export const headers: Route.HeadersFunction = pipeHeaders
 export const loader = async () => {
 	const timing = new ServerTiming()
 
-	const posts = await time(timing, 'get posts', () =>
+	const postCollection = await time(timing, 'get posts', () =>
 		retrieveAll(config, timing),
 	)
 
+	const posts = postCollection
+		.filter((post) => !post.matter.draft)
+		.map((post) => ({
+			readingTime: post.readingTime,
+			matter: post.matter,
+			slug: post.meta.slug,
+		}))
+
 	return data(
-		{ posts: posts.filter((post) => !post.matter.draft) },
+		{ posts },
 		{
 			headers: {
 				'Cache-Control': 'max-age=86400',
@@ -42,7 +50,7 @@ export default function Blog() {
 		<div className="container max-w-[80ch]">
 			<ul className="flex flex-col gap-y-2">
 				{data.posts.map((post) => (
-					<PostItem key={post.meta.name} post={post} />
+					<PostItem key={post.slug} post={post} />
 				))}
 			</ul>
 		</div>
@@ -57,7 +65,7 @@ function PostItem({
 	return (
 		<li>
 			<Link
-				to={post.meta.slug}
+				to={post.slug}
 				className="hover:bg-accent hover:text-accent-foreground inline-block w-full rounded-md p-4 transition ease-out hover:scale-105"
 			>
 				<div className="flex items-baseline justify-between gap-x-2">
