@@ -1,9 +1,9 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { z } from 'zod'
+import { profile } from '#app/config/profile.ts'
 import { posts as postConfig } from '#app/utils/content/config.ts'
 import { getMdxSource } from '#app/utils/content/mdx/mdx.server.ts'
 import { retrieve, retrieveAll } from '#app/utils/content/retrieve.ts'
-import { loader as aboutLoader } from '../_site+/about.tsx'
 import { Transport } from './transport.server.ts'
 
 export const transports = new Map<string, Transport>()
@@ -30,13 +30,20 @@ server.tool(
 	'get-about',
 	'Get information about Samuel Jensen, the owner of nichtsam.com',
 	() => {
-		const about = aboutLoader()
-		return { content: [{ type: 'text', text: JSON.stringify(about) }] }
+		return { content: [{ type: 'text', text: JSON.stringify(profile) }] }
 	},
 )
 
 server.tool('get-blog-posts', 'Get the list of blog posts', async () => {
-	const posts = await retrieveAll(postConfig)
+	const postCollection = await retrieveAll(postConfig)
+
+	const posts = postCollection
+		.filter((post) => !post.matter.draft)
+		.map((post) => ({
+			readingTime: post.readingTime,
+			matter: post.matter,
+			slug: post.meta.slug,
+		}))
 
 	if (posts.length === 0) {
 		return { content: [{ type: 'text', text: 'No blog posts found' }] }

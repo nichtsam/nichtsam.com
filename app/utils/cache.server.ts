@@ -114,6 +114,7 @@ function cachified<Value>(
 	{ timing, ...options }: CachifiedOptions<Value> & { timing?: ServerTiming },
 	reporter: CreateReporter<Value> = verboseReporter<Value>(),
 ): Promise<Value> {
+	options.forceFresh = true
 	return baseCachified(
 		options,
 		mergeReporters(reporter, timing ? timingReporter(timing) : null),

@@ -1,6 +1,6 @@
 import { intersection } from 'ramda'
 import { useMemo, useState } from 'react'
-import { useLoaderData, type MetaArgs } from 'react-router'
+import { type MetaArgs } from 'react-router'
 import { Badge } from '#app/components/ui/badge.tsx'
 import { allQuestionTags, profile } from '#app/config/profile.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
@@ -23,20 +23,9 @@ export const headers: Route.HeadersFunction = (args) => {
 	return pipeHeaders(args)
 }
 
-export const loader = () => {
-	return {
-		bio: profile.bio,
-		questions: profile.questions,
-		allQuestionTags,
-	}
-}
-
 export default function About() {
-	const {
-		bio,
-		questions,
-		allQuestionTags: allTags,
-	} = useLoaderData<typeof loader>()
+	const { bio, questions } = profile
+	const allTags = allQuestionTags
 	const { selectedTags, isTagSelected, toggleTag, clearTags } = useTagSelect()
 
 	const filteredQuestions = useMemo(
