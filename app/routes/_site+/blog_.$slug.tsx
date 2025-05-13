@@ -69,7 +69,10 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 		})
 	}
 
-	const bundleSource = await getMdxSource(post.meta)
+	const bundleSource = await time(timing, 'get mdx source', () =>
+		getMdxSource(post.meta),
+	)
+
 	const { code } = await bundleMDX({
 		slug,
 		bundleSource,
