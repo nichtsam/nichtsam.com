@@ -17,11 +17,11 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "quality": "pnpm lint:fix && pnpm format",
+    "quality": "run-s lint:fix format",
     "typecheck": "react-router typegen && tsc",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "validate": "pnpm quality && pnpm typecheck && pnpm coverage"
+    "validate": "run-s quality typecheck coverage"
   },
   "dependencies": {
     "@cloudinary/url-gen": "1.21.0",
