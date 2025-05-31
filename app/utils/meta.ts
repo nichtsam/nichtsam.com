@@ -1,11 +1,11 @@
 import {
-	type ErrorResponse,
 	isRouteErrorResponse,
+	type useRouteLoaderData,
+	type ErrorResponse,
 	type Location,
 	type MetaArgs,
-	type useRouteLoaderData,
+	type MetaDescriptor,
 } from 'react-router'
-import { type MetaDescriptors } from 'react-router/route-module'
 import { type loader } from '#app/root.tsx'
 import { removeTrailingSlash } from './misc'
 
@@ -32,7 +32,7 @@ export function buildMeta({
 	statusMetas?: Record<number, StatusMeta>
 	defaultStatusMeta?: StatusMeta
 	unexpectedErrorMeta?: UnexpectedErrorMeta
-}): MetaDescriptors {
+}): MetaDescriptor[] {
 	const rootData = matches.find((m) => m.id === 'root')?.data as RootData
 	const origin = rootData ? rootData.requestInfo.origin : 'https://nichtsam.com'
 	const url = `${origin}${removeTrailingSlash(location.pathname)}${location.search}`

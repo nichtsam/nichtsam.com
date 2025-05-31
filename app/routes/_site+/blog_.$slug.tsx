@@ -43,6 +43,7 @@ export const meta: Route.MetaFunction = (args) => [
 
 	...(!args.error &&
 	args.matches[0].data.env.ALLOW_INDEXING &&
+	args.data &&
 	args.data.matter.draft
 		? [{ name: 'robots', content: 'noindex, nofollow' }]
 		: []),
