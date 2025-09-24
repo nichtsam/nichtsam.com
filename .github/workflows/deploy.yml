@@ -9,6 +9,9 @@ env:
   NODE_VERSION: 22
   PNPM_VERSION: 10
 
+  SENTRY_ORG: 'samuel-jensen'
+  SENTRY_PROJECT: 'nichtsam-com'
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -131,16 +134,21 @@ jobs:
 
       - name: 🚀 Deploy Staging
         if: ${{ github.ref_name == 'dev'}}
-        run: flyctl deploy --remote-only --config fly.staging.toml
+        run: |
+          flyctl deploy \
+          --remote-only \
+          --config fly.staging.toml
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
       - name: 🚀 Deploy Production
         if: ${{ github.ref_name == 'main'}}
-        run: >
-          flyctl deploy  --remote-only  --build-secret SENTRY_AUTH_TOKEN=${{
-          secrets.SENTRY_AUTH_TOKEN }}  --build-arg SENTRY_ORG="samuel-jensen"
-          --build-arg SENTRY_PROJECT="nichtsam-com" --build-arg COMMIT_SHA=${{
-          github.sha }}
+        run: |
+          flyctl deploy \
+          --remote-only \
+          --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
+          --build-arg SENTRY_ORG=${{ env.SENTRY_ORG}} \
+          --build-arg SENTRY_PROJECT=${{ env.SENTRY_PROJECT}} \
+          --build-arg COMMIT_SHA=${{ github.sha }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
