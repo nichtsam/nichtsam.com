@@ -6,6 +6,7 @@ import {
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 import { envOnlyMacros } from 'vite-env-only'
+import { iconsSpritesheet } from 'vite-plugin-icons-spritesheet'
 
 export default defineConfig((config) => ({
 	build: {
@@ -19,6 +20,14 @@ export default defineConfig((config) => ({
 		envOnlyMacros(),
 		tailwindcss(),
 		reactRouter(),
+
+		iconsSpritesheet({
+			withTypes: true,
+			inputDir: './other/svg-icons',
+			outputDir: './app/components/ui/icons',
+			fileName: 'sprite.svg',
+			iconNameTransformer: (iconName) => iconName,
+		}),
 
 		process.env.SENTRY_AUTH_TOKEN && process.env.NODE_ENV === 'production'
 			? sentryReactRouter(sentryConfig, config)

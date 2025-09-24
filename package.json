@@ -10,7 +10,6 @@
     "dev": "node ./server.js",
     "dev:email": "email dev --dir ./app/components/emails/",
     "build": "run-s build:*",
-    "build:icons": "tsx ./other/build-icons.ts",
     "build:router": "react-router build",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "db:migrate": "tsx ./drizzle/migrate.ts",
@@ -73,8 +72,8 @@
     "dayjs": "1.11.13",
     "dedent": "1.6.0",
     "dotenv": "16.5.0",
-    "drizzle-zod": "0.7.1",
     "drizzle-orm": "0.44.1",
+    "drizzle-zod": "0.7.1",
     "express": "5.1.0",
     "express-rate-limit": "7.5.0",
     "get-port": "7.1.0",
@@ -140,6 +139,7 @@
     "typescript": "5.8.3",
     "vite": "6.3.5",
     "vite-env-only": "3.0.3",
+    "vite-plugin-icons-spritesheet": "3.0.1",
     "vitest": "3.2.2"
   },
   "engines": {
