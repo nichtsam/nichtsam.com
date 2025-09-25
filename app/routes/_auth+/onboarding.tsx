@@ -31,7 +31,10 @@ import {
 	signUp,
 	signUpWithConnection,
 } from '#app/utils/auth/auth.server.ts'
-import { onboardingCookie } from '#app/utils/auth/onboarding.server.ts'
+import {
+	onboardingCookie,
+	onboardingCookieSchema,
+} from '#app/utils/auth/onboarding.server.ts'
 import { onboardingFormSchema } from '#app/utils/auth/onboarding.ts'
 import { db } from '#app/utils/db.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
@@ -56,8 +59,8 @@ export const meta: Route.MetaFunction = (args) =>
 const requireData = async (request: Request) => {
 	await requireAnonymous(request)
 
-	const onboardingInfo = await onboardingCookie.parse(
-		request.headers.get('cookie'),
+	const onboardingInfo = onboardingCookieSchema.parse(
+		await onboardingCookie.parse(request.headers.get('cookie')),
 	)
 
 	if (onboardingInfo) {

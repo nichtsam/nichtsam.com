@@ -18,6 +18,10 @@ const magicLinkSchema = z.object({
 	email: z.string().email(),
 })
 
+export const onboardingCookieSchema = z
+	.union([oauthSchema, magicLinkSchema])
+	.nullable()
+
 export const onboardingCookie = createTypedCookie({
 	cookie: createCookie('_onboarding', {
 		path: '/',
@@ -27,5 +31,5 @@ export const onboardingCookie = createTypedCookie({
 		secrets: env.SESSION_SECRET.split(','),
 		secure: env.NODE_ENV === 'production',
 	}),
-	schema: z.union([oauthSchema, magicLinkSchema]).nullable(),
+	schema: onboardingCookieSchema,
 })
