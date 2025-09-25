@@ -90,6 +90,7 @@ function createMatch({
 				breadcrumb === 'yes' ? 1 : breadcrumb === 'no' ? 0 : undefined,
 		}),
 		data: null,
+		loaderData: null,
 		params: {},
 	}
 }
