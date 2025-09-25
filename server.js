@@ -7,7 +7,7 @@ import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
 import cors from 'cors'
 import express from 'express'
-import { rateLimit } from 'express-rate-limit'
+import { ipKeyGenerator, rateLimit } from 'express-rate-limit'
 import getPort, { portNumbers } from 'get-port'
 import morgan from 'morgan'
 import sourceMapSupport from 'source-map-support'
@@ -65,7 +65,7 @@ const rateLimitConfig = {
 	standardHeaders: true,
 	legacyHeaders: false,
 	keyGenerator: (req) => {
-		return req.get('fly-client-ip') ?? `${req.ip}`
+		return req.get('fly-client-ip') ?? ipKeyGenerator(req.ip)
 	},
 }
 
