@@ -113,6 +113,7 @@ if (viteDevServer) {
 		express.static('build/client/assets', {
 			immutable: true,
 			maxAge: '1y',
+			fallthrough: false,
 		}),
 	)
 }
