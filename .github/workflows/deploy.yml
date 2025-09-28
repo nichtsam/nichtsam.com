@@ -122,6 +122,8 @@ jobs:
   container:
     name: 🔜 Prepare Container
     runs-on: ubuntu-22.04
+    outputs:
+      image_reference: ${{ steps.image_reference.outputs.value }}
     if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
 
     steps:
@@ -158,6 +160,20 @@ jobs:
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
+      - name: 👀 Read App name
+        uses: SebRollen/toml-action@v1.2.0
+        id: app_name
+        with:
+          file:
+            ${{ github.ref_name == 'main' && 'fly.toml' || 'fly.staging.toml' }}
+          field: app
+
+      - name: 👀 Prepare Image Reference
+        id: image_reference
+        run: |
+          IMAGE="registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
+          echo "value=$IMAGE" >> $GITHUB_OUTPUT
+
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-22.04
@@ -171,20 +187,12 @@ jobs:
       - name: 🎈 Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@1.5
 
-      - name: 👀 Read app name
-        uses: SebRollen/toml-action@v1.2.0
-        id: app_name
-        with:
-          file:
-            ${{ github.ref_name == 'dev' && 'fly.staging.toml' || 'fly.toml' }}
-          field: app
-
       - name: 🚀 Deploy Staging
         if: ${{ github.ref_name == 'dev'}}
         run: |
           flyctl deploy \
             --config fly.staging.toml \
-            --image "registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
+            --image "${{ needs.container.outputs.image_reference }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -192,6 +200,6 @@ jobs:
         if: ${{ github.ref_name == 'main'}}
         run: |
           flyctl deploy \
-            --image "registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
+            --image "${{ needs.container.outputs.image_reference }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
