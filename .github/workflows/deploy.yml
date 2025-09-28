@@ -119,10 +119,9 @@ jobs:
           TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
           TURSO_DB_AUTH_TOKEN: ${{ secrets.TURSO_DB_AUTH_TOKEN }}
 
-  deploy:
-    name: 🚀 Deploy
+  container:
+    name: 🔜 Prepare Container
     runs-on: ubuntu-22.04
-    needs: [lint, typecheck, vitest, migration]
     if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
 
     steps:
@@ -132,12 +131,60 @@ jobs:
       - name: 🎈 Setup Fly
         uses: superfly/flyctl-actions/setup-flyctl@1.5
 
-      - name: 🚀 Deploy Staging
+      - name: 📦 Build Staging Container
         if: ${{ github.ref_name == 'dev'}}
         run: |
           flyctl deploy \
           --remote-only \
+          --build-only \
+          --push \
+          --image-label ${{ github.sha }} \
           --config fly.staging.toml
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+      - name: 📦 Build Production Container
+        if: ${{ github.ref_name == 'main'}}
+        run: |
+          flyctl deploy \
+          --remote-only \
+          --build-only \
+          --push \
+          --image-label ${{ github.sha }} \
+          --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
+          --build-arg SENTRY_ORG=${{ env.SENTRY_ORG}} \
+          --build-arg SENTRY_PROJECT=${{ env.SENTRY_PROJECT}} \
+          --build-arg COMMIT_SHA=${{ github.sha }}
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+  deploy:
+    name: 🚀 Deploy
+    runs-on: ubuntu-22.04
+    needs: [lint, typecheck, vitest, migration, container]
+    if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
+
+    steps:
+      - name: 👀 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🎈 Setup Fly
+        uses: superfly/flyctl-actions/setup-flyctl@1.5
+
+      - name: 👀 Read app name
+        uses: SebRollen/toml-action@v1.2.0
+        id: app_name
+        with:
+          file:
+            ${{ github.ref_name == 'dev' && 'fly.staging.toml' || 'fly.toml' }}
+          field: app
+
+      - name: 🚀 Deploy Staging
+        if: ${{ github.ref_name == 'dev'}}
+        run: |
+          flyctl deploy \
+          --config fly.staging.toml \
+          --image "registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -145,10 +192,6 @@ jobs:
         if: ${{ github.ref_name == 'main'}}
         run: |
           flyctl deploy \
-          --remote-only \
-          --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
-          --build-arg SENTRY_ORG=${{ env.SENTRY_ORG}} \
-          --build-arg SENTRY_PROJECT=${{ env.SENTRY_PROJECT}} \
-          --build-arg COMMIT_SHA=${{ github.sha }}
+            --image "registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
