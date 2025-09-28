@@ -135,11 +135,11 @@ jobs:
         if: ${{ github.ref_name == 'dev'}}
         run: |
           flyctl deploy \
-          --remote-only \
-          --build-only \
-          --push \
-          --image-label ${{ github.sha }} \
-          --config fly.staging.toml
+            --remote-only \
+            --build-only \
+            --push \
+            --image-label ${{ github.sha }} \
+            --config fly.staging.toml
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -147,14 +147,14 @@ jobs:
         if: ${{ github.ref_name == 'main'}}
         run: |
           flyctl deploy \
-          --remote-only \
-          --build-only \
-          --push \
-          --image-label ${{ github.sha }} \
-          --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
-          --build-arg SENTRY_ORG=${{ env.SENTRY_ORG}} \
-          --build-arg SENTRY_PROJECT=${{ env.SENTRY_PROJECT}} \
-          --build-arg COMMIT_SHA=${{ github.sha }}
+            --remote-only \
+            --build-only \
+            --push \
+            --image-label ${{ github.sha }} \
+            --build-secret SENTRY_AUTH_TOKEN=${{ secrets.SENTRY_AUTH_TOKEN }} \
+            --build-arg SENTRY_ORG=${{ env.SENTRY_ORG}} \
+            --build-arg SENTRY_PROJECT=${{ env.SENTRY_PROJECT}} \
+            --build-arg COMMIT_SHA=${{ github.sha }}
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -183,8 +183,8 @@ jobs:
         if: ${{ github.ref_name == 'dev'}}
         run: |
           flyctl deploy \
-          --config fly.staging.toml \
-          --image "registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
+            --config fly.staging.toml \
+            --image "registry.fly.io/${{ steps.app_name.outputs.value }}:${{ github.sha }}"
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
