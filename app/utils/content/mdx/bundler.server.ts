@@ -47,13 +47,12 @@ const queue = remember(
 	() =>
 		new PQueue({
 			concurrency: 1,
-			throwOnTimeout: true,
 			timeout: 1000 * 30,
 		}),
 )
 
 const queuedBundleMDX = async (...args: Parameters<typeof bundleMDX>) =>
-	await queue.add(() => bundleMDX(...args), { throwOnTimeout: true })
+	await queue.add(() => bundleMDX(...args))
 
 function cachedBundleMDX({
 	slug,
