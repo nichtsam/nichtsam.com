@@ -2,14 +2,13 @@ import { Resize } from '@cloudinary/url-gen/actions/resize'
 import { useMemo } from 'react'
 import { cloudinary } from '#app/utils/image.ts'
 
-interface CloudinaryImageProps
-	extends Omit<
-		React.DetailedHTMLProps<
-			React.ImgHTMLAttributes<HTMLImageElement>,
-			HTMLImageElement
-		>,
-		'src' | 'srcSet' | 'sizes'
-	> {
+interface CloudinaryImageProps extends Omit<
+	React.DetailedHTMLProps<
+		React.ImgHTMLAttributes<HTMLImageElement>,
+		HTMLImageElement
+	>,
+	'src' | 'srcSet' | 'sizes'
+> {
 	id: string
 	widths: number[]
 	sizes: string[]
