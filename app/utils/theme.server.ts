@@ -1,4 +1,4 @@
-import { parseWithZod } from '@conform-to/zod'
+import { parseWithZod } from '@conform-to/zod/v4'
 import { parse as parseCookie, serialize as serializeCookie } from 'cookie'
 import { data } from 'react-router'
 import { ThemeFormSchema } from './theme.tsx'
