@@ -9,18 +9,18 @@
   "scripts": {
     "dev": "node ./server.js",
     "dev:email": "email dev --dir ./app/components/emails/",
-    "build": "run-s build:*",
+    "build": "pnpm build:router",
     "build:router": "react-router build",
     "start": "cross-env NODE_ENV=production node ./server.js",
     "db:migrate": "tsx ./drizzle/migrate.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "quality": "run-s lint:fix format",
+    "quality": "pnpm lint:fix && pnpm format",
     "typecheck": "react-router typegen && tsc",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "validate": "run-s quality typecheck coverage"
+    "validate": "pnpm quality && pnpm typecheck && pnpm coverage"
   },
   "dependencies": {
     "@cloudinary/url-gen": "1.22.0",
@@ -128,7 +128,6 @@
     "eslint": "9.39.2",
     "jsdom": "27.3.0",
     "node-html-parser": "7.0.1",
-    "npm-run-all": "4.1.5",
     "prettier": "3.7.4",
     "prettier-plugin-tailwindcss": "0.7.2",
     "react-email": "5.0.8",
