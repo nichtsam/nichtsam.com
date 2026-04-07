@@ -72,13 +72,7 @@ function handleRequest(
 									],
 									'font-src': ["'self'"],
 									'frame-src': ["'self'"],
-									'img-src': [
-										"'self'",
-										'data:',
-										'avatars.githubusercontent.com',
-										'cdn.discordapp.com',
-										'res.cloudinary.com',
-									],
+									'img-src': ["'self'", 'data:', 'res.cloudinary.com'],
 									'script-src': [
 										"'strict-dynamic'",
 										"'self'",
@@ -90,7 +84,7 @@ function handleRequest(
 									'script-src-attr': [`'nonce-${nonce}'`],
 								},
 								navigation: {
-									'form-action': ["'self'", 'github.com/login/oauth/authorize'],
+									'form-action': ["'self'"],
 								},
 							},
 						},

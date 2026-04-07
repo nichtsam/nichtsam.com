@@ -8,7 +8,6 @@ import {
 	Drawer,
 	DrawerContent,
 	DrawerDescription,
-	DrawerFooter,
 	DrawerHeader,
 	DrawerTitle,
 	DrawerTrigger,
@@ -21,7 +20,6 @@ import {
 	NavigationMenuList,
 	navigationMenuTriggerStyle,
 } from './ui/navigation-menu'
-import { UserButton } from './user'
 
 export function SiteHeader() {
 	return (
@@ -33,9 +31,6 @@ export function SiteHeader() {
 				<div className="flex gap-x-1">
 					<MobileNav />
 					<ThemeSwitcher />
-					<nav className="hidden lg:block">
-						<UserButton />
-					</nav>
 				</div>
 			</div>
 		</header>
@@ -106,9 +101,6 @@ function MobileNav() {
 						</ul>
 					</nav>
 				</div>
-				<DrawerFooter>
-					<UserButton />
-				</DrawerFooter>
 			</DrawerContent>
 		</Drawer>
 	)

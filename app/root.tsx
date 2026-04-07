@@ -28,7 +28,6 @@ import { SiteFooter } from './components/site-footer.tsx'
 import { SiteHeader } from './components/site-header.tsx'
 import { Toaster } from './components/ui/sonner.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
-import { getUser, getUserId, logout } from './utils/auth/auth.server.ts'
 import { ClientHintsCheck, getHints } from './utils/client-hints.tsx'
 import { csrf } from './utils/csrf.server.ts'
 import { pipeHeaders } from './utils/headers.server.ts'
@@ -67,19 +66,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 	const timing = new ServerTiming()
 
-	timing.time('get user id', 'Get user id in database')
-	const userId = await getUserId(request)
-	timing.timeEnd('get user id')
-
-	timing.time('find user', 'Find user in database')
-	const user = userId ? await getUser(userId) : null
-	timing.timeEnd('find user')
-
-	if (userId && !user) {
-		console.info('something weird happened')
-		await logout({ request })
-	}
-
 	const [[csrfToken, csrfCookieHeader], toast, honeyProps] = await Promise.all([
 		csrf.commitToken(),
 		getToast(request),
@@ -93,7 +79,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 	headers.append('Server-Timing', timing.toString())
 	return data(
 		{
-			user,
 			env: publicEnv,
 			requestInfo: {
 				origin: getOrigin(request),

@@ -13,19 +13,9 @@ const envSchema = z
 
 		SESSION_SECRET: z.string(),
 		CSRF_SECRET: z.string().optional(),
-		MAGIC_LINK_SECRET: z.string(),
-
-		GITHUB_CLIENT_ID: z.string(),
-		GITHUB_CLIENT_SECRET: z.string(),
-
-		DISCORD_CLIENT_ID: z.string(),
-		DISCORD_CLIENT_SECRET: z.string(),
-		DISCORD_BOT_TOKEN: z.string(),
 
 		TURSO_DB_URL: z.string().url(),
 		TURSO_DB_AUTH_TOKEN: z.string(),
-
-		RESEND_API_KEY: z.string(),
 
 		SENTRY_DSN: z.string().url().optional(),
 

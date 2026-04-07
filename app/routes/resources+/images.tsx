@@ -2,8 +2,7 @@ import { join } from 'node:path'
 import { getImgResponse, type ImgSource } from 'openimg/node'
 import { env } from '#app/utils/env.server.ts'
 import { mergeHeaders } from '#app/utils/request.server.ts'
-import { getSignedUrl } from '#app/utils/storage/presigned.server.ts'
-import { ServerTiming, time } from '#app/utils/timings.server.ts'
+import { ServerTiming } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/images.ts'
 
 const STORAGE_BUCKET = env.BUCKET_NAME
@@ -12,7 +11,7 @@ const STORAGE_ENDPOINT = env.AWS_ENDPOINT_URL_S3.replace(
 	`://${STORAGE_BUCKET}.`,
 )
 
-type ImgSrcType = 'external' | 'object' | 'public'
+type ImgSrcType = 'external' | 'public'
 export function getImgSrc(type: ImgSrcType, path: string) {
 	return `${type}:${path}`
 }
@@ -57,14 +56,6 @@ export async function loader({ request }: Route.LoaderArgs) {
 		}
 		case 'public': {
 			imgSource = { type: 'fs', path: join('./public', path) }
-			break
-		}
-		case 'object': {
-			const url = await time(timing, 'get presigned url', () =>
-				getSignedUrl({ method: 'GET', key: path }),
-			)
-
-			imgSource = { type: 'fetch', url: url.toString() }
 			break
 		}
 		default:
