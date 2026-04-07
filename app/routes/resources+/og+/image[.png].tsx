@@ -20,7 +20,7 @@ export async function loader() {
 		</div>
 	)
 
-	const data = await generateImage({ jsx, timing })
+	const data = new Uint8Array(await generateImage({ jsx, timing }))
 
 	const cors = new Headers({
 		'Access-Control-Allow-Origin': '*',
