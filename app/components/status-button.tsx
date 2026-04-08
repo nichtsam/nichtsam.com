@@ -1,8 +1,8 @@
 import { cn } from '#app/utils/ui.ts'
-import { Button } from './ui/button.tsx'
+import { Button, ButtonProps } from './ui/button.tsx'
 import { Icon } from './ui/icon.tsx'
 
-export interface StatusButtonProps extends Button.Props {
+export interface StatusButtonProps extends ButtonProps {
 	status: 'success' | 'pending' | 'error' | 'idle'
 }
 export const StatusButton = ({
