@@ -3,14 +3,6 @@ import { type NavLink } from '#app/model/nav.ts'
 
 export const coreNav = [
 	{
-		title: 'About Me',
-		href: '/about',
-	},
-	{
-		title: 'Reach Out',
-		href: '/contact',
-	},
-	{
 		title: 'My Blog',
 		href: '/blog',
 	},
