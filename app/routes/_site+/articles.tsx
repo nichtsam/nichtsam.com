@@ -4,15 +4,15 @@ import { retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { ServerTiming, time } from '#app/utils/timings.server.ts'
-import { type Route } from './+types/blog'
+import { type Route } from './+types/articles'
 
 export const meta: Route.MetaFunction = (args) =>
 	buildMeta({
 		args: args as unknown as MetaArgs,
 		meta: {
-			title: 'Blog | nichtsam',
+			title: 'Articles | nichtsam',
 			description:
-				'Blog posts written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
+				'Articles written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
 		},
 	})
 
@@ -44,7 +44,7 @@ export const loader = async () => {
 	)
 }
 
-export default function Blog() {
+export default function Articles() {
 	const data = useLoaderData<typeof loader>()
 	return (
 		<div className="container max-w-[80ch]">

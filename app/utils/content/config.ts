@@ -5,7 +5,7 @@ import { defineCollection } from './model'
 
 export const posts = defineCollection({
 	name: 'posts',
-	directory: 'content/blog',
+	directory: 'content/articles',
 	includes: '**/*.{md,mdx}',
 	excludes: '_*',
 	schema: z.object({

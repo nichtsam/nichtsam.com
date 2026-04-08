@@ -53,7 +53,7 @@ export function CloudinaryImage({
 	)
 }
 
-export function BlogImage({
+export function ArticleImage({
 	id,
 	alt,
 }: {

@@ -54,13 +54,13 @@ async function retrieveAll<
 			} catch (err) {
 				if (err instanceof z.ZodError) {
 					console.error(
-						`Error: skipping blog post '${entry}', invalid frontMatter:`,
+						`Error: skipping entry '${entry}', invalid frontMatter:`,
 						err.flatten().fieldErrors,
 					)
 				} else if (err instanceof Error) {
-					console.error(`Error: skipping blog post '${entry}',`, err.message)
+					console.error(`Error: skipping entry  '${entry}',`, err.message)
 				} else {
-					console.error(`Error: skipping blog post '${entry}',`, err)
+					console.error(`Error: skipping entry '${entry}',`, err)
 				}
 			}
 		}),

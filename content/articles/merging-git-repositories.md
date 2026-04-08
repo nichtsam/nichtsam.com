@@ -27,8 +27,8 @@ environment. Though I could structure things better, finding the optimal setup
 will take time. I also wanted each repo to be simply named under a namespace. I
 used Git organizations for this initially, but I didn’t like the idea and didn’t
 want to create one just yet. So, I decided to switch to a monorepo approach. Who
-knows, I might regret this and end up writing another blog post about splitting
-a monorepo.
+knows, I might regret this and end up writing another article about splitting a
+monorepo.
 
 The goal is to merge several repositories into one, with each repo as a
 subdirectory in the main repository. Additionally, I want to preserve the commit

@@ -46,11 +46,11 @@ If you want to deploy manually, refer to
 
 Here are some stuff you will need to adjust to make it your website.
 
-#### Blog
+#### Articles
 
-- `/content/blog` \
-  Written in mdx, every top-level file or directory with index file is a blog
-  post.
+- `/content/articles` \
+  Written in mdx, every top-level file or directory with index file is an
+  article.
 
 #### Favicons
 

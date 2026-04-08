@@ -15,7 +15,7 @@ import { env } from '#app/utils/env.server.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { ServerTiming, time } from '#app/utils/timings.server.ts'
-import { type Route } from './+types/blog_.$slug'
+import { type Route } from './+types/articles_.$slug'
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'stylesheet', href: shikiStylesheet },
@@ -25,7 +25,7 @@ export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {
 		const posts = await retrieveAll(config)
 		return posts.map((post) =>
-			post.matter.draft ? null : { route: `/blog/${post.meta.name}` },
+			post.matter.draft ? null : { route: `/articles/${post.meta.name}` },
 		)
 	}),
 }
@@ -96,7 +96,7 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 	)
 }
 
-export default function BlogPost() {
+export default function Article() {
 	const data = useLoaderData<typeof loader>()
 	const Component = useMdxComponent(data.code)
 

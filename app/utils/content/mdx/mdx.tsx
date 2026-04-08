@@ -1,9 +1,9 @@
 import { LRUCache } from 'lru-cache'
 import * as mdxBundler from 'mdx-bundler/client/index.js'
 import { useMemo } from 'react'
-import { BlogImage } from '#app/components/image.tsx'
+import { ArticleImage } from '#app/components/image.tsx'
 
-const customMdxComponents = { BlogImage }
+const customMdxComponents = { ArticleImage }
 
 function getMdxComponent(code: string) {
 	const Component = mdxBundler.getMDXComponent(code)

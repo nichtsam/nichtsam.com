@@ -3,8 +3,8 @@ import { type NavLink } from '#app/model/nav.ts'
 
 export const coreNav = [
 	{
-		title: 'My Blog',
-		href: '/blog',
+		title: 'Articles',
+		href: '/articles',
 	},
 ] satisfies NavLink[]
 
