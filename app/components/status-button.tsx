@@ -1,5 +1,5 @@
 import { cn } from '#app/utils/ui.ts'
-import { Button, ButtonProps } from './ui/button.tsx'
+import { Button, type ButtonProps } from './ui/button.tsx'
 import { Icon } from './ui/icon.tsx'
 
 export interface StatusButtonProps extends ButtonProps {
