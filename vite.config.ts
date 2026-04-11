@@ -12,7 +12,7 @@ export default defineConfig((config) => ({
 	build: {
 		cssMinify: process.env.NODE_ENV === 'production',
 
-		sourcemap: true,
+		sourcemap: 'hidden',
 	},
 
 	sentryConfig,
