@@ -13,7 +13,7 @@ keywords:
   - merge
 ---
 
-# {frontmatter.title}
+# Merging Git Repositories
 
 I started developing a small app a while ago, but I wasn’t sure whether to
 structure it as a mono repo or poly repo. Since I’m working with a tech stack

@@ -1,5 +1,5 @@
 ---
-title: Writing CSS for a “Header + Main + Footer” Layout
+title: Writing CSS for a "Header + Main + Footer" Layout
 description: Sharing my experiences and insights on implementing a "Header + Main + Footer" layout
 publishedDate: 2025-01-30
 keywords:
@@ -8,13 +8,13 @@ keywords:
   - layout
 ---
 
-# {frontmatter.title}
+# Writing CSS for a "Header + Main + Footer" Layout
 
 This is the layout I start with for almost every new project I begin. The concept is simple: a header, a main content container, and a footer, while ensuring a minimum height that fills the screen, with the main content filling the remaining space.
 
-I don’t enjoy writing vanilla CSS, so I will use [Tailwind CSS](https://tailwindcss.com/) in this article, though the general concepts apply to all CSS frameworks.
+I don't enjoy writing vanilla CSS, so I will use [Tailwind CSS](https://tailwindcss.com/) in this article, though the general concepts apply to all CSS frameworks.
 
-It’s relatively simple; I’m just writing this post to keep a record of it.
+It's relatively simple; I'm just writing this post to keep a record of it.
 
 ## The Basics
 
@@ -35,7 +35,7 @@ To start, we need a root container for the header, main, and footer. While we co
 </html>
 ```
 
-Now, we have the basic structure in place. Let’s move on to writing the styles.
+Now, we have the basic structure in place. Let's move on to writing the styles.
 
 ### Step 1: Full-Screen Height
 
@@ -67,7 +67,7 @@ Ok I know this is simple.
 
 ## Handling Nested Elements
 
-What if you have another element inside `<main>` that you want to stretch and fill the available space? Simply using `"h-full"` wouldn’t work, so we need to apply flexbox principles deeper into the layout.
+What if you have another element inside `<main>` that you want to stretch and fill the available space? Simply using `"h-full"` wouldn't work, so we need to apply flexbox principles deeper into the layout.
 
 ```html
 <div class="min-h-screen">

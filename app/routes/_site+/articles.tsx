@@ -1,9 +1,7 @@
+import { allArticles } from '#content-collections'
 import { data, Link, type MetaArgs, useLoaderData } from 'react-router'
-import { posts as config } from '#app/utils/content/config.ts'
-import { retrieveAll } from '#app/utils/content/retrieve.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
-import { ServerTiming, time } from '#app/utils/timings.server.ts'
 import { type Route } from './+types/articles'
 
 export const meta: Route.MetaFunction = (args) =>
@@ -19,28 +17,20 @@ export const meta: Route.MetaFunction = (args) =>
 export const headers: Route.HeadersFunction = pipeHeaders
 
 export const loader = async () => {
-	const timing = new ServerTiming()
-
-	const postCollection = await time(timing, 'get posts', () =>
-		retrieveAll(config, timing),
-	)
-
-	const posts = postCollection
-		.filter((post) => !post.matter.draft)
-		.map((post) => ({
-			readingTime: post.readingTime,
-			matter: post.matter,
-			slug: post.meta.slug,
+	const posts = allArticles
+		.filter((article) => !article.draft)
+		.map((article) => ({
+			readingTime: article.readingTime,
+			matter: {
+				title: article.title,
+				description: article.description,
+				publishedDate: article.publishedDate,
+			},
+			slug: article.slug,
 		}))
 
 	return data(
 		{ posts },
-		{
-			headers: {
-				'Cache-Control': 'max-age=86400',
-				'Server-Timing': timing.toString(),
-			},
-		},
 	)
 }
 

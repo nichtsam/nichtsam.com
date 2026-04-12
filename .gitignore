@@ -17,6 +17,10 @@ coverage
 # generated files
 /app/components/ui/icons
 .react-router/
+.content-collections/*
+.content-collections/generated/*
+!.content-collections/generated/
+!.content-collections/generated/index.d.ts
 
 # Sentry Config File
 .sentryclirc

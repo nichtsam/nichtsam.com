@@ -15,6 +15,7 @@
 
 		"rootDirs": [".", "./.react-router/types"],
 		"paths": {
+			"#content-collections": ["./.content-collections/generated"],
 			"#app/*": ["./app/*"],
 			"#drizzle/*": ["./drizzle/*"],
 			"@/icon-name": [

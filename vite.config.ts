@@ -1,3 +1,4 @@
+import contentCollections from '@content-collections/remix-vite'
 import { reactRouter } from '@react-router/dev/vite'
 import {
 	sentryReactRouter,
@@ -17,6 +18,7 @@ export default defineConfig((config) => ({
 
 	sentryConfig,
 	plugins: [
+		contentCollections(),
 		envOnlyMacros(),
 		tailwindcss(),
 		reactRouter(),
