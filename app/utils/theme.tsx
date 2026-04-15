@@ -22,7 +22,7 @@ export const ThemeFormSchema = z.object({
 export const useTheme = () => {
 	const requestInfo = useRequestInfo()
 	const hints = useHints()
-	const optimisticMode = useOptimisticThemeMode()
+	const optimisticMode = useOptimisticTheme()
 	if (optimisticMode) {
 		return optimisticMode === 'system' ? hints.theme : optimisticMode
 	}
@@ -33,7 +33,7 @@ export const useTheme = () => {
 export const useOptionalTheme = () => {
 	const requestInfo = useOptionalRequestInfo()
 	const hints = useOptionalHints()
-	const optimisticMode = useOptimisticThemeMode()
+	const optimisticMode = useOptimisticTheme()
 	if (optimisticMode) {
 		return optimisticMode === 'system' ? hints?.theme : optimisticMode
 	}
@@ -41,7 +41,7 @@ export const useOptionalTheme = () => {
 	return requestInfo?.userPreferences.theme ?? hints?.theme
 }
 
-export function useOptimisticThemeMode() {
+function useOptimisticTheme() {
 	const fetchers = useFetchers()
 	const themeFetcher = fetchers.find((f) => f.formAction === '/')
 
@@ -69,9 +69,9 @@ export const ThemeSwitcher = () => {
 		lastResult: fetcher.data?.result,
 	})
 
-	const themePreference = useOptionalRequestInfo()?.userPreferences.theme
-	const optimisticMode = useOptimisticThemeMode()
-	const mode = optimisticMode ?? themePreference ?? 'system'
+	const preferredTheme = useOptionalRequestInfo()?.userPreferences.theme
+	const optimisticTheme = useOptimisticTheme()
+	const mode = optimisticTheme ?? preferredTheme ?? 'system'
 	const nextMode =
 		mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system'
 

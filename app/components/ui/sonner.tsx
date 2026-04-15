@@ -1,12 +1,12 @@
 'use client'
 
 import { Toaster as Sonner } from 'sonner'
-import { useOptimisticThemeMode } from '#app/utils/theme.tsx'
+import { useOptionalTheme } from '#app/utils/theme.tsx'
 
 type ToasterProps = React.ComponentProps<typeof Sonner>
 
 const Toaster = ({ ...props }: ToasterProps) => {
-	const theme = useOptimisticThemeMode()
+	const theme = useOptionalTheme()
 
 	return (
 		<Sonner
