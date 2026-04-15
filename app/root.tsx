@@ -28,7 +28,7 @@ import { SiteFooter } from './components/site-footer.tsx'
 import { SiteHeader } from './components/site-header.tsx'
 import { Toaster } from './components/ui/sonner.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
-import { ClientHintsCheck, getHints } from './utils/client-hints.tsx'
+import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
 import { csrf } from './utils/csrf.server.ts'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { honeypot } from './utils/honeypot.server.tsx'
@@ -127,7 +127,7 @@ function Document({
 	return (
 		<html lang="en" className={clsx(theme, 'relative')}>
 			<head>
-				<ClientHintsCheck nonce={nonce} />
+				<ClientHintCheck nonce={nonce} />
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				{!allowIndexing && <meta name="robots" content="noindex, nofollow" />}
