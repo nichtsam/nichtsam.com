@@ -1,5 +1,4 @@
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
-import { allArticles } from '#content-collections'
 import { data, type MetaArgs, useLoaderData } from 'react-router'
 import { serverOnly$ } from 'vite-env-only/macros'
 import {
@@ -11,6 +10,7 @@ import { useMdxComponent } from '#app/utils/content/mdx.tsx'
 import { env } from '#app/utils/env.server.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
+import { allArticles } from '#content-collections'
 import { type Route } from './+types/articles_.$slug'
 
 export const links: Route.LinksFunction = () => [

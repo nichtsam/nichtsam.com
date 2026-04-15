@@ -50,8 +50,7 @@ export const meta: Route.MetaFunction = (args) =>
 	})
 
 export const headers: Route.HeadersFunction = (args) => {
-	// document has authed personalized content
-	args.loaderHeaders.append('Cache-Control', 'private')
+	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
 	args.loaderHeaders.append('Vary', 'Cookie')
 
 	return pipeHeaders(args)

@@ -12,10 +12,7 @@ export const meta: Route.MetaFunction = (args) =>
 		},
 	})
 
-export const headers: Route.HeadersFunction = (args) => {
-	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
-	return pipeHeaders(args)
-}
+export const headers: Route.HeadersFunction = pipeHeaders
 
 export default function Index() {
 	return (

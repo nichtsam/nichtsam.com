@@ -1,7 +1,7 @@
-import { allArticles } from '#content-collections'
 import { data, Link, type MetaArgs, useLoaderData } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
+import { allArticles } from '#content-collections'
 import { type Route } from './+types/articles'
 
 export const meta: Route.MetaFunction = (args) =>
@@ -29,9 +29,7 @@ export const loader = async () => {
 			slug: article.slug,
 		}))
 
-	return data(
-		{ posts },
-	)
+	return data({ posts })
 }
 
 export default function Articles() {
