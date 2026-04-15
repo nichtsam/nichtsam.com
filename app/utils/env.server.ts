@@ -14,9 +14,6 @@ const envSchema = z
 		SESSION_SECRET: z.string(),
 		CSRF_SECRET: z.string().optional(),
 
-		TURSO_DB_URL: z.string().url(),
-		TURSO_DB_AUTH_TOKEN: z.string(),
-
 		SENTRY_DSN: z.string().url().optional(),
 
 		AWS_REGION: z.string(),

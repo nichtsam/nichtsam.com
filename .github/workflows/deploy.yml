@@ -84,41 +84,6 @@ jobs:
       - name: ⚡ Run vitest
         run: pnpm coverage
 
-  migration:
-    name: 🧬 Migration
-    runs-on: ubuntu-22.04
-    needs: [lint, typecheck, vitest]
-    if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
-
-    steps:
-      - name: 👀 Checkout repo
-        uses: actions/checkout@v4
-
-      - name: 🟢 Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: 📥 Download deps
-        uses: pnpm/action-setup@v3
-        with:
-          version: ${{ env.PNPM_VERSION }}
-          run_install: true
-
-      - name: 🧬 Staging Migration
-        if: ${{ github.ref_name == 'dev'}}
-        run: pnpm db:migrate
-        env:
-          TURSO_DB_URL: ${{ secrets.STAGING_TURSO_DB_URL }}
-          TURSO_DB_AUTH_TOKEN: ${{ secrets.STAGING_TURSO_DB_AUTH_TOKEN }}
-
-      - name: 🧬 Production Migration
-        if: ${{ github.ref_name == 'main'}}
-        run: pnpm db:migrate
-        env:
-          TURSO_DB_URL: ${{ secrets.TURSO_DB_URL }}
-          TURSO_DB_AUTH_TOKEN: ${{ secrets.TURSO_DB_AUTH_TOKEN }}
-
   container:
     name: 🔜 Prepare Container
     runs-on: ubuntu-22.04
@@ -177,7 +142,7 @@ jobs:
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-22.04
-    needs: [lint, typecheck, vitest, migration, container]
+    needs: [lint, typecheck, vitest, container]
     if: ${{ github.ref_name == 'main' || github.ref_name == 'dev'}}
 
     steps:

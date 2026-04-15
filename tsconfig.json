@@ -17,7 +17,6 @@
 		"paths": {
 			"#content-collections": ["./.content-collections/generated"],
 			"#app/*": ["./app/*"],
-			"#drizzle/*": ["./drizzle/*"],
 			"@/icon-name": [
 				"./app/components/ui/icons/types.ts",
 				"./types/fallback.ts"

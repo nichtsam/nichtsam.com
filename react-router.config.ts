@@ -4,9 +4,7 @@ import { sentryOnBuildEnd } from '@sentry/react-router'
 export default {
 	ssr: true,
 
-	future: {
-		unstable_optimizeDeps: true,
-	},
+	future: {},
 
 	buildEnd: async ({ viteConfig, reactRouterConfig, buildManifest }) => {
 		if (

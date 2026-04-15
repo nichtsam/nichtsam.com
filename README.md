@@ -20,9 +20,8 @@ Staging : https://staging.nichtsam.com
 
 1. Copy `.env.example` into `.env`
 2. run `pnpm i`
-3. run `pnpm db:migrate`
-4. run `pnpm dev`
-5. open up `http://localhost:3000`
+3. run `pnpm dev`
+4. open up `http://localhost:3000`
 
 ## Deployment
 
