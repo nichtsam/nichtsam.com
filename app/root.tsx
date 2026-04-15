@@ -12,8 +12,6 @@ import {
 	useLoaderData,
 	useRouteLoaderData,
 } from 'react-router'
-import { AuthenticityTokenProvider } from 'remix-utils/csrf/react'
-import { HoneypotProvider } from 'remix-utils/honeypot/react'
 import appStylesheet from '#app/styles/app.css?url'
 import {
 	publicEnv,
@@ -29,9 +27,7 @@ import { SiteHeader } from './components/site-header.tsx'
 import { Toaster } from './components/ui/sonner.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
 import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
-import { csrf } from './utils/csrf.server.ts'
 import { pipeHeaders } from './utils/headers.server.ts'
-import { honeypot } from './utils/honeypot.server.tsx'
 import { buildMeta } from './utils/meta.ts'
 import { getOrigin } from './utils/misc.ts'
 import { useNonce } from './utils/nonce-provider.tsx'
@@ -66,15 +62,10 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 
 	const timing = new ServerTiming()
 
-	const [[csrfToken, csrfCookieHeader], toast, honeyProps] = await Promise.all([
-		csrf.commitToken(),
-		getToast(request),
-		honeypot.getInputProps(),
-	])
+	const [toast] = await Promise.all([getToast(request)])
 
 	const headers = new Headers()
 	mergeHeaders(headers, toast?.discardHeaders)
-	csrfCookieHeader && headers.append('set-cookie', csrfCookieHeader)
 
 	headers.append('Server-Timing', timing.toString())
 	return data(
@@ -88,8 +79,6 @@ export const loader = async ({ request }: Route.LoaderArgs) => {
 				},
 			},
 			toast: toast?.toast,
-			csrfToken,
-			honeyProps,
 		},
 		{
 			headers,
@@ -187,18 +176,12 @@ function App() {
 }
 
 function AppWithProviders() {
-	const { csrfToken, honeyProps } = useLoaderData<typeof loader>()
-
 	return (
-		<HoneypotProvider {...honeyProps}>
-			<AuthenticityTokenProvider token={csrfToken}>
-				<OpenImgContextProvider optimizerEndpoint="/resources/images">
-					<TooltipProvider>
-						<App />
-					</TooltipProvider>
-				</OpenImgContextProvider>
-			</AuthenticityTokenProvider>
-		</HoneypotProvider>
+		<OpenImgContextProvider optimizerEndpoint="/resources/images">
+			<TooltipProvider>
+				<App />
+			</TooltipProvider>
+		</OpenImgContextProvider>
 	)
 }
 

@@ -12,7 +12,6 @@ const envSchema = z
 			.transform((s) => s !== 'false'),
 
 		SESSION_SECRET: z.string(),
-		CSRF_SECRET: z.string().optional(),
 
 		SENTRY_DSN: z.string().url().optional(),
 
