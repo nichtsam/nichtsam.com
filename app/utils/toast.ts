@@ -8,6 +8,7 @@ export const useToast = (toast?: Toast) => {
 
 		showToast[toast.type](toast.title, {
 			description: toast.message,
+			richColors: true,
 		})
 	}, [toast])
 }
