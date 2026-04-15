@@ -31,7 +31,7 @@ export const toastCookie = createTypedCookie({
 		sameSite: 'lax',
 		path: '/',
 		httpOnly: true,
-		secrets: env.SESSION_SECRET.split(','),
+		secrets: env.APP_SECRET.split(','),
 		secure: env.NODE_ENV === 'production',
 	}),
 	schema: toastSchema,

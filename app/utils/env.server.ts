@@ -11,7 +11,7 @@ const envSchema = z
 			.default('true')
 			.transform((s) => s !== 'false'),
 
-		SESSION_SECRET: z.string(),
+		APP_SECRET: z.string(),
 
 		SENTRY_DSN: z.string().url().optional(),
 
