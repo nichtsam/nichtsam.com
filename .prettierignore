@@ -1,10 +1,8 @@
-node_modules
-
-/build
 .env
-
 pnpm-lock.yaml
-
+node_modules
 coverage
+/build
+.content-collections
+GEMINI.md
 
-drizzle/meta
