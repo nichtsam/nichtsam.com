@@ -6,14 +6,18 @@ export function init() {
 
 		sendDefaultPii: true,
 
-		tracesSampleRate: 1,
-		profilesSampleRate: 1,
+		enableLogs: true,
+
+		tracesSampleRate: 1.0,
 		replaysSessionSampleRate: 0.1,
-		replaysOnErrorSampleRate: 1,
+		replaysOnErrorSampleRate: 1.0,
 
 		integrations: [
+			Sentry.reactRouterTracingIntegration(),
 			Sentry.replayIntegration(),
-			Sentry.browserProfilingIntegration(),
+			Sentry.feedbackIntegration({
+				colorScheme: 'system',
+			}),
 		],
 	})
 }

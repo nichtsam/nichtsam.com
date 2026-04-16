@@ -16,7 +16,6 @@ export default defineConfig((config) => ({
 		sourcemap: 'hidden',
 	},
 
-	sentryConfig,
 	plugins: [
 		contentCollections(),
 		envOnlyMacros(),
@@ -46,9 +45,7 @@ const sentryConfig: SentryReactRouterBuildOptions = {
 		name: process.env.COMMIT_SHA,
 	},
 
-	unstable_sentryVitePluginOptions: {
-		sourcemaps: {
-			filesToDeleteAfterUpload: ['./build/**/*.map'],
-		},
+	sourcemaps: {
+		filesToDeleteAfterUpload: ['./build/**/*.map'],
 	},
 }

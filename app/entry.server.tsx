@@ -127,11 +127,13 @@ export function handleError(
 		return
 	}
 
+	let errorMessage: string
 	if (error instanceof Error) {
-		console.error(styleText('red', error.stack ?? error.message))
+		errorMessage = error.stack ?? error.message
 	} else {
-		console.error(styleText('red', String(error)))
+		errorMessage = String(error)
 	}
 
+	console.error(styleText('red', errorMessage))
 	Sentry.captureException(error)
 }

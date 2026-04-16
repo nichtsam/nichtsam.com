@@ -7,8 +7,10 @@ export function init() {
 
 		sendDefaultPii: true,
 
-		tracesSampleRate: 1,
-		profilesSampleRate: 1,
+		enableLogs: true,
+
+		tracesSampleRate: 1.0,
+		profileSessionSampleRate: 1.0,
 
 		integrations: [nodeProfilingIntegration()],
 	})
