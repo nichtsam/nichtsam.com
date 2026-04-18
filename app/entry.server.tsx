@@ -67,8 +67,16 @@ function handleRequest(
 								fetch: {
 									'connect-src': [
 										MODE === 'development' ? 'ws:' : undefined,
-										process.env.SENTRY_DSN ? '*.sentry.io' : undefined,
-										process.env.VITE_PUBLIC_POSTHOG_HOST ?? undefined,
+										env.SENTRY_DSN ? '*.sentry.io' : undefined,
+										...(env.POSTHOG_HOST
+											? [
+													env.POSTHOG_HOST,
+													env.POSTHOG_HOST.replace(
+														/(\/\/[^.]+)/,
+														(m) => `${m}-assets`,
+													),
+												]
+											: []),
 										"'self'",
 									],
 									'font-src': ["'self'"],

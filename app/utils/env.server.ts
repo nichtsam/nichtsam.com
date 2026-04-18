@@ -13,14 +13,14 @@ const envSchema = z
 
 		APP_SECRET: z.string(),
 
-		SENTRY_DSN: z.string().url().optional(),
+		SENTRY_DSN: z.url().optional(),
 
-		VITE_PUBLIC_POSTHOG_PROJECT_TOKEN: z.string().optional(),
-		VITE_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+		POSTHOG_PROJECT_TOKEN: z.string().optional(),
+		POSTHOG_HOST: z.url().optional(),
 
 		AWS_REGION: z.string(),
 		BUCKET_NAME: z.string(),
-		AWS_ENDPOINT_URL_S3: z.string().url(),
+		AWS_ENDPOINT_URL_S3: z.url(),
 		AWS_ACCESS_KEY_ID: z.string(),
 		AWS_SECRET_ACCESS_KEY: z.string(),
 	})
@@ -43,8 +43,8 @@ const PUBLIC_ENV = [
 	'NODE_ENV',
 	'SENTRY_DSN',
 	'ALLOW_INDEXING',
-	'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN',
-	'VITE_PUBLIC_POSTHOG_HOST',
+	'POSTHOG_PROJECT_TOKEN',
+	'POSTHOG_HOST',
 ] as const satisfies (keyof Env)[]
 
 export type PublicEnv = typeof publicEnv

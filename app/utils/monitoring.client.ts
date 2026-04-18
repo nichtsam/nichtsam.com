@@ -1,6 +1,10 @@
 import * as Sentry from '@sentry/react-router'
 
 export function init() {
+	if (window.ENV.NODE_ENV !== 'production' || !window.ENV.SENTRY_DSN) {
+		return
+	}
+
 	Sentry.init({
 		dsn: window.ENV.SENTRY_DSN,
 
