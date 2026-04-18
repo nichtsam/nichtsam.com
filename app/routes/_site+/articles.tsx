@@ -65,9 +65,6 @@ function PostItem({
 						{post.readingTime}
 					</span>
 				</div>
-
-				<br />
-				<p className="text-muted-foreground">{post.matter.description}</p>
 			</Link>
 		</li>
 	)
