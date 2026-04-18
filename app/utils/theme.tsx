@@ -1,5 +1,6 @@
 import { getFormProps, useForm } from '@conform-to/react'
 import { parseWithZod } from '@conform-to/zod/v4'
+import { usePostHog } from '@posthog/react'
 import { useFetcher, useFetchers } from 'react-router'
 import { z } from 'zod'
 import { Button } from '#app/components/ui/button.tsx'
@@ -64,6 +65,7 @@ const modeLabel = {
 
 export const ThemeSwitcher = () => {
 	const fetcher = useFetcher<typeof setThemeAction>()
+	const posthog = usePostHog()
 	const [form] = useForm({
 		id: 'theme-switch',
 		lastResult: fetcher.data?.result,
@@ -76,7 +78,17 @@ export const ThemeSwitcher = () => {
 		mode === 'system' ? 'light' : mode === 'light' ? 'dark' : 'system'
 
 	return (
-		<fetcher.Form method="POST" action="/" {...getFormProps(form)}>
+		<fetcher.Form
+			method="POST"
+			action="/"
+			{...getFormProps(form)}
+			onSubmit={() =>
+				posthog?.capture('theme_changed', {
+					from: mode,
+					to: nextMode,
+				})
+			}
+		>
 			<input type="hidden" name="theme" value={nextMode} />
 
 			<noscript>

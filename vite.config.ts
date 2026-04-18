@@ -16,6 +16,10 @@ export default defineConfig((config) => ({
 		sourcemap: 'hidden',
 	},
 
+	ssr: {
+		noExternal: ['posthog-js', '@posthog/react'],
+	},
+
 	plugins: [
 		contentCollections(),
 		envOnlyMacros(),

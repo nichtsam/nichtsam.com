@@ -68,6 +68,7 @@ function handleRequest(
 									'connect-src': [
 										MODE === 'development' ? 'ws:' : undefined,
 										process.env.SENTRY_DSN ? '*.sentry.io' : undefined,
+										process.env.VITE_PUBLIC_POSTHOG_HOST ?? undefined,
 										"'self'",
 									],
 									'font-src': ["'self'"],

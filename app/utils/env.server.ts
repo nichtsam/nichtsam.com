@@ -15,6 +15,9 @@ const envSchema = z
 
 		SENTRY_DSN: z.string().url().optional(),
 
+		VITE_PUBLIC_POSTHOG_PROJECT_TOKEN: z.string().optional(),
+		VITE_PUBLIC_POSTHOG_HOST: z.string().url().optional(),
+
 		AWS_REGION: z.string(),
 		BUCKET_NAME: z.string(),
 		AWS_ENDPOINT_URL_S3: z.string().url(),
@@ -40,6 +43,8 @@ const PUBLIC_ENV = [
 	'NODE_ENV',
 	'SENTRY_DSN',
 	'ALLOW_INDEXING',
+	'VITE_PUBLIC_POSTHOG_PROJECT_TOKEN',
+	'VITE_PUBLIC_POSTHOG_HOST',
 ] as const satisfies (keyof Env)[]
 
 export type PublicEnv = typeof publicEnv

@@ -1,3 +1,4 @@
+import { usePostHog } from '@posthog/react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import { coreNav } from '#app/config/nav.tsx'
@@ -62,6 +63,7 @@ let firstRender = true
 function MobileNav() {
 	const [open, setOpen] = useState(false)
 	const location = useLocation()
+	const posthog = usePostHog()
 
 	useEffect(() => {
 		if (firstRender) {
@@ -75,8 +77,15 @@ function MobileNav() {
 		firstRender = false
 	}, [])
 
+	const handleOpenChange = (isOpen: boolean) => {
+		if (isOpen) {
+			posthog?.capture('mobile_nav_opened')
+		}
+		setOpen(isOpen)
+	}
+
 	return (
-		<Drawer open={open} onOpenChange={setOpen}>
+		<Drawer open={open} onOpenChange={handleOpenChange}>
 			<DrawerTrigger className="lg:hidden" asChild>
 				<Button size="icon" variant="ghost" aria-label="Navigation Menu">
 					<Icon name="hamburger-menu" />

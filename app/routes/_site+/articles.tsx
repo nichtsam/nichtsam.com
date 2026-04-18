@@ -1,3 +1,4 @@
+import { usePostHog } from '@posthog/react'
 import { data, Link, type MetaArgs, useLoaderData } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
@@ -50,11 +51,20 @@ function PostItem({
 }: {
 	post: ReturnType<typeof useLoaderData<typeof loader>>['posts'][number]
 }) {
+	const posthog = usePostHog()
+
 	return (
 		<li>
 			<Link
 				to={post.slug}
 				className="hover:bg-accent hover:text-accent-foreground inline-block w-full rounded-md p-4 transition ease-out hover:scale-105"
+				onClick={() =>
+					posthog?.capture('article_clicked', {
+						slug: post.slug,
+						title: post.matter.title,
+						published_date: post.matter.publishedDate,
+					})
+				}
 			>
 				<div className="flex flex-col">
 					<time dateTime={post.matter.publishedDate}>
