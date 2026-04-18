@@ -43,15 +43,14 @@ function MainNav() {
 			<NavigationMenuList>
 				{coreNav.map(({ href, title }) => (
 					<NavigationMenuItem key={href}>
-						<NavigationMenuLink asChild>
-							<NavLink
-								prefetch="intent"
-								to={href}
-								className={navigationMenuTriggerStyle()}
-							>
-								{title}
-							</NavLink>
-						</NavigationMenuLink>
+						<NavigationMenuLink
+							className={navigationMenuTriggerStyle()}
+							render={
+								<NavLink prefetch="intent" to={href}>
+									{title}
+								</NavLink>
+							}
+						></NavigationMenuLink>
 					</NavigationMenuItem>
 				))}
 			</NavigationMenuList>

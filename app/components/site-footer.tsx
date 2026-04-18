@@ -17,13 +17,20 @@ export function SiteFooter() {
 						{socialNav.map(({ href, title, icon }) => (
 							<NavigationMenuItem key={href}>
 								<Tooltip>
-									<TooltipTrigger asChild>
-										<Button variant="ghost" size="icon" asChild>
-											<ExternalLink href={href} aria-label={title}>
-												{icon}
-											</ExternalLink>
-										</Button>
-									</TooltipTrigger>
+									<TooltipTrigger
+										render={
+											<Button
+												variant="ghost"
+												size="icon"
+												nativeButton={false}
+												render={
+													<ExternalLink href={href} aria-label={title}>
+														{icon}
+													</ExternalLink>
+												}
+											></Button>
+										}
+									></TooltipTrigger>
 									<TooltipContent>
 										<p>{title}</p>
 									</TooltipContent>
