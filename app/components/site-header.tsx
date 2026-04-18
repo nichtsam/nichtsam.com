@@ -88,7 +88,7 @@ function MobileNav() {
 					<DrawerTitle>Menu</DrawerTitle>
 					<DrawerDescription>Links and Actions</DrawerDescription>
 				</DrawerHeader>
-				<div className="overflow-auto p-4 pb-0">
+				<div className="overflow-auto p-4">
 					<nav className="text-center">
 						<ul className="flex flex-col gap-y-3">
 							{coreNav.map(({ title, href }) => (
