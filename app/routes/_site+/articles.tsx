@@ -56,20 +56,17 @@ function PostItem({
 				to={post.slug}
 				className="hover:bg-accent hover:text-accent-foreground inline-block w-full rounded-md p-4 transition ease-out hover:scale-105"
 			>
-				<div className="flex items-baseline justify-between gap-x-2">
-					<div>
-						<h3 className="mr-2 inline text-lg">{post.matter.title}</h3>
-
-						<span className="text-muted-foreground text-sm whitespace-pre">
-							{post.readingTime}
-						</span>
-					</div>
-
-					<time dateTime={post.matter.publishedDate} className="shrink-0">
+				<div className="flex flex-col">
+					<time dateTime={post.matter.publishedDate}>
 						{post.matter.publishedDate}
 					</time>
+					<h3 className="text-lg">{post.matter.title}</h3>
+					<span className="text-muted-foreground text-sm">
+						{post.readingTime}
+					</span>
 				</div>
 
+				<br />
 				<p className="text-muted-foreground">{post.matter.description}</p>
 			</Link>
 		</li>
