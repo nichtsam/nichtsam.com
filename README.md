@@ -1,70 +1,65 @@
-# Welcome to nichtsam.com!
+# nichtsam.com
 
-Production : https://nichtsam.com  
-Staging : https://staging.nichtsam.com
+My personal website — a small pixel-art room you can walk around in, plus the
+articles I write.
+
+Production: https://nichtsam.com · Staging: https://staging.nichtsam.com
 
 ## Stack
 
-- Framework: [Remix](https://remix.run/)
+- Framework: [Remix 3](https://remix.run/) (`remix@3.0.0-rc.3`) — routes,
+  controllers, server rendering and hydrated `clientEntry` components, no
+  bundler or build step
+- Content: Markdown in [`content/articles`](./content/articles), rendered with
+  [marked](https://marked.js.org/) and highlighted with [Shiki](https://shiki.style/)
+- Styling: plain CSS tokens in [`app/ui/public/site.css`](./app/ui/public/site.css)
+  plus Remix's `css()` mixin; all pixel art is drawn in code
+  ([`app/ui/public/sprites.ts`](./app/ui/public/sprites.ts))
 - Deployment: [Fly.io](https://fly.io/)
-- Styling: [Tailwind CSS](https://tailwindcss.com/)
-
-## System Requirement
-
-- [Node.js](https://nodejs.org/) >= 20
-- [Pnpm](https://pnpm.io/) >= 8
 
 ## Development
 
-### Setup
+Requires Node.js >= 24.3 and pnpm 10.
 
-1. Copy `.env.example` into `.env`
-2. run `pnpm i`
-3. run `pnpm dev`
-4. open up `http://localhost:3000`
+```sh
+pnpm install
+pnpm dev        # http://localhost:3000, restarts on change
+pnpm hmr        # same, with hot module reloading
+pnpm test
+pnpm typecheck
+pnpm format
+```
+
+`pnpm start` runs the production server; there is no separate build step.
+
+## Project layout
+
+```txt
+server.ts                 Node entry point
+app/
+  routes.ts               Route contract (typed hrefs)
+  router.ts               Middleware + controller mapping
+  assets.ts               On-demand browser asset server
+  actions/                Controllers and route-owned pages
+  content/articles.ts     Markdown loading and rendering
+  ui/                     Shared layout and server components
+  ui/public/              Browser code: the room, theme toggle, effects, sprites
+content/articles/         Articles (files starting with `_` are ignored)
+public/                   Static files served as-is
+```
+
+## Writing an article
+
+Copy [`content/articles/_template.mdx`](./content/articles/_template.mdx) to
+`content/articles/<slug>.md` and fill in the frontmatter. Drafts
+(`draft: true`) only show up in development.
 
 ## Deployment
 
-This repository has a [Github Workflow](.github/workflows/deploy.yml) set up to
-deploy automatically. \
-If you want to deploy manually, refer to
-[Deploy a Fly App](https://fly.io/docs/apps/deploy/).
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) checks every push
+and pull request, and deploys `main` to production and `dev` to staging on
+Fly.io. It needs a `FLY_API_TOKEN` repository secret.
 
-## Make it yours
+## Secrets
 
-### Infra
-
-- [sign up on fiy.io](https://fly.io/docs/hands-on/)
-- [setup deployment for fly.io](https://fly.io/docs/apps/launch/)
-- set up
-  [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
-  needed by [project's Github Workflows](./.github/workflows/).
-  - [`FLY_API_TOKEN`](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#api-tokens)
-
-### Content
-
-Here are some stuff you will need to adjust to make it your website.
-
-#### Articles
-
-- `/content/articles` \
-  Written in mdx, every top-level file or directory with index file is an
-  article.
-
-#### Favicons
-
-- `public/favicon.ico`
-- `public/favicons`
-- related fields in `public/site.webmanifest`
-
-#### Logo
-
-- logo in `app/components/navbar.tsx`
-
-#### Pages' Meta
-
-- `meta()` in every route
-
-#### Social Links
-
-- `LINKS` in `app/components/footer.tsx`
+↑ ↑ ↓ ↓ ← → ← → B A

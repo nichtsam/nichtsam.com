@@ -1,31 +1,19 @@
 {
-	"include": ["**/*.ts", "**/*.tsx", ".react-router/types/**/*", "server.js"],
 	"compilerOptions": {
-		"isolatedModules": true,
-
-		"jsx": "react-jsx",
-		"allowJs": true,
-		"module": "preserve",
-		"target": "ES2022",
-
 		"strict": true,
-		"noImplicitAny": true,
-		"noUncheckedIndexedAccess": true,
-		"forceConsistentCasingInFileNames": true,
-
-		"rootDirs": [".", "./.react-router/types"],
-		"paths": {
-			"#content-collections": ["./.content-collections/generated"],
-			"#app/*": ["./app/*"],
-			"@/icon-name": [
-				"./app/components/ui/icons/types.ts",
-				"./types/fallback.ts"
-			]
-		},
-
-		// Remix takes care of building everything in `remix build`.
-		"noEmit": true,
+		"lib": ["ES2024", "DOM", "DOM.Iterable"],
+		"types": ["node", "remix/assets/types/hmr"],
+		"module": "NodeNext",
+		"moduleResolution": "NodeNext",
+		"target": "ESNext",
+		"allowImportingTsExtensions": true,
+		"rewriteRelativeImportExtensions": true,
+		"verbatimModuleSyntax": true,
+		"isolatedModules": true,
 		"skipLibCheck": true,
-		"allowImportingTsExtensions": true
-	}
+		"jsx": "react-jsx",
+		"jsxImportSource": "remix/ui",
+		"noEmit": true
+	},
+	"exclude": ["dist"]
 }

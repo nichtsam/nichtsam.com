@@ -1,7 +1,13 @@
-import { type RouteConfig } from '@react-router/dev/routes'
-import { remixRoutesOptionAdapter } from '@react-router/remix-routes-option-adapter'
-import { flatRoutes } from 'remix-flat-routes'
+import { get, route } from 'remix/routes'
 
-export default remixRoutesOptionAdapter((defineRoutes) => {
-	return flatRoutes('routes', defineRoutes, {})
-}) satisfies RouteConfig
+export const routes = route({
+	assets: get('/assets/*path'),
+	home: get('/'),
+	articles: {
+		index: get('/articles'),
+		show: get('/articles/:slug'),
+	},
+	sitemap: get('/sitemap.xml'),
+	robots: get('/robots.txt'),
+	notFound: get('/*path'),
+})
