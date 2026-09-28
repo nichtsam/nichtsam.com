@@ -1,65 +1,31 @@
-import { css } from 'remix/ui'
 import type { Handle } from 'remix/ui'
 
 import type { ArticleMeta } from '../../content/articles.ts'
 import { routes } from '../../routes.ts'
-import { ArticleCard } from '../../ui/article-card.tsx'
+import { PageHeader } from '../../ui/headings.tsx'
 import { Layout } from '../../ui/layout.tsx'
+import { ArticleList } from '../../ui/lists.tsx'
 
 export function ArticlesIndexPage(handle: Handle<{ articles: ArticleMeta[] }>) {
 	return () => {
 		let { articles } = handle.props
 		return (
 			<Layout
-				current="articles"
-				title="Articles"
-				description="Notes, guides and write-ups by Samuel Jensen."
-				path={routes.articles.index.href()}
+				meta={{
+					title: 'Articles',
+					description: 'Notes and write-ups on Git, CSS and building for the web.',
+					path: routes.articles.index.href(),
+				}}
+				section="articles"
 			>
-				<header mix={headerStyle}>
-					<p className="eyebrow">Quest log</p>
-					<h1>Articles</h1>
-					<p className="count">
-						{articles.length} {articles.length === 1 ? 'entry' : 'entries'} found. Some are even
-						finished.
-					</p>
-				</header>
-				{articles.length ? (
-					<div mix={listStyle}>
-						{articles.map((article, index) => (
-							<ArticleCard key={article.slug} article={article} index={index} />
-						))}
-					</div>
-				) : (
-					<p>Nothing here yet. Check back soon!</p>
-				)}
+				<PageHeader
+					title="Articles"
+					eyebrow="notes and write-ups"
+					lede={`${articles.length} so far. Some of them are even finished.`}
+					seed={74}
+				/>
+				<ArticleList articles={articles} headingLevel={2} />
 			</Layout>
 		)
 	}
 }
-
-const headerStyle = css({
-	display: 'grid',
-	gap: '8px',
-	marginBottom: '40px',
-	'& .eyebrow': {
-		fontFamily: 'var(--font-label)',
-		fontSize: '0.8rem',
-		color: 'var(--accent)',
-	},
-	'& h1': {
-		fontFamily: 'var(--font-display)',
-		fontSize: 'clamp(2.5rem, 8vw, 4.5rem)',
-		fontWeight: 700,
-		lineHeight: 1,
-		textShadow: '4px 4px 0 var(--gold)',
-	},
-	'& .count': {
-		color: 'var(--ink-soft)',
-	},
-})
-
-const listStyle = css({
-	display: 'grid',
-	gap: '24px',
-})

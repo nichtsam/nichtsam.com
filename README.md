@@ -1,21 +1,24 @@
 # nichtsam.com
 
-My personal website — a small pixel-art room you can walk around in, plus the
-articles I write.
+My personal website: a page drawn in pencil, plus the articles I write.
 
-Production: https://nichtsam.com · Staging: https://staging.nichtsam.com
+The design spec lives in [`docs/spec.md`](./docs/spec.md).
 
 ## Stack
 
-- Framework: [Remix 3](https://remix.run/) (`remix@3.0.0-rc.3`) — routes,
-  controllers, server rendering and hydrated `clientEntry` components, no
+- Framework: [Remix 3](https://remix.run/) (`remix@3.0.0-rc.3`): routes,
+  controllers, server rendering and hydrated `clientEntry` components, with no
   bundler or build step
+- Drawing: a small seeded pencil ([`app/ui/public/pencil.ts`](./app/ui/public/pencil.ts))
+  that draws every frame, line and doodle as SVG, on the server and in the browser
 - Content: Markdown in [`content/articles`](./content/articles), rendered with
   [marked](https://marked.js.org/) and highlighted with [Shiki](https://shiki.style/)
-- Styling: plain CSS tokens in [`app/ui/public/site.css`](./app/ui/public/site.css)
-  plus Remix's `css()` mixin; all pixel art is drawn in code
-  ([`app/ui/public/sprites.ts`](./app/ui/public/sprites.ts))
-- Deployment: [Fly.io](https://fly.io/)
+- Styling: CSS tokens in [`app/ui/public/site.css`](./app/ui/public/site.css)
+  plus Remix's `css()` mixin
+
+Every page is plain server-rendered HTML that works without JavaScript; the
+drawing-in, the page transition and the hero carousel are enhancements, and
+all of them step aside for `prefers-reduced-motion`.
 
 ## Development
 
@@ -38,28 +41,12 @@ pnpm format
 server.ts                 Node entry point
 app/
   routes.ts               Route contract (typed hrefs)
-  router.ts               Middleware + controller mapping
-  assets.ts               On-demand browser asset server
-  actions/                Controllers and route-owned pages
-  content/articles.ts     Markdown loading and rendering
-  ui/                     Shared layout and server components
-  ui/public/              Browser code: the room, theme toggle, effects, sprites
-content/articles/         Articles (files starting with `_` are ignored)
-public/                   Static files served as-is
+  router.ts               Middleware and controller mapping
+  middleware/theme.ts     Reads the theme cookie
+  content/                Articles, projects, site settings
+  actions/                Controllers and route pages
+  ui/                     Document, layout and shared components
+  ui/public/              Browser code: pencil, ink, transition, hero, theme toggle
+content/articles/         Markdown articles
+docs/spec.md              Design spec
 ```
-
-## Writing an article
-
-Copy [`content/articles/_template.mdx`](./content/articles/_template.mdx) to
-`content/articles/<slug>.md` and fill in the frontmatter. Drafts
-(`draft: true`) only show up in development.
-
-## Deployment
-
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) checks every push
-and pull request, and deploys `main` to production and `dev` to staging on
-Fly.io. It needs a `FLY_API_TOKEN` repository secret.
-
-## Secrets
-
-↑ ↑ ↓ ↓ ← → ← → B A

@@ -1,16 +1,22 @@
+import { asyncContext } from 'remix/middleware/async-context'
 import { compression } from 'remix/middleware/compression'
+import { cop } from 'remix/middleware/cop'
 import { render } from 'remix/middleware/render'
 import { staticFiles } from 'remix/middleware/static'
 import { createRouter, type MiddlewareContext } from 'remix/router'
 
 import articlesController from './actions/articles/controller.tsx'
 import controller from './actions/controller.tsx'
+import projectsController from './actions/projects/controller.tsx'
 import { assets } from './assets.ts'
+import { theme } from './middleware/theme.ts'
 import { routes } from './routes.ts'
 
 const isProduction = process.env.NODE_ENV === 'production'
+
+const themeMiddleware = theme()
 const renderMiddleware = render({ assets })
-type AppContext = MiddlewareContext<[typeof renderMiddleware]>
+type AppContext = MiddlewareContext<[typeof themeMiddleware, typeof renderMiddleware]>
 
 declare module 'remix/router' {
 	interface RouterTypes {
@@ -25,9 +31,13 @@ export const router = createRouter<AppContext>({
 			index: false,
 			cacheControl: isProduction ? 'public, max-age=3600' : 'no-cache',
 		}),
+		cop(),
+		asyncContext(),
+		themeMiddleware,
 		renderMiddleware,
 	],
 })
 
+router.map(routes.projects, projectsController)
 router.map(routes.articles, articlesController)
 router.map(routes, controller)

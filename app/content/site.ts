@@ -8,3 +8,8 @@ export const site = {
 		linkedin: 'https://www.linkedin.com/in/nichtsam/',
 	},
 }
+
+/** An absolute URL on the site, for canonical links, feeds and sitemaps. */
+export function absoluteUrl(path: string) {
+	return new URL(path, site.url).href
+}

@@ -1,72 +1,97 @@
 import { clientEntry, css, on } from 'remix/ui'
 import type { Handle } from 'remix/ui'
 
-import { PixelArt } from './pixel.tsx'
-import { icons } from './sprites.ts'
-import { getTheme, THEME_EVENT, toggleTheme, type Theme } from './theme.ts'
+import { Doodle } from './sketch.tsx'
 
-export const ThemeToggle = clientEntry(import.meta.url, function ThemeToggle(handle: Handle) {
-	let theme: Theme | undefined
+type Theme = 'light' | 'dark'
 
-	handle.queueTask(() => {
-		theme = getTheme()
-		document.addEventListener(
-			THEME_EVENT,
-			() => {
-				theme = getTheme()
-				handle.update()
-			},
-			{ signal: handle.signal },
-		)
-		handle.update()
-	})
+export type ThemeToggleProps = {
+	/** The visitor's saved choice, or null to follow the system. */
+	theme: Theme | null
+	/** Where the form posts without JavaScript. */
+	action: string
+	/** Where the server sends the visitor back to afterwards. */
+	returnTo: string
+}
 
-	return () => {
-		let next = theme === 'dark' ? 'light' : 'dark'
-		return (
-			<button
-				type="button"
-				aria-label={theme ? `Switch to ${next} mode` : 'Toggle color theme'}
-				title={theme ? `Switch to ${next} mode` : 'Toggle color theme'}
-				mix={[toggleStyle, on('click', () => toggleTheme())]}
-			>
-				<span className="icon sun">
-					<PixelArt sprite={icons.sun!} />
-				</span>
-				<span className="icon moon">
-					<PixelArt sprite={icons.moon!} />
-				</span>
-			</button>
-		)
-	}
-})
+export const THEME_FORM_ID = 'theme-form'
 
-const toggleStyle = css({
-	position: 'relative',
-	display: 'grid',
-	placeItems: 'center',
-	width: '44px',
-	height: '44px',
-	padding: 0,
-	background: 'var(--surface)',
-	color: 'var(--ink)',
-	border: 'var(--px) solid var(--line)',
-	boxShadow: '0 var(--px) 0 var(--shadow)',
-	transition: 'transform 80ms steps(2), box-shadow 80ms steps(2)',
-	'&:hover': {
-		background: 'var(--gold)',
-		color: '#22203a',
+/**
+ * Day/night switch. Without JavaScript it is a plain form that the server
+ * answers with a cookie and a redirect back; with JavaScript the page flips
+ * in place and writes the same cookie.
+ */
+export const ThemeToggle = clientEntry(
+	import.meta.url,
+	function ThemeToggle(handle: Handle<ThemeToggleProps>) {
+		let theme = handle.props.theme
+		let systemDark = false
+
+		handle.queueTask(() => {
+			let query = window.matchMedia('(prefers-color-scheme: dark)')
+			systemDark = query.matches
+			query.addEventListener(
+				'change',
+				(event) => {
+					systemDark = event.matches
+					handle.update()
+				},
+				{ signal: handle.signal },
+			)
+			handle.update()
+		})
+
+		let effective = (): Theme => theme ?? (systemDark ? 'dark' : 'light')
+
+		return () => {
+			let dark = effective() === 'dark'
+			return (
+				<form
+					id={THEME_FORM_ID}
+					method="post"
+					action={handle.props.action}
+					mix={[
+						formStyle,
+						on('submit', (event) => {
+							event.preventDefault()
+							theme = dark ? 'light' : 'dark'
+							document.documentElement.dataset.theme = theme
+							document.cookie = `theme=${theme}; Path=/; Max-Age=31536000; SameSite=Lax${
+								location.protocol === 'https:' ? '; Secure' : ''
+							}`
+							handle.update()
+						}),
+					]}
+				>
+					<input type="hidden" name="returnTo" value={handle.props.returnTo} />
+					<button
+						type="submit"
+						name="theme"
+						value={dark ? 'light' : 'dark'}
+						aria-pressed={dark ? 'true' : 'false'}
+						aria-label="Night mode"
+						title={dark ? 'Switch to day' : 'Switch to night'}
+					>
+						<Doodle name={dark ? 'sun' : 'moon'} ink={false} />
+					</button>
+				</form>
+			)
+		}
 	},
-	'&:active': {
-		transform: 'translateY(var(--px))',
-		boxShadow: '0 0 0 var(--shadow)',
+)
+
+const formStyle = css({
+	display: 'contents',
+	'& button': {
+		display: 'grid',
+		placeItems: 'center',
+		width: '44px',
+		height: '44px',
+		padding: 0,
+		background: 'none',
+		border: 0,
+		cursor: 'pointer',
 	},
-	'& .icon': {
-		gridArea: '1 / 1',
-		width: '22px',
-	},
-	'& .icon svg': { width: '100%', height: 'auto' },
-	'& .moon': { display: 'none' },
-	':root[data-theme="dark"] & .sun': { display: 'none' },
-	':root[data-theme="dark"] & .moon': { display: 'block' },
+	'& svg': { width: '24px', height: '24px' },
+	'& button:hover svg': { color: 'var(--accent)' },
 })
