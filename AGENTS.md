@@ -4,8 +4,9 @@ This is a Remix 3 app (`remix` package, v3 RC). Remix UI is **not React**:
 components are `(handle) => () => JSX`, state lives in setup scope, and
 `handle.update()` re-renders.
 
-- Read `docs/spec.md` first: it is the design spec, and changes to the design
-  start there.
+- Read `docs/handoff.md` and `docs/spec.md` first: the handoff covers the
+  current state and known pitfalls; the spec is the design, and changes to the
+  design start there.
 - Read `.agents/skills/remix/SKILL.md` and `node_modules/remix/INDEX.md` before
   using unfamiliar Remix APIs; the installed docs are canonical.
 - `app/routes.ts` is the URL contract. Controllers live in `app/actions/`.
