@@ -208,6 +208,59 @@
 		overflow: visible;
 	}
 
+	.scene .folks {
+		position: absolute;
+		left: 0;
+		top: 0;
+		pointer-events: none;
+	}
+
+	/* The street draws itself: strokes trace in, paper and text fade in. */
+	.scene.is-drawing path:not(.paper) {
+		stroke-dasharray: 3200px;
+		stroke-dashoffset: 3200px;
+		animation: ink-draw 0.8s ease-out forwards;
+		animation-delay: calc(var(--d, 0s) + var(--i, 0) * 40ms);
+	}
+
+	.scene.is-drawing .paper,
+	.scene.is-drawing text,
+	.scene.is-drawing line,
+	.scene.is-drawing circle,
+	.scene.is-drawing rect,
+	.scene.is-drawing .folks {
+		animation: ink-fade 0.45s ease-out both;
+		animation-delay: calc(var(--d, 0s) + 0.45s);
+	}
+
+	.scene.is-drawing .folks {
+		animation-delay: 1.2s;
+	}
+
+	.scene.is-drawing .folks path,
+	.scene.is-drawing .folks circle,
+	.scene.is-drawing .folks ellipse {
+		animation: none;
+		stroke-dasharray: none;
+	}
+
+	@keyframes ink-draw {
+		to {
+			stroke-dashoffset: 0;
+		}
+	}
+
+	@keyframes ink-fade {
+		from {
+			opacity: 0;
+		}
+	}
+
+	.scene.is-paused,
+	.scene.is-paused * {
+		animation-play-state: paused !important;
+	}
+
 	.scene .layer.far {
 		opacity: 0.32;
 		transform: translateX(calc(var(--px) * -10px));
@@ -426,27 +479,6 @@
 		}
 	}
 
-	.scene .walker {
-		animation:
-			walk 70s linear infinite,
-			bob 0.7s ease-in-out infinite;
-	}
-
-	@keyframes walk {
-		from {
-			transform: translateX(1640px);
-		}
-		to {
-			transform: translateX(-140px);
-		}
-	}
-
-	@keyframes bob {
-		50% {
-			translate: 0 -2px;
-		}
-	}
-
 	.scene-tip {
 		position: absolute;
 		left: var(--x, 0);
@@ -470,7 +502,6 @@
 
 	@media (prefers-reduced-motion: reduce) {
 		.scene .car,
-		.scene .walker,
 		.scene .cloud {
 			animation: none;
 		}

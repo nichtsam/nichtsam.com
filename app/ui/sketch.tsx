@@ -98,12 +98,13 @@ export type PenApi = ReturnType<typeof createPen>
 /** Renders ink paths; strokes follow `currentColor`, fills follow the paper. */
 export function InkPaths(handle: Handle<{ ink: Ink[] }>) {
 	return () =>
-		handle.props.ink.map((ink) =>
+		handle.props.ink.map((ink, i) =>
 			ink.kind === 'fill' ? (
-				<path d={ink.d} fill="var(--paper)" stroke="none" />
+				<path d={ink.d} fill="var(--paper)" stroke="none" className="paper" />
 			) : (
 				<path
 					d={ink.d}
+					style={{ '--i': i % 12 }}
 					fill="none"
 					stroke="currentColor"
 					strokeWidth={ink.kind === 'hatch' ? 0.9 : (ink.width ?? 1.6)}

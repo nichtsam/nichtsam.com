@@ -163,7 +163,7 @@ function Sign(
 	}
 }
 
-export function StreetScene() {
+export function StreetScene(handle: Handle<{ children?: RemixNode }>) {
 	return () => {
 		let pen = createPen({ seed: 1, roughness: 1.3 })
 		let rand = prng(7)
@@ -822,56 +822,35 @@ export function StreetScene() {
 			</g>
 		)
 
-		let walker = (
-			<g className="mover walker">
-				<InkPaths
-					ink={[
-						...stick(pen, 20, 0, 1.25),
-						...pen.curve(
-							[
-								[28, 22],
-								[40, 30],
-								[52, 30],
-							],
-							{ thin: true },
-						),
-						...pen.ellipse(62, 34, 22, 10, { thin: true, paper: true }),
-						...pen.circle(74, 28, 9, { thin: true, paper: true }),
-						...pen.line(56, 38, 54, 44, { thin: true }),
-						...pen.line(68, 38, 70, 44, { thin: true }),
-						...pen.line(51, 32, 45, 28, { thin: true }),
-					]}
-				/>
-			</g>
-		)
-
+		// The street draws itself on load: each part starts after the one before.
+		let at = (delay: number, node: RemixNode) => <g style={{ '--d': `${delay}s` }}>{node}</g>
 		return (
-			<div className="scene" id={SCENE_ID}>
+			<div className="scene is-drawing" id={SCENE_ID}>
 				<svg
 					viewBox={`0 0 ${W} ${H}`}
 					role="group"
 					aria-label="A hand-drawn street. Each building leads somewhere on this site."
 				>
-					{sky}
-					{far}
+					{at(3.6, sky)}
+					{at(3.3, far)}
 					<g className="layer main">
-						{apartmentA}
-						{house}
-						{bookshop}
-						{clockTower}
-						{workshop}
-						{billboard}
-						{cafe}
-						{tower}
-						{apartmentB}
+						{at(0.35, apartmentA)}
+						{at(0.7, house)}
+						{at(1.05, bookshop)}
+						{at(1.4, clockTower)}
+						{at(1.75, workshop)}
+						{at(2.1, billboard)}
+						{at(2.35, cafe)}
+						{at(2.6, tower)}
+						{at(2.95, apartmentB)}
 					</g>
 					<g className="layer street">
-						<InkPaths ink={street} />
-						<g transform="translate(0 575)">{walker}</g>
-						<g transform="translate(0 626)">{car}</g>
-						{lamps}
+						{at(0, <InkPaths ink={street} />)}
+						{at(4, <g transform="translate(0 626)">{car}</g>)}
+						{at(3.8, lamps)}
 					</g>
 				</svg>
+				{handle.props.children}
 				<p className="scene-tip" aria-hidden="true" data-tip />
 			</div>
 		)

@@ -2,8 +2,10 @@
 
 My personal website, drawn in pen and ink. The home page is a hand-drawn street
 where every building leads somewhere: the bookshop holds the articles, the
-workshop is GitHub, the tower is LinkedIn. Click the windows to switch the
-lights, knock on the little house, and switch to night for white ink on black.
+workshop is GitHub, the tower is LinkedIn. The street draws itself when the page
+loads; three little characters walk the sidewalk and jump when you click the
+street. Click the windows to switch the lights, knock on the little house, and
+switch to night for white ink on black.
 
 Production: https://nichtsam.com · Staging: https://staging.nichtsam.com
 

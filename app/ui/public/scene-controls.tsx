@@ -1,6 +1,7 @@
-import { clientEntry } from 'remix/ui'
+import { clientEntry, css, on } from 'remix/ui'
 import type { Handle } from 'remix/ui'
 
+import { JUMP_EVENT } from './street-folks.tsx'
 import { prefersReducedMotion } from './theme.ts'
 
 /**
@@ -11,6 +12,23 @@ import { prefersReducedMotion } from './theme.ts'
 export const SceneControls = clientEntry(
 	import.meta.url,
 	function SceneControls(handle: Handle<{ sceneId: string; lines: string[] }>) {
+		let paused = false
+		let scene = () => document.getElementById(handle.props.sceneId)
+
+		function redraw() {
+			let el = scene()
+			if (!el) return
+			el.classList.remove('is-drawing')
+			void el.getBoundingClientRect()
+			el.classList.add('is-drawing')
+		}
+
+		function togglePause() {
+			paused = !paused
+			scene()?.classList.toggle('is-paused', paused)
+			handle.update()
+		}
+
 		handle.queueTask(() => {
 			let scene = document.getElementById(handle.props.sceneId)
 			if (!scene) return
@@ -114,6 +132,53 @@ export const SceneControls = clientEntry(
 			}
 		})
 
-		return () => null
+		return () => (
+			<div mix={controlsStyle}>
+				<p className="hint">click the street to make them jump</p>
+				<div className="buttons">
+					<button
+						type="button"
+						mix={on('click', () => void scene()?.dispatchEvent(new Event(JUMP_EVENT)))}
+					>
+						hop!
+					</button>
+					<button type="button" mix={on('click', redraw)}>
+						↻ draw it again
+					</button>
+					<button
+						type="button"
+						aria-pressed={paused}
+						aria-label={paused ? 'Play animations' : 'Pause animations'}
+						mix={on('click', togglePause)}
+					>
+						{paused ? '▶' : '❚❚'}
+					</button>
+				</div>
+			</div>
+		)
 	},
 )
+
+const controlsStyle = css({
+	display: 'flex',
+	flexWrap: 'wrap',
+	alignItems: 'center',
+	justifyContent: 'space-between',
+	gap: '8px 20px',
+	maxWidth: '1180px',
+	marginInline: 'auto',
+	padding: '6px 20px 0',
+	fontFamily: 'var(--font-hand)',
+	color: 'var(--ink-soft)',
+	'& .buttons': { display: 'flex', gap: '18px', alignItems: 'center' },
+	'& button': {
+		padding: '0 2px',
+		border: 0,
+		borderBottom: '1.5px solid currentColor',
+		background: 'transparent',
+		color: 'var(--ink)',
+		fontFamily: 'var(--font-hand)',
+		fontSize: '1rem',
+	},
+	'& button:hover': { color: 'var(--accent)' },
+})

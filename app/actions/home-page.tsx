@@ -7,6 +7,7 @@ import { ArticleCard } from '../ui/article-card.tsx'
 import { Icon, Scribble, type IconName } from '../ui/icons.tsx'
 import { Layout } from '../ui/layout.tsx'
 import { SceneControls } from '../ui/public/scene-controls.tsx'
+import { StreetFolks } from '../ui/public/street-folks.tsx'
 import { site } from '../ui/site.ts'
 import { SAM_LINES, SCENE_ID, StreetScene } from '../ui/street-scene.tsx'
 
@@ -53,11 +54,10 @@ export function HomePage(handle: Handle<{ articles: ArticleMeta[] }>) {
 				path={routes.home.href()}
 				wide={
 					<section mix={heroStyle} aria-label="Sam's street">
-						<StreetScene />
+						<StreetScene>
+							<StreetFolks sceneId={SCENE_ID} />
+						</StreetScene>
 						<SceneControls sceneId={SCENE_ID} lines={SAM_LINES} />
-						<p className="hint">
-							hover the buildings · click the windows · knock on the little house
-						</p>
 					</section>
 				}
 			>
@@ -113,14 +113,6 @@ export function HomePage(handle: Handle<{ articles: ArticleMeta[] }>) {
 const heroStyle = css({
 	position: 'relative',
 	marginTop: '-12px',
-	'& .hint': {
-		textAlign: 'center',
-		fontFamily: 'var(--font-hand)',
-		fontSize: '1rem',
-		color: 'var(--ink-soft)',
-		marginTop: '4px',
-		paddingInline: '20px',
-	},
 })
 
 const introStyle = css({
