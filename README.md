@@ -1,8 +1,9 @@
-# nichtsam.com — doodle edition
+# nichtsam.com — ink sketch edition
 
-My personal website, drawn like a slightly messy notebook: scribble on the
-home page, poke the stick-figure me, drag the sticky notes around. At night
-the notebook turns into a chalkboard.
+My personal website, drawn in pen and ink. The home page is a hand-drawn street
+where every building leads somewhere: the bookshop holds the articles, the
+workshop is GitHub, the tower is LinkedIn. Click the windows to switch the
+lights, knock on the little house, and switch to night for white ink on black.
 
 Production: https://nichtsam.com · Staging: https://staging.nichtsam.com
 
@@ -13,9 +14,12 @@ Production: https://nichtsam.com · Staging: https://staging.nichtsam.com
   bundler or build step
 - Content: Markdown in [`content/articles`](./content/articles), rendered with
   [marked](https://marked.js.org/) and highlighted with [Shiki](https://shiki.style/)
+- Drawing: [roughjs](https://roughjs.com/) generates every sketchy line on the
+  server with fixed seeds ([`app/ui/sketch.tsx`](./app/ui/sketch.tsx),
+  [`app/ui/street-scene.tsx`](./app/ui/street-scene.tsx)); the browser only
+  toggles classes on the rendered SVG
 - Styling: CSS tokens in [`app/ui/public/site.css`](./app/ui/public/site.css)
-  plus Remix's `css()` mixin; all doodles are hand-written SVG paths in
-  [`app/ui/public/doodles.tsx`](./app/ui/public/doodles.tsx)
+  plus Remix's `css()` mixin
 - Deployment: [Fly.io](https://fly.io/)
 
 ## Development
@@ -44,7 +48,7 @@ app/
   actions/                Controllers and route-owned pages
   content/articles.ts     Markdown loading and rendering
   ui/                     Shared layout and server components
-  ui/public/              Browser code: sketchpad, sticky notes, doodles, effects
+  ui/public/              Browser code: scene controls, theme toggle, effects
 content/articles/         Articles (files starting with `_` are ignored)
 public/                   Static files served as-is
 ```

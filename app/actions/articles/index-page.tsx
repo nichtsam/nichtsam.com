@@ -4,8 +4,8 @@ import type { Handle } from 'remix/ui'
 import type { ArticleMeta } from '../../content/articles.ts'
 import { routes } from '../../routes.ts'
 import { ArticleCard } from '../../ui/article-card.tsx'
+import { Scribble } from '../../ui/icons.tsx'
 import { Layout } from '../../ui/layout.tsx'
-import { Underline } from '../../ui/public/doodles.tsx'
 
 export function ArticlesIndexPage(handle: Handle<{ articles: ArticleMeta[] }>) {
 	return () => {
@@ -18,23 +18,21 @@ export function ArticlesIndexPage(handle: Handle<{ articles: ArticleMeta[] }>) {
 				path={routes.articles.index.href()}
 			>
 				<header mix={headerStyle}>
+					<p className="eyebrow">The bookshop</p>
 					<h1>
-						articles
-						<Underline className="line boil" />
+						Articles
+						<Scribble className="scribble line" seed={14} />
 					</h1>
-					<p>
-						{articles.length} {articles.length === 1 ? 'page' : 'pages'} so far. Some of them are
-						even finished.
-					</p>
+					<p className="count">{articles.length} on the shelf. Some of them are even finished.</p>
 				</header>
 				{articles.length ? (
-					<div>
-						{articles.map((article) => (
-							<ArticleCard key={article.slug} article={article} />
+					<div mix={listStyle}>
+						{articles.map((article, index) => (
+							<ArticleCard key={article.slug} article={article} index={index} />
 						))}
 					</div>
 				) : (
-					<p>Nothing written down yet. Check back soon!</p>
+					<p>The shelves are empty. Check back soon!</p>
 				)}
 			</Layout>
 		)
@@ -43,28 +41,26 @@ export function ArticlesIndexPage(handle: Handle<{ articles: ArticleMeta[] }>) {
 
 const headerStyle = css({
 	display: 'grid',
-	gap: '14px',
-	marginBottom: '28px',
+	gap: '10px',
+	marginBottom: '36px',
+	'& .eyebrow': {
+		fontFamily: 'var(--font-sign)',
+		fontWeight: 800,
+		fontSize: '0.78rem',
+		letterSpacing: '0.1em',
+		textTransform: 'uppercase',
+		color: 'var(--accent)',
+	},
 	'& h1': {
 		position: 'relative',
 		width: 'fit-content',
 		fontFamily: 'var(--font-hand)',
-		fontSize: 'clamp(3.4rem, 10vw, 5.5rem)',
-		fontWeight: 700,
-		lineHeight: 0.9,
-		transform: 'rotate(-2deg)',
+		fontWeight: 400,
+		fontSize: 'clamp(2.8rem, 9vw, 4.4rem)',
+		lineHeight: 1,
 	},
-	'& .line': {
-		position: 'absolute',
-		left: 0,
-		bottom: '-10px',
-		width: '100%',
-		height: '16px',
-		color: 'var(--pen-red)',
-	},
-	'& p': {
-		fontFamily: 'var(--font-note)',
-		fontSize: '1.2rem',
-		color: 'var(--ink-soft)',
-	},
+	'& .line': { position: 'absolute', left: 0, bottom: '-8px', width: '100%', height: '10px' },
+	'& .count': { color: 'var(--ink-soft)', marginTop: '8px' },
 })
+
+const listStyle = css({ display: 'grid', gap: '22px' })

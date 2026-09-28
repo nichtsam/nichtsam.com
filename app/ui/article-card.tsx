@@ -3,120 +3,91 @@ import type { Handle } from 'remix/ui'
 
 import { formatDate, type ArticleMeta } from '../content/articles.ts'
 import { routes } from '../routes.ts'
-import { Clock } from './public/doodles.tsx'
+import { Icon, type IconName } from './icons.tsx'
 
-/** An article as an entry in a notebook: date in the margin, title highlighted on hover. */
-export function ArticleCard(handle: Handle<{ article: ArticleMeta }>) {
+function iconFor(article: ArticleMeta): IconName {
+	let words = article.keywords.join(' ')
+	if (/git|repo/.test(words)) return 'branch'
+	if (/css|layout|tailwind/.test(words)) return 'layout'
+	return 'pencil'
+}
+
+/** An article as a wireframe card: an icon box, a title, a few lines of text. */
+export function ArticleCard(handle: Handle<{ article: ArticleMeta; index?: number }>) {
 	return () => {
-		let { article } = handle.props
+		let { article, index = 0 } = handle.props
 		let href = routes.articles.show.href({ slug: article.slug })
 		return (
-			<article mix={entryStyle}>
-				<div className="margin">
-					<time dateTime={article.publishedDate}>{formatDate(article.publishedDate)}</time>
+			<article className="frame frame-hover" mix={cardStyle}>
+				<div className="icon-box frame">
+					<Icon name={iconFor(article)} seed={20 + index} />
 				</div>
 				<div className="body">
+					<p className="meta">
+						<time dateTime={article.publishedDate}>{formatDate(article.publishedDate)}</time>
+						<span>· {article.readingMinutes} min read</span>
+						{article.draft && <span className="draft">· draft</span>}
+					</p>
 					<h2>
-						<a href={href}>
-							<span className="title">{article.title}</span>
-						</a>
+						<a href={href}>{article.title}</a>
 					</h2>
 					{article.description && <p className="description">{article.description}</p>}
-					<div className="meta">
-						<span className="read">
-							<Clock />
-							{article.readingMinutes} min read
-						</span>
-						{article.keywords.map((keyword) => (
-							<span className="tag">#{keyword}</span>
-						))}
-						{article.draft && <span className="draft">draft!</span>}
-					</div>
+					{article.keywords.length > 0 && (
+						<p className="tags">{article.keywords.map((k) => `#${k}`).join('  ')}</p>
+					)}
 				</div>
 			</article>
 		)
 	}
 }
 
-const entryStyle = css({
+const cardStyle = css({
 	position: 'relative',
 	display: 'grid',
-	gridTemplateColumns: '110px minmax(0, 1fr)',
-	gap: '0 28px',
-	paddingBlock: '22px',
-	backgroundImage: 'linear-gradient(90deg, var(--ink-soft) 55%, transparent 55%)',
-	backgroundSize: '10px 1.5px',
-	backgroundRepeat: 'repeat-x',
-	backgroundPosition: 'bottom',
-	'& .margin': {
-		position: 'relative',
-		paddingRight: '14px',
-		borderRight: '2px solid var(--margin-line)',
-		textAlign: 'right',
-	},
-	'& time': {
-		fontFamily: 'var(--font-hand)',
-		fontSize: '1.45rem',
-		fontWeight: 700,
-		color: 'var(--pen-red)',
-		lineHeight: 1.1,
-		display: 'inline-block',
-		transform: 'rotate(-4deg)',
-	},
-	'& .body': {
+	gridTemplateColumns: '84px minmax(0, 1fr)',
+	gap: '22px',
+	padding: '14px 16px',
+	transition: 'transform 180ms ease',
+	'&:hover, &:focus-within': { transform: 'rotate(-0.4deg) translateY(-3px)' },
+	'& .icon-box': {
+		width: '84px',
+		height: '84px',
 		display: 'grid',
-		gap: '8px',
+		placeItems: 'center',
 	},
-	'& h2': {
-		fontFamily: 'var(--font-hand)',
-		fontSize: 'clamp(1.9rem, 4vw, 2.4rem)',
-		fontWeight: 700,
-		lineHeight: 1.05,
-	},
-	'& h2 a': {
-		textDecoration: 'none',
-	},
-	'& h2 a::after': {
-		content: '""',
-		position: 'absolute',
-		inset: 0,
-	},
-	'& .title': {
-		backgroundImage:
-			'linear-gradient(100deg, transparent 1%, var(--hl-yellow) 3%, var(--hl-yellow) 96%, transparent 99%)',
-		backgroundSize: '0% 55%',
-		backgroundPosition: '0 88%',
-		backgroundRepeat: 'no-repeat',
-		transition: 'background-size 350ms ease-out',
-	},
-	'&:hover .title, &:focus-within .title': {
-		backgroundSize: '100% 55%',
-	},
-	'& .description': {
-		color: 'var(--ink-soft)',
-		maxWidth: '44rem',
-	},
+	'& .icon-box svg': { width: '46px', height: '46px' },
+	'& .body': { display: 'grid', gap: '6px', alignContent: 'start' },
 	'& .meta': {
 		display: 'flex',
 		flexWrap: 'wrap',
-		alignItems: 'center',
-		gap: '4px 14px',
-		fontFamily: 'var(--font-note)',
-		fontSize: '1.05rem',
+		gap: '0 8px',
+		fontFamily: 'var(--font-sign)',
+		fontWeight: 800,
+		fontSize: '0.72rem',
+		letterSpacing: '0.08em',
+		textTransform: 'uppercase',
 		color: 'var(--ink-soft)',
 	},
-	'& .read': { display: 'inline-flex', alignItems: 'center', gap: '6px' },
-	'& .read svg': { width: '18px', height: '18px' },
-	'& .tag': { color: 'var(--pen-blue)' },
-	'& .draft': {
-		padding: '0 8px',
-		border: '2px solid var(--pen-red)',
-		color: 'var(--pen-red)',
-		borderRadius: 'var(--sketch-radius)',
-		transform: 'rotate(-4deg)',
+	'& .draft': { color: 'var(--accent)' },
+	'& h2': {
+		fontFamily: 'var(--font-hand)',
+		fontWeight: 400,
+		fontSize: 'clamp(1.45rem, 3vw, 1.8rem)',
+		lineHeight: 1.25,
+		textWrap: 'balance',
 	},
-	'@media (max-width: 560px)': {
+	'& h2 a': { textDecoration: 'none' },
+	'& h2 a::after': { content: '""', position: 'absolute', inset: 0 },
+	'& h2 a:hover': {
+		textDecoration: 'underline wavy',
+		textUnderlineOffset: '5px',
+		textDecorationThickness: '1px',
+	},
+	'& .description': { color: 'var(--ink-soft)', maxWidth: '46rem' },
+	'& .tags': { fontFamily: 'var(--font-hand)', fontSize: '0.95rem', whiteSpace: 'pre-wrap' },
+	'@media (max-width: 520px)': {
 		gridTemplateColumns: '1fr',
-		'& .margin': { border: 0, textAlign: 'left', paddingRight: 0 },
+		'& .icon-box': { width: '64px', height: '64px' },
+		'& .icon-box svg': { width: '36px', height: '36px' },
 	},
 })

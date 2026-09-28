@@ -10,13 +10,13 @@ function get(path: string) {
 }
 
 describe('site routes', () => {
-	it('renders the home page with the sketchpad', async () => {
+	it('renders the home page with the street scene', async () => {
 		let response = await get(routes.home.href())
 		assert.equal(response.status, 200)
 		assert.match(response.headers.get('Content-Type') ?? '', /text\/html/)
 		let html = await response.text()
 		assert.match(html, /Samuel/)
-		assert.match(html, /aria-label="Poke Sam"/)
+		assert.match(html, /Knock on Sam/)
 	})
 
 	it('lists published articles', async () => {
@@ -45,7 +45,7 @@ describe('site routes', () => {
 		assert.equal((await get(routes.articles.show.href({ slug: 'does-not-exist' }))).status, 404)
 		let response = await get('/definitely/not/here')
 		assert.equal(response.status, 404)
-		assert.match(await response.text(), /Oops, crumpled/)
+		assert.match(await response.text(), /still a wireframe/)
 	})
 
 	it('serves sitemap.xml and robots.txt', async () => {

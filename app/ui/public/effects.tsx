@@ -13,7 +13,7 @@ const SHAPES = [
 	// heart
 	'M20 33 C 8 24, 2 17, 4 10 C 6 3, 16 2, 20 10 C 23 2, 34 2, 36 10 C 38 18, 30 25, 20 33 Z',
 ]
-const COLORS = ['var(--pen-red)', 'var(--pen-blue)', 'var(--pen-green)', 'var(--ink)']
+const COLORS = ['var(--ink)']
 
 interface Mark {
 	id: number
@@ -73,7 +73,7 @@ export const Effects = clientEntry(import.meta.url, function Effects(handle: Han
 						pathLength={1}
 						fill="none"
 						stroke="currentColor"
-						strokeWidth={2.4}
+						strokeWidth={1.8}
 						strokeLinecap="round"
 						strokeLinejoin="round"
 					/>

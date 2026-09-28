@@ -3,6 +3,7 @@ import { unsafeHTML } from 'remix/ui'
 import { ImportMap } from 'remix/ui/server'
 
 import { scriptEntry, stylesheetHref } from '../assets.ts'
+import { frameCss } from './sketch.tsx'
 import { site } from './site.ts'
 
 export interface DocumentProps {
@@ -18,7 +19,7 @@ export interface DocumentProps {
 const themeScript = `(()=>{try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark')t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.dataset.theme=t}catch(e){}})()`
 
 const fontsHref =
-	'https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=JetBrains+Mono:wght@400;600&family=Nunito:ital,wght@0,400;0,600;0,800;1,400&family=Patrick+Hand&display=swap'
+	'https://fonts.googleapis.com/css2?family=Architects+Daughter&family=JetBrains+Mono:wght@400;600&family=Karla:ital,wght@0,400;0,600;0,800;1,400&display=swap'
 
 export function Document(handle: Handle<DocumentProps>) {
 	return () => {
@@ -47,8 +48,8 @@ export function Document(handle: Handle<DocumentProps>) {
 					<meta property="og:description" content={description} />
 					<meta property="og:url" content={url} />
 					<meta name="twitter:card" content="summary" />
-					<meta name="theme-color" content="#fbf7ee" media="(prefers-color-scheme: light)" />
-					<meta name="theme-color" content="#1f2b27" media="(prefers-color-scheme: dark)" />
+					<meta name="theme-color" content="#f1f0ec" media="(prefers-color-scheme: light)" />
+					<meta name="theme-color" content="#151515" media="(prefers-color-scheme: dark)" />
 					<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 					<link rel="icon" href="/favicon.ico" sizes="32x32" />
 					<link rel="apple-touch-icon" href="/favicons/apple-touch-icon.png" />
@@ -58,6 +59,7 @@ export function Document(handle: Handle<DocumentProps>) {
 					<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
 					<link rel="stylesheet" href={fontsHref} />
 					<link rel="stylesheet" href={stylesheetHref} />
+					<style innerHTML={unsafeHTML(frameCss)} />
 					<ImportMap value={importMap} />
 					{preloads.map((preloadHref) => (
 						<link key={preloadHref} rel="modulepreload" href={preloadHref} />

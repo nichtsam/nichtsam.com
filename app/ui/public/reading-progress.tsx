@@ -61,20 +61,25 @@ export const ReadingProgress = clientEntry(
 					>
 						<path
 							d="M2 10 L 10 5 H 36 V 15 H 10 Z"
-							fill="#ffd166"
-							stroke="#1f2a44"
+							fill="var(--paper)"
+							stroke="var(--ink)"
 							strokeWidth={1.5}
 							strokeLinejoin="round"
 						/>
 						<path
 							d="M2 10 L 10 5 V 15 Z"
-							fill="#f3d9b1"
-							stroke="#1f2a44"
+							fill="var(--paper)"
+							stroke="var(--ink)"
 							strokeWidth={1.5}
 							strokeLinejoin="round"
 						/>
-						<path d="M2 10 L 5 8.2 V 11.8 Z" fill="#1f2a44" />
-						<path d="M31 5 H 36 V 15 H 31 Z" fill="#ff9ecb" stroke="#1f2a44" strokeWidth={1.5} />
+						<path d="M2 10 L 5 8.2 V 11.8 Z" fill="var(--ink)" />
+						<path
+							d="M31 5 H 36 V 15 H 31 Z"
+							fill="var(--ink)"
+							stroke="var(--ink)"
+							strokeWidth={1.5}
+						/>
 					</svg>
 				</div>
 				<p className={done ? 'stamp is-in' : 'stamp'} aria-live="polite">
@@ -106,8 +111,8 @@ const barStyle = css({
 	},
 	'& .line path': {
 		fill: 'none',
-		stroke: 'var(--pen-blue)',
-		strokeWidth: 3,
+		stroke: 'var(--ink)',
+		strokeWidth: 2,
 		strokeLinecap: 'round',
 		strokeDasharray: 1,
 		vectorEffect: 'non-scaling-stroke',
@@ -129,9 +134,8 @@ const barStyle = css({
 		fontFamily: 'var(--font-hand)',
 		fontSize: '2.4rem',
 		fontWeight: 700,
-		color: 'var(--pen-red)',
-		border: '3px solid var(--pen-red)',
-		borderRadius: 'var(--sketch-radius)',
+		color: 'var(--ink)',
+		border: '3px double var(--ink)',
 		opacity: 0,
 		transform: 'rotate(-12deg) scale(2)',
 	},
