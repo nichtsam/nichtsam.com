@@ -21,7 +21,7 @@ export type HeroProps = {
 	lampValue: 'light' | 'dark'
 }
 
-const ERASE_MS = 380
+const ERASE_MS = 240
 
 /**
  * The framed box at the top of the home page. You flip through it with the

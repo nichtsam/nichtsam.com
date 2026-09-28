@@ -1,4 +1,4 @@
-import { clientEntry, css, navigate, ref } from 'remix/ui'
+import { clientEntry, navigate } from 'remix/ui'
 import type { Handle } from 'remix/ui'
 
 import { REFRESH_EVENT } from './ink.tsx'
@@ -18,7 +18,6 @@ const ease = (k: number) => (k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) /
  * pages change the ordinary way.
  */
 export const PageTransition = clientEntry(import.meta.url, function PageTransition(handle: Handle) {
-	let layer: SVGSVGElement | undefined
 	let busy = false
 
 	handle.queueTask(() => {
@@ -34,10 +33,9 @@ export const PageTransition = clientEntry(import.meta.url, function PageTransiti
 	}
 
 	async function go(href: string) {
-		if (!layer) return
 		busy = true
-		layer.dataset.active = ''
-		let scribble = new Scribble(layer)
+		let layer = openLayer()
+		let scribble = new Scribble(layer.svg)
 		try {
 			await scribble.cover()
 			try {
@@ -50,25 +48,47 @@ export const PageTransition = clientEntry(import.meta.url, function PageTransiti
 			if (!new URL(href).hash) window.scrollTo(0, 0)
 			document.getElementById('main')?.focus({ preventScroll: true })
 			document.dispatchEvent(new Event(REFRESH_EVENT))
-			await wait(70)
+			await wait(30)
 			await scribble.uncover()
 		} finally {
 			scribble.clear()
-			delete layer.dataset.active
+			layer.close()
 			busy = false
 		}
 	}
 
-	return () => (
-		<svg
-			aria-hidden="true"
-			focusable="false"
-			data-rmx-key="page-transition"
-			data-rmx-preserve-dom
-			mix={[layerStyle, ref((node) => (layer = node))]}
-		/>
-	)
+	return () => <span hidden />
 })
+
+/**
+ * The layer lives outside the page Remix renders: a client navigation replaces
+ * the page while the screen is still scribbled over, and must not take the
+ * scribble with it. As a popover it sits in the browser's top layer, above
+ * anything the page can stack.
+ */
+function openLayer() {
+	let host = document.getElementById(LAYER_ID)
+	if (!host) {
+		host = document.createElement('div')
+		host.id = LAYER_ID
+		host.setAttribute('aria-hidden', 'true')
+		host.popover = 'manual'
+		host.append(document.createElementNS(SVG_NS, 'svg'))
+		document.documentElement.append(host)
+	}
+	let element = host
+	element.dataset.open = ''
+	if ('showPopover' in element) element.showPopover()
+	return {
+		svg: element.firstElementChild as SVGSVGElement,
+		close() {
+			if ('hidePopover' in element) element.hidePopover()
+			delete element.dataset.open
+		},
+	}
+}
+
+const LAYER_ID = 'page-transition'
 
 /** The destination when a click should get the transition, else nothing. */
 function transitionHref(event: MouseEvent) {
@@ -203,7 +223,7 @@ class Scribble {
 	}
 
 	cover() {
-		return frames(640, (k) => {
+		return frames(380, (k) => {
 			let at = this.#total * ease(k)
 			for (let { path, start, length } of this.#pieces) {
 				path.style.strokeDashoffset = `${length - clamp(at - start, 0, length)}`
@@ -216,7 +236,7 @@ class Scribble {
 		let w = this.#width
 		let h = this.#height
 		let span = w + h * 1.2
-		return frames(460, (k) => {
+		return frames(300, (k) => {
 			let front = -h * 0.6 + span * ease(k) * 1.15
 			for (let { path, length, x } of this.#pieces) {
 				let erased = clamp((front - x) / (w * 0.18), 0, 1)
@@ -230,20 +250,3 @@ class Scribble {
 		this.#layer.replaceChildren()
 	}
 }
-
-const layerStyle = css({
-	position: 'fixed',
-	inset: 0,
-	zIndex: 100,
-	width: '100%',
-	height: '100%',
-	color: 'var(--ink)',
-	pointerEvents: 'none',
-	'&[data-active]': { pointerEvents: 'auto' },
-	'& path': {
-		fill: 'none',
-		stroke: 'currentColor',
-		strokeLinecap: 'round',
-		strokeLinejoin: 'round',
-	},
-})
