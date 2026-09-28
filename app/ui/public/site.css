@@ -238,7 +238,7 @@
 		:root:has(#js[data-on]) svg[data-ink].ready.in path {
 			stroke-dashoffset: 0;
 			transition: stroke-dashoffset 480ms cubic-bezier(0.4, 0, 0.2, 1)
-				calc(var(--d, 0ms) * 0.6 + var(--i, 0) * 8ms);
+				calc(var(--d, 0ms) * 0.6 + var(--i, 0) * var(--stagger, 8ms));
 		}
 	}
 

@@ -21,7 +21,7 @@ export type HeroProps = {
 	lampValue: 'light' | 'dark'
 }
 
-const ERASE_MS = 240
+const ERASE_MS = 160
 
 /**
  * The framed box at the top of the home page. You flip through it with the
@@ -100,16 +100,16 @@ export const Hero = clientEntry(import.meta.url, function Hero(handle: Handle<He
 								>
 									<div className="copy">
 										<Heading className="heading">
-											<span data-ink style="--d: 200ms">
+											<span data-ink style="--d: 60ms">
 												{slide.heading
 													.split('\n')
 													.flatMap((line, j) => (j > 0 ? [<br key={j} />, line] : [line]))}
 											</span>
 										</Heading>
-										<p data-ink style="--d: 550ms">
+										<p data-ink style="--d: 180ms">
 											{slide.body}
 										</p>
-										<p data-ink style="--d: 800ms">
+										<p data-ink style="--d: 260ms">
 											<a className="pencil-link" href={slide.link.href}>
 												{slide.link.label}
 											</a>
@@ -182,6 +182,8 @@ export const Hero = clientEntry(import.meta.url, function Hero(handle: Handle<He
 const withJs = ':root:has(#js[data-on]) &'
 
 const heroStyle = css({
+	// Flipping should feel quick: strokes start closer together than elsewhere.
+	'--stagger': '4ms',
 	'& .stage': { position: 'relative' },
 	'& .frame': { position: 'absolute', inset: 0, width: '100%', height: '100%' },
 	'& .track': {
