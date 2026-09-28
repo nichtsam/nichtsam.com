@@ -1,8 +1,0 @@
-node_modules
-.git
-.github
-.agents
-coverage
-*.test.ts
-*.md
-!content/**/*.md
