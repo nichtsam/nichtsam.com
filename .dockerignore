@@ -1,5 +1,5 @@
 .git
-.gitignore
+# .gitignore stays: Tailwind reads it to skip generated files when scanning
 
 Dockerfile
 .dockerignore
