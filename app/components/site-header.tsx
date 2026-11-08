@@ -2,7 +2,6 @@ import { usePostHog } from '@posthog/react'
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import { coreNav } from '#app/config/nav.tsx'
-import { ThemeSwitcher } from '#app/utils/theme.tsx'
 import { NavLink } from './link'
 import { Button } from './ui/button'
 import {
@@ -29,9 +28,8 @@ export function SiteHeader() {
 				<Logo />
 				<MainNav />
 				<div className="-mr-16 grow" /> {/* Spacing adjustment */}
-				<div className="flex gap-x-1">
+				<div className="flex">
 					<MobileNav />
-					<ThemeSwitcher />
 				</div>
 			</div>
 		</header>

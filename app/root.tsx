@@ -1,6 +1,4 @@
 import { PostHogProvider } from '@posthog/react'
-import clsx from 'clsx'
-import css from 'dedent'
 import posthog from 'posthog-js'
 import {
 	Links,
@@ -24,14 +22,10 @@ import { NavProgress } from './components/nav-progress.tsx'
 import { SiteFooter } from './components/site-footer.tsx'
 import { SiteHeader } from './components/site-header.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
-import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { buildMeta } from './utils/meta.ts'
 import { getOrigin } from './utils/misc.ts'
 import { useNonce } from './utils/nonce-provider.tsx'
-import { getFormData } from './utils/request.server.ts'
-import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
-import { SET_THEME_INTENT, useOptionalTheme } from './utils/theme.tsx'
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'stylesheet', href: appStylesheet },
@@ -46,7 +40,6 @@ export const meta: Route.MetaFunction = (args) =>
 
 export const headers: Route.HeadersFunction = (args) => {
 	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
-	args.loaderHeaders.append('Vary', 'Cookie')
 
 	return pipeHeaders(args)
 }
@@ -56,47 +49,24 @@ export const loader = ({ request }: Route.LoaderArgs) => {
 
 	return {
 		env: publicEnv,
-		requestInfo: {
-			origin: getOrigin(request),
-			hints: getHints(request),
-			userPreferences: {
-				theme: getTheme(request),
-			},
-		},
-	}
-}
-
-export const action = async ({ request }: Route.ActionArgs) => {
-	const formData = await getFormData(request)
-	const intent = formData.get('intent')
-
-	switch (intent) {
-		case SET_THEME_INTENT: {
-			return setTheme(formData)
-		}
-		default: {
-			throw new Response(`Invalid intent "${intent}"`, { status: 400 })
-		}
+		origin: getOrigin(request),
 	}
 }
 
 function Document({
 	children,
 	nonce,
-	theme = 'light',
 	env,
 }: {
 	children: React.ReactNode
 	nonce: string
-	theme?: Theme
 	env?: PublicEnv
 }) {
 	const allowIndexing = env?.ALLOW_INDEXING
 
 	return (
-		<html lang="en" className={clsx(theme, 'relative')}>
+		<html lang="en" className="relative">
 			<head>
-				<ClientHintCheck nonce={nonce} />
 				<meta charSet="utf-8" />
 				<meta name="viewport" content="width=device-width,initial-scale=1" />
 				{!allowIndexing && <meta name="robots" content="noindex, nofollow" />}
@@ -104,24 +74,8 @@ function Document({
 
 				<Meta />
 				<Links />
-
-				<noscript>
-					<style>
-						{css`
-							.js-required {
-								display: none !important;
-							}
-							.hint-js-required {
-								opacity: 50% !important;
-							}
-						`}
-					</style>
-				</noscript>
 			</head>
-			<body
-				className="bg-background text-foreground transition-colors"
-				suppressHydrationWarning
-			>
+			<body className="bg-background text-foreground" suppressHydrationWarning>
 				{children}
 
 				<NavProgress />
@@ -166,10 +120,9 @@ export default AppWithProviders
 export function Layout({ children }: { children: React.ReactNode }) {
 	const data = useRouteLoaderData<typeof loader>('root')
 	const nonce = useNonce()
-	const theme = useOptionalTheme()
 
 	return (
-		<Document nonce={nonce} env={data?.env} theme={theme}>
+		<Document nonce={nonce} env={data?.env}>
 			{children}
 		</Document>
 	)

@@ -17,7 +17,7 @@
 - `app/`: Core application code.
   - `components/`: Reusable UI components.
   - `routes/`: Application routes (using `remix-flat-routes` convention).
-  - `utils/`: Server and client-side utilities (Content, Theme, etc.).
+  - `utils/`: Server and client-side utilities (Content, etc.).
 - `content/`: MDX files for blog articles.
 - `other/`: Auxiliary files like SVG icons and `sly` configuration.
 - `public/`: Static assets (favicons, images, manifest).

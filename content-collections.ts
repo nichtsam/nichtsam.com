@@ -29,10 +29,7 @@ const articles = defineCollection({
 				[
 					rehypeShiki,
 					{
-						themes: {
-							light: 'catppuccin-latte',
-							dark: 'tokyo-night',
-						},
+						theme: 'catppuccin-latte',
 					} satisfies RehypeShikiOptions,
 				],
 				rehypeSlug,

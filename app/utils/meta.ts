@@ -34,7 +34,7 @@ export function buildMeta({
 	unexpectedErrorMeta?: UnexpectedErrorMeta
 }): MetaDescriptor[] {
 	const rootData = matches.find((m) => m.id === 'root')?.data as RootData
-	const origin = rootData ? rootData.requestInfo.origin : 'https://nichtsam.com'
+	const origin = rootData ? rootData.origin : 'https://nichtsam.com'
 	const url = `${origin}${removeTrailingSlash(location.pathname)}${location.search}`
 
 	if (error) {

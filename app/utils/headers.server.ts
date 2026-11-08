@@ -21,7 +21,7 @@ export function pipeHeaders({
 
 	// take in useful headers route loader/action
 	// pass this point currentHeaders can be ignored
-	const forwardHeaders = ['Cache-Control', 'Vary', 'X-Robots-Tag']
+	const forwardHeaders = ['Cache-Control', 'X-Robots-Tag']
 	for (const headerName of forwardHeaders) {
 		const header = currentHeaders.get(headerName)
 		if (header) {
@@ -36,27 +36,6 @@ export function pipeHeaders({
 			headers.get('Cache-Control'),
 		),
 	)
-
-	// append useful parent headers
-	const inheritHeaders = ['Vary']
-	for (const headerName of inheritHeaders) {
-		const header = parentHeaders.get(headerName)
-		if (header) {
-			headers.append(headerName, header)
-		}
-	}
-
-	// fallback to parent headers if loader don't have
-	const fallbackHeaders = ['Cache-Control', 'Vary']
-	for (const headerName of fallbackHeaders) {
-		if (headers.has(headerName)) {
-			continue
-		}
-		const fallbackHeader = parentHeaders.get(headerName)
-		if (fallbackHeader) {
-			headers.set(headerName, fallbackHeader)
-		}
-	}
 
 	return headers
 }

@@ -16,7 +16,7 @@ export const headers: Route.HeadersFunction = pipeHeaders
 export default function Index() {
 	return (
 		<section className="container">
-			<article className="prose dark:prose-invert lg:prose-xl py-9">
+			<article className="prose lg:prose-xl py-9">
 				<h1>Samuel Jensen</h1>
 				<p>
 					Hi there, I'm Sam.

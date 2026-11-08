@@ -7,17 +7,12 @@ import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
 } from '#app/components/error-boundary.tsx'
-import shikiStylesheet from '#app/styles/shiki.css?url'
 import { useMdxComponent } from '#app/utils/content/mdx.tsx'
 import { env } from '#app/utils/env.server.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { allArticles } from '#content-collections'
 import { type Route } from './+types/articles_.$slug'
-
-export const links: Route.LinksFunction = () => [
-	{ rel: 'stylesheet', href: shikiStylesheet },
-]
 
 export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {
@@ -83,9 +78,9 @@ export default function Article() {
 
 	return (
 		<div>
-			<article className="prose dark:prose-invert xl:prose-lg 2xl:prose-2xl container">
+			<article className="prose xl:prose-lg 2xl:prose-2xl container">
 				{data.article.draft && (
-					<blockquote className="border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
+					<blockquote className="border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-800">
 						Draft! Article Work In Progress!
 					</blockquote>
 				)}
