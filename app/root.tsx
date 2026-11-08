@@ -1,7 +1,6 @@
 import { PostHogProvider } from '@posthog/react'
 import clsx from 'clsx'
 import css from 'dedent'
-import { OpenImgContextProvider } from 'openimg/react'
 import posthog from 'posthog-js'
 import {
 	Links,
@@ -155,11 +154,9 @@ function App() {
 function AppWithProviders() {
 	return (
 		<PostHogProvider client={posthog}>
-			<OpenImgContextProvider optimizerEndpoint="/resources/images">
-				<TooltipProvider>
-					<App />
-				</TooltipProvider>
-			</OpenImgContextProvider>
+			<TooltipProvider>
+				<App />
+			</TooltipProvider>
 		</PostHogProvider>
 	)
 }

@@ -14,12 +14,6 @@ const envSchema = z
 
 		POSTHOG_PROJECT_TOKEN: z.string().optional(),
 		POSTHOG_HOST: z.url().optional(),
-
-		AWS_REGION: z.string(),
-		BUCKET_NAME: z.string(),
-		AWS_ENDPOINT_URL_S3: z.url(),
-		AWS_ACCESS_KEY_ID: z.string(),
-		AWS_SECRET_ACCESS_KEY: z.string(),
 	})
 	.readonly()
 

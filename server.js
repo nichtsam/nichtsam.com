@@ -5,7 +5,6 @@ import { helmet } from '@nichtsam/helmet/node-http'
 import { createRequestHandler } from '@react-router/express'
 import closeWithGrace from 'close-with-grace'
 import compression from 'compression'
-import cors from 'cors'
 import express from 'express'
 import { ipKeyGenerator, rateLimit } from 'express-rate-limit'
 import getPort, { portNumbers } from 'get-port'
@@ -97,6 +96,12 @@ app.use((_, res, next) => {
 	next()
 })
 
+// OG images are embedded by link previews on other sites
+app.use('/resources/og', (_, res, next) => {
+	res.set('Cross-Origin-Resource-Policy', 'cross-origin')
+	next()
+})
+
 // handle asset requests
 if (viteDevServer) {
 	app.use(viteDevServer.middlewares)
@@ -117,10 +122,6 @@ function getBuild() {
 		? viteDevServer.ssrLoadModule('virtual:react-router/server-build')
 		: import('./build/server/index.js')
 }
-
-const wantCors = ['/resources/og']
-app.options(wantCors, cors())
-app.get(wantCors, cors())
 
 // handle SSR requests
 app.all(

@@ -43,14 +43,12 @@ export function buildMeta({
 				error,
 				params,
 				location,
-				origin,
 			})
 		} else {
 			meta = unexpectedErrorMeta({
 				error,
 				params,
 				location,
-				origin,
 			})
 		}
 	}
@@ -92,32 +90,27 @@ type StatusMeta = (info: {
 	error: ErrorResponse
 	params: Record<string, string | undefined>
 	location: Location
-	origin: string
 }) => Meta
 
 type UnexpectedErrorMeta = (info: {
 	error: unknown
 	params: Record<string, string | undefined>
 	location: Location
-	origin: string
 }) => Meta
 
-const fallbackUnexpectedErrorMeta: UnexpectedErrorMeta = ({ origin }) => ({
+const fallbackUnexpectedErrorMeta: UnexpectedErrorMeta = () => ({
 	title: `Error | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-	image: `${origin}/resources/og/error.png`,
 })
 
-const fallbackStatusMeta: StatusMeta = ({ error, origin }) => ({
+const fallbackStatusMeta: StatusMeta = ({ error }) => ({
 	title: `${error.status} | nichtsam.com`,
 	description:
 		"Oops! Something went wrong. We're sorry for the inconvenience. Please try again later, or contact us if the issue persists.",
-	image: `${origin}/resources/og/error.png`,
 })
 
-export const notFoundMeta: StatusMeta & UnexpectedErrorMeta = ({ origin }) => ({
+export const notFoundMeta: StatusMeta & UnexpectedErrorMeta = () => ({
 	title: 'Not Found | nichtsam.com',
 	description: "Sorry, I couldn't find this page for you 😭",
-	image: `${origin}/resources/og/not-found.png`,
 })
