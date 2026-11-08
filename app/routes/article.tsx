@@ -12,7 +12,7 @@ import { env } from '#app/utils/env.server.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { allArticles } from '#content-collections'
-import { type Route } from './+types/articles_.$slug'
+import { type Route } from './+types/article'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: serverOnly$(async () => {

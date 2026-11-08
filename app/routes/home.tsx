@@ -1,7 +1,7 @@
 import { type MetaArgs } from 'react-router'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
-import { type Route } from './+types/_index'
+import { type Route } from './+types/home'
 
 export const meta: Route.MetaFunction = (args) =>
 	buildMeta({
@@ -13,7 +13,7 @@ export const meta: Route.MetaFunction = (args) =>
 
 export const headers: Route.HeadersFunction = pipeHeaders
 
-export default function Index() {
+export default function Home() {
 	return (
 		<section className="container">
 			<article className="prose lg:prose-xl py-9">

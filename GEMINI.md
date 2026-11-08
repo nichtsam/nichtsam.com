@@ -16,7 +16,7 @@
 ## Project Structure
 - `app/`: Core application code.
   - `components/`: Reusable UI components.
-  - `routes/`: Application routes (using `remix-flat-routes` convention).
+  - `routes/`: Route modules, mounted explicitly in `app/routes.ts`.
   - `utils/`: Server and client-side utilities (Content, etc.).
 - `content/`: MDX files for blog articles.
 - `other/`: Auxiliary files like SVG icons and `sly` configuration.
@@ -48,8 +48,7 @@
 ## Development Conventions
 
 ### Routing
-- The project uses **flat routes** via `remix-flat-routes`. Routes are located in `app/routes/`.
-- Convention: Files like `_site+/_index.tsx` or `_site+.articles.tsx` define the URL structure.
+- Routes are declared explicitly in `app/routes.ts`; file names in `app/routes/` carry no meaning.
 
 ### Content Management
 - Articles are stored in `content/articles/` as `.mdx` or `.md` files.

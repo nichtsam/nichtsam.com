@@ -1,6 +1,6 @@
 import { generateSitemap } from '@nasa-gcn/remix-seo'
 import { getOrigin } from '#app/utils/misc.ts'
-import { type Route } from './+types/sitemap[.]xml'
+import { type Route } from './+types/sitemap'
 
 export async function loader({ request, context }: Route.LoaderArgs) {
 	const serverBuild = await context.serverBuild

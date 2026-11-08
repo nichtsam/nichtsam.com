@@ -1,9 +1,9 @@
-// This is called a "splat route" and as it's in the root `/app/routes/`
-// directory, it's a catchall. If no other routes match, this one will and we
-// can know that the user is hitting a URL that doesn't exist. By throwing a
+// This is mounted as the `*` splat route in `app/routes.ts`, so it's a
+// catchall. If no other routes match, this one will and we can know that the
+// user is hitting a URL that doesn't exist. By throwing a
 // 404 from the loader, we can force the error boundary to render which will
 // ensure the user gets the right status code and we can display a nicer error
-// message for them than the Remix and/or browser default.
+// message for them than the React Router and/or browser default.
 
 import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { type MetaArgs } from 'react-router'
@@ -12,7 +12,7 @@ import {
 	generalNotFoundHandler,
 } from '#app/components/error-boundary.tsx'
 import { buildMeta, notFoundMeta } from '#app/utils/meta.ts'
-import { type Route } from './+types/$'
+import { type Route } from './+types/not-found'
 
 export const handle: SEOHandle = {
 	getSitemapEntries: () => null,
