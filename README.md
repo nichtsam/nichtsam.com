@@ -5,14 +5,14 @@ Staging : https://staging.nichtsam.com
 
 ## Stack
 
-- Framework: [Remix](https://remix.run/)
+- Framework: [React Router 7](https://reactrouter.com/)
 - Deployment: [Fly.io](https://fly.io/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 
 ## System Requirement
 
-- [Node.js](https://nodejs.org/) >= 20
-- [Pnpm](https://pnpm.io/) >= 8
+- [Node.js](https://nodejs.org/) 24
+- [Pnpm](https://pnpm.io/) 10
 
 ## Development
 
@@ -40,6 +40,7 @@ If you want to deploy manually, refer to
   [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
   needed by [project's Github Workflows](./.github/workflows/).
   - [`FLY_API_TOKEN`](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#api-tokens)
+  - `SENTRY_AUTH_TOKEN` (optional, uploads source maps to Sentry)
 
 ### Content
 
@@ -48,8 +49,8 @@ Here are some stuff you will need to adjust to make it your website.
 #### Articles
 
 - `/content/articles` \
-  Written in mdx, every top-level file or directory with index file is an
-  article.
+  Written in md or mdx, every file is an article. Files starting with `_` are
+  skipped.
 
 #### Favicons
 
@@ -59,7 +60,7 @@ Here are some stuff you will need to adjust to make it your website.
 
 #### Logo
 
-- logo in `app/components/navbar.tsx`
+- `Logo` in `app/components/site-header.tsx`
 
 #### Pages' Meta
 
@@ -67,4 +68,4 @@ Here are some stuff you will need to adjust to make it your website.
 
 #### Social Links
 
-- `LINKS` in `app/components/footer.tsx`
+- `socialNav` in `app/config/nav.tsx`

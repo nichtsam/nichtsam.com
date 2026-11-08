@@ -6,7 +6,7 @@
 ### Key Technologies
 - **Framework:** [React Router 7](https://reactrouter.com/) (using Vite)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) with `@tailwindcss/vite`
-- **Content:** MDX via `mdx-bundler`, `gray-matter`, and `content-collections`
+- **Content:** MDX via `content-collections`
 - **Deployment:** [Fly.io](https://fly.io/)
 - **Validation:** [Zod](https://zod.dev/) for schema validation (env, content)
 - **Testing:** [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
@@ -20,7 +20,7 @@
   - `utils/`: Server and client-side utilities (Content, etc.).
 - `content/`: MDX files for blog articles.
 - `other/`: Auxiliary files like SVG icons and `sly` configuration.
-- `public/`: Static assets (favicons, images, manifest).
+- `public/`: Static assets (favicons, OG image, manifest).
 - `tests/`: Test setup and global test files.
 
 ---
@@ -37,7 +37,7 @@
 - **Typecheck:** `pnpm typecheck`
 - **Lint:** `pnpm lint`
 - **Format:** `pnpm format`
-- **Full Validation:** `pnpm validate` (Runs lint, format, typecheck, and tests).
+- **Full Validation:** `pnpm validate` (Auto-fixes lint and formatting, then runs typecheck and tests with coverage).
 
 ### Production
 - **Build:** `pnpm build` (Runs `react-router build`).
@@ -52,8 +52,8 @@
 
 ### Content Management
 - Articles are stored in `content/articles/` as `.mdx` or `.md` files.
-- Each article requires frontmatter (title, date, etc.) validated by Zod in `app/utils/content/model.ts`.
-- MDX is processed using `app/utils/content/retrieve.ts` and managed via `#content-collections`.
+- Each article requires frontmatter (title, description, publishedDate, keywords) validated by Zod in `content-collections.ts`.
+- Compiled articles are imported from `#content-collections`; custom MDX components live in `app/utils/content/mdx.tsx`.
 
 ### Styling & UI
 - **Tailwind CSS v4:** Configuration is integrated into Vite via `@tailwindcss/vite`.
