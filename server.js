@@ -69,18 +69,11 @@ const rateLimitConfig = {
 	},
 }
 
-const strongestRateLimit = rateLimit({ ...rateLimitConfig, max: 10 })
 const strongRateLimit = rateLimit({ ...rateLimitConfig, max: 100 })
 const generalRateLimit = rateLimit(rateLimitConfig)
 
 app.use((req, res, next) => {
-	const criticalActions = ['/auth', '/onboarding']
-
 	if (req.method !== 'GET' && req.method !== 'HEAD') {
-		if (criticalActions.some((p) => req.path.startsWith(p))) {
-			return strongestRateLimit(req, res, next)
-		}
-
 		return strongRateLimit(req, res, next)
 	}
 

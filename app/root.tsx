@@ -4,14 +4,12 @@ import css from 'dedent'
 import { OpenImgContextProvider } from 'openimg/react'
 import posthog from 'posthog-js'
 import {
-	data,
 	Links,
 	Meta,
 	type MetaArgs,
 	Outlet,
 	Scripts,
 	ScrollRestoration,
-	useLoaderData,
 	useRouteLoaderData,
 } from 'react-router'
 import appStylesheet from '#app/styles/app.css?url'
@@ -26,19 +24,15 @@ import { GeneralErrorBoundary } from './components/error-boundary.tsx'
 import { NavProgress } from './components/nav-progress.tsx'
 import { SiteFooter } from './components/site-footer.tsx'
 import { SiteHeader } from './components/site-header.tsx'
-import { Toaster } from './components/ui/sonner.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
 import { ClientHintCheck, getHints } from './utils/client-hints.tsx'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { buildMeta } from './utils/meta.ts'
 import { getOrigin } from './utils/misc.ts'
 import { useNonce } from './utils/nonce-provider.tsx'
-import { getFormData, mergeHeaders } from './utils/request.server.ts'
+import { getFormData } from './utils/request.server.ts'
 import { setTheme, getTheme, type Theme } from './utils/theme.server.ts'
 import { SET_THEME_INTENT, useOptionalTheme } from './utils/theme.tsx'
-import { ServerTiming } from './utils/timings.server.ts'
-import { getToast } from './utils/toast.server.ts'
-import { useToast } from './utils/toast.ts'
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'stylesheet', href: appStylesheet },
@@ -58,33 +52,19 @@ export const headers: Route.HeadersFunction = (args) => {
 	return pipeHeaders(args)
 }
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
+export const loader = ({ request }: Route.LoaderArgs) => {
 	forceEnvValidation()
 
-	const timing = new ServerTiming()
-
-	const [toast] = await Promise.all([getToast(request)])
-
-	const headers = new Headers()
-	mergeHeaders(headers, toast?.discardHeaders)
-
-	headers.append('Server-Timing', timing.toString())
-	return data(
-		{
-			env: publicEnv,
-			requestInfo: {
-				origin: getOrigin(request),
-				hints: getHints(request),
-				userPreferences: {
-					theme: getTheme(request),
-				},
+	return {
+		env: publicEnv,
+		requestInfo: {
+			origin: getOrigin(request),
+			hints: getHints(request),
+			userPreferences: {
+				theme: getTheme(request),
 			},
-			toast: toast?.toast,
 		},
-		{
-			headers,
-		},
-	)
+	}
 }
 
 export const action = async ({ request }: Route.ActionArgs) => {
@@ -146,7 +126,6 @@ function Document({
 				{children}
 
 				<NavProgress />
-				<Toaster theme={theme} />
 
 				<script
 					nonce={nonce}
@@ -162,9 +141,6 @@ function Document({
 }
 
 function App() {
-	const data = useLoaderData<typeof loader>()
-	useToast(data.toast)
-
 	return (
 		<div className="flex min-h-screen flex-col">
 			<SiteHeader />

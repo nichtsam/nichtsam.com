@@ -4,7 +4,7 @@
 		{
 			"name": "@radix-ui/icons",
 			"directory": "./other/svg-icons",
-			"postinstall": ["pnpm", "build:icons"],
+			"postinstall": [],
 			"transformers": [
 				"./transformers/svg-remove-dimensions.js",
 				"./transformers/html-meta-comments.js",
@@ -14,7 +14,7 @@
 		{
 			"name": "lucide-icons",
 			"directory": "./other/svg-icons",
-			"postinstall": ["pnpm", "build:icons"],
+			"postinstall": [],
 			"transformers": [
 				"./transformers/svg-remove-dimensions.js",
 				"./transformers/html-meta-comments.js",

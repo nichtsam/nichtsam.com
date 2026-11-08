@@ -1,5 +1,3 @@
-import { type Cookie, type SessionStorage } from 'react-router'
-
 const getFormData = async (request: Request) => {
 	try {
 		return await request.clone().formData()
@@ -29,42 +27,4 @@ const combineHeaders = (
 	return combined
 }
 
-const getCookieHeader = (request: Request) => {
-	return request.headers.get('cookie')
-}
-
-const destroyCookie = (cookie: Cookie) => {
-	return cookie.serialize(null, { expires: new Date(Date.now() - 1) })
-}
-
-const getSession = (storage: SessionStorage, request: Request) => {
-	const cookieHeader = getCookieHeader(request)
-	const session = storage.getSession(cookieHeader)
-
-	return session
-}
-
-const destroySession = async (storage: SessionStorage, request: Request) => {
-	const session = await getSession(storage, request)
-	return storage.destroySession(session)
-}
-
-const getDomainUrl = (request: Request) => {
-	const host =
-		request.headers.get('X-Forwarded-Host') ??
-		request.headers.get('host') ??
-		new URL(request.url).host
-	const protocol = host.includes('localhost') ? 'http' : 'https'
-	return `${protocol}://${host}`
-}
-
-export {
-	getFormData,
-	mergeHeaders,
-	combineHeaders,
-	getCookieHeader,
-	destroyCookie,
-	getSession,
-	destroySession,
-	getDomainUrl,
-}
+export { getFormData, mergeHeaders, combineHeaders }

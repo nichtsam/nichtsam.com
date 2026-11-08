@@ -1,4 +1,3 @@
-import { pick } from 'ramda'
 import { z } from 'zod'
 
 export type Env = z.infer<typeof envSchema>
@@ -10,8 +9,6 @@ const envSchema = z
 			.enum(['true', 'false'])
 			.default('true')
 			.transform((s) => s !== 'false'),
-
-		APP_SECRET: z.string(),
 
 		SENTRY_DSN: z.url().optional(),
 
@@ -39,16 +36,14 @@ if (!parsedEnv.success) {
 
 export const env = parsedEnv.data
 
-const PUBLIC_ENV = [
-	'NODE_ENV',
-	'SENTRY_DSN',
-	'ALLOW_INDEXING',
-	'POSTHOG_PROJECT_TOKEN',
-	'POSTHOG_HOST',
-] as const satisfies (keyof Env)[]
-
 export type PublicEnv = typeof publicEnv
-export const publicEnv = pick(PUBLIC_ENV, env)
+export const publicEnv = {
+	NODE_ENV: env.NODE_ENV,
+	SENTRY_DSN: env.SENTRY_DSN,
+	ALLOW_INDEXING: env.ALLOW_INDEXING,
+	POSTHOG_PROJECT_TOKEN: env.POSTHOG_PROJECT_TOKEN,
+	POSTHOG_HOST: env.POSTHOG_HOST,
+}
 
 declare global {
 	interface Window {
