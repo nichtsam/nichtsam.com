@@ -39,7 +39,9 @@ export const meta: Route.MetaFunction = (args) =>
 	})
 
 export const headers: Route.HeadersFunction = (args) => {
-	args.loaderHeaders.set('Cache-Control', 'max-age=86400')
+	// HTML points at hashed assets that the next deploy deletes, so browsers
+	// must revalidate it instead of reusing a stale copy
+	args.loaderHeaders.set('Cache-Control', 'no-cache')
 
 	return pipeHeaders(args)
 }

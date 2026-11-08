@@ -52,7 +52,6 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 		{ article },
 		{
 			headers: {
-				'Cache-Control': 'max-age=86400',
 				...(env.ALLOW_INDEXING &&
 					article.draft && { 'X-Robots-Tag': 'noindex, nofollow' }),
 			},
