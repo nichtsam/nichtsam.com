@@ -1,5 +1,10 @@
 import * as Sentry from '@sentry/react-router'
-import { useEffect, type ReactElement } from 'react'
+import {
+	useEffect,
+	useSyncExternalStore,
+	type ReactElement,
+	type ReactNode,
+} from 'react'
 import {
 	Link,
 	isRouteErrorResponse,
@@ -100,7 +105,9 @@ export const generalNotFoundHandler: StatusHandler & UnexpectedErrorHandler = ({
 				<h1 className="text-2xl sm:text-4xl md:text-5xl">
 					We can't find this page
 				</h1>
-				<pre className="text-sm sm:text-lg md:text-xl">{location.pathname}</pre>
+				<pre className="text-sm sm:text-lg md:text-xl">
+					<ClientOnly>{location.pathname}</ClientOnly>
+				</pre>
 			</div>
 			<Link to="/" className="flex items-center gap-2 self-start text-lg">
 				<Icon name="arrow-left">Back to home</Icon>
@@ -108,3 +115,17 @@ export const generalNotFoundHandler: StatusHandler & UnexpectedErrorHandler = ({
 		</div>
 	)
 }
+
+// The prerendered not found page is shared by every unknown URL, so what
+// depends on the URL can only render once the browser has taken over
+function ClientOnly({ children }: { children: ReactNode }) {
+	const hydrated = useSyncExternalStore(
+		subscribeToNothing,
+		() => true,
+		() => false,
+	)
+
+	return hydrated ? children : null
+}
+
+const subscribeToNothing = () => () => {}

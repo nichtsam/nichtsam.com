@@ -23,7 +23,11 @@ export default {
 
 	buildEnd: async ({ viteConfig, reactRouterConfig, buildManifest }) => {
 		// Imported here so that loading this config doesn't validate the env
+		const { addNotFoundPage } = await import('./other/not-found-page.ts')
 		const { addContentSecurityPolicy } = await import('./other/csp.ts')
+
+		// First, so that the not found page gets a CSP too
+		await addNotFoundPage(reactRouterConfig)
 		await addContentSecurityPolicy(
 			path.join(reactRouterConfig.buildDirectory, 'client'),
 		)
