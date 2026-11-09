@@ -1,8 +1,8 @@
 import { usePostHog } from '@posthog/react'
 import { data, Link, type MetaArgs, useLoaderData } from 'react-router'
+import { articlePath, publishedArticles } from '#app/utils/content/articles.ts'
 import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
-import { allArticles } from '#content-collections'
 import { type Route } from './+types/articles'
 
 export const meta: Route.MetaFunction = (args) =>
@@ -18,17 +18,15 @@ export const meta: Route.MetaFunction = (args) =>
 export const headers: Route.HeadersFunction = pipeHeaders
 
 export const loader = async () => {
-	const posts = allArticles
-		.filter((article) => !article.draft)
-		.map((article) => ({
-			readingTime: article.readingTime,
-			matter: {
-				title: article.title,
-				description: article.description,
-				publishedDate: article.publishedDate,
-			},
-			slug: article.slug,
-		}))
+	const posts = publishedArticles.map((article) => ({
+		readingTime: article.readingTime,
+		matter: {
+			title: article.title,
+			description: article.description,
+			publishedDate: article.publishedDate,
+		},
+		slug: article.slug,
+	}))
 
 	return data({ posts })
 }
@@ -56,7 +54,7 @@ function PostItem({
 	return (
 		<li>
 			<Link
-				to={post.slug}
+				to={articlePath(post.slug)}
 				className="hover:bg-accent hover:text-accent-foreground inline-block w-full rounded-md p-4 transition ease-out hover:scale-105"
 				onClick={() =>
 					posthog?.capture('article_clicked', {

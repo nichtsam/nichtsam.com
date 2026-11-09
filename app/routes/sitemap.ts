@@ -1,13 +1,11 @@
 import { siteUrl } from '#app/config/site.ts'
-import { allArticles } from '#content-collections'
+import { articlePath, publishedArticles } from '#app/utils/content/articles.ts'
 
 export function loader() {
 	const paths = [
 		'/',
 		'/articles',
-		...allArticles
-			.filter((article) => !article.draft)
-			.map((article) => `/articles/${article.slug}`),
+		...publishedArticles.map((article) => articlePath(article.slug)),
 	]
 
 	const urls = paths
