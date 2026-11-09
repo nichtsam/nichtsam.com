@@ -105,12 +105,8 @@ jobs:
       - name: 📥 Install dependencies
         run: pnpm install
 
-      # Every page is prerendered, so the env is read here and not at runtime
       - name: 🏗️ Build
         run: pnpm build
-        env:
-          POSTHOG_PROJECT_TOKEN: ${{ vars.POSTHOG_PROJECT_TOKEN }}
-          POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
 
       - name: 🚀 Deploy
         run: pnpm exec wrangler deploy

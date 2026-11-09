@@ -2,7 +2,6 @@ import { createHash } from 'node:crypto'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { contentSecurityPolicy } from '@nichtsam/helmet/rules/content/content-security-policy'
-import { env } from '#app/utils/env.server.ts'
 
 // Prerendered pages can't carry a per-request nonce, so each page allows
 // exactly its own inline scripts by hash instead
@@ -52,15 +51,7 @@ function policy(scriptHashes: string[]) {
 	contentSecurityPolicy(headers, {
 		directives: {
 			fetch: {
-				'connect-src': [
-					...(env.POSTHOG_HOST
-						? [
-								env.POSTHOG_HOST,
-								env.POSTHOG_HOST.replace(/(\/\/[^.]+)/, (m) => `${m}-assets`),
-							]
-						: []),
-					"'self'",
-				],
+				'connect-src': ["'self'"],
 				'font-src': ["'self'"],
 				'frame-src': ["'self'"],
 				'img-src': ["'self'", 'data:', 'res.cloudinary.com'],

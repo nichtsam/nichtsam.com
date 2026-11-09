@@ -9,10 +9,6 @@ export default defineConfig({
 		cssMinify: process.env.NODE_ENV === 'production',
 	},
 
-	ssr: {
-		noExternal: ['posthog-js', '@posthog/react'],
-	},
-
 	plugins: [
 		contentCollections(),
 		tailwindcss(),

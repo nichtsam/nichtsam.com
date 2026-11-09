@@ -1,5 +1,3 @@
-import { usePostHog } from '@posthog/react'
-import { useEffect } from 'react'
 import { data, type MetaArgs, useLoaderData } from 'react-router'
 import {
 	GeneralErrorBoundary,
@@ -52,18 +50,6 @@ export const loader = async ({ params }: Route.LoaderArgs) => {
 export default function Article() {
 	const data = useLoaderData<typeof loader>()
 	const Component = useMdxComponent(data.article.mdx)
-	const posthog = usePostHog()
-
-	const { slug, title, publishedDate, readingTime, draft } = data.article
-	useEffect(() => {
-		posthog?.capture('article_viewed', {
-			slug,
-			title,
-			published_date: publishedDate,
-			reading_time: readingTime,
-			is_draft: draft,
-		})
-	}, [slug, title, publishedDate, readingTime, draft, posthog])
 
 	return (
 		<div>

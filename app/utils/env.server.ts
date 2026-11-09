@@ -9,9 +9,6 @@ const envSchema = z
 			.enum(['true', 'false'])
 			.default('true')
 			.transform((s) => s !== 'false'),
-
-		POSTHOG_PROJECT_TOKEN: z.string().optional(),
-		POSTHOG_HOST: z.url().optional(),
 	})
 	.readonly()
 
@@ -32,8 +29,6 @@ export type PublicEnv = typeof publicEnv
 export const publicEnv = {
 	NODE_ENV: env.NODE_ENV,
 	ALLOW_INDEXING: env.ALLOW_INDEXING,
-	POSTHOG_PROJECT_TOKEN: env.POSTHOG_PROJECT_TOKEN,
-	POSTHOG_HOST: env.POSTHOG_HOST,
 }
 
 declare global {

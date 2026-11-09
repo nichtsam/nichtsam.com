@@ -1,5 +1,7 @@
 import path from 'node:path'
 import { type Config } from '@react-router/dev/config'
+import { addContentSecurityPolicy } from './other/csp.ts'
+import { addNotFoundPage } from './other/not-found-page.ts'
 
 export default {
 	ssr: true,
@@ -21,10 +23,6 @@ export default {
 	future: {},
 
 	buildEnd: async ({ reactRouterConfig }) => {
-		// Imported here so that loading this config doesn't validate the env
-		const { addNotFoundPage } = await import('./other/not-found-page.ts')
-		const { addContentSecurityPolicy } = await import('./other/csp.ts')
-
 		// First, so that the not found page gets a CSP too
 		await addNotFoundPage(reactRouterConfig)
 		await addContentSecurityPolicy(

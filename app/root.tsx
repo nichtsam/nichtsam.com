@@ -1,5 +1,3 @@
-import { PostHogProvider } from '@posthog/react'
-import posthog from 'posthog-js'
 import {
 	Links,
 	Meta,
@@ -103,11 +101,9 @@ function App() {
 
 function AppWithProviders() {
 	return (
-		<PostHogProvider client={posthog}>
-			<TooltipProvider>
-				<App />
-			</TooltipProvider>
-		</PostHogProvider>
+		<TooltipProvider>
+			<App />
+		</TooltipProvider>
 	)
 }
 
