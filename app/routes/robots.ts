@@ -1,9 +1,8 @@
-import { getOrigin } from '#app/utils/misc.ts'
-import { type Route } from './+types/robots'
+import { siteUrl } from '#app/config/site.ts'
 
-export function loader({ request }: Route.LoaderArgs) {
+export function loader() {
 	return new Response(
-		`User-agent: *\nAllow: /\nSitemap: ${getOrigin(request)}/sitemap.xml\n`,
+		`User-agent: *\nAllow: /\nSitemap: ${siteUrl('/sitemap.xml')}\n`,
 		{ headers: { 'Content-Type': 'text/plain' } },
 	)
 }

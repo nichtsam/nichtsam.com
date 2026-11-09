@@ -24,7 +24,6 @@ import { SiteHeader } from './components/site-header.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { buildMeta } from './utils/meta.ts'
-import { getOrigin } from './utils/misc.ts'
 import { useNonce } from './utils/nonce-provider.tsx'
 
 export const links: Route.LinksFunction = () => [
@@ -46,12 +45,11 @@ export const headers: Route.HeadersFunction = (args) => {
 	return pipeHeaders(args)
 }
 
-export const loader = ({ request }: Route.LoaderArgs) => {
+export const loader = () => {
 	forceEnvValidation()
 
 	return {
 		env: publicEnv,
-		origin: getOrigin(request),
 	}
 }
 

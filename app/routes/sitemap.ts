@@ -1,11 +1,9 @@
-import { getOrigin } from '#app/utils/misc.ts'
+import { siteUrl } from '#app/config/site.ts'
 import { allArticles } from '#content-collections'
-import { type Route } from './+types/sitemap'
 
-export function loader({ request }: Route.LoaderArgs) {
-	const origin = getOrigin(request)
+export function loader() {
 	const paths = [
-		'',
+		'/',
 		'/articles',
 		...allArticles
 			.filter((article) => !article.draft)
@@ -13,7 +11,7 @@ export function loader({ request }: Route.LoaderArgs) {
 	]
 
 	const urls = paths
-		.map((path) => `<url><loc>${origin}${path}</loc></url>`)
+		.map((path) => `<url><loc>${siteUrl(path)}</loc></url>`)
 		.join('')
 
 	return new Response(

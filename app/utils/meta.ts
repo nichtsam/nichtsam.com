@@ -1,15 +1,11 @@
 import {
 	isRouteErrorResponse,
-	type useRouteLoaderData,
 	type ErrorResponse,
 	type Location,
 	type MetaArgs,
 	type MetaDescriptor,
 } from 'react-router'
-import { type loader } from '#app/root.tsx'
-import { removeTrailingSlash } from './misc'
-
-type RootData = ReturnType<typeof useRouteLoaderData<typeof loader>>
+import { siteUrl } from '#app/config/site.ts'
 
 interface Meta {
 	title?: string
@@ -19,7 +15,7 @@ interface Meta {
 }
 
 export function buildMeta({
-	args: { error, params, location, matches },
+	args: { error, params, location },
 	meta,
 
 	statusMetas,
@@ -33,9 +29,7 @@ export function buildMeta({
 	defaultStatusMeta?: StatusMeta
 	unexpectedErrorMeta?: UnexpectedErrorMeta
 }): MetaDescriptor[] {
-	const rootData = matches.find((m) => m.id === 'root')?.data as RootData
-	const origin = rootData ? rootData.origin : 'https://nichtsam.com'
-	const url = `${origin}${removeTrailingSlash(location.pathname)}${location.search}`
+	const url = `${siteUrl(location.pathname)}${location.search}`
 
 	if (error) {
 		if (isRouteErrorResponse(error)) {
@@ -57,7 +51,7 @@ export function buildMeta({
 		title: 'nichtsam.com',
 		description:
 			'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
-		image: `${origin}/resources/og/image.png`,
+		image: siteUrl('/resources/og/image.png'),
 		...meta,
 	}
 
