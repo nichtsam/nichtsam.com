@@ -75,11 +75,6 @@ function Document({
 
 				<NavProgress />
 
-				<script
-					dangerouslySetInnerHTML={{
-						__html: `window.ENV = ${JSON.stringify(env ?? {})}`,
-					}}
-				/>
 				<Scripts />
 				<ScrollRestoration />
 			</body>

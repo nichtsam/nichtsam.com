@@ -27,14 +27,7 @@ export const env = parsedEnv.data
 
 export type PublicEnv = typeof publicEnv
 export const publicEnv = {
-	NODE_ENV: env.NODE_ENV,
 	ALLOW_INDEXING: env.ALLOW_INDEXING,
-}
-
-declare global {
-	interface Window {
-		ENV: PublicEnv
-	}
 }
 
 // To ensure env safety, I want to force environment validation to happen as soon as possible.
