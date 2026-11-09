@@ -1,6 +1,5 @@
 import { data, Link, type MetaArgs, useLoaderData } from 'react-router'
 import { articlePath, publishedArticles } from '#app/utils/content/articles.ts'
-import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/articles'
 
@@ -13,8 +12,6 @@ export const meta: Route.MetaFunction = (args) =>
 				'Articles written by Samuel, where he shares his thoughts, ideas, and insights on a variety of topics.',
 		},
 	})
-
-export const headers: Route.HeadersFunction = pipeHeaders
 
 export const loader = async () => {
 	const posts = publishedArticles.map((article) => ({

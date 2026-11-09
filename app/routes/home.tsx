@@ -1,5 +1,4 @@
 import { type MetaArgs } from 'react-router'
-import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/home'
 
@@ -10,8 +9,6 @@ export const meta: Route.MetaFunction = (args) =>
 			title: 'Home | nichtsam',
 		},
 	})
-
-export const headers: Route.HeadersFunction = pipeHeaders
 
 export default function Home() {
 	return (

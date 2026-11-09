@@ -20,7 +20,6 @@ import { NavProgress } from './components/nav-progress.tsx'
 import { SiteFooter } from './components/site-footer.tsx'
 import { SiteHeader } from './components/site-header.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
-import { pipeHeaders } from './utils/headers.server.ts'
 import { buildMeta } from './utils/meta.ts'
 
 export const links: Route.LinksFunction = () => [
@@ -33,14 +32,6 @@ export const meta: Route.MetaFunction = (args) =>
 	buildMeta({
 		args: args as unknown as MetaArgs,
 	})
-
-export const headers: Route.HeadersFunction = (args) => {
-	// HTML points at hashed assets that the next deploy deletes, so browsers
-	// must revalidate it instead of reusing a stale copy
-	args.loaderHeaders.set('Cache-Control', 'no-cache')
-
-	return pipeHeaders(args)
-}
 
 export const loader = () => {
 	forceEnvValidation()

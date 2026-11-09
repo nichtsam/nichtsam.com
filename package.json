@@ -33,7 +33,6 @@
     "@react-router/node": "7.14.0",
     "@shikijs/rehype": "4.0.2",
     "@tailwindcss/vite": "4.2.2",
-    "@tusbar/cache-control": "3.0.0",
     "address": "2.0.3",
     "class-variance-authority": "0.7.1",
     "close-with-grace": "2.5.0",
