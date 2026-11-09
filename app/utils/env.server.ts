@@ -10,8 +10,6 @@ const envSchema = z
 			.default('true')
 			.transform((s) => s !== 'false'),
 
-		SENTRY_DSN: z.url().optional(),
-
 		POSTHOG_PROJECT_TOKEN: z.string().optional(),
 		POSTHOG_HOST: z.url().optional(),
 	})
@@ -33,7 +31,6 @@ export const env = parsedEnv.data
 export type PublicEnv = typeof publicEnv
 export const publicEnv = {
 	NODE_ENV: env.NODE_ENV,
-	SENTRY_DSN: env.SENTRY_DSN,
 	ALLOW_INDEXING: env.ALLOW_INDEXING,
 	POSTHOG_PROJECT_TOKEN: env.POSTHOG_PROJECT_TOKEN,
 	POSTHOG_HOST: env.POSTHOG_HOST,

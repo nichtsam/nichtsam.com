@@ -40,7 +40,6 @@ If you want to deploy manually, refer to
   [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
   needed by [project's Github Workflows](./.github/workflows/).
   - [`FLY_API_TOKEN`](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#api-tokens)
-  - `SENTRY_AUTH_TOKEN` (optional, uploads source maps to Sentry)
 
 ### Content
 

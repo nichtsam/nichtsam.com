@@ -20,6 +20,4 @@ coverage
 .content-collections/generated/*
 !.content-collections/generated/
 !.content-collections/generated/index.d.ts
-.sentryclirc
-.env.sentry-build-plugin
 .DS_Store

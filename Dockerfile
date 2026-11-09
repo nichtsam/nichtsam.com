@@ -22,21 +22,9 @@ RUN pnpm prune --prod
 
 FROM deps AS build
 
-ARG COMMIT_SHA
-ENV COMMIT_SHA=$COMMIT_SHA
-
 COPY . .
 
-# Sentry monitoring
-ARG SENTRY_ORG 
-ARG SENTRY_PROJECT 
-ENV SENTRY_ORG=$SENTRY_ORG
-ENV SENTRY_PROJECT=$SENTRY_PROJECT
-# Secured way to expose secret to the build 
-# https://docs.docker.com/build/building/secrets/
-RUN --mount=type=secret,id=SENTRY_AUTH_TOKEN \
-  export SENTRY_AUTH_TOKEN=$(cat /run/secrets/SENTRY_AUTH_TOKEN) && \
-  pnpm build
+RUN pnpm build
 
 FROM base
 
@@ -52,7 +40,6 @@ COPY --from=build /app/public /app/public
 COPY --from=build /app/package.json /app/package.json
 COPY --from=build /app/server.js /app/server.js
 COPY --from=build /app/server-utils.js /app/server-utils.js
-COPY --from=build /app/server-monitoring.js /app/server-monitoring.js
 COPY ./content ./content
 
 CMD [ "pnpm","start" ]

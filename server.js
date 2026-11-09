@@ -16,10 +16,6 @@ const ALLOW_INDEXING = process.env.ALLOW_INDEXING !== 'false'
 
 sourceMapSupport.install()
 
-if (MODE === 'production' && process.env.SENTRY_DSN) {
-	import('./server-monitoring.js').then(({ init }) => init())
-}
-
 const viteDevServer =
 	MODE === 'production'
 		? undefined

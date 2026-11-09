@@ -1,6 +1,5 @@
 import path from 'node:path'
 import { type Config } from '@react-router/dev/config'
-import { sentryOnBuildEnd } from '@sentry/react-router'
 
 export default {
 	ssr: true,
@@ -21,7 +20,7 @@ export default {
 
 	future: {},
 
-	buildEnd: async ({ viteConfig, reactRouterConfig, buildManifest }) => {
+	buildEnd: async ({ reactRouterConfig }) => {
 		// Imported here so that loading this config doesn't validate the env
 		const { addNotFoundPage } = await import('./other/not-found-page.ts')
 		const { addContentSecurityPolicy } = await import('./other/csp.ts')
@@ -31,16 +30,5 @@ export default {
 		await addContentSecurityPolicy(
 			path.join(reactRouterConfig.buildDirectory, 'client'),
 		)
-
-		if (
-			process.env.SENTRY_AUTH_TOKEN &&
-			process.env.NODE_ENV === 'production'
-		) {
-			await sentryOnBuildEnd({
-				viteConfig,
-				reactRouterConfig,
-				buildManifest,
-			})
-		}
 	},
 } satisfies Config

@@ -8,9 +8,6 @@ on:
 env:
   NODE_VERSION: 24
 
-  SENTRY_ORG: 'samuel-jensen'
-  SENTRY_PROJECT: 'nichtsam-com'
-
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -112,9 +109,6 @@ jobs:
       - name: 🏗️ Build
         run: pnpm build
         env:
-          COMMIT_SHA: ${{ github.sha }}
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_DSN: ${{ vars.SENTRY_DSN }}
           POSTHOG_PROJECT_TOKEN: ${{ vars.POSTHOG_PROJECT_TOKEN }}
           POSTHOG_HOST: ${{ vars.POSTHOG_HOST }}
 

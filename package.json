@@ -32,8 +32,6 @@
     "@radix-ui/react-progress": "1.1.8",
     "@react-router/express": "7.14.0",
     "@react-router/node": "7.14.0",
-    "@sentry/profiling-node": "10.47.0",
-    "@sentry/react-router": "10.47.0",
     "@shikijs/rehype": "4.0.2",
     "@tailwindcss/vite": "4.2.2",
     "@tusbar/cache-control": "3.0.0",
@@ -102,8 +100,6 @@
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
     "onlyBuiltDependencies": [
-      "@sentry-internal/node-cpu-profiler",
-      "@sentry/cli",
       "esbuild",
       "unrs-resolver",
       "@tailwindcss/oxide",

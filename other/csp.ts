@@ -53,7 +53,6 @@ function policy(scriptHashes: string[]) {
 		directives: {
 			fetch: {
 				'connect-src': [
-					env.SENTRY_DSN ? '*.sentry.io' : undefined,
 					...(env.POSTHOG_HOST
 						? [
 								env.POSTHOG_HOST,

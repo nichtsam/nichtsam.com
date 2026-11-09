@@ -1,18 +1,12 @@
 import contentCollections from '@content-collections/remix-vite'
 import { reactRouter } from '@react-router/dev/vite'
-import {
-	sentryReactRouter,
-	type SentryReactRouterBuildOptions,
-} from '@sentry/react-router'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
 import { iconsSpritesheet } from 'vite-plugin-icons-spritesheet'
 
-export default defineConfig((config) => ({
+export default defineConfig({
 	build: {
 		cssMinify: process.env.NODE_ENV === 'production',
-
-		sourcemap: 'hidden',
 	},
 
 	ssr: {
@@ -31,23 +25,5 @@ export default defineConfig((config) => ({
 			fileName: 'sprite.svg',
 			iconNameTransformer: (iconName) => iconName,
 		}),
-
-		process.env.SENTRY_AUTH_TOKEN && process.env.NODE_ENV === 'production'
-			? sentryReactRouter(sentryConfig, config)
-			: null,
 	],
-}))
-
-const sentryConfig: SentryReactRouterBuildOptions = {
-	authToken: process.env.SENTRY_AUTH_TOKEN,
-	org: process.env.SENTRY_ORG,
-	project: process.env.SENTRY_PROJECT,
-
-	release: {
-		name: process.env.COMMIT_SHA,
-	},
-
-	sourcemaps: {
-		filesToDeleteAfterUpload: ['./build/**/*.map'],
-	},
-}
+})

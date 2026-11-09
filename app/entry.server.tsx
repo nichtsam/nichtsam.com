@@ -1,11 +1,6 @@
 import { PassThrough } from 'node:stream'
 import { styleText } from 'node:util'
 import { createReadableStreamFromReadable } from '@react-router/node'
-import * as Sentry from '@sentry/react-router'
-import {
-	getMetaTagTransformer,
-	wrapSentryHandleRequest,
-} from '@sentry/react-router'
 import { isbot } from 'isbot'
 import { renderToPipeableStream } from 'react-dom/server'
 import {
@@ -14,7 +9,7 @@ import {
 	type HandleDocumentRequestFunction,
 	ServerRouter,
 } from 'react-router'
-import { env, forceEnvValidation } from './utils/env.server'
+import { forceEnvValidation } from './utils/env.server'
 
 forceEnvValidation()
 
@@ -22,8 +17,7 @@ const streamTimeout = 5_000
 
 type DocRequestArgs = Parameters<HandleDocumentRequestFunction>
 
-export default wrapSentryHandleRequest(handleRequest)
-function handleRequest(
+export default function handleRequest(
 	...[
 		request,
 		responseStatusCode,
@@ -31,10 +25,6 @@ function handleRequest(
 		routerContext,
 	]: DocRequestArgs
 ) {
-	if (env.NODE_ENV === 'production' && env.SENTRY_DSN) {
-		responseHeaders.append('Document-Policy', 'js-profiling')
-	}
-
 	const callbackName = isbot(request.headers.get('user-agent'))
 		? 'onAllReady'
 		: 'onShellReady'
@@ -60,7 +50,7 @@ function handleRequest(
 						}),
 					)
 
-					pipe(getMetaTagTransformer(body))
+					pipe(body)
 				},
 				onShellError(error: unknown) {
 					reject(error)
@@ -97,5 +87,4 @@ export function handleError(
 	}
 
 	console.error(styleText('red', errorMessage))
-	Sentry.captureException(error)
 }

@@ -1,10 +1,4 @@
-import * as Sentry from '@sentry/react-router'
-import {
-	useEffect,
-	useSyncExternalStore,
-	type ReactElement,
-	type ReactNode,
-} from 'react'
+import { useSyncExternalStore, type ReactElement, type ReactNode } from 'react'
 import {
 	Link,
 	isRouteErrorResponse,
@@ -46,14 +40,6 @@ export const GeneralErrorBoundary = ({
 	if (typeof document !== 'undefined') {
 		console.error(error)
 	}
-
-	useEffect(() => {
-		if (isResponse) {
-			return
-		}
-
-		Sentry.captureException(error)
-	}, [error, isResponse])
 
 	return (
 		<div className="container flex items-center justify-center py-20">
