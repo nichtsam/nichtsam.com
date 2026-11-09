@@ -1,8 +1,6 @@
-import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { usePostHog } from '@posthog/react'
 import { useEffect } from 'react'
 import { data, type MetaArgs, useLoaderData } from 'react-router'
-import { serverOnly$ } from 'vite-env-only/macros'
 import {
 	GeneralErrorBoundary,
 	generalNotFoundHandler,
@@ -13,14 +11,6 @@ import { pipeHeaders } from '#app/utils/headers.server.ts'
 import { buildMeta } from '#app/utils/meta.ts'
 import { allArticles } from '#content-collections'
 import { type Route } from './+types/article'
-
-export const handle: SEOHandle = {
-	getSitemapEntries: serverOnly$(async () => {
-		return allArticles.map((article) =>
-			article.draft ? null : { route: `/articles/${article.slug}` },
-		)
-	}),
-}
 
 export const headers: Route.HeadersFunction = pipeHeaders
 

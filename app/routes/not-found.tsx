@@ -5,7 +5,6 @@
 // ensure the user gets the right status code and we can display a nicer error
 // message for them than the React Router and/or browser default.
 
-import { type SEOHandle } from '@nasa-gcn/remix-seo'
 import { type MetaArgs } from 'react-router'
 import {
 	GeneralErrorBoundary,
@@ -13,10 +12,6 @@ import {
 } from '#app/components/error-boundary.tsx'
 import { buildMeta, notFoundMeta } from '#app/utils/meta.ts'
 import { type Route } from './+types/not-found'
-
-export const handle: SEOHandle = {
-	getSitemapEntries: () => null,
-}
 
 export const meta: Route.MetaFunction = (args) =>
 	buildMeta({

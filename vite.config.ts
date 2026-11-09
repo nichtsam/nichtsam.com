@@ -6,7 +6,6 @@ import {
 } from '@sentry/react-router'
 import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'vite'
-import { envOnlyMacros } from 'vite-env-only'
 import { iconsSpritesheet } from 'vite-plugin-icons-spritesheet'
 
 export default defineConfig((config) => ({
@@ -22,7 +21,6 @@ export default defineConfig((config) => ({
 
 	plugins: [
 		contentCollections(),
-		envOnlyMacros(),
 		tailwindcss(),
 		reactRouter(),
 
