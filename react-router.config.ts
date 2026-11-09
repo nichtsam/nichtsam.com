@@ -1,3 +1,4 @@
+import path from 'node:path'
 import { type Config } from '@react-router/dev/config'
 import { sentryOnBuildEnd } from '@sentry/react-router'
 
@@ -21,6 +22,12 @@ export default {
 	future: {},
 
 	buildEnd: async ({ viteConfig, reactRouterConfig, buildManifest }) => {
+		// Imported here so that loading this config doesn't validate the env
+		const { addContentSecurityPolicy } = await import('./other/csp.ts')
+		await addContentSecurityPolicy(
+			path.join(reactRouterConfig.buildDirectory, 'client'),
+		)
+
 		if (
 			process.env.SENTRY_AUTH_TOKEN &&
 			process.env.NODE_ENV === 'production'

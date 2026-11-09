@@ -1,6 +1,5 @@
 import { PassThrough } from 'node:stream'
 import { styleText } from 'node:util'
-import { contentSecurity } from '@nichtsam/helmet/content'
 import { createReadableStreamFromReadable } from '@react-router/node'
 import * as Sentry from '@sentry/react-router'
 import {
@@ -16,11 +15,8 @@ import {
 	ServerRouter,
 } from 'react-router'
 import { env, forceEnvValidation } from './utils/env.server'
-import { NonceProvider } from './utils/nonce-provider'
 
 forceEnvValidation()
-
-const MODE = env.NODE_ENV ?? 'development'
 
 const streamTimeout = 5_000
 
@@ -33,14 +29,12 @@ function handleRequest(
 		responseStatusCode,
 		responseHeaders,
 		routerContext,
-		loadContext,
 	]: DocRequestArgs
 ) {
 	if (env.NODE_ENV === 'production' && env.SENTRY_DSN) {
 		responseHeaders.append('Document-Policy', 'js-profiling')
 	}
 
-	const nonce = String(loadContext.cspNonce)
 	const callbackName = isbot(request.headers.get('user-agent'))
 		? 'onAllReady'
 		: 'onShellReady'
@@ -50,9 +44,7 @@ function handleRequest(
 		let shellRendered = false
 
 		const { pipe, abort } = renderToPipeableStream(
-			<NonceProvider value={nonce}>
-				<ServerRouter context={routerContext} url={request.url} nonce={nonce} />
-			</NonceProvider>,
+			<ServerRouter context={routerContext} url={request.url} />,
 			{
 				[callbackName]() {
 					shellRendered = true
@@ -60,44 +52,6 @@ function handleRequest(
 					const stream = createReadableStreamFromReadable(body)
 
 					responseHeaders.set('Content-Type', 'text/html')
-					contentSecurity(responseHeaders, {
-						crossOriginEmbedderPolicy: false,
-						contentSecurityPolicy: {
-							directives: {
-								fetch: {
-									'connect-src': [
-										MODE === 'development' ? 'ws:' : undefined,
-										env.SENTRY_DSN ? '*.sentry.io' : undefined,
-										...(env.POSTHOG_HOST
-											? [
-													env.POSTHOG_HOST,
-													env.POSTHOG_HOST.replace(
-														/(\/\/[^.]+)/,
-														(m) => `${m}-assets`,
-													),
-												]
-											: []),
-										"'self'",
-									],
-									'font-src': ["'self'"],
-									'frame-src': ["'self'"],
-									'img-src': ["'self'", 'data:', 'res.cloudinary.com'],
-									'script-src': [
-										"'strict-dynamic'",
-										"'self'",
-										`'nonce-${nonce}'`,
-										"'unsafe-inline'", // backward compatibility for 'nonces'
-										'https:', // backward compatibility for 'strict-dynamic'
-										"'unsafe-eval'", // mdx-bundler needs this
-									],
-									'script-src-attr': [`'nonce-${nonce}'`],
-								},
-								navigation: {
-									'form-action': ["'self'"],
-								},
-							},
-						},
-					})
 
 					resolve(
 						new Response(stream, {
@@ -120,7 +74,6 @@ function handleRequest(
 						console.error(error)
 					}
 				},
-				nonce,
 			},
 		)
 

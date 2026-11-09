@@ -24,7 +24,6 @@ import { SiteHeader } from './components/site-header.tsx'
 import { TooltipProvider } from './components/ui/tooltip.tsx'
 import { pipeHeaders } from './utils/headers.server.ts'
 import { buildMeta } from './utils/meta.ts'
-import { useNonce } from './utils/nonce-provider.tsx'
 
 export const links: Route.LinksFunction = () => [
 	{ rel: 'stylesheet', href: appStylesheet },
@@ -55,11 +54,9 @@ export const loader = () => {
 
 function Document({
 	children,
-	nonce,
 	env,
 }: {
 	children: React.ReactNode
-	nonce: string
 	env?: PublicEnv
 }) {
 	const allowIndexing = env?.ALLOW_INDEXING
@@ -81,13 +78,12 @@ function Document({
 				<NavProgress />
 
 				<script
-					nonce={nonce}
 					dangerouslySetInnerHTML={{
 						__html: `window.ENV = ${JSON.stringify(env ?? {})}`,
 					}}
 				/>
-				<Scripts nonce={nonce} />
-				<ScrollRestoration nonce={nonce} />
+				<Scripts />
+				<ScrollRestoration />
 			</body>
 		</html>
 	)
@@ -119,13 +115,8 @@ export default AppWithProviders
 
 export function Layout({ children }: { children: React.ReactNode }) {
 	const data = useRouteLoaderData<typeof loader>('root')
-	const nonce = useNonce()
 
-	return (
-		<Document nonce={nonce} env={data?.env}>
-			{children}
-		</Document>
-	)
+	return <Document env={data?.env}>{children}</Document>
 }
 
 export const ErrorBoundary = GeneralErrorBoundary

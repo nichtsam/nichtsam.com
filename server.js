@@ -1,5 +1,4 @@
 import 'dotenv/config'
-import crypto from 'crypto'
 import { styleText } from 'node:util'
 import { helmet } from '@nichtsam/helmet/node-http'
 import { createRequestHandler } from '@react-router/express'
@@ -79,11 +78,6 @@ app.use((req, res, next) => {
 	return generalRateLimit(req, res, next)
 })
 
-app.use((_, res, next) => {
-	res.locals.cspNonce = crypto.randomBytes(16).toString('hex')
-	next()
-})
-
 if (!ALLOW_INDEXING) {
 	app.use((_, res, next) => {
 		res.set('X-Robots-Tag', 'noindex, nofollow')
@@ -127,9 +121,6 @@ function getBuild() {
 app.all(
 	'*splat',
 	createRequestHandler({
-		getLoadContext: (_, res) => ({
-			cspNonce: res.locals.cspNonce,
-		}),
 		build: getBuild,
 	}),
 )
