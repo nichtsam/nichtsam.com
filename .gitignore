@@ -17,6 +17,7 @@ coverage
 # generated files
 /app/components/ui/icons
 .react-router/
+.wrangler/
 .content-collections/*
 .content-collections/generated/*
 !.content-collections/generated/

@@ -1,0 +1,27 @@
+# The headers helmet sent from server.js
+/*
+	Content-Security-Policy: frame-ancestors 'self'
+	Cross-Origin-Opener-Policy: same-origin
+	Cross-Origin-Resource-Policy: same-origin
+	Origin-Agent-Cluster: ?1
+	Referrer-Policy: no-referrer
+	Strict-Transport-Security: max-age=31536000; includeSubDomains
+	X-Content-Type-Options: nosniff
+	X-DNS-Prefetch-Control: off
+	X-Download-Options: noopen
+	X-Frame-Options: SAMEORIGIN
+	X-Permitted-Cross-Domain-Policies: none
+	X-XSS-Protection: 0
+
+# File names carry a content hash
+/assets/*
+	Cache-Control: public, max-age=31536000, immutable
+
+# OG images are embedded by link previews on other sites
+/resources/og/*
+	! Cross-Origin-Resource-Policy
+	Cross-Origin-Resource-Policy: cross-origin
+
+# Keeps the workers.dev and preview URLs out of search results
+https://:name.:subdomain.workers.dev/*
+	X-Robots-Tag: noindex

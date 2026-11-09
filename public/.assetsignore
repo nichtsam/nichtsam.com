@@ -1,0 +1,3 @@
+# Sentry deletes the source maps after uploading them, but a build without
+# Sentry keeps them, and they are not meant to be public
+*.map

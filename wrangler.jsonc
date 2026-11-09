@@ -1,0 +1,12 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "nichtsam-com",
+	"compatibility_date": "2026-11-09",
+	// Every page is prerendered, so there is no Worker script, only files
+	"assets": {
+		"directory": "./build/client",
+		// Matches the canonical URLs, which have no trailing slash
+		"html_handling": "drop-trailing-slash",
+		"not_found_handling": "404-page",
+	},
+}
