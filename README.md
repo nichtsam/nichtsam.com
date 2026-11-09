@@ -1,12 +1,12 @@
 # Welcome to nichtsam.com!
 
-Production : https://nichtsam.com  
-Staging : https://staging.nichtsam.com
+Production : https://nichtsam.com
 
 ## Stack
 
 - Framework: [React Router 7](https://reactrouter.com/)
-- Deployment: [Fly.io](https://fly.io/)
+- Deployment:
+  [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
 
 ## System Requirement
@@ -21,25 +21,34 @@ Staging : https://staging.nichtsam.com
 1. Copy `.env.example` into `.env`
 2. run `pnpm i`
 3. run `pnpm dev`
-4. open up `http://localhost:3000`
+4. open up `http://localhost:5173`
+
+To preview the production build, run `pnpm build` and then `pnpm start`.
 
 ## Deployment
 
-This repository has a [Github Workflow](.github/workflows/deploy.yml) set up to
-deploy automatically. \
-If you want to deploy manually, refer to
-[Deploy a Fly App](https://fly.io/docs/apps/deploy/).
+Every page is prerendered at build time, and the Worker in
+[`wrangler.jsonc`](wrangler.jsonc) serves the files in `build/client`. This
+repository has a [Github Workflow](.github/workflows/deploy.yml) set up to
+deploy automatically from `main`. \
+If you want to deploy manually, run `pnpm build` and then
+`pnpm exec wrangler deploy`.
 
 ## Make it yours
 
 ### Infra
 
-- [sign up on fiy.io](https://fly.io/docs/hands-on/)
-- [setup deployment for fly.io](https://fly.io/docs/apps/launch/)
+- [sign up on Cloudflare](https://dash.cloudflare.com/sign-up)
+- change `name` in [`wrangler.jsonc`](wrangler.jsonc)
 - set up
   [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
   needed by [project's Github Workflows](./.github/workflows/).
-  - [`FLY_API_TOKEN`](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/#api-tokens)
+  - [`CLOUDFLARE_API_TOKEN`](https://developers.cloudflare.com/workers/ci-cd/external-cicd/github-actions/),
+    made from the "Edit Cloudflare Workers" template
+  - `CLOUDFLARE_ACCOUNT_ID`
+- attach your domain as a
+  [Custom Domain](https://developers.cloudflare.com/workers/configuration/routing/custom-domains/)
+  of the Worker
 
 ### Content
 

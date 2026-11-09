@@ -1,4 +1,4 @@
-# The headers helmet sent from server.js
+# The security headers helmet sets by default
 /*
 	Content-Security-Policy: frame-ancestors 'self'
 	Cross-Origin-Opener-Policy: same-origin

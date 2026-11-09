@@ -7,7 +7,7 @@
 - **Framework:** [React Router 7](https://reactrouter.com/) (using Vite)
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) with `@tailwindcss/vite`
 - **Content:** MDX via `content-collections`
-- **Deployment:** [Fly.io](https://fly.io/)
+- **Deployment:** [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/), every page prerendered at build time
 - **Validation:** [Zod](https://zod.dev/) for schema validation (env, content)
 - **Testing:** [Vitest](https://vitest.dev/) and [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
 
@@ -30,7 +30,7 @@
 ### Development
 1.  **Environment:** Copy `.env.example` to `.env`.
 2.  **Install Dependencies:** `pnpm install`
-3.  **Start Dev Server:** `pnpm dev` (Runs `node ./server.js`).
+3.  **Start Dev Server:** `pnpm dev` (Runs `react-router dev`).
 
 ### Testing & Quality
 - **Run Tests:** `pnpm test`
@@ -40,8 +40,8 @@
 - **Full Validation:** `pnpm validate` (Auto-fixes lint and formatting, then runs typecheck and tests with coverage).
 
 ### Production
-- **Build:** `pnpm build` (Runs `react-router build`).
-- **Start:** `pnpm start` (Runs the production server via `server.js`).
+- **Build:** `pnpm build` (Runs `react-router build`, which prerenders every page into `build/client`).
+- **Start:** `pnpm start` (Serves the build with `wrangler dev`, as in production).
 
 ---
 
@@ -65,5 +65,6 @@
 - Server-side errors should be handled gracefully, often using the `data()` utility from React Router.
 
 ### Deployment
-- Deployed to **Fly.io**. Configuration in `fly.toml`.
-- Continuous Deployment via GitHub Actions (`.github/workflows/deploy.yml`).
+- Deployed to **Cloudflare Workers** as static assets. Configuration in `wrangler.jsonc`, response headers in `public/_headers`.
+- There is no server at runtime: route `headers` exports and loader response headers are never sent.
+- Continuous Deployment via GitHub Actions (`.github/workflows/deploy.yml`), from `main` only.
