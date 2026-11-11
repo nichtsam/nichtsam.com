@@ -35,7 +35,7 @@
 - **Full Validation:** `pnpm validate` (Formats, then typechecks).
 
 ### Production
-- **Build:** `pnpm build` (Runs `astro build`, which prerenders every page into `dist`).
+- **Build:** `pnpm build` (Runs `astro check`, then `astro build`, which prerenders every page into `dist`).
 - **Start:** `pnpm start` (Serves the build with `wrangler dev`, as in production).
 
 ---
@@ -55,4 +55,4 @@
 ### Deployment
 - Deployed to **Cloudflare Workers** as static assets. Configuration in `wrangler.jsonc`, response headers (including the CSP) in `public/_headers`.
 - There is no server at runtime.
-- Continuous Deployment via GitHub Actions (`.github/workflows/deploy.yml`), from `main` only.
+- Continuous Deployment via Cloudflare Workers Builds: every push to `main` runs `pnpm build`, then `wrangler deploy`. A type error fails the build and stops the deploy.
