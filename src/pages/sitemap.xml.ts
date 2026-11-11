@@ -1,7 +1,7 @@
-import { siteUrl } from '#src/config/site.ts'
+import { type APIContext } from 'astro'
 import { articlePath, getPublishedArticles } from '#src/utils/articles.ts'
 
-export async function GET() {
+export async function GET({ site }: APIContext) {
 	const paths = [
 		'/',
 		'/articles',
@@ -9,7 +9,7 @@ export async function GET() {
 	]
 
 	const urls = paths
-		.map((path) => `<url><loc>${siteUrl(path)}</loc></url>`)
+		.map((path) => `<url><loc>${new URL(path, site).href}</loc></url>`)
 		.join('')
 
 	return new Response(

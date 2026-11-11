@@ -2,7 +2,6 @@
 import '#src/styles/app.css'
 import SiteFooter from '#src/components/SiteFooter.astro'
 import SiteHeader from '#src/components/SiteHeader.astro'
-import { siteUrl } from '#src/config/site.ts'
 
 interface Props {
 	title?: string
@@ -16,8 +15,8 @@ const {
 	noindex = false,
 } = Astro.props
 
-const url = siteUrl(Astro.url.pathname)
-const image = siteUrl('/resources/og/image.png')
+const url = Astro.url.href
+const image = new URL('/resources/og/image.png', Astro.site).href
 ---
 
 <!doctype html>

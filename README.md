@@ -39,6 +39,7 @@ If you want to deploy manually, run `pnpm build` and then
 
 - [sign up on Cloudflare](https://dash.cloudflare.com/sign-up)
 - change `name` in [`wrangler.jsonc`](wrangler.jsonc)
+- change `site` in [`astro.config.ts`](astro.config.ts) to your domain
 - set up
   [secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets#creating-encrypted-secrets-for-a-repository)
   needed by [project's Github Workflows](./.github/workflows/).

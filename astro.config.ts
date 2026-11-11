@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { defineConfig } from 'astro/config'
 
 export default defineConfig({
+	site: 'https://nichtsam.com',
 	// Matches the canonical URLs and the Worker's `drop-trailing-slash`
 	trailingSlash: 'never',
 
