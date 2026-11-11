@@ -4,7 +4,7 @@ Production : https://nichtsam.com
 
 ## Stack
 
-- Framework: [React Router 7](https://reactrouter.com/)
+- Framework: [Astro](https://astro.build/)
 - Deployment:
   [Cloudflare Workers static assets](https://developers.cloudflare.com/workers/static-assets/)
 - Styling: [Tailwind CSS](https://tailwindcss.com/)
@@ -18,19 +18,18 @@ Production : https://nichtsam.com
 
 ### Setup
 
-1. Copy `.env.example` into `.env`
-2. run `pnpm i`
-3. run `pnpm dev`
-4. open up `http://localhost:5173`
+1. run `pnpm i`
+2. run `pnpm dev`
+3. open up `http://localhost:4321`
 
 To preview the production build, run `pnpm build` and then `pnpm start`.
 
 ## Deployment
 
 Every page is prerendered at build time, and the Worker in
-[`wrangler.jsonc`](wrangler.jsonc) serves the files in `build/client`. This
-repository has a [Github Workflow](.github/workflows/deploy.yml) set up to
-deploy automatically from `main`. \
+[`wrangler.jsonc`](wrangler.jsonc) serves the files in `dist`. This repository
+has a [Github Workflow](.github/workflows/deploy.yml) set up to deploy
+automatically from `main`. \
 If you want to deploy manually, run `pnpm build` and then
 `pnpm exec wrangler deploy`.
 
@@ -68,12 +67,12 @@ Here are some stuff you will need to adjust to make it your website.
 
 #### Logo
 
-- `Logo` in `app/components/site-header.tsx`
+- the logo in `src/components/SiteHeader.astro`
 
 #### Pages' Meta
 
-- `meta()` in every route
+- `title` and `description` passed to `Layout` in every page
 
 #### Social Links
 
-- `socialNav` in `app/config/nav.tsx`
+- `socialNav` in `src/config/nav.ts`
