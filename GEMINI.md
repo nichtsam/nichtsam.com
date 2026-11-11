@@ -19,7 +19,6 @@
   - `icons/`: SVG icons, imported as components.
   - `content.config.ts`: The articles collection and its frontmatter schema.
 - `content/`: Markdown and MDX files for blog articles.
-- `other/`: Auxiliary files like the `sly` configuration.
 - `public/`: Static assets (favicons, OG image, manifest, `_headers`, `robots.txt`).
 
 ---
