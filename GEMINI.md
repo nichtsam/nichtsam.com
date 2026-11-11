@@ -31,9 +31,8 @@
 
 ### Quality
 - **Typecheck:** `pnpm typecheck` (Runs `astro check`)
-- **Lint:** `pnpm lint`
 - **Format:** `pnpm format`
-- **Full Validation:** `pnpm validate` (Auto-fixes lint and formatting, then typechecks).
+- **Full Validation:** `pnpm validate` (Formats, then typechecks).
 
 ### Production
 - **Build:** `pnpm build` (Runs `astro build`, which prerenders every page into `dist`).

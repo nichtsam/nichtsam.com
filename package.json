@@ -8,12 +8,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "start": "wrangler dev",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
-    "quality": "pnpm lint:fix && pnpm format",
     "typecheck": "astro check",
-    "validate": "pnpm quality && pnpm typecheck"
+    "validate": "pnpm format && pnpm typecheck"
   },
   "dependencies": {
     "@astrojs/markdown-satteri": "0.4.7",
@@ -27,7 +24,6 @@
     "@astrojs/check": "0.9.12",
     "@tailwindcss/typography": "0.5.19",
     "@types/node": "^24.12.2",
-    "eslint": "9.39.2",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "1.1.2",
     "prettier-plugin-tailwindcss": "0.7.2",
