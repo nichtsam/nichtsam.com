@@ -1,0 +1,30 @@
+---
+// Cloudinary resizes on request, so every width is just another URL
+interface Props {
+	id: string
+	alt: string
+}
+
+const { id, alt } = Astro.props
+
+const widths = [300, 600, 900, 1200, 1500, 1800]
+const sizes = [
+	'(min-width: 1536px) 97.5ch',
+	'(min-width: 1280px) 73.125ch',
+	'(min-width: 655px) 65ch',
+	'100vw',
+]
+
+const imageUrl = (width: number) =>
+	`https://res.cloudinary.com/nichtsam/image/upload/c_scale,w_${width}/${id}`
+const averageWidth = Math.ceil(widths.reduce((a, b) => a + b) / widths.length)
+---
+
+<img
+	src={imageUrl(averageWidth)}
+	srcset={widths.map((width) => `${imageUrl(width)} ${width}w`).join(', ')}
+	sizes={sizes.join(', ')}
+	alt={alt}
+	loading="lazy"
+	class="w-full"
+/>

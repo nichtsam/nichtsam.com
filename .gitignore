@@ -4,7 +4,7 @@
 node_modules
 
 /.cache
-/build
+/dist
 .env
 
 /local
@@ -12,15 +12,8 @@ node_modules
 
 *.db
 
-coverage
-
 # generated files
-/app/components/ui/icons
-.react-router/
+.astro/
 .wrangler/
-.content-collections/*
-.content-collections/generated/*
-!.content-collections/generated/
-!.content-collections/generated/index.d.ts
 
 .DS_Store

@@ -60,32 +60,10 @@ jobs:
       - name: 🔬 Type check
         run: pnpm typecheck
 
-  vitest:
-    name: ⚡ Vitest
-    runs-on: ubuntu-latest
-    steps:
-      - name: 👀 Checkout repo
-        uses: actions/checkout@v6
-
-      - name: 📥 Install pnpm
-        uses: pnpm/action-setup@v6
-
-      - name: 🟢 Setup node
-        uses: actions/setup-node@v6
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: 'pnpm'
-
-      - name: 📥 Install dependencies
-        run: pnpm install
-
-      - name: ⚡ Run vitest
-        run: pnpm coverage
-
   deploy:
     name: 🚀 Deploy
     runs-on: ubuntu-latest
-    needs: [lint, typecheck, vitest]
+    needs: [lint, typecheck]
     if: ${{ github.ref_name == 'main' }}
 
     steps:

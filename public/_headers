@@ -1,6 +1,7 @@
-# The security headers helmet sets by default
+# The security headers helmet sets by default, with a policy that allows no
+# inline scripts, as pages ship none
 /*
-	Content-Security-Policy: frame-ancestors 'self'
+	Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; img-src 'self' data: res.cloudinary.com; object-src 'none'; style-src 'self' 'unsafe-inline'
 	Cross-Origin-Opener-Policy: same-origin
 	Cross-Origin-Resource-Policy: same-origin
 	Origin-Agent-Cluster: ?1
@@ -14,7 +15,7 @@
 	X-XSS-Protection: 0
 
 # File names carry a content hash
-/assets/*
+/_astro/*
 	Cache-Control: public, max-age=31536000, immutable
 
 # OG images are embedded by link previews on other sites

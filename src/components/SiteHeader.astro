@@ -1,0 +1,66 @@
+---
+import { coreNav } from '#src/config/nav.ts'
+import HamburgerMenu from '#src/icons/hamburger-menu.svg'
+
+const { pathname } = Astro.url
+const isActive = (href: string) =>
+	pathname === href || pathname.startsWith(`${href}/`)
+---
+
+<header>
+	<div class="flex items-center p-9 lg:gap-16">
+		<a class="hover:underline" href="/">
+			<span class="text-xl font-bold sm:text-3xl">nichtsam</span>
+		</a>
+
+		<nav class="hidden lg:flex">
+			<ul class="flex items-center">
+				{coreNav.map(({ href, title }) => (
+					<li>
+						<a
+							href={href}
+							aria-current={pathname === href ? 'page' : undefined}
+							class:list={[
+								'hover:bg-muted focus:bg-muted focus-visible:ring-ring/50 inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all outline-none focus-visible:ring-3 focus-visible:outline-1',
+								isActive(href) && 'underline',
+							]}
+						>
+							{title}
+						</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+
+		<div class="-mr-16 grow"></div>
+
+		<button
+			type="button"
+			popovertarget="mobile-nav"
+			aria-label="Navigation Menu"
+			class="icon-button lg:hidden"
+		>
+			<HamburgerMenu class="size-[1em]" aria-hidden="true" />
+		</button>
+	</div>
+
+	<div
+		id="mobile-nav"
+		popover
+		class="bg-popover text-popover-foreground top-auto bottom-0 hidden max-h-[60svh] w-full translate-y-full flex-col rounded-t-xl border-t text-sm transition-[translate,display,overlay] transition-discrete duration-300 backdrop:bg-black/10 backdrop:backdrop-blur-xs open:flex open:translate-y-0 starting:open:translate-y-full"
+	>
+		<div class="flex flex-col gap-0.5 p-4 text-center" inert>
+			<p class="text-foreground font-medium">Menu</p>
+			<p class="text-muted-foreground text-sm">Links and Actions</p>
+		</div>
+		<nav class="overflow-auto p-4 text-center">
+			<ul class="flex flex-col gap-y-3">
+				{coreNav.map(({ href, title }) => (
+					<li>
+						<a href={href}>{title}</a>
+					</li>
+				))}
+			</ul>
+		</nav>
+	</div>
+</header>

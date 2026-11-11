@@ -1,31 +1,6 @@
 {
-	"include": ["**/*.ts", "**/*.tsx", ".react-router/types/**/*"],
+	"extends": "astro/tsconfigs/strict",
 	"compilerOptions": {
-		"isolatedModules": true,
-
-		"jsx": "react-jsx",
-		"allowJs": true,
-		"module": "preserve",
-		"target": "ES2022",
-
-		"strict": true,
-		"noImplicitAny": true,
-		"noUncheckedIndexedAccess": true,
-		"forceConsistentCasingInFileNames": true,
-
-		"rootDirs": [".", "./.react-router/types"],
-		"paths": {
-			"#content-collections": ["./.content-collections/generated"],
-			"#app/*": ["./app/*"],
-			"@/icon-name": [
-				"./app/components/ui/icons/types.ts",
-				"./types/fallback.ts"
-			]
-		},
-
-		// Remix takes care of building everything in `remix build`.
-		"noEmit": true,
-		"skipLibCheck": true,
-		"allowImportingTsExtensions": true
+		"noUncheckedIndexedAccess": true
 	}
 }

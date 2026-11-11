@@ -1,8 +1,7 @@
 .env
 pnpm-lock.yaml
 node_modules
-coverage
-/build
-.content-collections
+/dist
+.astro
 GEMINI.md
 
