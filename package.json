@@ -21,7 +21,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
-    "@epic-web/config": "1.21.3",
     "@tailwindcss/typography": "0.5.19",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "1.1.2",
@@ -38,7 +37,6 @@
   "pnpm": {
     "onlyBuiltDependencies": [
       "esbuild",
-      "unrs-resolver",
       "@tailwindcss/oxide",
       "workerd"
     ]
