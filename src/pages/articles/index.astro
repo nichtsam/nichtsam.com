@@ -1,13 +1,16 @@
 ---
+import readingTime from 'reading-time'
 import Layout from '#src/layouts/Layout.astro'
-import {
-	articlePath,
-	articleReadingTime,
-	formatPublishedDate,
-	getPublishedArticles,
-} from '#src/utils/articles.ts'
+import { articlePath, getArticles } from '#src/utils/articles.ts'
 
-const articles = await getPublishedArticles()
+const articles = await getArticles()
+
+// Frontmatter dates are parsed as UTC midnight
+const publishedDateFormat = new Intl.DateTimeFormat('en', {
+	month: 'short',
+	year: 'numeric',
+	timeZone: 'UTC',
+})
 ---
 
 <Layout
@@ -24,11 +27,11 @@ const articles = await getPublishedArticles()
 					>
 						<div class="flex flex-col">
 							<time datetime={article.data.publishedDate.toISOString()}>
-								{formatPublishedDate(article.data.publishedDate)}
+								{publishedDateFormat.format(article.data.publishedDate)}
 							</time>
 							<h3 class="text-lg">{article.data.title}</h3>
 							<span class="text-sm text-muted-foreground">
-								{articleReadingTime(article)}
+								{readingTime(article.body ?? '').text}
 							</span>
 						</div>
 					</a>

@@ -1,11 +1,11 @@
 import { type APIContext } from 'astro'
-import { articlePath, getPublishedArticles } from '#src/utils/articles.ts'
+import { articlePath, getArticles } from '#src/utils/articles.ts'
 
 export async function GET({ site }: APIContext) {
 	const paths = [
 		'/',
 		'/articles',
-		...(await getPublishedArticles()).map((article) => articlePath(article.id)),
+		...(await getArticles()).map((article) => articlePath(article.id)),
 	]
 
 	const urls = paths
