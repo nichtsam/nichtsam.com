@@ -62,7 +62,6 @@ Here are some stuff you will need to adjust to make it your website.
 
 - `public/favicon.ico`
 - `public/favicons`
-- related fields in `public/site.webmanifest`
 
 #### Logo
 
