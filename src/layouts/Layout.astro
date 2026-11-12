@@ -4,14 +4,17 @@ import SiteFooter from '#src/components/SiteFooter.astro'
 import SiteHeader from '#src/components/SiteHeader.astro'
 
 interface Props {
-	title?: string
+	// The page's own name, the site name is appended here
+	title: string
 	description?: string
 }
 
 const {
-	title = 'nichtsam.com',
+	title: pageTitle,
 	description = 'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
 } = Astro.props
+
+const title = `${pageTitle} | nichtsam`
 
 const url = Astro.url.href
 const image = new URL('/resources/og/image.png', Astro.site).href

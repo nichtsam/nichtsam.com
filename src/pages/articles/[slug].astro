@@ -21,10 +21,7 @@ const { article } = Astro.props
 const { Content } = await render(article)
 ---
 
-<Layout
-	title={`${article.data.title} | nichtsam`}
-	description={article.data.description}
->
+<Layout title={article.data.title} description={article.data.description}>
 	<article class="container prose xl:prose-lg 2xl:prose-2xl">
 		<Content components={{ ArticleImage }} />
 	</article>
