@@ -24,14 +24,8 @@ const { Content } = await render(article)
 <Layout
 	title={`${article.data.title} | nichtsam`}
 	description={article.data.description}
-	noindex={article.data.draft}
 >
 	<article class="container prose xl:prose-lg 2xl:prose-2xl">
-		{article.data.draft && (
-			<blockquote class="border-l-4 border-yellow-500 bg-yellow-100 p-4 text-yellow-800">
-				Draft! Article Work In Progress!
-			</blockquote>
-		)}
 		<Content components={{ ArticleImage }} />
 	</article>
 </Layout>

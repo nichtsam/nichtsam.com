@@ -6,13 +6,11 @@ import SiteHeader from '#src/components/SiteHeader.astro'
 interface Props {
 	title?: string
 	description?: string
-	noindex?: boolean
 }
 
 const {
 	title = 'nichtsam.com',
 	description = 'Welcome to nichtsam.com! Explore the site to learn more about Samuel, his projects, and ideas.',
-	noindex = false,
 } = Astro.props
 
 const url = Astro.url.href
@@ -24,7 +22,6 @@ const image = new URL('/resources/og/image.png', Astro.site).href
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		{noindex && <meta name="robots" content="noindex, nofollow" />}
 
 		<title>{title}</title>
 		<meta name="description" content={description} />

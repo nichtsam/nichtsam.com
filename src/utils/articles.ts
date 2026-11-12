@@ -3,9 +3,8 @@ import readingTime from 'reading-time'
 
 export type Article = CollectionEntry<'articles'>
 
-// Drafts stay reachable by URL, they are only left out of listings
 export async function getPublishedArticles() {
-	const articles = await getCollection('articles', ({ data }) => !data.draft)
+	const articles = await getCollection('articles')
 
 	return articles.sort(
 		(a, b) => b.data.publishedDate.getTime() - a.data.publishedDate.getTime(),
