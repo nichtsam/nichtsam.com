@@ -3,14 +3,10 @@
 
 node_modules
 
-/.cache
 /dist
 .env
 
-/local
 *.local.*
-
-*.db
 
 # generated files
 .astro/
