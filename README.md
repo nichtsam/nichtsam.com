@@ -55,7 +55,7 @@ Here are some stuff you will need to adjust to make it your website.
 #### Articles
 
 - `/content/articles` \
-  Written in md or mdx, every file is an article. Files starting with `_` are
+  Written in Markdown, every file is an article. Files starting with `_` are
   skipped.
 
 #### Favicons

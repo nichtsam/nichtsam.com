@@ -1,6 +1,5 @@
 ---
 import { render } from 'astro:content'
-import ArticleImage from '#src/components/ArticleImage.astro'
 import Layout from '#src/layouts/Layout.astro'
 import { type Article, getArticles } from '#src/utils/articles.ts'
 
@@ -23,6 +22,6 @@ const { Content } = await render(article)
 
 <Layout title={article.data.title} description={article.data.description}>
 	<article class="container prose xl:prose-lg 2xl:prose-2xl">
-		<Content components={{ ArticleImage }} />
+		<Content />
 	</article>
 </Layout>

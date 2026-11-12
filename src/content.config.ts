@@ -5,8 +5,8 @@ import { defineCollection } from 'astro:content'
 const articles = defineCollection({
 	loader: glob({
 		base: 'content/articles',
-		// Files starting with `_` are templates, test pages and unfinished articles
-		pattern: ['**/*.{md,mdx}', '!**/_*'],
+		// Files starting with `_` are templates and unfinished articles
+		pattern: ['**/*.md', '!**/_*'],
 	}),
 	schema: z.object({
 		title: z.string(),

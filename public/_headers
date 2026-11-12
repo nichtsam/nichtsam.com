@@ -1,7 +1,7 @@
 # The security headers helmet sets by default, with a policy that allows no
 # inline scripts, as pages ship none
 /*
-	Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; img-src 'self' data: res.cloudinary.com; object-src 'none'; style-src 'self' 'unsafe-inline'
+	Content-Security-Policy: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; img-src 'self' data:; object-src 'none'; style-src 'self' 'unsafe-inline'
 	Cross-Origin-Opener-Policy: same-origin
 	Cross-Origin-Resource-Policy: same-origin
 	Origin-Agent-Cluster: ?1

@@ -12,11 +12,5 @@ export default {
 	overrides: [
 		// Package managers rewrite package.json with spaces
 		{ files: ['**/package.json'], options: { useTabs: false } },
-		{
-			files: ['**/*.mdx'],
-			// Otherwise a component at the end of a line wraps on one save and
-			// gains a blank line on the next
-			options: { proseWrap: 'preserve', htmlWhitespaceSensitivity: 'ignore' },
-		},
 	],
 }
