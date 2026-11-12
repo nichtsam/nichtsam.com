@@ -37,8 +37,8 @@ importers:
         specifier: 1.1.2
         version: 1.1.2(prettier@3.8.1)
       prettier-plugin-tailwindcss:
-        specifier: 0.7.2
-        version: 0.7.2(prettier-plugin-astro@1.1.2(prettier@3.8.1))(prettier@3.8.1)
+        specifier: 0.0.0-insiders.5b27f94
+        version: 0.0.0-insiders.5b27f94(prettier-plugin-astro@1.1.2(prettier@3.8.1))(prettier@3.8.1)
       tailwindcss:
         specifier: 4.2.2
         version: 4.2.2
@@ -1792,8 +1792,8 @@ packages:
     peerDependencies:
       prettier: ^3.5.3
 
-  prettier-plugin-tailwindcss@0.7.2:
-    resolution: {integrity: sha512-LkphyK3Fw+q2HdMOoiEHWf93fNtYJwfamoKPl7UwtjFQdei/iIBoX11G6j706FzN3ymX9mPVi97qIY8328vdnA==}
+  prettier-plugin-tailwindcss@0.0.0-insiders.5b27f94:
+    resolution: {integrity: sha512-1Kcao7i9xkk1FhomIiD4d2emC+RiWVWThC4kpo/tZTkKJvPkhr7e1tkuELU/HSYLaFECmfxIkv+21HEjkkhiYw==}
     engines: {node: '>=20.19'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -3889,7 +3889,7 @@ snapshots:
       prettier: 3.8.1
       sass-formatter: 0.8.0
 
-  prettier-plugin-tailwindcss@0.7.2(prettier-plugin-astro@1.1.2(prettier@3.8.1))(prettier@3.8.1):
+  prettier-plugin-tailwindcss@0.0.0-insiders.5b27f94(prettier-plugin-astro@1.1.2(prettier@3.8.1))(prettier@3.8.1):
     dependencies:
       prettier: 3.8.1
     optionalDependencies:

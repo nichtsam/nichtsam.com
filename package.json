@@ -24,7 +24,7 @@
     "@tailwindcss/typography": "0.5.19",
     "prettier": "3.8.1",
     "prettier-plugin-astro": "1.1.2",
-    "prettier-plugin-tailwindcss": "0.7.2",
+    "prettier-plugin-tailwindcss": "0.0.0-insiders.5b27f94",
     "tailwindcss": "4.2.2",
     "typescript": "6.0.2",
     "wrangler": "4.159.0"

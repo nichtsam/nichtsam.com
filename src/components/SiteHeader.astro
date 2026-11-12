@@ -21,7 +21,7 @@ const isActive = (href: string) =>
 							href={href}
 							aria-current={pathname === href ? 'page' : undefined}
 							class:list={[
-								'hover:bg-muted focus:bg-muted focus-visible:ring-ring/50 inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all outline-none focus-visible:ring-3 focus-visible:outline-1',
+								'inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1',
 								isActive(href) && 'underline',
 							]}
 						>
@@ -47,11 +47,11 @@ const isActive = (href: string) =>
 	<div
 		id="mobile-nav"
 		popover
-		class="bg-popover text-popover-foreground top-auto bottom-0 hidden max-h-[60svh] w-full translate-y-full flex-col rounded-t-xl border-t text-sm transition-[translate,display,overlay] transition-discrete duration-300 backdrop:bg-black/10 backdrop:opacity-0 backdrop:backdrop-blur-xs backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-300 open:flex open:backdrop:opacity-100 starting:open:backdrop:opacity-0 open:translate-y-0 starting:open:translate-y-full"
+		class="top-auto bottom-0 hidden max-h-[60svh] w-full translate-y-full flex-col rounded-t-xl border-t bg-popover text-sm text-popover-foreground transition-[translate,display,overlay] transition-discrete duration-300 backdrop:bg-black/10 backdrop:opacity-0 backdrop:backdrop-blur-xs backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-300 open:flex open:translate-y-0 open:backdrop:opacity-100 starting:open:translate-y-full starting:open:backdrop:opacity-0"
 	>
 		<div class="flex flex-col gap-0.5 p-4 text-center" inert>
-			<p class="text-foreground font-medium">Menu</p>
-			<p class="text-muted-foreground text-sm">Links and Actions</p>
+			<p class="font-medium text-foreground">Menu</p>
+			<p class="text-sm text-muted-foreground">Links and Actions</p>
 		</div>
 		<nav class="overflow-auto p-4 text-center">
 			<ul class="flex flex-col gap-y-3">

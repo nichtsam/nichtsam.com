@@ -20,14 +20,14 @@ const articles = await getPublishedArticles()
 				<li>
 					<a
 						href={articlePath(article.id)}
-						class="hover:bg-accent hover:text-accent-foreground inline-block w-full rounded-md p-4 transition ease-out hover:scale-105"
+						class="inline-block w-full rounded-md p-4 transition ease-out hover:scale-105 hover:bg-accent hover:text-accent-foreground"
 					>
 						<div class="flex flex-col">
 							<time datetime={article.data.publishedDate.toISOString()}>
 								{formatPublishedDate(article.data.publishedDate)}
 							</time>
 							<h3 class="text-lg">{article.data.title}</h3>
-							<span class="text-muted-foreground text-sm">
+							<span class="text-sm text-muted-foreground">
 								{articleReadingTime(article)}
 							</span>
 						</div>
