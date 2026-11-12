@@ -6,11 +6,6 @@ description:
   message and moves the contents into a subdirectory, ensuring a clean and
   organized project structure.
 publishedDate: 2025-03-30
-keywords:
-  - git
-  - monorepo
-  - polyrepo
-  - merge
 ---
 
 # Merging Git Repositories
