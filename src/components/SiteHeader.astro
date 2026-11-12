@@ -1,6 +1,12 @@
 ---
-import { coreNav } from '#src/config/nav.ts'
 import HamburgerMenu from '#src/icons/hamburger-menu.svg'
+
+const coreNav = [
+	{
+		title: 'Articles',
+		href: '/articles',
+	},
+]
 
 const { pathname } = Astro.url
 const isActive = (href: string) =>

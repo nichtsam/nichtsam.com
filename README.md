@@ -73,4 +73,4 @@ Here are some stuff you will need to adjust to make it your website.
 
 #### Social Links
 
-- `socialNav` in `src/config/nav.ts`
+- `socialNav` in `src/components/SiteFooter.astro`
