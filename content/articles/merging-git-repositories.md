@@ -8,8 +8,6 @@ description:
 publishedDate: 2025-03-30
 ---
 
-# Merging Git Repositories
-
 I started developing a small app a while ago, but I wasn’t sure whether to
 structure it as a mono repo or poly repo. Since I’m working with a tech stack
 I’m not very familiar with, I expected to make mistakes and start over multiple

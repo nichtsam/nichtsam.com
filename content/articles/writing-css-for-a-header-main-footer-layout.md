@@ -6,8 +6,6 @@ description:
 publishedDate: 2025-01-30
 ---
 
-# Writing CSS for a "Header + Main + Footer" Layout
-
 This is the layout I start with for almost every new project I begin. The
 concept is simple: a header, a main content container, and a footer, while
 ensuring a minimum height that fills the screen, with the main content filling

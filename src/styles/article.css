@@ -1,0 +1,216 @@
+/*
+ * Article bodies come from Markdown, so their styles hang off the elements.
+ * On wide screens the body sits on the page's 12 column grid, with each `h2`
+ * in the first 3 columns next to the section it opens.
+ */
+.article-body {
+	--gap: 1.5rem;
+	--section-space: 3.5rem;
+	--heading-offset: 2rem;
+
+	display: grid;
+	grid-template-columns: minmax(0, 1fr);
+	column-gap: var(--gap);
+	align-items: start;
+	font-size: 19px;
+	line-height: 1.65;
+	counter-reset: section;
+
+	@variant md {
+		--section-space: 5.5rem;
+		--heading-offset: 2.5rem;
+
+		grid-template-columns: repeat(12, minmax(0, 1fr));
+		font-size: 21px;
+
+		& > * {
+			grid-column: 4 / -1;
+		}
+	}
+
+	& > :where(p, ul, ol, pre, blockquote) {
+		margin-bottom: 1.3em;
+	}
+
+	& :where(p, ul, ol, blockquote) {
+		max-width: 680px;
+	}
+
+	/* The opening letter drops through the first 3 lines */
+	& > p:first-child::first-letter {
+		/* Without initial-letter, a floated letter is sized and moved to run from
+		   the first line's cap height to the third line's baseline, measured
+		   against Newsreader at this paragraph's line height */
+		float: left;
+		margin: 0.21em 0.08em 0 0;
+		font-size: 5.6em;
+		line-height: 0.65;
+		color: var(--color-accent);
+
+		@supports (initial-letter: 3) or (-webkit-initial-letter: 3) {
+			float: none;
+			margin: 0 0.12em 0 0;
+			-webkit-initial-letter: 3;
+			initial-letter: 3;
+		}
+	}
+
+	& > h2 {
+		position: relative;
+		margin-top: var(--section-space);
+		margin-bottom: 0.75em;
+		padding-top: var(--heading-offset);
+		font-size: 24px;
+		line-height: 1.2;
+		counter-increment: section;
+
+		&::before {
+			content: counter(section, decimal-leading-zero);
+			display: block;
+			margin-bottom: 6px;
+			font-family: var(--font-plex-mono);
+			font-size: 12px;
+			color: var(--color-accent);
+		}
+
+		/* The rule runs on under the section, as wide as the whole grid */
+		&::after {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			border-top: 1px solid var(--color-foreground);
+		}
+
+		@variant md {
+			grid-column: 1 / span 3;
+			margin-bottom: 0;
+
+			&::after {
+				/* 12 columns and 11 gaps are 4 times the heading's 3 columns and 2
+				   gaps, plus 3 gaps */
+				width: calc(400% + 3 * var(--gap));
+			}
+
+			/* Lines the first line of the section up with the heading's name */
+			& + * {
+				margin-top: calc(
+					var(--section-space) + var(--heading-offset) + 1.125rem
+				);
+			}
+		}
+	}
+
+	& :where(h3) {
+		margin: 2.4em 0 0.7em;
+		font-size: 23px;
+		line-height: 1.2;
+		font-style: italic;
+
+		@variant md {
+			font-size: 26px;
+		}
+	}
+
+	& :where(h4) {
+		margin: 1.6em 0 0.5em;
+		font-weight: 500;
+	}
+
+	& :where(h5, h6) {
+		margin: 1.4em 0 0.4em;
+		font-family: var(--font-plex-mono);
+		font-size: 12px;
+		font-weight: 500;
+		color: var(--color-muted);
+	}
+
+	/* The headings link to themselves */
+	& :is(h2, h3, h4, h5, h6) a {
+		text-decoration: none;
+	}
+
+	& :where(ul, ol) {
+		padding-left: 1.4em;
+	}
+
+	& ul {
+		list-style: disc;
+	}
+
+	& ol {
+		list-style: decimal;
+	}
+
+	& li {
+		margin-bottom: 0.35em;
+		padding-left: 0.3em;
+
+		&::marker {
+			font-family: var(--font-plex-mono);
+			font-size: 0.8em;
+			color: var(--color-accent);
+		}
+	}
+
+	& code {
+		padding: 0.1em 0.3em;
+		background-color: var(--color-code);
+		font-size: 0.8em;
+	}
+
+	& pre {
+		max-width: 760px;
+		margin-bottom: 1.4em;
+		padding: 20px 22px;
+		overflow-x: auto;
+		background-color: var(--color-code);
+		font-size: 14px;
+		line-height: 1.75;
+
+		@variant md {
+			padding: 24px 28px;
+			font-size: 15px;
+		}
+
+		& code {
+			padding: 0;
+			font-size: inherit;
+		}
+	}
+
+	/* Shiki leaves both themes' colors in variables */
+	& .astro-code,
+	& .astro-code span {
+		color: var(--shiki-light);
+
+		@media (prefers-color-scheme: dark) {
+			color: var(--shiki-dark);
+		}
+	}
+
+	& blockquote {
+		margin: 0.65em 0 1.8em;
+		padding-top: 20px;
+		border-top: 1px solid var(--color-accent);
+		font-size: 0.9em;
+		line-height: 1.6;
+		font-style: italic;
+
+		& p:not(:last-child) {
+			margin-bottom: 0.6em;
+		}
+
+		/* A leading bold word like "Caution:" becomes the label */
+		& > p:first-child > strong:first-child {
+			display: block;
+			margin-bottom: 4px;
+			font-family: var(--font-plex-mono);
+			font-size: 12px;
+			font-style: normal;
+			font-weight: 400;
+			color: var(--color-accent);
+		}
+	}
+}

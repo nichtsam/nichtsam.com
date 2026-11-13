@@ -1,42 +1,16 @@
 ---
-import GithubLogo from '#src/icons/github-logo.svg'
-import LinkedinLogo from '#src/icons/linkedin-logo.svg'
-
-const socialNav = [
-	{
-		title: 'Github',
-		href: 'https://github.com/nichtsam',
-		Icon: GithubLogo,
-	},
-	{
-		title: 'LinkedIn',
-		href: 'https://www.linkedin.com/in/nichtsam/',
-		Icon: LinkedinLogo,
-	},
-]
+import { socialLinks } from '#src/utils/social-links.ts'
 ---
 
-<footer>
-	<nav class="flex justify-center py-4">
-		<ul class="flex items-center">
-			{socialNav.map(({ href, title, Icon }) => (
-				<li>
-					<a
-						href={href}
-						target="_blank"
-						aria-label={title}
-						class="group relative icon-button"
-					>
-						<Icon class="size-[1em]" aria-hidden="true" />
-						<span
-							aria-hidden="true"
-							class="pointer-events-none absolute bottom-full mb-2 rounded-md bg-foreground px-3 py-1.5 text-xs text-background opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100 after:absolute after:top-full after:left-1/2 after:size-2.5 after:-translate-1/2 after:rotate-45 after:rounded-[2px] after:bg-foreground"
-						>
-							{title}
-						</span>
-					</a>
-				</li>
-			))}
-		</ul>
-	</nav>
+<footer class="grid gap-x-6 gap-y-2 border-t border-foreground pt-8 pb-16 font-mono text-[13px] text-muted md:grid-cols-12 md:pt-10">
+	<p class="md:col-span-3">nichtsam.com</p>
+	<ul class="flex flex-wrap gap-x-7 gap-y-2 md:col-span-9">
+		{socialLinks.map(({ href, title }) => (
+			<li>
+				<a href={href} target="_blank">
+					{title} ↗
+				</a>
+			</li>
+		))}
+	</ul>
 </footer>

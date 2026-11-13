@@ -1,27 +1,90 @@
 ---
 import { render } from 'astro:content'
 import Layout from '#src/layouts/Layout.astro'
-import { type Article, getArticles } from '#src/utils/articles.ts'
+import {
+	type Article,
+	articlePath,
+	formatPublishedDate,
+	getArticles,
+	readingMinutes,
+} from '#src/utils/articles.ts'
 
 export async function getStaticPaths() {
 	const articles = await getArticles()
 
-	return articles.map((article) => ({
-		params: { slug: article.id },
-		props: { article },
-	}))
+	return articles.map((article, index) => {
+		// Goes on to the next older article, and from the oldest back to the newest
+		const next = articles[(index + 1) % articles.length]
+
+		return {
+			params: { slug: article.id },
+			props: { article, next: next === article ? undefined : next },
+		}
+	})
 }
 
 interface Props {
 	article: Article
+	next?: Article | undefined
 }
 
-const { article } = Astro.props
+const { article, next } = Astro.props
+const { title, description, publishedDate } = article.data
 const { Content } = await render(article)
 ---
 
-<Layout title={article.data.title} description={article.data.description}>
-	<article class="container prose xl:prose-lg 2xl:prose-2xl">
-		<Content />
+<Layout title={title} description={description}>
+	<article>
+		<header class="grid gap-x-6 gap-y-8 pt-[clamp(64px,8vw,112px)] pb-20 md:grid-cols-12 md:pb-28">
+			<dl class="flex gap-x-8 gap-y-3.5 font-mono text-[13px] leading-normal md:col-span-3 md:flex-col md:pt-3">
+				<div>
+					<dt class="text-muted">Published</dt>
+					<dd>
+						<time datetime={formatPublishedDate(publishedDate)}>
+							{formatPublishedDate(publishedDate)}
+						</time>
+					</dd>
+				</div>
+				<div>
+					<dt class="text-muted">Reading time</dt>
+					<dd>{readingMinutes(article)} min</dd>
+				</div>
+			</dl>
+			<div class="flex flex-col gap-8 md:col-span-9">
+				<h1 class="text-[clamp(48px,8vw,112px)] leading-[0.92] font-light tracking-[-0.04em]">
+					{title}
+				</h1>
+				<p class="max-w-[700px] text-[clamp(21px,2vw,25px)] leading-[1.45] text-muted italic">
+					{description}
+				</p>
+			</div>
+		</header>
+
+		<div class="article-body border-t border-foreground pt-16 md:pt-20">
+			<Content />
+		</div>
+
+		<nav
+			aria-label="More articles"
+			class="mt-28 grid gap-x-6 gap-y-3 border-t border-foreground pt-8 pb-24 md:grid-cols-12 md:pt-10"
+		>
+			<a
+				href="/#articles"
+				class="font-mono text-[13px] text-muted md:col-span-3"
+			>
+				← All articles
+			</a>
+			{next && (
+				<div class="flex flex-col items-start gap-2 md:col-span-9">
+					<p class="font-mono text-[13px] text-muted">Next</p>
+					<a
+						href={articlePath(next.id)}
+						class="text-[clamp(28px,3vw,36px)] leading-[1.15] tracking-[-0.015em]"
+					>
+						{next.data.title}
+					</a>
+				</div>
+			)}
+		</nav>
 	</article>
 </Layout>

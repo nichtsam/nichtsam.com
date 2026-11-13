@@ -52,6 +52,17 @@ If you want to deploy manually, run `pnpm build` and then
 
 Here are some stuff you will need to adjust to make it your website.
 
+#### Home Page
+
+- the intro and skills in `src/pages/index.astro`
+
+#### Projects
+
+- `/content/projects` \
+  Written in Markdown, every file is a project. The frontmatter holds its
+  details and stories, the body is its description. Files starting with `_` are
+  skipped.
+
 #### Articles
 
 - `/content/articles` \
@@ -73,4 +84,4 @@ Here are some stuff you will need to adjust to make it your website.
 
 #### Social Links
 
-- `socialNav` in `src/components/SiteFooter.astro`
+- `socialLinks` in `src/utils/social-links.ts`

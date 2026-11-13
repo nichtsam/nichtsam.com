@@ -1,18 +1,80 @@
 ---
+import HomeSection from '#src/components/HomeSection.astro'
+import ProjectEntry from '#src/components/ProjectEntry.astro'
 import Layout from '#src/layouts/Layout.astro'
+import {
+	articlePath,
+	formatPublishedDate,
+	getArticles,
+	readingMinutes,
+} from '#src/utils/articles.ts'
+import { getProjects } from '#src/utils/projects.ts'
+
+const projects = await getProjects()
+const articles = await getArticles()
+
+const skills = [
+	{ term: 'Most comfortable', description: 'TypeScript + React' },
+	{ term: 'The rest', description: 'I just pick up.', aside: true },
+	{ term: 'Likes', description: 'Go, Rust' },
+	{ term: 'Uses', description: 'Neovim' },
+	{ term: 'Speaks', description: 'English, fluently. Chinese, natively.' },
+]
 ---
 
 <Layout title="Home">
-	<section class="container">
-		<article class="prose py-9 lg:prose-xl">
-			<h1>Samuel Jensen</h1>
-			<p>
-				Hi there, I'm Sam.
-				<br />
-				You can call me Sam.
-				<br />
-				Oh and this is my website by the way.
-			</p>
-		</article>
-	</section>
+	<h1 class="pt-[clamp(64px,9vw,120px)] pb-[clamp(56px,7vw,112px)] text-[clamp(64px,10.5vw,152px)] leading-[0.88] font-light tracking-[-0.045em]">
+		Samuel Jensen
+	</h1>
+
+	<HomeSection number="01" title="Intro">
+		<p class="max-w-[820px] text-[clamp(28px,3vw,38px)] leading-[1.3] font-[350] tracking-[-0.01em]">
+			I’m Samuel, a full-stack engineer who enjoys elegance.
+		</p>
+	</HomeSection>
+
+	<HomeSection id="projects" number="02" title="Projects">
+		<div class="space-y-28 md:space-y-36">
+			{projects.map((project) => (
+				<ProjectEntry project={project} />
+			))}
+		</div>
+	</HomeSection>
+
+	<HomeSection id="skills" number="03" title="Skills">
+		<dl class="space-y-5">
+			{skills.map(({ term, description, aside }) => (
+				<div class="grid items-baseline gap-x-6 gap-y-1 md:grid-cols-[200px_minmax(0,1fr)]">
+					<dt class="font-mono text-[13px] text-muted">{term}</dt>
+					<dd class:list={['text-xl md:text-[22px]', aside && 'italic']}>
+						{description}
+					</dd>
+				</div>
+			))}
+		</dl>
+	</HomeSection>
+
+	<HomeSection id="articles" number="04" title="Articles">
+		<ol>
+			{articles.map((article) => (
+				<li class="grid items-baseline gap-x-6 gap-y-1 py-7 not-last:border-b first:pt-0 md:grid-cols-[112px_minmax(0,1fr)_80px]">
+					<time
+						datetime={formatPublishedDate(article.data.publishedDate)}
+						class="font-mono text-[13px] text-muted"
+					>
+						{formatPublishedDate(article.data.publishedDate)}
+					</time>
+					<a
+						href={articlePath(article.id)}
+						class="text-xl leading-[1.3] md:text-[22px]"
+					>
+						{article.data.title}
+					</a>
+					<p class="font-mono text-[13px] text-muted md:text-right">
+						{readingMinutes(article)} min
+					</p>
+				</li>
+			))}
+		</ol>
+	</HomeSection>
 </Layout>

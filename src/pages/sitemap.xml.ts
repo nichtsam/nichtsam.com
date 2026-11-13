@@ -4,7 +4,6 @@ import { articlePath, getArticles } from '#src/utils/articles.ts'
 export async function GET({ site }: APIContext) {
 	const paths = [
 		'/',
-		'/articles',
 		...(await getArticles()).map((article) => articlePath(article.id)),
 	]
 

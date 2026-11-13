@@ -3,8 +3,8 @@
 Personal site and blog. Astro prerenders every page into `dist`, and Cloudflare
 Workers serves it as static assets, with no server at runtime.
 
-- Build interactions from platform features, like the popover API for the mobile
-  menu, so pages stay script-free.
+- Build interactions from platform features, like `<details>` for the project
+  stories, so pages stay script-free.
 - The CSP in `public/_headers` allows only same-origin resources, so an inline
   script or anything from another origin needs it widened.
 - Pushing to `main` deploys production through Cloudflare Workers Builds, which

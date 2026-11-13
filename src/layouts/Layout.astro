@@ -1,4 +1,5 @@
 ---
+import { Font } from 'astro:assets'
 import '#src/styles/app.css'
 import SiteFooter from '#src/components/SiteFooter.astro'
 import SiteHeader from '#src/components/SiteHeader.astro'
@@ -47,10 +48,22 @@ const image = new URL('/resources/og/image.png', Astro.site).href
 			sizes="180x180"
 			href="/favicons/apple-touch-icon.png"
 		/>
-		<meta name="theme-color" content="#ffffff" />
+		<meta
+			name="theme-color"
+			media="(prefers-color-scheme: light)"
+			content="#f7f5f0"
+		/>
+		<meta
+			name="theme-color"
+			media="(prefers-color-scheme: dark)"
+			content="#15130f"
+		/>
+
+		<Font cssVariable="--font-newsreader" preload={[{ style: 'normal' }]} />
+		<Font cssVariable="--font-plex-mono" />
 	</head>
-	<body class="bg-background text-foreground">
-		<div class="flex min-h-screen flex-col">
+	<body>
+		<div class="mx-auto flex min-h-screen max-w-[1440px] flex-col px-[clamp(20px,6vw,96px)]">
 			<SiteHeader />
 			<main class="grow">
 				<slot />

@@ -1,0 +1,116 @@
+---
+import { render } from 'astro:content'
+import { type Project } from '#src/utils/projects.ts'
+
+interface Props {
+	project: Project
+}
+
+const { project } = Astro.props
+const { name, startedYear, endedYear, role, stack, links, stories } =
+	project.data
+const { Content } = await render(project)
+
+// Frontmatter dates are parsed as UTC midnight
+const storyDateFormat = new Intl.DateTimeFormat('en', {
+	month: 'short',
+	year: 'numeric',
+	timeZone: 'UTC',
+})
+---
+
+<article>
+	<div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+		<h3 class="text-[clamp(36px,3.6vw,48px)] leading-none tracking-[-0.025em]">
+			{name}
+		</h3>
+		<p class="font-mono text-[13px] text-muted">
+			{startedYear} — {endedYear ?? 'now'}
+		</p>
+	</div>
+
+	<div class="mt-5 max-w-[640px] space-y-4 text-lg leading-relaxed md:text-xl">
+		<Content />
+	</div>
+
+	<dl class="mt-10 grid gap-x-6 gap-y-5 text-base leading-normal md:grid-cols-[1fr_2fr_1fr]">
+		<div>
+			<dt class="mb-1.5 font-mono text-xs text-muted">Role</dt>
+			<dd>{role}</dd>
+		</div>
+		<div>
+			<dt class="mb-1.5 font-mono text-xs text-muted">Stack</dt>
+			<dd>{stack.join(', ')}</dd>
+		</div>
+		<div>
+			<dt class="mb-1.5 font-mono text-xs text-muted">Links</dt>
+			<dd>
+				{links.map(({ href, title }, index) => (
+					<>
+						{index > 0 && ' · '}
+						<a href={href} target="_blank">
+							{title} ↗
+						</a>
+					</>
+				))}
+			</dd>
+		</div>
+	</dl>
+
+	<h4 class="mt-14 mb-2 font-mono text-xs font-medium text-muted">Story</h4>
+	<ol>
+		{stories.map((story) => (
+			<li class="grid grid-cols-[64px_minmax(0,1fr)] gap-x-4 md:grid-cols-[112px_minmax(0,1fr)] md:gap-x-6">
+				<p class="pt-5 font-mono text-xs text-muted md:text-[13px]">
+					{story.date ? (
+						<time datetime={story.date.toISOString().slice(0, 7)}>
+							{storyDateFormat.format(story.date)}
+						</time>
+					) : (
+						<span class="text-accent">Next</span>
+					)}
+				</p>
+				<details
+					open={story.open}
+					class:list={[
+						'group relative border-l pt-4 pb-6 pl-6 md:pl-9',
+						!story.date && 'border-dashed',
+					]}
+				>
+					<summary class="group/summary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+						{/* The timeline's node is the toggle, drawing a plus that loses its
+						    upright stroke to become a minus once open */}
+						<span
+							aria-hidden="true"
+							class:list={[
+								'absolute top-5 -left-[9px] size-[17px] rounded-full border bg-background group-open:border-accent group-open:bg-accent group-open:text-background group-hover/summary:border-accent',
+								'before:absolute before:top-1/2 before:left-1/2 before:h-px before:w-[7px] before:-translate-1/2 before:bg-current',
+								'after:absolute after:top-1/2 after:left-1/2 after:h-[7px] after:w-px after:-translate-1/2 after:bg-current group-open:after:hidden',
+								story.date
+									? 'border-muted text-foreground'
+									: 'border-dashed border-accent text-accent',
+							]}
+						/>
+						<span class="text-lg leading-[1.35] group-hover/summary:text-accent md:text-[19px]">
+							{story.title}
+						</span>
+					</summary>
+					<p class="mt-2 max-w-[600px] text-base leading-relaxed text-muted md:text-[17px]">
+						{story.body}
+					</p>
+					{story.links.length > 0 && (
+						<ul class="mt-2 flex flex-wrap gap-x-5 gap-y-1 font-mono text-[13px]">
+							{story.links.map(({ href, title }) => (
+								<li>
+									<a href={href} target="_blank">
+										{title} ↗
+									</a>
+								</li>
+							))}
+						</ul>
+					)}
+				</details>
+			</li>
+		))}
+	</ol>
+</article>

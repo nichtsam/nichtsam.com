@@ -1,29 +1,16 @@
 @import 'tailwindcss';
 @import './theme.css';
-
-@plugin '@tailwindcss/typography';
+@import './article.css';
 
 /* Cross-fades between pages, now that every navigation loads a new page */
 @view-transition {
 	navigation: auto;
 }
 
-/* Keeps the page behind the open mobile menu from scrolling */
-html:has(#mobile-nav:popover-open) {
-	overflow: hidden;
-}
-
-@utility container {
-	margin-inline: auto;
-	padding-inline: 2rem;
-	@media (width >= --theme(--breakpoint-sm)) {
-		max-width: none;
+/* Links to a section of the same page scroll there instead of jumping, as view
+   transitions only run between pages */
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
 	}
-	@media (width >= 1400px) {
-		max-width: 1400px;
-	}
-}
-
-@utility icon-button {
-	@apply inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-transparent text-sm transition-all outline-none select-none hover:bg-muted hover:text-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:translate-y-px;
 }

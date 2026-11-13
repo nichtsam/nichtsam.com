@@ -1,5 +1,4 @@
 ---
-import ArrowLeft from '#src/icons/arrow-left.svg'
 import Layout from '#src/layouts/Layout.astro'
 ---
 
@@ -7,12 +6,14 @@ import Layout from '#src/layouts/Layout.astro'
 	title="Not Found"
 	description="Sorry, I couldn't find this page for you 😭"
 >
-	<div class="container flex items-center justify-center py-20">
-		<div class="flex flex-col gap-6">
-			<h1 class="text-2xl sm:text-4xl md:text-5xl">We can't find this page</h1>
-			<a href="/" class="flex items-center gap-2 self-start text-lg">
-				<ArrowLeft class="size-[1em]" aria-hidden="true" />
-				Back to home
+	<div class="grid gap-x-6 gap-y-6 py-[clamp(64px,9vw,120px)] md:grid-cols-12">
+		<p class="font-mono text-[13px] text-accent md:col-span-3 md:pt-3">404</p>
+		<div class="flex flex-col items-start gap-10 md:col-span-9">
+			<h1 class="text-[clamp(48px,8vw,112px)] leading-[0.92] font-light tracking-[-0.04em]">
+				We can't find this page
+			</h1>
+			<a href="/" class="font-mono text-[13px] text-muted">
+				← Back to home
 			</a>
 		</div>
 	</div>

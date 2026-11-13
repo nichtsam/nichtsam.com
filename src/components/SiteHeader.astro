@@ -1,72 +1,48 @@
 ---
-import HamburgerMenu from '#src/icons/hamburger-menu.svg'
+import { socialLinks } from '#src/utils/social-links.ts'
 
-const coreNav = [
-	{
-		title: 'Articles',
-		href: '/articles',
-	},
+const sectionNav = [
+	{ title: 'Projects', href: '/#projects' },
+	{ title: 'Skills', href: '/#skills' },
+	{ title: 'Articles', href: '/#articles' },
 ]
 
-const { pathname } = Astro.url
-const isActive = (href: string) =>
-	pathname === href || pathname.startsWith(`${href}/`)
+// Articles have no list page, so the home page's list stands in for it
+const isArticle = Astro.url.pathname.startsWith('/articles/')
 ---
 
-<header>
-	<div class="flex items-center p-9 lg:gap-16">
-		<a class="hover:underline" href="/">
-			<span class="text-xl font-bold sm:text-3xl">nichtsam</span>
-		</a>
+<header class="grid items-baseline gap-x-6 gap-y-2 border-b border-foreground py-7 md:grid-cols-12">
+	<a href="/" class="text-[22px] font-medium italic no-underline md:col-span-3">
+		nichtsam
+	</a>
 
-		<nav class="hidden lg:flex">
-			<ul class="flex items-center">
-				{coreNav.map(({ href, title }) => (
-					<li>
-						<a
-							href={href}
-							aria-current={pathname === href ? 'page' : undefined}
-							class:list={[
-								'inline-flex h-9 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1',
-								isActive(href) && 'underline',
-							]}
-						>
-							{title}
-						</a>
-					</li>
-				))}
-			</ul>
-		</nav>
-
-		<div class="-mr-16 grow"></div>
-
-		<button
-			type="button"
-			popovertarget="mobile-nav"
-			aria-label="Navigation Menu"
-			class="icon-button lg:hidden"
-		>
-			<HamburgerMenu class="size-[1em]" aria-hidden="true" />
-		</button>
-	</div>
-
-	<div
-		id="mobile-nav"
-		popover
-		class="top-auto bottom-0 hidden max-h-[60svh] w-full translate-y-full flex-col rounded-t-xl border-t bg-popover text-sm text-popover-foreground transition-[translate,display,overlay] transition-discrete duration-300 backdrop:bg-black/10 backdrop:opacity-0 backdrop:backdrop-blur-xs backdrop:transition-[opacity,display,overlay] backdrop:transition-discrete backdrop:duration-300 open:flex open:translate-y-0 open:backdrop:opacity-100 starting:open:translate-y-full starting:open:backdrop:opacity-0"
+	<nav
+		aria-label="Primary"
+		class="flex flex-wrap justify-between gap-x-7 gap-y-2 font-mono text-[13px] text-muted md:col-span-9"
 	>
-		<div class="flex flex-col gap-0.5 p-4 text-center" inert>
-			<p class="font-medium text-foreground">Menu</p>
-			<p class="text-sm text-muted-foreground">Links and Actions</p>
-		</div>
-		<nav class="overflow-auto p-4 text-center">
-			<ul class="flex flex-col gap-y-3">
-				{coreNav.map(({ href, title }) => (
-					<li>
-						<a href={href}>{title}</a>
-					</li>
-				))}
-			</ul>
-		</nav>
-	</div>
+		<ul class="flex flex-wrap gap-x-7 gap-y-2">
+			{sectionNav.map(({ href, title }) => (
+				<li>
+					<a
+						href={href}
+						aria-current={
+							title === 'Articles' && isArticle ? 'true' : undefined
+						}
+						class="aria-[current]:text-foreground"
+					>
+						{title}
+					</a>
+				</li>
+			))}
+		</ul>
+		<ul class="flex flex-wrap gap-x-7 gap-y-2">
+			{socialLinks.map(({ href, title }) => (
+				<li>
+					<a href={href} target="_blank">
+						{title} ↗
+					</a>
+				</li>
+			))}
+		</ul>
+	</nav>
 </header>
